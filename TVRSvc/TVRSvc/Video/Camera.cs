@@ -1,15 +1,19 @@
 ﻿using Emgu.CV;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TVRSvc.Video
 {
     public class Camera : IDisposable
     {
         private readonly VideoCapture videoCapture;
+
+        public float Exposure
+        {
+            set
+            {
+                videoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Exposure, value);
+            }
+        }
 
         public Camera()
         {

@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TVRSvc.Math
+namespace TVRSvc.Math.Transform
 {
 
     // This transform is based on
     // https://www.pyimagesearch.com/2015/01/19/find-distance-camera-objectmarker-using-python-opencv/
-    public class CameraTransform
+    public class SimpleCameraTransform : ICameraTransform
     {
         // Unit: Meters
 

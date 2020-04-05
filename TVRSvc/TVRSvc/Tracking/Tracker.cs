@@ -1,23 +1,47 @@
 ﻿using Emgu.CV;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Emgu.CV.Structure;
+using TVRSvc.Math.Transform;
 using TVRSvc.Model;
 
 namespace TVRSvc.Tracking
 {
     public class Tracker
     {
-        public Controller Controller0 { get; } = new Controller(0);
+        public Controller Controller { get; }
 
-        public Controller Controller1 { get; } = new Controller(1);
+        public TrackerSettings Settings { get; }
 
-        public void Update(Mat frame)
+        public bool Detected { get; private set; }
+
+        public Image<Gray, byte> Frame { get; private set; }
+
+        private readonly ICameraTransform transform;
+
+        public Tracker(int controllerId, TrackerSettings settings)
         {
-
+            Controller = new Controller(controllerId);
+            Settings = settings;
+            transform = new SimpleCameraTransform();
         }
+
+        public void UpdateVideo(Mat frame)
+        {
+            if (Frame == null)
+                Frame = new Image<Gray, byte>(frame.Width, frame.Height);
+
+            CvInvoke.InRange(frame, new ScalarArray(Settings.Minimum), new ScalarArray(Settings.Maximum), Frame);
+            Frame = Frame.SmoothGaussian(9);
+
+            var circles = Frame.HoughCircles(new Gray(Settings.CannyThreshold), new Gray(1), 2, Frame.Height / 4, 8, 500)[0];
+            Detected = circles.Length > 0;
+
+            if (Detected)
+            {
+                var circle = circles[0];
+                Controller.Position = transform.Transform(Frame.Width, Frame.Height, circle);
+            }
+        }
+
 
     }
 }
