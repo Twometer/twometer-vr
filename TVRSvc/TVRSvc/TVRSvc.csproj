@@ -57,7 +57,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Math\CameraTransform.cs" />
+    <Compile Include="Math\Transform\SimpleCameraTransform.cs" />
+    <Compile Include="Math\Transform\ICameraTransform.cs" />
     <Compile Include="Math\Vec2.cs" />
     <Compile Include="Math\Vec3.cs" />
     <Compile Include="Math\RollingAverage.cs" />

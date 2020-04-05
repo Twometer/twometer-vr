@@ -9,9 +9,9 @@ namespace TVRSvc.Tracking
 {
     public struct TrackerSettings
     {
-        public static TrackerSettings Blue { get; } = new TrackerSettings(new MCvScalar(160, 140, 5), new MCvScalar(255, 255, 255), 100);
+        public static TrackerSettings Blue { get; } = new TrackerSettings(new MCvScalar(250, 140, 5), new MCvScalar(255, 255, 255), 100);
 
-        public static TrackerSettings Red { get; } = new TrackerSettings(new MCvScalar(5, 140, 160), new MCvScalar(255, 255, 255), 100);
+        public static TrackerSettings Red { get; } = new TrackerSettings(new MCvScalar(0, 140, 160), new MCvScalar(255, 255, 255), 100);
 
         public MCvScalar Minimum { get; }
 

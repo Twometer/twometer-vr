@@ -1,4 +1,5 @@
-﻿using Emgu.CV.UI;
+﻿using Emgu.CV;
+using Emgu.CV.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,23 +32,26 @@ namespace TVRSvc
             var trackers = new TrackerManager();
             var calibration = new Calibration(camera, trackers);
 
+            camera.Exposure = -8;
+
             Application.Idle += (s, a) =>
             {
                 var frame = camera.QueryFrame();
                 trackers.UpdateVideo(frame);
 
-                if (!calibration.IsCalibrated)
+                /*if (!calibration.IsCalibrated)
                 {
                     calibration.Update();
                 }
                 else
                 {
                     label2.Text = "calibrated: true";
-                }
+                }*/
 
-                label1.Text = trackers.Trackers[0].Controller.Position.ToString();
+                label1.Text = trackers.Trackers[0].Detected ? trackers.Trackers[0].Controller.Position.ToString() : "out of range";
+                label6.Text = trackers.Trackers[1].Detected ? trackers.Trackers[1].Controller.Position.ToString() : "out of range";
 
-                imageBox1.Image = frame;
+                imageBox1.Image = checkBox1.Checked ? frame : trackers.Trackers[0].Frame as IInputArray;
             };
         }
     }
