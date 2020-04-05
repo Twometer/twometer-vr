@@ -1,25 +1,23 @@
-﻿using System;
+﻿using Emgu.CV;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TVRSvc.Math;
+using TVRSvc.Model;
 
 namespace TVRSvc.Tracking
 {
     public class Tracker
     {
-        public int Id { get; }
+        public Controller Controller0 { get; } = new Controller(0);
 
-        public Vec3 Position { get; set; }
+        public Controller Controller1 { get; } = new Controller(1);
 
-        public Vec3 Acceleration { get; set; }
-
-        public Vec2 Rotation { get; set; }
-
-        public Tracker(int id)
+        public void Update(Mat frame)
         {
-            Id = id;
+
         }
+
     }
 }
