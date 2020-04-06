@@ -32,7 +32,7 @@ namespace TVRSvc
             var trackers = new TrackerManager();
             var calibration = new Calibration(camera, trackers);
 
-            camera.Exposure = -8;
+            camera.Exposure = -10;
 
             Application.Idle += (s, a) =>
             {
@@ -51,8 +51,24 @@ namespace TVRSvc
                 label1.Text = trackers.Trackers[0].Detected ? trackers.Trackers[0].Controller.Position.ToString() : "out of range";
                 label6.Text = trackers.Trackers[1].Detected ? trackers.Trackers[1].Controller.Position.ToString() : "out of range";
 
-                imageBox1.Image = checkBox1.Checked ? frame : trackers.Trackers[0].Frame as IInputArray;
+                if (radioButton1.Checked)
+                {
+                    imageBox1.Image = frame;
+                }
+                else if (radioButton2.Checked)
+                {
+                    imageBox1.Image = trackers.Trackers[0].Frame;
+                }
+                else if (radioButton3.Checked)
+                {
+                    imageBox1.Image = trackers.Trackers[1].Frame;
+                }
             };
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

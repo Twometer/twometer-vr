@@ -1,4 +1,5 @@
 ﻿using Emgu.CV;
+using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,11 @@ namespace TVRSvc.Tracking
 
         public void UpdateVideo(Mat frame)
         {
+            var hsvFrame = new Mat();
+            CvInvoke.CvtColor(frame, hsvFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
+
             foreach (var tracker in Trackers)
-                tracker.UpdateVideo(frame);
+                tracker.UpdateVideo(hsvFrame);
         }
 
         public void UpdateMeta()
