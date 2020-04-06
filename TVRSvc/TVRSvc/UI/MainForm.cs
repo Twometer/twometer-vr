@@ -20,6 +20,8 @@ namespace TVRSvc
     {
         private TrackerManager manager;
 
+        private int frames;
+
         public MainForm()
         {
             InitializeComponent();
@@ -59,6 +61,8 @@ namespace TVRSvc
                     imageBox1.Image = manager.Trackers[1].Frame;
 
                 glControl1.Invalidate();
+
+                frames++;
             };
         }
 
@@ -188,6 +192,13 @@ namespace TVRSvc
 
         private void label2_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            lbfps.Text = $"{frames} fps";
+            frames = 0;
 
         }
     }

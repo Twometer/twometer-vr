@@ -43,6 +43,8 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.glControl1 = new OpenTK.GLControl();
             this.label2 = new System.Windows.Forms.Label();
+            this.lbfps = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -184,11 +186,27 @@
             this.label2.Text = "3D view:";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
+            // lbfps
+            // 
+            this.lbfps.AutoSize = true;
+            this.lbfps.Location = new System.Drawing.Point(935, 483);
+            this.lbfps.Name = "lbfps";
+            this.lbfps.Size = new System.Drawing.Size(30, 13);
+            this.lbfps.TabIndex = 15;
+            this.lbfps.Text = "0 fps";
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1599, 509);
+            this.Controls.Add(this.lbfps);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.glControl1);
             this.Controls.Add(this.checkBox1);
@@ -227,6 +245,8 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private OpenTK.GLControl glControl1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbfps;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
