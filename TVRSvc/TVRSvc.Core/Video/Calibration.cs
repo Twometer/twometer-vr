@@ -13,7 +13,7 @@ namespace TVRSvc.Core.Video
     {
         public bool IsCalibrated { get; private set; }
 
-        private const float BrightnessThreshold = 7.5f;
+        private const float BrightnessThreshold = 4f;
 
         private float exposure;
 

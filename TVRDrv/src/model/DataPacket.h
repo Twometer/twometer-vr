@@ -12,6 +12,7 @@
 struct DataPacket {
 public:
     std::vector<ControllerState> controllerStates;
+
     std::vector<ButtonPress> buttonPresses;
 
 };
