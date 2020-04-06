@@ -44,7 +44,6 @@ namespace TVRSvc.Core.Tracking
 
                 if (Visualize)
                 {
-                    // Frame = Frame.Canny(100, 300);
                     Frame.Draw(circle, new Gray(128), 4);
                 }
             }

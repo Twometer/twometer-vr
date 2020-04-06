@@ -23,11 +23,13 @@ namespace TVRSvc.Core.Math.Transform
 
         private const float HorizontalPixelsPerMeter = 590; // How many pixels it takes for one meter in XY direction (after normalization)
 
+        private const int Latency = 6; // Latency of the transform in frames. Higher values mean slower response time but smoother movement
+
         private PointF frameCenter;
 
-        private RollingAverage xAvg = new RollingAverage(8);
-        private RollingAverage yAvg = new RollingAverage(8);
-        private RollingAverage zAvg = new RollingAverage(8);
+        private RollingAverage xAvg = new RollingAverage(Latency);
+        private RollingAverage yAvg = new RollingAverage(Latency);
+        private RollingAverage zAvg = new RollingAverage(Latency);
 
         public Vec3 Transform(int frameWidth, int frameHeight, CircleF obj)
         {
@@ -40,8 +42,8 @@ namespace TVRSvc.Core.Math.Transform
 
 
             var Z = ComputeDistance(diameter);
-            xAvg.Push(offset.X * Z / HorizontalPixelsPerMeter); //   
-            yAvg.Push(offset.Y * Z / HorizontalPixelsPerMeter); //   
+            xAvg.Push(offset.X * Z / HorizontalPixelsPerMeter);
+            yAvg.Push(-offset.Y * Z / HorizontalPixelsPerMeter);
             zAvg.Push(Z);
 
             return new Vec3(xAvg.Value, yAvg.Value, zAvg.Value);

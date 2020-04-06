@@ -7,7 +7,7 @@ namespace TVRSvc.Core.Video
     {
         private readonly VideoCapture videoCapture;
 
-        public float Exposure
+        public double Exposure
         {
             set
             {
