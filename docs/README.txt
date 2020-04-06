@@ -3,7 +3,7 @@ Twometer VR Documentation
 
 Protocol Controller<->Service:
   MetaFrame:
-    [int32[] buttonPresses][float rotX][float rotZ]
+    [int32 buttonPressCount][int32[] buttonPresses][float rotX][float rotZ]
 
 
 Protocol Service<->Driver:
