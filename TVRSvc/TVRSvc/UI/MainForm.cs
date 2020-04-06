@@ -13,11 +13,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TVRSvc.Core.Tracking;
 using TVRSvc.Core.Video;
+using TVRSvc.Network;
 
 namespace TVRSvc
 {
     public partial class MainForm : Form
     {
+        private const int NetworkPort = 12741;
+
         private TrackerManager manager;
 
         private int frames;
@@ -33,6 +36,8 @@ namespace TVRSvc
 
             var camera = new Camera();
             var calibration = new Calibration(camera);
+            var server = new Server();
+            server.Start(NetworkPort);
 
             Application.Idle += (s, a) =>
             {
@@ -61,6 +66,9 @@ namespace TVRSvc
                     imageBox1.Image = manager.Trackers[1].Frame;
 
                 glControl1.Invalidate();
+
+                if (manager.Detected)
+                    server.Broadcast(new DataPacket() { ControllerStates = manager.Trackers.Select(t => t.Controller).ToArray() });
 
                 frames++;
             };
@@ -181,9 +189,9 @@ namespace TVRSvc
         {
             if (moving)
             {
-                
 
-                
+
+
             }
 
             lx = e.X;

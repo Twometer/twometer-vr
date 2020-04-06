@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVRSvc", "TVRSvc\TVRSvc.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVRSvc.Core", "TVRSvc.Core\TVRSvc.Core.csproj", "{BF70D6F8-2CE6-4515-BD30-DD64A0CE297F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVRSvc.Network", "TVRSvc.Network\TVRSvc.Network.csproj", "{9DFC4CB2-EE07-4881-9BCB-8358FC71176F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BF70D6F8-2CE6-4515-BD30-DD64A0CE297F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF70D6F8-2CE6-4515-BD30-DD64A0CE297F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF70D6F8-2CE6-4515-BD30-DD64A0CE297F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DFC4CB2-EE07-4881-9BCB-8358FC71176F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DFC4CB2-EE07-4881-9BCB-8358FC71176F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DFC4CB2-EE07-4881-9BCB-8358FC71176F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DFC4CB2-EE07-4881-9BCB-8358FC71176F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

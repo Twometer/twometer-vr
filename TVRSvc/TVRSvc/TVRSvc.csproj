@@ -106,6 +106,10 @@
       <Project>{bf70d6f8-2ce6-4515-bd30-dd64a0ce297f}</Project>
       <Name>TVRSvc.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TVRSvc.Network\TVRSvc.Network.csproj">
+      <Project>{9dfc4cb2-ee07-4881-9bcb-8358fc71176f}</Project>
+      <Name>TVRSvc.Network</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Emgu.CV.runtime.windows.4.2.0.3662\build\Emgu.CV.runtime.windows.targets" Condition="Exists('..\packages\Emgu.CV.runtime.windows.4.2.0.3662\build\Emgu.CV.runtime.windows.targets')" />
