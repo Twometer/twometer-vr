@@ -3,4 +3,4 @@ project(TVRDrv)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(TVRDrv main.cpp)
+add_executable(TVRDrv src/main.cpp src/model/ButtonPress.h src/model/ControllerState.h src/model/DataPacket.h src/net/StreamClient.cpp src/net/StreamClient.h)
