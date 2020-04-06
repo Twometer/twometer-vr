@@ -12,8 +12,8 @@ namespace TVRSvc.Core.Tracking
         public static TrackerSettings Blue { get; } = new TrackerSettings(new MCvScalar(58, 205, 110), new MCvScalar(137, 255, 255), 100);
 
         public static TrackerSettings Red { get; } = new TrackerSettings(new[] {
-            new ColorRange(new MCvScalar(0, 76, 46), new MCvScalar(70, 255, 255)),
-            new ColorRange(new MCvScalar(151, 76, 46), new MCvScalar(179, 255, 255))
+            new ColorRange(new MCvScalar(0, 76, 56), new MCvScalar(70, 255, 255)),
+            new ColorRange(new MCvScalar(151, 76, 56), new MCvScalar(179, 255, 255))
         }, 100);
 
         public ColorRange[] ColorRanges { get; }
