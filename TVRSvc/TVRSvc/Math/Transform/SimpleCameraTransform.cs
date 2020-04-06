@@ -34,8 +34,9 @@ namespace TVRSvc.Math.Transform
             if (frameCenter == PointF.Empty)
                 frameCenter = new PointF(frameWidth / 2.0f, frameHeight / 2.0f);
 
-            var offset = new PointF(obj.Center.X - frameCenter.X, obj.Center.Y - frameCenter.Y);
-            var diameter = obj.Radius * 2;
+            var center = LockToPixel(obj.Center);
+            var offset = LockToPixel(new PointF(center.X - frameCenter.X, center.Y - frameCenter.Y));
+            var diameter = (float) System.Math.Floor(obj.Radius * 2);
 
 
             var Z = ComputeDistance(diameter);
@@ -49,6 +50,11 @@ namespace TVRSvc.Math.Transform
         private float ComputeDistance(float diameter)
         {
             return FS / diameter;
+        }
+
+        private Point LockToPixel(PointF p)
+        {
+            return new Point((int)System.Math.Floor(p.X), (int)System.Math.Floor(p.Y));
         }
 
     }
