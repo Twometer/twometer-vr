@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TVRSvc.Math;
+using TVRSvc.Core.Math;
 
-namespace TVRSvc.Model
+namespace TVRSvc.Core.Model
 {
     public class Controller
     {

@@ -1,7 +1,7 @@
 ﻿using Emgu.CV;
 using System;
 
-namespace TVRSvc.Video
+namespace TVRSvc.Core.Video
 {
     public class Camera : IDisposable
     {

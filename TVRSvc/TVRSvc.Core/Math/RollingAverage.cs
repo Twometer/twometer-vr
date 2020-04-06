@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TVRSvc.Math
+namespace TVRSvc.Core.Math
 {
     public class RollingAverage
     {

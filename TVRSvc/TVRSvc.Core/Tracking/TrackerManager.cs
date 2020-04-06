@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TVRSvc.Model;
+using TVRSvc.Core.Model;
 
-namespace TVRSvc.Tracking
+namespace TVRSvc.Core.Tracking
 {
     public class TrackerManager
     {

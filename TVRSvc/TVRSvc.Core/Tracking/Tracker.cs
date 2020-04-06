@@ -1,9 +1,9 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
-using TVRSvc.Math.Transform;
-using TVRSvc.Model;
+using TVRSvc.Core.Math.Transform;
+using TVRSvc.Core.Model;
 
-namespace TVRSvc.Tracking
+namespace TVRSvc.Core.Tracking
 {
     public class Tracker
     {

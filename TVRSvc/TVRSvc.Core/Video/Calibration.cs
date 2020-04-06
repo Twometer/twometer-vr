@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TVRSvc.Tracking;
+using TVRSvc.Core.Tracking;
 
-namespace TVRSvc.Video
+namespace TVRSvc.Core.Video
 {
     public class Calibration
     {

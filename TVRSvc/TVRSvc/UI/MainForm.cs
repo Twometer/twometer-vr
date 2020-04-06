@@ -9,8 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TVRSvc.Tracking;
-using TVRSvc.Video;
+using TVRSvc.Core.Tracking;
+using TVRSvc.Core.Video;
 
 namespace TVRSvc
 {
@@ -19,11 +19,6 @@ namespace TVRSvc
         public MainForm()
         {
             InitializeComponent();
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -41,12 +36,15 @@ namespace TVRSvc
                     t.Visualize = checkBox1.Checked;
 
                 if (!calibration.IsCalibrated)
+                {
                     calibration.Update(frame);
+                    label1.Text = label6.Text = "calibrating camera...";
+                }
                 else
-                    label2.Text = "calibrated: true";
-
-                label1.Text = manager.Trackers[0].Detected ? manager.Trackers[0].Controller.Position.ToString() : "out of range";
-                label6.Text = manager.Trackers[1].Detected ? manager.Trackers[1].Controller.Position.ToString() : "out of range";
+                {
+                    label1.Text = manager.Trackers[0].Detected ? manager.Trackers[0].Controller.Position.ToString() : "out of range";
+                    label6.Text = manager.Trackers[1].Detected ? manager.Trackers[1].Controller.Position.ToString() : "out of range";
+                }
 
                 if (radioButton1.Checked)
                     imageBox1.Image = frame;
@@ -55,16 +53,6 @@ namespace TVRSvc
                 else if (radioButton3.Checked)
                     imageBox1.Image = manager.Trackers[1].Frame;
             };
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
