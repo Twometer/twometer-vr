@@ -29,44 +29,40 @@ namespace TVRSvc
         private void button1_Click(object sender, EventArgs e)
         {
             var camera = new Camera();
-            var trackers = new TrackerManager();
-            var calibration = new Calibration(camera, trackers);
-
-            camera.Exposure = -10;
+            var manager = new TrackerManager();
+            var calibration = new Calibration(camera);
 
             Application.Idle += (s, a) =>
             {
                 var frame = camera.QueryFrame();
-                trackers.UpdateVideo(frame);
+                manager.UpdateVideo(frame);
 
-                /*if (!calibration.IsCalibrated)
-                {
-                    calibration.Update();
-                }
+                foreach (var t in manager.Trackers)
+                    t.Visualize = checkBox1.Checked;
+
+                if (!calibration.IsCalibrated)
+                    calibration.Update(frame);
                 else
-                {
                     label2.Text = "calibrated: true";
-                }*/
 
-                label1.Text = trackers.Trackers[0].Detected ? trackers.Trackers[0].Controller.Position.ToString() : "out of range";
-                label6.Text = trackers.Trackers[1].Detected ? trackers.Trackers[1].Controller.Position.ToString() : "out of range";
+                label1.Text = manager.Trackers[0].Detected ? manager.Trackers[0].Controller.Position.ToString() : "out of range";
+                label6.Text = manager.Trackers[1].Detected ? manager.Trackers[1].Controller.Position.ToString() : "out of range";
 
                 if (radioButton1.Checked)
-                {
                     imageBox1.Image = frame;
-                }
                 else if (radioButton2.Checked)
-                {
-                    imageBox1.Image = trackers.Trackers[0].Frame;
-                }
+                    imageBox1.Image = manager.Trackers[0].Frame;
                 else if (radioButton3.Checked)
-                {
-                    imageBox1.Image = trackers.Trackers[1].Frame;
-                }
+                    imageBox1.Image = manager.Trackers[1].Frame;
             };
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
         }

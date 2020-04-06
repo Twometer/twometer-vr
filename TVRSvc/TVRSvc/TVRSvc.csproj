@@ -63,6 +63,7 @@
     <Compile Include="Math\Vec3.cs" />
     <Compile Include="Math\RollingAverage.cs" />
     <Compile Include="Model\Controller.cs" />
+    <Compile Include="Tracking\ColorRange.cs" />
     <Compile Include="Tracking\Tracker.cs" />
     <Compile Include="Tracking\TrackerManager.cs" />
     <Compile Include="Tracking\TrackerSettings.cs" />

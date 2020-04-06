@@ -13,6 +13,8 @@ namespace TVRSvc.Tracking
 
         public bool Detected { get; private set; }
 
+        public bool Visualize { get; set; }
+
         public Image<Gray, byte> Frame { get; private set; }
 
         private readonly ICameraTransform transform;
@@ -29,16 +31,36 @@ namespace TVRSvc.Tracking
             if (Frame == null)
                 Frame = new Image<Gray, byte>(frame.Width, frame.Height);
 
-            CvInvoke.InRange(frame, new ScalarArray(Settings.Minimum), new ScalarArray(Settings.Maximum), Frame);
+            RangeFilter(frame);
             Frame = Frame.SmoothGaussian(9);
 
-            var circles = Frame.HoughCircles(new Gray(Settings.CannyThreshold), new Gray(1), 2, Frame.Height / 4, 8, 500)[0];
+            var circles = Frame.HoughCircles(new Gray(Settings.CannyThreshold), new Gray(1), 3, Frame.Height / 4, 2, 250)[0];
             Detected = circles.Length > 0;
 
             if (Detected)
             {
                 var circle = circles[0];
                 Controller.Position = transform.Transform(Frame.Width, Frame.Height, circle);
+
+                if (Visualize)
+                {
+                    // Frame = Frame.Canny(100, 300);
+                    Frame.Draw(circle, new Gray(128), 4);
+                }
+            }
+        }
+
+        private void RangeFilter(Mat frame)
+        {
+            var range0 = Settings.ColorRanges[0];
+            CvInvoke.InRange(frame, new ScalarArray(range0.Minimum), new ScalarArray(range0.Maximum), Frame);
+
+            for (var i = 1; i < Settings.ColorRanges.Length; i++)
+            {
+                var range = Settings.ColorRanges[i];
+                var mat = new Mat();
+                CvInvoke.InRange(frame, new ScalarArray(range.Minimum), new ScalarArray(range.Maximum), mat);
+                CvInvoke.BitwiseOr(Frame, mat, Frame);
             }
         }
 

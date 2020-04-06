@@ -11,18 +11,24 @@ namespace TVRSvc.Tracking
     {
         public static TrackerSettings Blue { get; } = new TrackerSettings(new MCvScalar(58, 205, 123), new MCvScalar(137, 255, 255), 100);
 
-        public static TrackerSettings Red { get; } = new TrackerSettings(new MCvScalar(0, 76, 36), new MCvScalar(70, 255, 255), 100);
+        public static TrackerSettings Red { get; } = new TrackerSettings(new[] {
+            new ColorRange(new MCvScalar(0, 76, 36), new MCvScalar(70, 255, 255)),
+            new ColorRange(new MCvScalar(151, 76, 36), new MCvScalar(179, 255, 255))
+        }, 100);
 
-        public MCvScalar Minimum { get; }
-
-        public MCvScalar Maximum { get; }
+        public ColorRange[] ColorRanges { get; }
 
         public float CannyThreshold { get; }
 
+        public TrackerSettings(ColorRange[] colorRanges, float cannyThreshold)
+        {
+            ColorRanges = colorRanges;
+            CannyThreshold = cannyThreshold;
+        }
+
         public TrackerSettings(MCvScalar minimum, MCvScalar maximum, float cannyThreshold)
         {
-            Minimum = minimum;
-            Maximum = maximum;
+            ColorRanges = new ColorRange[] { new ColorRange(minimum, maximum) };
             CannyThreshold = cannyThreshold;
         }
     }
