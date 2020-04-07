@@ -15,3 +15,15 @@ Protocol Service<->Driver:
 
   ButtonPress:
     [int32 ctrlId][int32 buttonId]
+
+Button IDs:
+
+- 0 None
+- 1 Up
+- 2 Down
+- 3 Left
+- 4 Right
+- 5 Center
+
+How many of those buttons will be actually used is yet to be determined.
+This is just the table with reserved IDs

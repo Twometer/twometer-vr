@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -80,6 +81,13 @@ namespace TVRSvc
 
                 frames++;
             };
+
+            controllerServer.PacketReceived += ControllerServer_PacketReceived;
+        }
+
+        private void ControllerServer_PacketReceived(object sender, ControllerInfoPacket e)
+        {
+            Debug.WriteLine($"Received controller update: {e.PressedButtons.Length}; {e.AccelX}; {e.AccelY}; {e.AccelZ}");
         }
 
         private void glControl1_Paint(object sender, PaintEventArgs e)

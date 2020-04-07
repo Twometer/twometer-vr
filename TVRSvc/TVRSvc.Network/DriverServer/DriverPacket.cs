@@ -15,6 +15,11 @@ namespace TVRSvc.Network.DriverServer
 
         public ButtonPress[] ButtonPresses { get; set; }
 
+        public void Deserialize(BinaryReader reader)
+        {
+            // Never received by the server
+        }
+
         public void Serialize(BinaryWriter writer)
         {
             // Controller states

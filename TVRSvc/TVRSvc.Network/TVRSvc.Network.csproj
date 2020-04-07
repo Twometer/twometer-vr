@@ -44,6 +44,7 @@
     <Compile Include="Common\Host\BaseServer.cs" />
     <Compile Include="Common\Host\Client.cs" />
     <Compile Include="Common\IPacket.cs" />
+    <Compile Include="Common\IReceiveCallback.cs" />
     <Compile Include="Common\NetworkConfig.cs" />
     <Compile Include="ControllerServer\ControllerInfoPacket.cs" />
     <Compile Include="ControllerServer\ControllerServer.cs" />

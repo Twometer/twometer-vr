@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace TVRSvc.Network.Common
 {
-    public interface IPacket
+    public interface IReceiveCallback
     {
-        void Serialize(BinaryWriter writer);
 
-        void Deserialize(BinaryReader reader);
+        void OnPacket(MemoryStream data);
 
     }
 }

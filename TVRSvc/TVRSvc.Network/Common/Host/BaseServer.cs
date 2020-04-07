@@ -11,11 +11,13 @@ using System.Threading.Tasks;
 
 namespace TVRSvc.Network.Common.Host
 {
-    public abstract class BaseServer<T> where T : IPacket
+    public abstract class BaseServer<T> : IReceiveCallback where T : IPacket
     {
-        private TcpListener listener;
+        private readonly TcpListener listener;
 
         private readonly ConcurrentDictionary<Guid, Client> clients = new ConcurrentDictionary<Guid, Client>();
+
+        public event EventHandler<T> PacketReceived;
 
         public BaseServer(IPAddress addr, int port)
         {
@@ -58,10 +60,18 @@ namespace TVRSvc.Network.Common.Host
             if (tcp != null)
             {
                 var id = Guid.NewGuid();
-                clients[id] = new Client(id, tcp);
+                clients[id] = new Client(id, tcp, this);
             }
 
             listener.BeginAcceptTcpClient(new AsyncCallback(AcceptClients), null);
+        }
+
+        public void OnPacket(MemoryStream data)
+        {
+            var reader = new BinaryReader(data);
+            var packet = Activator.CreateInstance<T>();
+            packet.Deserialize(reader);
+            PacketReceived?.Invoke(this, packet);
         }
     }
 }
