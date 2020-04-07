@@ -1,5 +1,5 @@
 // No, don't steal my WiFi credentials
-// Fill your WiFi credentials in here
+// Fill your own WiFi credentials in here
 
-const String WIFI_SSID = "";
-const String WIFI_PASS = "";
+const String WIFI_SSID = " ";
+const String WIFI_PASS = " ";
