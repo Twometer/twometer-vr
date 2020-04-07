@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TVRSvc.Core.Model;
+using TVRSvc.Network.Common;
 
-namespace TVRSvc.Network
+namespace TVRSvc.Network.DriverServer
 {
-    public class DataPacket
+    public class DriverPacket : IPacket
     {
         public Controller[] ControllerStates { get; set; }
 

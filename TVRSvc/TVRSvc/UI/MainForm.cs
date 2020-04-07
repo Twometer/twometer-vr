@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using TVRSvc.Core.Tracking;
 using TVRSvc.Core.Video;
 using TVRSvc.Network;
+using TVRSvc.Network.DriverServer;
 
 namespace TVRSvc
 {
@@ -36,8 +37,7 @@ namespace TVRSvc
 
             var camera = new Camera();
             var calibration = new Calibration(camera);
-            var server = new Server();
-            server.Start(NetworkPort);
+            var server = new DriverServer();
 
             Application.Idle += (s, a) =>
             {
@@ -74,7 +74,7 @@ namespace TVRSvc
                 glControl1.Invalidate();
 
                 if (manager.Detected)
-                    server.Broadcast(new DataPacket() { ControllerStates = manager.Trackers.Select(t => t.Controller).ToArray() });
+                    server.Broadcast(new DriverPacket() { ControllerStates = manager.Trackers.Select(t => t.Controller).ToArray() });
 
                 frames++;
             };

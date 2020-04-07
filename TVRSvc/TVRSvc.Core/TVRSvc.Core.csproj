@@ -58,6 +58,7 @@
     <Compile Include="Math\Transform\SimpleCameraTransform.cs" />
     <Compile Include="Math\Vec2.cs" />
     <Compile Include="Math\Vec3.cs" />
+    <Compile Include="Model\Button.cs" />
     <Compile Include="Model\ButtonPress.cs" />
     <Compile Include="Model\Controller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TVRSvc.Network
+namespace TVRSvc.Core.Model
 {
-    public interface IDisconnectListener
+    public enum Button
     {
-
-        void OnDisconnect(Guid clientId);
-
+        None,
+        Up,
+        Down,
+        Left,
+        Right,
+        Center
     }
 }

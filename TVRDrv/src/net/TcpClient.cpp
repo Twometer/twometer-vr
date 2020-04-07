@@ -7,8 +7,13 @@
 
 #include <string>
 #include <cstdio>
+#include <iostream>
+
+#include "../util/Logger.h"
 
 bool TcpClient::Connect(const char *host, unsigned short port) {
+    log::info << "Connecting to " << host << ":" << port << log::endl;
+
     WSADATA wsaData;
     SOCKET ConnectSocket = INVALID_SOCKET;
     struct addrinfo *result = nullptr, *ptr = nullptr, hints;
@@ -18,7 +23,7 @@ bool TcpClient::Connect(const char *host, unsigned short port) {
     // Initialize Winsock
     iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != 0) {
-        printf("WSAStartup failed with error: %d\n", iResult);
+        log::err << "WSAStartup failed with error " << iResult << log::endl;
         return false;
     }
 
@@ -29,7 +34,7 @@ bool TcpClient::Connect(const char *host, unsigned short port) {
 
     iResult = getaddrinfo(host, std::to_string(port).c_str(), &hints, &result);
     if (iResult != 0) {
-        printf("getaddrinfo failed with error: %d\n", iResult);
+        log::err << "getaddrinfo failed with error " << iResult << log::endl;
         WSACleanup();
         return false;
     }
@@ -39,7 +44,7 @@ bool TcpClient::Connect(const char *host, unsigned short port) {
         // Create a SOCKET for connecting to server
         ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
         if (ConnectSocket == INVALID_SOCKET) {
-            printf("Socket failed with error: %ld\n", WSAGetLastError());
+            log::err << "Socket failed with error " << WSAGetLastError() << log::endl;
             WSACleanup();
             return false;
         }
@@ -57,10 +62,12 @@ bool TcpClient::Connect(const char *host, unsigned short port) {
     freeaddrinfo(result);
 
     if (ConnectSocket == INVALID_SOCKET) {
-        printf("Unable to connect to server!");
+        log::err << "Failed to connect to the server" << log::endl;
         WSACleanup();
         return false;
     }
+
+    log::info << "Connected." << log::endl;
 
     this->tcpSocket = ConnectSocket;
     return true;

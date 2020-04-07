@@ -10,12 +10,14 @@ namespace TVRSvc.Core.Model
     {
         public int ControllerId { get; }
 
-        public int ButtonId { get; }
+        public Button Button { get; }
 
-        public ButtonPress(int controllerId, int buttonId)
+        public int ButtonId => (int)Button;
+
+        public ButtonPress(int controllerId, Button button)
         {
             ControllerId = controllerId;
-            ButtonId = buttonId;
+            Button = button;
         }
     }
 }

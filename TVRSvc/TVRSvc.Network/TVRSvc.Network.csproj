@@ -41,10 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client.cs" />
-    <Compile Include="DataPacket.cs" />
-    <Compile Include="IDisconnectListener.cs" />
-    <Compile Include="Server.cs" />
+    <Compile Include="Common\Host\BaseServer.cs" />
+    <Compile Include="Common\Host\Client.cs" />
+    <Compile Include="Common\IPacket.cs" />
+    <Compile Include="Common\NetworkConfig.cs" />
+    <Compile Include="DriverServer\DriverPacket.cs" />
+    <Compile Include="DriverServer\DriverServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
