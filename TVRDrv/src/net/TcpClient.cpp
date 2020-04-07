@@ -2,21 +2,21 @@
 // Created by Twometer on 20/09/2019.
 //
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunknown-pragmas"    // Without this, it warns at the pop
+#pragma ide diagnostic ignored "hicpp-signed-bitwise"   // We can't fix the signed-bitwise OPs of Windows' headers
 
 #include "TcpClient.h"
+#include "../util/Logger.h"
 
 #include <string>
-#include <cstdio>
-#include <iostream>
-
-#include "../util/Logger.h"
 
 bool TcpClient::Connect(const char *host, unsigned short port) {
     log::info << "Connecting to " << host << ":" << port << log::endl;
 
     WSADATA wsaData;
-    SOCKET ConnectSocket = INVALID_SOCKET;
-    struct addrinfo *result = nullptr, *ptr = nullptr, hints;
+    auto ConnectSocket = INVALID_SOCKET;
+    struct addrinfo *result = nullptr, *ptr = nullptr, hints{};
 
     int iResult;
 
@@ -27,7 +27,6 @@ bool TcpClient::Connect(const char *host, unsigned short port) {
         return false;
     }
 
-    ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
@@ -101,3 +100,5 @@ uint8_t TcpClient::ReadByte() {
     recv(tcpSocket, (char *) &buf, 1, 0);
     return buf;
 }
+
+#pragma clang diagnostic pop

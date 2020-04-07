@@ -12,7 +12,6 @@ void StreamClient::Connect() {
         return;
 
     auto *recvBuf = new uint8_t[32767];
-    memset(recvBuf, 0, 32767);
 
     do {
         int packetLen = ReadInt();

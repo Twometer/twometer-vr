@@ -21,8 +21,6 @@ namespace TVRSvc
 {
     public partial class MainForm : Form
     {
-        private const int NetworkPort = 12741;
-
         private TrackerManager manager;
 
         private int frames;

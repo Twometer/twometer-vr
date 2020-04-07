@@ -17,11 +17,6 @@ private:
 
     int offset;
 
-    void Reverse(void *ptr, int len) {
-        auto *bytePtr = (uint8_t *) ptr;
-        std::reverse(bytePtr, bytePtr + len);
-    }
-
 public:
     Buffer(uint8_t *data, int len);
 
