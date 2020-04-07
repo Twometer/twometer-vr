@@ -21,13 +21,15 @@ namespace TVRSvc.Core.Video
         private float exposure;
 
         private Camera camera;
+        private TrackerManager manager;
 
         private int frameCounter;
         private int adjustFrames;
 
-        public Calibration(Camera camera)
+        public Calibration(Camera camera, TrackerManager manager)
         {
             this.camera = camera;
+            this.manager = manager;
         }
 
         public void Update(Mat frame)
@@ -51,7 +53,7 @@ namespace TVRSvc.Core.Video
 
             Debug.WriteLine("Brightness value: " + meanBrightness);
 
-            if (meanBrightness > BrightnessThreshold)
+            if (meanBrightness > BrightnessThreshold || manager.Detected)
             {
                 exposure--;
                 adjustFrames = CooldownFrames;

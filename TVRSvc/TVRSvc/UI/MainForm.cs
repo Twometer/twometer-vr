@@ -36,7 +36,7 @@ namespace TVRSvc
             manager = new TrackerManager();
 
             var camera = new Camera();
-            var calibration = new Calibration(camera);
+            var calibration = new Calibration(camera, manager);
             var server = new DriverServer();
 
             Application.Idle += (s, a) =>
