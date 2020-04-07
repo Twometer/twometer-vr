@@ -5,6 +5,8 @@
 #define CONTROLLER_PORT 12742
 #define DISCOVERY_PORT  12743
 
+#define CONTROLLER_ID   0
+
 WiFiUDP udp;
 byte discoverySequence[4] = { 0x79, 0x65, 0x65, 0x74 };
 IPAddress broadcastIp;
@@ -56,7 +58,7 @@ void loop() {
   // Send it to the server
 
   // Test data
-  int pressed[] = {1, 2};
+  byte pressed[] = {1, 2};
   sendPacket(2, pressed, 1.3456, 0.3199, millis());
 }
 
@@ -77,12 +79,14 @@ bool discovery() {
   return true;
 }
 
-void sendPacket(int32_t numButtonPresses, int32_t* buttonPresses, float accelX, float accelY, float accelZ) {
-  int packetLen = 4 + 4 + (4 * numButtonPresses) + 4 + 4 + 4;
+void sendPacket(byte numButtonPresses, byte* buttonPresses, float accelX, float accelY, float accelZ) {
+  
+  int16_t packetLen = 2 + 1 + 1 + (numButtonPresses) + 4 * 3;
   byte data[packetLen];
   int offset = 0;
 
-  cpy(data, offset, packetLen - 4);
+  cpy(data, offset, int16_t(packetLen - 2));
+  cpy(data, offset, byte(CONTROLLER_ID));
   cpy(data, offset, numButtonPresses);
   for (int i = 0; i < numButtonPresses; i++) {
     cpy(data, offset, buttonPresses[i]);

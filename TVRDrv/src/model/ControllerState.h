@@ -7,14 +7,14 @@
 
 struct ControllerState {
 public:
-    int controllerId;
+    uint8_t controllerId;
     float posX;
     float posY;
     float posZ;
     float rotX;
     float rotY;
 
-    ControllerState(int controllerId, float posX, float posY, float posZ, float rotX, float rotY) : controllerId(
+    ControllerState(uint8_t controllerId, float posX, float posY, float posZ, float rotX, float rotY) : controllerId(
             controllerId), posX(posX), posY(posY), posZ(posZ), rotX(rotX), rotY(rotY) {}
 
 };

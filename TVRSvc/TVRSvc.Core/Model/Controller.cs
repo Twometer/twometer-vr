@@ -9,7 +9,7 @@ namespace TVRSvc.Core.Model
 {
     public class Controller
     {
-        public int Id { get; }
+        public byte Id { get; }
 
         public Vec3 Position { get; set; }
 
@@ -17,7 +17,7 @@ namespace TVRSvc.Core.Model
 
         public Vec2 Rotation { get; set; }
 
-        public Controller(int id)
+        public Controller(byte id)
         {
             Id = id;
         }

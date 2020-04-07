@@ -17,7 +17,7 @@ private:
 
     volatile bool closeRequested = false;
 
-    int32_t ReadInt();
+    int16_t ReadShort();
 
     std::function<void(DataPacket)> callback;
 

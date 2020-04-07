@@ -19,7 +19,7 @@ namespace TVRSvc.Core.Tracking
 
         private readonly ICameraTransform transform;
 
-        public Tracker(int controllerId, TrackerSettings settings)
+        public Tracker(byte controllerId, TrackerSettings settings)
         {
             Controller = new Controller(controllerId);
             Settings = settings;

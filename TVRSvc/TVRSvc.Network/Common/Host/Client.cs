@@ -31,15 +31,15 @@ namespace TVRSvc.Network.Common.Host
 
         public void BeginReceiving()
         {
-            stream.BeginRead(buf, 0, 4, new AsyncCallback(ReceiveCallback), null);
+            stream.BeginRead(buf, 0, sizeof(short), new AsyncCallback(ReceiveCallback), null);
         }
 
         private void ReceiveCallback(IAsyncResult result)
         {
             var received = stream.EndRead(result);
-            if (received == 4)
+            if (received == sizeof(short))
             {
-                var packetLen = BitConverter.ToInt32(buf, 0);
+                var packetLen = BitConverter.ToInt16(buf, 0);
                 if (packetLen > buf.Length)
                 {
                     throw new IOException("Buffer overflow: Message too long");

@@ -26,7 +26,7 @@ namespace TVRSvc.Network.DriverServer
 
             if (ControllerStates != null)
             {
-                writer.Write(ControllerStates.Length);
+                writer.Write((byte)ControllerStates.Length);
                 foreach (var c in ControllerStates)
                 {
                     writer.Write(c.Id);
@@ -39,7 +39,7 @@ namespace TVRSvc.Network.DriverServer
             }
             else
             {
-                writer.Write(0);
+                writer.Write((byte)0);
             }
 
 
@@ -47,7 +47,7 @@ namespace TVRSvc.Network.DriverServer
 
             if (ButtonPresses == null)
             {
-                writer.Write(0);
+                writer.Write((byte)0);
                 return;
             }
 

@@ -11,7 +11,7 @@ namespace TVRSvc.Network.DriverServer
 {
     public class DriverServer : BaseServer<DriverPacket>
     {
-        public DriverServer() : base(IPAddress.Loopback, NetworkConfig.DriverPort)
+        public DriverServer() : base(IPAddress.Loopback, NetworkConfig.DriverPort, receiving: false)
         {
         }
     }

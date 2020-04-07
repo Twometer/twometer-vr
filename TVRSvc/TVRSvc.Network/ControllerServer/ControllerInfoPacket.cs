@@ -11,6 +11,8 @@ namespace TVRSvc.Network.ControllerServer
 {
     public class ControllerInfoPacket : IPacket
     {
+        public byte ControllerId { get; set; }
+
         public Button[] PressedButtons { get; set; }
 
         public float AccelX { get; set; }
@@ -21,12 +23,13 @@ namespace TVRSvc.Network.ControllerServer
 
         public void Deserialize(BinaryReader reader)
         {
-            var pressedCount = reader.ReadInt32();
+            ControllerId = reader.ReadByte();
+            var pressedCount = reader.ReadByte();
             if (pressedCount > 0)
             {
                 PressedButtons = new Button[pressedCount];
                 for (var i = 0; i < PressedButtons.Length; i++)
-                    PressedButtons[i] = (Button)reader.ReadInt32();
+                    PressedButtons[i] = (Button)reader.ReadByte();
             }
 
             AccelX = reader.ReadSingle();

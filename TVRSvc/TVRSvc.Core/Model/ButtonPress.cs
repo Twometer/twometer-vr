@@ -8,13 +8,13 @@ namespace TVRSvc.Core.Model
 {
     public struct ButtonPress
     {
-        public int ControllerId { get; }
+        public byte ControllerId { get; }
 
         public Button Button { get; }
 
-        public int ButtonId => (int)Button;
+        public byte ButtonId => (byte)Button;
 
-        public ButtonPress(int controllerId, Button button)
+        public ButtonPress(byte controllerId, Button button)
         {
             ControllerId = controllerId;
             Button = button;

@@ -7,10 +7,10 @@
 
 struct ButtonPress {
 public:
-    int controllerId;
-    int buttonId;
+    uint8_t controllerId;
+    uint8_t buttonId;
 
-    ButtonPress(int controllerId, int buttonId) : controllerId(controllerId), buttonId(buttonId) {}
+    ButtonPress(uint8_t controllerId, uint8_t buttonId) : controllerId(controllerId), buttonId(buttonId) {}
 
 };
 

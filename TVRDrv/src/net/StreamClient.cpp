@@ -14,7 +14,7 @@ void StreamClient::Connect() {
     auto *recvBuf = new uint8_t[32767];
 
     do {
-        int packetLen = ReadInt();
+        int packetLen = ReadShort();
         if (packetLen <= 0) continue;
 
         int received = tcpClient.Receive(recvBuf, packetLen);
@@ -23,9 +23,9 @@ void StreamClient::Connect() {
         Buffer buffer(recvBuf, received);
         DataPacket packet;
 
-        int controllerStateCount = buffer.Read<int32_t>();
+        int controllerStateCount = buffer.Read<uint8_t>();
         for (int i = 0; i < controllerStateCount; i++) {
-            auto controllerId = buffer.Read<int32_t>();
+            auto controllerId = buffer.Read<uint8_t>();
             auto posX = buffer.Read<float>();
             auto posY = buffer.Read<float>();
             auto posZ = buffer.Read<float>();
@@ -34,10 +34,10 @@ void StreamClient::Connect() {
             packet.controllerStates.emplace_back(controllerId, posX, posY, posZ, rotX, rotY);
         }
 
-        int buttonPressCount = buffer.Read<int32_t>();
+        int buttonPressCount = buffer.Read<uint8_t>();
         for (int i = 0; i < buttonPressCount; i++) {
-            auto controllerId = buffer.Read<int32_t>();
-            auto buttonId = buffer.Read<int32_t>();
+            auto controllerId = buffer.Read<uint8_t>();
+            auto buttonId = buffer.Read<uint8_t>();
             packet.buttonPresses.emplace_back(controllerId, buttonId);
         }
 
@@ -49,12 +49,12 @@ void StreamClient::Close() {
     closeRequested = true;
 }
 
-int32_t StreamClient::ReadInt() {
-    uint8_t data[4];
-    tcpClient.Receive(data, 4);
+int16_t StreamClient::ReadShort() {
+    uint8_t data[2];
+    tcpClient.Receive(data, 2);
 
-    int32_t value;
-    memcpy(&value, data, 4);
+    int16_t value;
+    memcpy(&value, data, 2);
     return value;
 }
 

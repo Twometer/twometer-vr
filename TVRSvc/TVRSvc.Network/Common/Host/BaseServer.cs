@@ -19,10 +19,14 @@ namespace TVRSvc.Network.Common.Host
 
         public event EventHandler<T> PacketReceived;
 
-        public BaseServer(IPAddress addr, int port)
+        private bool receiving;
+
+        public BaseServer(IPAddress addr, int port, bool receiving = true)
         {
             listener = new TcpListener(addr, port);
             listener.Start();
+
+            this.receiving = receiving;
 
             listener.BeginAcceptTcpClient(new AsyncCallback(AcceptClients), null);
         }
@@ -40,7 +44,7 @@ namespace TVRSvc.Network.Common.Host
             {
                 try
                 {
-                    client.Writer.Write(payload.Length);
+                    client.Writer.Write((short)payload.Length);
                     client.Writer.Write(payload);
                 }
                 catch (Exception e)
@@ -61,7 +65,8 @@ namespace TVRSvc.Network.Common.Host
             {
                 var id = Guid.NewGuid();
                 var client = new Client(id, tcp, this);
-                client.BeginReceiving();
+                if (receiving)
+                    client.BeginReceiving();
                 clients[id] = client;
             }
 
