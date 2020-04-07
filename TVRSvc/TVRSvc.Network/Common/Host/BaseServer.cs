@@ -60,7 +60,9 @@ namespace TVRSvc.Network.Common.Host
             if (tcp != null)
             {
                 var id = Guid.NewGuid();
-                clients[id] = new Client(id, tcp, this);
+                var client = new Client(id, tcp, this);
+                client.BeginReceiving();
+                clients[id] = client;
             }
 
             listener.BeginAcceptTcpClient(new AsyncCallback(AcceptClients), null);

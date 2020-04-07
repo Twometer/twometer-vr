@@ -17,7 +17,7 @@ char udp_incoming[15];
 void setup() {
   Serial.begin(9600);     // Ah yes, debug
   Serial.println("Twometer VR Firmware v1.0");
-  
+
   WiFi.persistent(true);  // Save those credentials
   WiFi.mode(WIFI_STA);    // Station mode for ESP-firmware glitch prevention
   WiFi.begin(WIFI_SSID, WIFI_PASS);
@@ -54,6 +54,10 @@ void loop() {
   // Read accelerometer
   // Read buttons
   // Send it to the server
+
+  // Test data
+  int pressed[] = {1, 2};
+  sendPacket(2, pressed, 1.3456, 0.3199, millis());
 }
 
 bool discovery() {
@@ -71,4 +75,28 @@ bool discovery() {
 
   serverIp = String(udp_incoming);
   return true;
+}
+
+void sendPacket(int32_t numButtonPresses, int32_t* buttonPresses, float accelX, float accelY, float accelZ) {
+  int packetLen = 4 + 4 + (4 * numButtonPresses) + 4 + 4 + 4;
+  byte data[packetLen];
+  int offset = 0;
+
+  cpy(data, offset, packetLen - 4);
+  cpy(data, offset, numButtonPresses);
+  for (int i = 0; i < numButtonPresses; i++) {
+    cpy(data, offset, buttonPresses[i]);
+  }
+  cpy(data, offset, accelX);
+  cpy(data, offset, accelY);
+  cpy(data, offset, accelZ);
+
+  tcp.write(data, packetLen);
+  tcp.flush();
+}
+
+template<typename T>
+void cpy(byte* dst, int &offset, T data) {
+  memcpy(dst + offset, &data, sizeof(data));
+  offset += sizeof(data);
 }

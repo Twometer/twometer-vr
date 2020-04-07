@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -43,10 +44,16 @@ namespace TVRSvc.Network.Common.Host
                 {
                     throw new IOException("Buffer overflow: Message too long");
                 }
-
-                stream.Read(buf, 0, packetLen);
-                var memstream = new MemoryStream(buf, 0, packetLen);
-                callback?.OnPacket(memstream);
+                if (packetLen == 0)
+                {
+                    Debug.WriteLine("Received packet with length 0, dropping.");
+                }
+                else
+                {
+                    stream.Read(buf, 0, packetLen);
+                    var memstream = new MemoryStream(buf, 0, packetLen);
+                    callback?.OnPacket(memstream);
+                }
             }
             BeginReceiving();
         }
