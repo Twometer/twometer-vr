@@ -22,9 +22,7 @@ namespace TVRSvc.Network.Common.Host
             listener = new TcpListener(addr, port);
             listener.Start();
 
-            var thread = new Thread(AcceptClients);
-            thread.IsBackground = true;
-            thread.Start();
+            listener.BeginAcceptTcpClient(new AsyncCallback(AcceptClients), null);
         }
 
 
@@ -53,14 +51,17 @@ namespace TVRSvc.Network.Common.Host
             }
         }
 
-        private void AcceptClients()
+        private void AcceptClients(IAsyncResult result)
         {
-            while (true)
+            var tcp = listener.EndAcceptTcpClient(result);
+
+            if (tcp != null)
             {
-                var cl = listener.AcceptTcpClient();
                 var id = Guid.NewGuid();
-                clients[id] = new Client(id, cl);
+                clients[id] = new Client(id, tcp);
             }
+
+            listener.BeginAcceptTcpClient(new AsyncCallback(AcceptClients), null);
         }
     }
 }
