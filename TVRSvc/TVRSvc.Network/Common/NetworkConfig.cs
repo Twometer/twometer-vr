@@ -20,5 +20,11 @@ namespace TVRSvc.Network.Common
         /// </summary>
         public const int ControllerPort = 12742;
 
+        /// <summary>
+        /// The port used by the ESP8266 controllers to discover this server using
+        /// UDP broadcasts
+        /// </summary>
+        public const int DiscoveryPort = 12743;
+
     }
 }

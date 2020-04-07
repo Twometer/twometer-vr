@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using TVRSvc.Core.Tracking;
 using TVRSvc.Core.Video;
 using TVRSvc.Network;
+using TVRSvc.Network.Discovery;
 using TVRSvc.Network.DriverServer;
 
 namespace TVRSvc
@@ -38,6 +39,7 @@ namespace TVRSvc
             var camera = new Camera();
             var calibration = new Calibration(camera, manager);
             var server = new DriverServer();
+            var discovery = new DiscoveryService();
 
             Application.Idle += (s, a) =>
             {

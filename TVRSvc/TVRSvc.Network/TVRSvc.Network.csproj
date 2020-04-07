@@ -45,6 +45,7 @@
     <Compile Include="Common\Host\Client.cs" />
     <Compile Include="Common\IPacket.cs" />
     <Compile Include="Common\NetworkConfig.cs" />
+    <Compile Include="Discovery\DiscoveryService.cs" />
     <Compile Include="DriverServer\DriverPacket.cs" />
     <Compile Include="DriverServer\DriverServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
