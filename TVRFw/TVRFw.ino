@@ -32,7 +32,11 @@ void setup() {
   Serial.print("Broadcast IP: ");
   Serial.println(broadcastIp);
 
+  Serial.print("Local IP: ");
+  Serial.println(WiFi.localIP());
+
   Serial.println("Discovering server...");
+  udp.begin(DISCOVERY_PORT);
   while (!discovery()) {
     delay(500);
   }

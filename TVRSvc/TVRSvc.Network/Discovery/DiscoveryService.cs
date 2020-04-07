@@ -32,8 +32,7 @@ namespace TVRSvc.Network.Discovery
                 var ip = GetLocalIp();
                 var c_array = new byte[Encoding.ASCII.GetByteCount(ip) + 1]; // Build a NUL-terminated C-array for the ESP8266
                 Encoding.ASCII.GetBytes(ip, 0, ip.Length, c_array, 0);
-
-                udpClient.Send(c_array, c_array.Length, sender);
+                var sent = udpClient.Send(c_array, c_array.Length, sender);
             }
 
             udpClient.BeginReceive(new AsyncCallback(ReceiveCallback), null);
@@ -41,15 +40,12 @@ namespace TVRSvc.Network.Discovery
 
         private string GetLocalIp()
         {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
+            using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
             {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip.ToString();
-                }
+                socket.Connect("8.8.8.8", 65530);
+                IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
+                return endPoint.Address.ToString();
             }
-            throw new Exception("Failed to get local IP");
         }
 
     }
