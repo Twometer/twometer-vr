@@ -32,9 +32,12 @@ namespace TVRSvc.Core.Tracking
                 Frame = new Image<Gray, byte>(frame.Width, frame.Height);
 
             RangeFilter(frame);
+            Frame = Frame.Erode(1);
+            Frame = Frame.Dilate(1);
+            Frame = Frame.ThresholdBinary(new Gray(150), new Gray(255));
             Frame = Frame.SmoothGaussian(9);
 
-            var circles = Frame.HoughCircles(new Gray(Settings.CannyThreshold), new Gray(1), 3, Frame.Height / 4, 2, 250)[0];
+            var circles = Frame.HoughCircles(new Gray(Settings.CannyThreshold), new Gray(1), 3, Frame.Height / 4, 2, 50)[0];
             Detected = circles.Length > 0;
 
             if (Detected)

@@ -64,6 +64,12 @@ namespace TVRSvc
                     imageBox1.Image = manager.Trackers[0].Frame;
                 else if (radioButton3.Checked)
                     imageBox1.Image = manager.Trackers[1].Frame;
+                else if (radioButton4.Checked)
+                {
+                    var mat = new Mat();
+                    CvInvoke.BitwiseOr(manager.Trackers[0].Frame, manager.Trackers[1].Frame, mat);
+                    imageBox1.Image = mat;
+                }
 
                 glControl1.Invalidate();
 

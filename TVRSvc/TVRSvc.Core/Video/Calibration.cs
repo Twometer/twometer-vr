@@ -13,7 +13,10 @@ namespace TVRSvc.Core.Video
     {
         public bool IsCalibrated { get; private set; }
 
-        private const float BrightnessThreshold = 4f;
+        private const float BrightnessThreshold = 15f;
+
+        private const int BootupFrames = 3;
+        private const int CooldownFrames = 5;
 
         private float exposure;
 
@@ -31,7 +34,7 @@ namespace TVRSvc.Core.Video
         {
             // First frames deliver wrong values, so wait for camera to adjust
             frameCounter++;
-            if (frameCounter < 3)
+            if (frameCounter < BootupFrames)
                 return;
 
             // Cooldown between exposure adjustments because the camera takes time
@@ -51,7 +54,7 @@ namespace TVRSvc.Core.Video
             if (meanBrightness > BrightnessThreshold)
             {
                 exposure--;
-                adjustFrames = 3;
+                adjustFrames = CooldownFrames;
                 camera.Exposure = exposure;
             }
             else

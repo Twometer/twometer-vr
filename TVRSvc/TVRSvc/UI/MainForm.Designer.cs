@@ -45,6 +45,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbfps = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -201,15 +202,27 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(16, 449);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(47, 17);
+            this.radioButton4.TabIndex = 16;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "Both";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1599, 509);
+            this.Controls.Add(this.radioButton4);
             this.Controls.Add(this.lbfps);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.glControl1);
             this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.glControl1);
             this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.label7);
@@ -247,6 +260,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lbfps;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.RadioButton radioButton4;
     }
 }
 

@@ -9,7 +9,7 @@ namespace TVRSvc.Core.Tracking
 {
     public struct TrackerSettings
     {
-        public static TrackerSettings Blue { get; } = new TrackerSettings(new MCvScalar(58, 205, 110), new MCvScalar(137, 255, 255), 100);
+        public static TrackerSettings Blue { get; } = new TrackerSettings(new MCvScalar(58, 125, 110), new MCvScalar(137, 255, 255), 100);
 
         public static TrackerSettings Red { get; } = new TrackerSettings(new[] {
             new ColorRange(new MCvScalar(0, 76, 56), new MCvScalar(70, 255, 255)),
