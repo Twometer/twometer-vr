@@ -7,7 +7,7 @@
 
 WiFiUDP udp;
 byte discoverySequence[4] = { 0x79, 0x65, 0x65, 0x74 };
-IPAddress broadcastIp(255, 255, 255, 255);
+IPAddress broadcastIp;
 
 WiFiClient tcp;
 
@@ -27,6 +27,10 @@ void setup() {
     delay(500);
   }
   Serial.println("Connected");
+
+  broadcastIp = ~uint32_t(WiFi.subnetMask()) | uint32_t(WiFi.gatewayIP());
+  Serial.print("Broadcast IP: ");
+  Serial.println(broadcastIp);
 
   Serial.println("Discovering server...");
   while (!discovery()) {
