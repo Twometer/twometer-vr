@@ -13,8 +13,8 @@ namespace TVRSvc.Core.Tracking
     {
         public Tracker[] Trackers { get; } = new[]
         {
-            new Tracker(0, TrackerSettings.Blue),
-            new Tracker(1, TrackerSettings.Red)
+            new Tracker(0, TrackerSettings.Blue),   // Left controller
+            new Tracker(1, TrackerSettings.Red)     // Right controller
         };
 
         public bool Detected => Trackers.Any(t => t.Detected);

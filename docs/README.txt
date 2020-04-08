@@ -19,16 +19,11 @@ Protocol Service<->Driver:
 Button IDs:
 
 - 0 None
-- 1 Up
-- 2 Down
-- 3 Left
-- 4 Right
-- 5 Center
+- 1 A
+- 2 B
 
 How many of those buttons will be actually used is yet to be determined.
 This is just the table with reserved IDs
-
-
 
 Controller IDs:
 
