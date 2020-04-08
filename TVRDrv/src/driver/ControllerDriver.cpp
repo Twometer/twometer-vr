@@ -14,7 +14,7 @@ vr::EVRInitError ControllerDriver::Activate(uint32_t unObjectId) {
 
     VRProperties()->SetStringProperty(propertyContainer, Prop_ModelNumber_String, "TwometerVRCtrl");
     VRProperties()->SetStringProperty(propertyContainer, Prop_RenderModelName_String, "Twometer VR Controller");
-    VRProperties()->SetUint64Property(propertyContainer, Prop_CurrentUniverseId_Uint64, 2);
+    VRProperties()->SetUint64Property(propertyContainer, Prop_CurrentUniverseId_Uint64, UNIVERSE_ID);
     VRProperties()->SetBoolProperty(propertyContainer, Prop_IsOnDesktop_Bool, false);
     VRProperties()->SetInt32Property(propertyContainer, Prop_ControllerRoleHint_Int32, GetTrackerRole());
     VRProperties()->SetStringProperty(propertyContainer, Prop_InputProfilePath_String,

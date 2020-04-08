@@ -26,8 +26,8 @@ vr::EVRInitError ServerDriver::Init(vr::IVRDriverContext *pDriverContext) {
     streamThread = new std::thread([&] { streamClient->ReceiveLoop(); });
 
     controllerDrivers = new std::vector<ControllerDriver *>();
-    controllerDrivers->push_back(new ControllerDriver(0, nullptr, "TVRXTL_0001"));
-    controllerDrivers->push_back(new ControllerDriver(1, nullptr, "TVRXTL_0002"));
+    controllerDrivers->push_back(new ControllerDriver(TRACKER_LEFT, nullptr, "TVRXTL_0001"));
+    controllerDrivers->push_back(new ControllerDriver(TRACKER_RIGHT, nullptr, "TVRXTL_0002"));
 
     for (auto drv : *controllerDrivers)
         VRServerDriverHost()->TrackedDeviceAdded(drv->GetSerialNumber().c_str(), vr::TrackedDeviceClass_Controller,

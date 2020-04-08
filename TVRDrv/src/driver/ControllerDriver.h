@@ -12,6 +12,8 @@
 #define TRACKER_LEFT  0
 #define TRACKER_RIGHT 1
 
+#define UNIVERSE_ID 42
+
 class ControllerDriver : public vr::ITrackedDeviceServerDriver {
 private:
     StreamClient *streamClient = nullptr;
