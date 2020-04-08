@@ -6,11 +6,14 @@ Folder structure:
  TVRDrv: The driver that maps the server's data to SteamVR
  TVRFw:  The firmware that runs on the controller's chips
  docs:   The protocol specification for the communication between the components
- models: STL files if you want to print this
+ hw:     STL and PCB files if you want to make this project for yourself
 
 Thanks to:
  OpenCV
  OpenVR
 
 
-Released under MIT license just have fun with this if you can use it
+Everything here is released under MIT license,
+just have fun with this if you can use it.
+
+Virtual reality for everyone!
