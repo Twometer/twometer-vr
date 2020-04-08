@@ -1,6 +1,6 @@
 #include <iostream>
 #include "net/StreamClient.h"
-#include "driver/SteamVRDriver.h"
+#include "driver/ServerDriver.h"
 
 int main() {
     std::cout << "Hello, Virtual World!" << std::endl;
