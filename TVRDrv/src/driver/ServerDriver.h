@@ -20,7 +20,11 @@
 
 class ServerDriver : public vr::IServerTrackedDeviceProvider {
 private:
-    ControllerDriver *controllerDriver = nullptr;
+    std::vector<ControllerDriver *> *controllerDrivers;
+
+    StreamClient *streamClient;
+
+    std::thread *streamThread;
 
 public:
     vr::EVRInitError Init(vr::IVRDriverContext *pDriverContext) override;

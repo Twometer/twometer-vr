@@ -24,9 +24,11 @@ private:
 public:
     explicit StreamClient(std::function<void(DataPacket)> callback);
 
-    void Connect();
+    bool Connect();
 
     void Close();
+
+    void ReceiveLoop();
 
 };
 

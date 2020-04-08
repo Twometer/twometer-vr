@@ -6,7 +6,7 @@
 
 #include <utility>
 
-using namespace vr; 
+using namespace vr;
 
 vr::EVRInitError ControllerDriver::Activate(uint32_t unObjectId) {
     this->objectId = unObjectId;
@@ -16,12 +16,18 @@ vr::EVRInitError ControllerDriver::Activate(uint32_t unObjectId) {
     VRProperties()->SetStringProperty(propertyContainer, Prop_RenderModelName_String, "Twometer VR Controller");
     VRProperties()->SetUint64Property(propertyContainer, Prop_CurrentUniverseId_Uint64, 2);
     VRProperties()->SetBoolProperty(propertyContainer, Prop_IsOnDesktop_Bool, false);
+    VRProperties()->SetInt32Property(propertyContainer, Prop_ControllerRoleHint_Int32, GetTrackerRole());
+    VRProperties()->SetStringProperty(propertyContainer, Prop_InputProfilePath_String,
+                                      "{tvr}/input/twometer_vr_profile.json");
+
+    VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/a/click", &buttonA);
+    VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/b/click", &buttonB);
 
     return VRInitError_None;
 }
 
 void ControllerDriver::Deactivate() {
-
+    objectId = k_unTrackedDeviceIndexInvalid;
 }
 
 void ControllerDriver::EnterStandby() {
@@ -37,7 +43,16 @@ void ControllerDriver::DebugRequest(const char *pchRequest, char *pchResponseBuf
 }
 
 vr::DriverPose_t ControllerDriver::GetPose() {
-    return vr::DriverPose_t();
+    DriverPose_t pose = {0};
+    pose.poseIsValid = false;
+    pose.result = TrackingResult_Calibrating_OutOfRange;
+    pose.deviceIsConnected = true;
+
+    // Quaternions
+    //pose.qWorldFromDriverRotation = HmdQuaternion_Init( 1, 0, 0, 0 );
+    //pose.qDriverFromHeadRotation = HmdQuaternion_Init( 1, 0, 0, 0 );
+
+    return pose;
 }
 
 std::string ControllerDriver::GetSerialNumber() {
@@ -45,13 +60,28 @@ std::string ControllerDriver::GetSerialNumber() {
 }
 
 void ControllerDriver::RunFrame() {
-
+    // Update buttons here
+    // vr::VRDriverInput()->UpdateBooleanComponent( m_compA, (0x8000 & GetAsyncKeyState( 'A' )) != 0, 0 );
 }
 
 void ControllerDriver::ProcessEvent(vr::VREvent_t event) {
 
 }
 
-ControllerDriver::ControllerDriver(StreamClient *streamClient, std::string serialNumber) : streamClient(streamClient),
-                                                                                           serialNumber(std::move(serialNumber)) {
+ControllerDriver::ControllerDriver(int trackerId, StreamClient *streamClient, std::string serialNumber)
+        : trackerId(trackerId), streamClient(streamClient), serialNumber(std::move(serialNumber)),
+          controllerState(ControllerState::invalid) {
+}
+
+int32_t ControllerDriver::GetTrackerRole() {
+    if (trackerId == TRACKER_LEFT)
+        return TrackedControllerRole_LeftHand;
+    else if (trackerId == TRACKER_RIGHT)
+        return TrackedControllerRole_RightHand;
+    else
+        return TrackedControllerRole_Invalid;
+}
+
+void ControllerDriver::SetControllerState(ControllerState controllerState) {
+    this->controllerState = controllerState;
 }

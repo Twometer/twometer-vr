@@ -7,10 +7,27 @@
 #include <utility>
 #include "Buffer.h"
 
-void StreamClient::Connect() {
-    if (!tcpClient.Connect("localhost", NetworkPort))
-        return;
+bool StreamClient::Connect() {
+    return tcpClient.Connect("localhost", NetworkPort);
+}
 
+void StreamClient::Close() {
+    closeRequested = true;
+}
+
+int16_t StreamClient::ReadShort() {
+    uint8_t data[2];
+    tcpClient.Receive(data, 2);
+
+    int16_t value;
+    memcpy(&value, data, 2);
+    return value;
+}
+
+StreamClient::StreamClient(std::function<void(DataPacket)> callback) : callback(std::move(callback)) {
+}
+
+void StreamClient::ReceiveLoop() {
     auto *recvBuf = new uint8_t[32767];
 
     do {
@@ -43,20 +60,4 @@ void StreamClient::Connect() {
 
         callback(packet);
     } while (!closeRequested);
-}
-
-void StreamClient::Close() {
-    closeRequested = true;
-}
-
-int16_t StreamClient::ReadShort() {
-    uint8_t data[2];
-    tcpClient.Receive(data, 2);
-
-    int16_t value;
-    memcpy(&value, data, 2);
-    return value;
-}
-
-StreamClient::StreamClient(std::function<void(DataPacket)> callback) : callback(std::move(callback)) {
 }

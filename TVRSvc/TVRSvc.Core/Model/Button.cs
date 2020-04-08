@@ -9,10 +9,7 @@ namespace TVRSvc.Core.Model
     public enum Button
     {
         None,
-        Up,
-        Down,
-        Left,
-        Right,
-        Center
+        A,
+        B
     }
 }

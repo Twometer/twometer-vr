@@ -9,6 +9,9 @@
 #include <openvr_driver.h>
 #include "../net/StreamClient.h"
 
+#define TRACKER_LEFT  0
+#define TRACKER_RIGHT 1
+
 class ControllerDriver : public vr::ITrackedDeviceServerDriver {
 private:
     StreamClient *streamClient = nullptr;
@@ -17,10 +20,19 @@ private:
 
     vr::PropertyContainerHandle_t propertyContainer = vr::k_ulInvalidPropertyContainer;
 
+    int trackerId = -1;
+
     uint32_t objectId = vr::k_unTrackedDeviceIndexInvalid;
 
+    vr::VRInputComponentHandle_t buttonA;
+    vr::VRInputComponentHandle_t buttonB;
+
+    ControllerState controllerState;
+
+    int32_t GetTrackerRole();
+
 public:
-    ControllerDriver(StreamClient *streamClient, std::string serialNumber);
+    ControllerDriver(int trackerId, StreamClient *streamClient, std::string serialNumber);
 
     vr::EVRInitError Activate(uint32_t unObjectId) override;
 
@@ -39,6 +51,8 @@ public:
     void RunFrame();
 
     void ProcessEvent(vr::VREvent_t event);
+
+    void SetControllerState(ControllerState controllerState);
 };
 
 
