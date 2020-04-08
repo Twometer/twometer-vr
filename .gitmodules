@@ -1,0 +1,3 @@
+[submodule "TVRDrv/lib/openvr"]
+	path = TVRDrv/lib/openvr
+	url = https://github.com/ValveSoftware/openvr
