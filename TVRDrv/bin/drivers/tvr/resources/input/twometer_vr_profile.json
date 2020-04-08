@@ -1,0 +1,23 @@
+{
+  "jsonid": "input_profile",
+  "controller_type": "tvr_controller",
+  "input_bindingui_mode": "multi_device",
+  "input_source": {
+    "/input/a": {
+      "binding_image_point": [
+        80,
+        60
+      ],
+      "type": "button",
+      "order": 1
+    },
+    "/input/b": {
+      "binding_image_point": [
+        250,
+        60
+      ],
+      "type": "button",
+      "order": 2
+    }
+  }
+}
