@@ -17,6 +17,8 @@ namespace TVRSvc.Core.Model
 
         public Vec3 Rotation { get; set; }
 
+        public Button[] PressedButtons { get; set; }
+
         public Controller(byte id)
         {
             Id = id;

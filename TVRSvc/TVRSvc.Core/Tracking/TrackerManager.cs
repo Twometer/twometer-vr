@@ -30,7 +30,11 @@ namespace TVRSvc.Core.Tracking
 
         public void UpdateMeta(byte controllerId, float yaw, float pitch, float roll, Button[] pressedButtons)
         {
+            if (controllerId > Trackers.Length)
+                return;
+
             Trackers[controllerId].Controller.Rotation = new Math.Vec3(pitch, yaw, roll);
+            Trackers[controllerId].Controller.PressedButtons = pressedButtons;
         }
 
     }
