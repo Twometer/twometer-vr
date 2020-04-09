@@ -28,9 +28,9 @@ namespace TVRSvc.Core.Tracking
                 tracker.UpdateVideo(hsvFrame);
         }
 
-        public void UpdateMeta()
+        public void UpdateMeta(byte controllerId, float yaw, float pitch, float roll, Button[] pressedButtons)
         {
-            // TODO: Parse network-based metadata frames
+            Trackers[controllerId].Controller.Rotation = new Math.Vec3(pitch, yaw, roll);
         }
 
     }

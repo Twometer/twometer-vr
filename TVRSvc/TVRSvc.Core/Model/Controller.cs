@@ -15,7 +15,7 @@ namespace TVRSvc.Core.Model
 
         public Vec3 Acceleration { get; set; }
 
-        public Vec2 Rotation { get; set; }
+        public Vec3 Rotation { get; set; }
 
         public Controller(byte id)
         {

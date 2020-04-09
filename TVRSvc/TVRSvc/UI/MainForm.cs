@@ -57,8 +57,8 @@ namespace TVRSvc
                 }
                 else
                 {
-                    label1.Text = manager.Trackers[0].Detected ? manager.Trackers[0].Controller.Position.ToString() : "out of range";
-                    label6.Text = manager.Trackers[1].Detected ? manager.Trackers[1].Controller.Position.ToString() : "out of range";
+                    label1.Text = manager.Trackers[0].Detected ? manager.Trackers[0].Controller.Position.ToString() + " " + manager.Trackers[0].Controller.Rotation.ToString() : "out of range";
+                    label6.Text = manager.Trackers[1].Detected ? manager.Trackers[1].Controller.Position.ToString() + " " + manager.Trackers[1].Controller.Rotation.ToString() : "out of range";
                 }
 
                 if (radioButton1.Checked)
@@ -87,7 +87,7 @@ namespace TVRSvc
 
         private void ControllerServer_PacketReceived(object sender, ControllerInfoPacket e)
         {
-            Debug.WriteLine($"Received update from controller #{e.ControllerId}: {e.PressedButtons?.Length}; {e.Yaw}; {e.Pitch}; {e.Roll}");
+            manager.UpdateMeta(e.ControllerId, e.Yaw, e.Pitch, e.Roll, e.PressedButtons);
         }
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
