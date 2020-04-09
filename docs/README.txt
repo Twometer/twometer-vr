@@ -3,7 +3,7 @@ Twometer VR Documentation
 
 Protocol Controller<->Service:
   ControllerInfoPacket:
-    [int16 length][byte controllerId][byte buttonPressCount][byte[] buttonPresses][float rotX][float rotZ]
+    [int16 length][byte controllerId][byte buttonPressCount][byte[] buttonPresses][float yaw][float pitch][float roll]
 
 
 Protocol Service<->Driver:

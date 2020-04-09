@@ -17,8 +17,12 @@ WiFiClient tcp;
 String serverIp;
 char udp_incoming[15];
 
+MPU6050 mpu;
+
+unsigned long last_update;
+
 void setup() {
-  Serial.begin(9600);     // Ah yes, debug
+  Serial.begin(38400);     // Ah yes, debug
   Serial.println("Twometer VR Firmware v1.0");
 
   WiFi.persistent(true);  // Save those credentials
@@ -51,16 +55,27 @@ void setup() {
     delay(500);
   }
   Serial.println("Connection established");
+
+  Serial.println("Initializing MPU...");
+  mpu.begin();
+  Serial.println("Completed");
 }
 
 void loop() {
-  // Read accelerometer
-  // Read buttons
+  mpu.update();
+
+  if (millis() - last_update > 10)
+  {
+    sendPacket(0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+    last_update = millis();    
+  }
+  
+  //// Read buttons
   // Send it to the server
 
   // Test data
-  byte pressed[] = {1, 2};
-  sendPacket(2, pressed, 1.3456, 0.3199, millis());
+  //byte pressed[] = {1, 2};
+  //sendPacket(2, pressed, 1.3456, 0.3199, millis());
 }
 
 bool discovery() {
@@ -80,7 +95,7 @@ bool discovery() {
   return true;
 }
 
-void sendPacket(byte numButtonPresses, byte* buttonPresses, float accelX, float accelY, float accelZ) {
+void sendPacket(byte numButtonPresses, byte* buttonPresses, float yaw, float pitch, float roll) {
   
   int16_t packetLen = 2 + 1 + 1 + (numButtonPresses) + 4 * 3;
   byte data[packetLen];
@@ -92,9 +107,9 @@ void sendPacket(byte numButtonPresses, byte* buttonPresses, float accelX, float 
   for (int i = 0; i < numButtonPresses; i++) {
     cpy(data, offset, buttonPresses[i]);
   }
-  cpy(data, offset, accelX);
-  cpy(data, offset, accelY);
-  cpy(data, offset, accelZ);
+  cpy(data, offset, yaw);
+  cpy(data, offset, pitch);
+  cpy(data, offset, roll);
 
   tcp.write(data, packetLen);
   tcp.flush();

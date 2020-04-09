@@ -15,11 +15,11 @@ namespace TVRSvc.Network.ControllerServer
 
         public Button[] PressedButtons { get; set; }
 
-        public float AccelX { get; set; }
+        public float Yaw { get; set; }
 
-        public float AccelY { get; set; }
+        public float Pitch { get; set; }
 
-        public float AccelZ { get; set; }
+        public float Roll { get; set; }
 
         public void Deserialize(BinaryReader reader)
         {
@@ -32,9 +32,9 @@ namespace TVRSvc.Network.ControllerServer
                     PressedButtons[i] = (Button)reader.ReadByte();
             }
 
-            AccelX = reader.ReadSingle();
-            AccelY = reader.ReadSingle();
-            AccelZ = reader.ReadSingle();
+            Yaw = reader.ReadSingle();
+            Pitch = reader.ReadSingle();
+            Roll = reader.ReadSingle();
         }
 
         public void Serialize(BinaryWriter writer)

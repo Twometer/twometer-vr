@@ -87,7 +87,7 @@ namespace TVRSvc
 
         private void ControllerServer_PacketReceived(object sender, ControllerInfoPacket e)
         {
-            Debug.WriteLine($"Received update from controller #{e.ControllerId}: {e.PressedButtons.Length}; {e.AccelX}; {e.AccelY}; {e.AccelZ}");
+            Debug.WriteLine($"Received update from controller #{e.ControllerId}: {e.PressedButtons?.Length}; {e.Yaw}; {e.Pitch}; {e.Roll}");
         }
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
