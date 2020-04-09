@@ -48,7 +48,8 @@ void StreamClient::ReceiveLoop() {
             auto posZ = buffer.Read<float>();
             auto rotX = buffer.Read<float>();
             auto rotY = buffer.Read<float>();
-            packet.controllerStates.emplace_back(controllerId, posX, posY, posZ, rotX, rotY);
+            auto rotZ = buffer.Read<float>();
+            packet.controllerStates.emplace_back(controllerId, posX, posY, posZ, rotX, rotY, rotZ);
         }
 
         int buttonPressCount = buffer.Read<uint8_t>();

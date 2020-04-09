@@ -35,6 +35,7 @@ namespace TVRSvc.Network.DriverServer
                     writer.Write(c.Position.Z);
                     writer.Write(c.Rotation.X);
                     writer.Write(c.Rotation.Y);
+                    writer.Write(c.Rotation.Z);
                 }
             }
             else

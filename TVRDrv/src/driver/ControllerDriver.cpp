@@ -44,9 +44,13 @@ void ControllerDriver::DebugRequest(const char *pchRequest, char *pchResponseBuf
 
 vr::DriverPose_t ControllerDriver::GetPose() {
     DriverPose_t pose = {0};
-    pose.poseIsValid = false;
-    pose.result = TrackingResult_Calibrating_OutOfRange;
+    pose.poseIsValid = controllerState.IsValid();
+    pose.result = !controllerState.IsValid() ? TrackingResult_Calibrating_OutOfRange : TrackingResult_Running_OK;
     pose.deviceIsConnected = true;
+    pose.shouldApplyHeadModel = false;
+    pose.willDriftInYaw = false;
+
+    // TODO: Translate absolute controller position to HMD-Space
 
     // Quaternions
     //pose.qWorldFromDriverRotation = HmdQuaternion_Init( 1, 0, 0, 0 );
@@ -61,6 +65,7 @@ std::string ControllerDriver::GetSerialNumber() {
 
 void ControllerDriver::RunFrame() {
     // Update buttons here
+
     // vr::VRDriverInput()->UpdateBooleanComponent( m_compA, (0x8000 & GetAsyncKeyState( 'A' )) != 0, 0 );
 }
 

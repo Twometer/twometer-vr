@@ -15,15 +15,16 @@ public:
     float posZ;
     float rotX;
     float rotY;
+    float rotZ;
 
-    ControllerState(uint8_t controllerId, float posX, float posY, float posZ, float rotX, float rotY) : controllerId(
-            controllerId), posX(posX), posY(posY), posZ(posZ), rotX(rotX), rotY(rotY) {}
+    ControllerState(uint8_t controllerId, float posX, float posY, float posZ, float rotX, float rotY, float rotZ) : controllerId(
+            controllerId), posX(posX), posY(posY), posZ(posZ), rotX(rotX), rotY(rotY), rotZ(rotZ) {}
 
     bool IsValid() {
         return controllerId != 255;
     }
 };
 
-ControllerState ControllerState::invalid(255, 0, 0, 0, 0, 0);
+ControllerState ControllerState::invalid(255, 0, 0, 0, 0, 0, 0);
 
 #endif //TVRDRV_CONTROLLERSTATE_H
