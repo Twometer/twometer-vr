@@ -17,7 +17,7 @@ class Button {
     }
 
     bool isHeld() {
-      return pressed && (millis() - pressTime) > 1500;
+      return pressed;
     }
 
     bool isPressed() {

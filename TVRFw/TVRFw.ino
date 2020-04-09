@@ -2,11 +2,15 @@
 #include <WiFiUdp.h>
 #include "WiFiConfig.h"
 #include "MPU6050.h"
+#include "Button.h"
+#include "ButtonId.h"
 
 #define CONTROLLER_PORT 12742
 #define DISCOVERY_PORT  12743
 
 #define CONTROLLER_ID   0
+
+Button trigger(14); // Main button
 
 WiFiUDP udp;
 byte discoverySequence[4] = { 0x79, 0x65, 0x65, 0x74 };
@@ -66,10 +70,13 @@ void loop() {
 
   if (millis() - last_update > 10)
   {
-    sendPacket(0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
-    last_update = millis();    
+    if (trigger.isHeld()) {
+      byte btn[] = {BUTTON_A};
+      sendPacket(1, btn, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+    } else sendPacket(0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+    last_update = millis();
   }
-  
+
   //// Read buttons
   // Send it to the server
 
@@ -96,7 +103,7 @@ bool discovery() {
 }
 
 void sendPacket(byte numButtonPresses, byte* buttonPresses, float yaw, float pitch, float roll) {
-  
+
   int16_t packetLen = 2 + 1 + 1 + (numButtonPresses) + 4 * 3;
   byte data[packetLen];
   int offset = 0;
