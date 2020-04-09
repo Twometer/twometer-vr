@@ -1,6 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 #include "WiFiConfig.h"
+#include "MPU6050.h"
 
 #define CONTROLLER_PORT 12742
 #define DISCOVERY_PORT  12743
