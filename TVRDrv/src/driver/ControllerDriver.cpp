@@ -50,12 +50,25 @@ vr::DriverPose_t ControllerDriver::GetPose() {
     pose.shouldApplyHeadModel = false;
     pose.willDriftInYaw = false;
 
-    // TODO: Translate absolute controller position to HMD-Space
 
-    // Quaternions
+
+    // No transform due to HMD pose
+    pose.qDriverFromHeadRotation.w = 1.f;
+    pose.qDriverFromHeadRotation.x = 0.0f;
+    pose.qDriverFromHeadRotation.y = 0.0f;
+    pose.qDriverFromHeadRotation.z = 0.0f;
+    pose.vecDriverFromHeadTranslation[0] = 0.0f;
+    pose.vecDriverFromHeadTranslation[1] = 0.0f;
+    pose.vecDriverFromHeadTranslation[1] = 0.0f;
     //pose.qWorldFromDriverRotation = HmdQuaternion_Init( 1, 0, 0, 0 );
     //pose.qDriverFromHeadRotation = HmdQuaternion_Init( 1, 0, 0, 0 );
 
+    // TODO: Translate absolute controller position to HMD-Space
+    //pose.vecWorldFromDriverTranslation = ;
+    // pose.qWorldFromDriverRotation = ;
+
+    // Call this from the network
+    // vr::VRServerDriverHost()->TrackedDevicePoseUpdated(m_unSteamVRTrackedDeviceId, m_Pose, sizeof(vr::DriverPose_t));
     return pose;
 }
 
