@@ -8,7 +8,7 @@
 #define CONTROLLER_PORT 12742
 #define DISCOVERY_PORT  12743
 
-#define CONTROLLER_ID   0
+#define CONTROLLER_ID   1
 
 Button trigger(14); // Main button
 

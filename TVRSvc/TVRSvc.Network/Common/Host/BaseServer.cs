@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -65,6 +66,7 @@ namespace TVRSvc.Network.Common.Host
             {
                 var id = Guid.NewGuid();
                 var client = new Client(id, tcp, this);
+                Debug.WriteLine("Client connected");
                 if (receiving)
                     client.BeginReceiving();
                 clients[id] = client;

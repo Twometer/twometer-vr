@@ -57,8 +57,8 @@ namespace TVRSvc
                 }
                 else
                 {
-                    label1.Text = manager.Trackers[0].Detected ? manager.Trackers[0].Controller.Position.ToString() + " " + manager.Trackers[0].Controller.Rotation.ToString() : "out of range";
-                    label6.Text = manager.Trackers[1].Detected ? manager.Trackers[1].Controller.Position.ToString() + " " + manager.Trackers[1].Controller.Rotation.ToString() : "out of range";
+                    label1.Text = manager.Trackers[0].Detected ? manager.Trackers[0].Controller.Position.ToString() + "\n" + manager.Trackers[0].Controller.Rotation.ToString() : "out of range";
+                    label6.Text = manager.Trackers[1].Detected ? manager.Trackers[1].Controller.Position.ToString() + "\n" + manager.Trackers[1].Controller.Rotation.ToString() : "out of range";
                 }
 
                 if (radioButton1.Checked)
@@ -132,7 +132,18 @@ namespace TVRSvc
         private void DrawTracker(Tracker tracker)
         {
             if (tracker.Detected)
+            {
                 DrawCross(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, 0.3f);
+
+                var rot = tracker.Controller.Rotation;
+                var yaw = rot.Y;
+                var pitch = rot.Z;
+
+                var x = (float)-Math.Sin(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch));
+                var y = (float)-Math.Sin(MathHelper.DegreesToRadians(-pitch));
+                var z = (float)-Math.Cos(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch));
+                DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, x, y, z);
+            }
         }
 
         private void DrawCross(float x, float y, float z, float size)
@@ -150,6 +161,14 @@ namespace TVRSvc
             GL.Begin(PrimitiveType.Lines);
             GL.Vertex3(x, y, -size + z);
             GL.Vertex3(x, y, size + z);
+            GL.End();
+        }
+
+        private void DrawLine(float x0, float y0, float z0, float x1, float y1, float z1)
+        {
+            GL.Begin(PrimitiveType.Lines);
+            GL.Vertex3(x0, y0, z0);
+            GL.Vertex3(x1, y1, z1);
             GL.End();
         }
 
