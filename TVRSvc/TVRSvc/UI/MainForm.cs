@@ -142,7 +142,8 @@ namespace TVRSvc
                 var x = (float)-Math.Sin(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch));
                 var y = (float)-Math.Sin(MathHelper.DegreesToRadians(-pitch));
                 var z = (float)-Math.Cos(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch));
-                DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, x, y, z);
+                DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X + x, tracker.Controller.Position.Y + y, tracker.Controller.Position.Z  + z);
+                //DrawCross(tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z, 0.3f);
             }
         }
 
