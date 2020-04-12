@@ -36,3 +36,18 @@ This is just the table with reserved IDs
 Controller IDs:
   0: Blue  left hand
   1: Red   right hand
+
+
+How to use with a DK2
+=====================
+This works as of April 2020!
+
+1. Download the latest official Oculus app, install WITH THE HEADSET DISCONNECTED!
+   If you install with the headset connected it will fail.
+
+2. Start the Oculus app, and connect the headset. It will ask you to configure it, skip that
+   because it will not work. If you now look through the headset, you should see the Oculus Home VR screen.
+
+3. In the Oculus app, under Settings->General enable unknown sources if it is not.
+
+4. Install SteamVR and the TVR driver, now you can start playing SteamVR games such as Beat Saber.
