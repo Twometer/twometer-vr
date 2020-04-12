@@ -156,6 +156,10 @@
 #define MPU6050_ADDRESS 0x68  // Device address when ADO = 0
 #endif
 
+#define MPU_ERR_NONE     0
+#define MPU_ERR_SELFTEST 1
+#define MPU_ERR_NO_CONN  2
+
 #include <Arduino.h>
 
 #include <Wire.h>
@@ -214,7 +218,7 @@ class MPU6050
     float _roll;
     float _pitch;
   public:
-    bool begin();
+    int begin();
 
     void update();
 

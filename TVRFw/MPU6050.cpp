@@ -13,7 +13,7 @@
 #include "MPU6050.h"
 
 
-bool MPU6050::begin() {
+int MPU6050::begin() {
   Wire.begin(4, 5);
 
   uint8_t c = readByte(MPU6050_ADDRESS, WHO_AM_I_MPU6050);  // Read WHO_AM_I register for MPU-6050
@@ -27,10 +27,11 @@ bool MPU6050::begin() {
       calibrateMPU6050(gyroBias, accelBias);
       delay(1000);
       initMPU6050();
-      return true;
+      return MPU_ERR_NONE;
     }
+    return MPU_ERR_SELFTEST;
   }
-  return false;
+  return MPU_ERR_NO_CONN;
 }
 
 void MPU6050::update() {

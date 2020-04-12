@@ -61,8 +61,14 @@ void setup() {
   Serial.println("Connection established");
 
   Serial.println("Initializing MPU...");
-  mpu.begin();
-  Serial.println("Completed");
+  
+  int mpu_error = mpu.begin();
+  if (mpu_error == MPU_ERR_NONE)
+    Serial.println("MPU initialized");
+  else if (mpu_error == MPU_ERR_SELFTEST)
+    Serial.println("MPU self-test failed, is the chip ok?");
+  else if (mpu_error == MPU_ERR_NO_CONN)
+    Serial.println("Failed to connect to MPU, check wiring");
 }
 
 void loop() {
