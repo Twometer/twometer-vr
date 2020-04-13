@@ -13,8 +13,8 @@ namespace TVRSvc.Core.Tracking
     {
         public Tracker[] Trackers { get; } = new[]
         {
-            new Tracker(0, TrackerSettings.Blue),   // Left controller
-            new Tracker(1, TrackerSettings.Red)     // Right controller
+            new Tracker(0, TrackerSettings.Red),   // Left controller
+            new Tracker(1, TrackerSettings.Blue)     // Right controller
         };
 
         public bool Detected => Trackers.Any(t => t.Detected);
@@ -35,8 +35,6 @@ namespace TVRSvc.Core.Tracking
 
             Trackers[controllerId].Controller.Rotation = new Math.Vec3(pitch, yaw, roll);
             Trackers[controllerId].Controller.PressedButtons = pressedButtons;
-            if (pressedButtons?.Length > 0)
-                Console.WriteLine(pressedButtons.Length);
         }
 
     }

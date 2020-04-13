@@ -34,8 +34,8 @@ How many of those buttons will be actually used is yet to be determined.
 This is just the table with reserved IDs
 
 Controller IDs:
-  0: Blue  left hand
-  1: Red   right hand
+  0: Red   left hand
+  1: Blue  right hand
 
 
 How to use with a DK2
