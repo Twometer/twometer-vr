@@ -24,7 +24,10 @@ public:
     std::map<Button, bool> buttons;
 
     ControllerState(uint8_t controllerId, float posX, float posY, float posZ, float rotX, float rotY, float rotZ) : controllerId(
-            controllerId), posX(posX), posY(posY), posZ(posZ), rotX(rotX), rotY(rotY), rotZ(rotZ) {}
+            controllerId), posX(posX), posY(posY), posZ(posZ), rotX(rotX), rotY(rotY), rotZ(rotZ) {
+        buttons[Button::A] = false;
+        buttons[Button::B] = false;
+    }
 
     bool IsValid() {
         return controllerId != 255;

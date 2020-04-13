@@ -6,11 +6,6 @@
 ServerDriver serverDriver;
 WatchdogDriver watchdogDriver;
 
-int main() {
-    std::cout << "Hello, Virtual World!" << std::endl;
-    return 0;
-}
-
 HMD_DLL_EXPORT void *HmdDriverFactory(const char *pInterfaceName, int *pReturnCode) {
     if (strcmp(vr::IServerTrackedDeviceProvider_Version, pInterfaceName) == 0) {
         return &serverDriver;

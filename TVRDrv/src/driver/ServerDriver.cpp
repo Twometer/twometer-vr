@@ -17,7 +17,7 @@ vr::EVRInitError ServerDriver::Init(vr::IVRDriverContext *pDriverContext) {
     VR_INIT_SERVER_DRIVER_CONTEXT(pDriverContext);
 
     streamClient = new StreamClient([this](const DataPacket &dataPacket) {
-        for (ControllerState state : dataPacket.controllerStates) {
+        for (const ControllerState& state : dataPacket.controllerStates) {
             ControllerDriver *driver = (*controllerDrivers)[state.controllerId];
             driver->SetControllerState(state);
         }
