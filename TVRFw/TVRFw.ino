@@ -69,6 +69,8 @@ void setup() {
     Serial.println("MPU self-test failed, is the chip ok?");
   else if (mpu_error == MPU_ERR_NO_CONN)
     Serial.println("Failed to connect to MPU, check wiring");
+
+  pinMode(14, INPUT_PULLUP);
 }
 
 void loop() {

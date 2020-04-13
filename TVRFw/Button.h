@@ -17,6 +17,7 @@ class Button {
     }
 
     bool isHeld() {
+      isPressed(); // Run the update, not ugly code at all lol
       return pressed;
     }
 
