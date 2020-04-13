@@ -8,7 +8,7 @@
         80,
         60
       ],
-      "type": "button",
+      "type": "trigger",
       "order": 1
     },
     "/input/b": {

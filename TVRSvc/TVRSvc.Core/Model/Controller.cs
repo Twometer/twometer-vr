@@ -13,6 +13,8 @@ namespace TVRSvc.Core.Model
 
         public Vec3 Position { get; set; }
 
+        public float? ZOffset { get; set; }
+
         public Vec3 Acceleration { get; set; }
 
         public Vec3 Rotation { get; set; }

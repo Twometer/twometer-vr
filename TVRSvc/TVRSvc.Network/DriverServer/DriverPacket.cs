@@ -13,8 +13,6 @@ namespace TVRSvc.Network.DriverServer
     {
         public Controller[] ControllerStates { get; set; }
 
-        public ButtonPress[] ButtonPresses { get; set; }
-
         public void Deserialize(BinaryReader reader)
         {
             // Never received by the server
@@ -32,7 +30,7 @@ namespace TVRSvc.Network.DriverServer
                     writer.Write(c.Id);
                     writer.Write(c.Position.X);
                     writer.Write(c.Position.Y);
-                    writer.Write(c.Position.Z);
+                    writer.Write(c.Position.Z - (c.ZOffset ?? 0));
                     writer.Write(c.Rotation.X);
                     writer.Write(c.Rotation.Y);
                     writer.Write(c.Rotation.Z);
@@ -45,15 +43,20 @@ namespace TVRSvc.Network.DriverServer
 
 
             // Button presses
+            var buttonPresses = ControllerStates?
+                .Where(c => c.PressedButtons != null)
+                .Select(c => c.PressedButtons.Select(btn => new ButtonPress(c.Id, btn)))
+                .SelectMany(press => press)
+                .ToArray();
 
-            if (ButtonPresses == null)
+            if (buttonPresses == null)
             {
                 writer.Write((byte)0);
                 return;
             }
 
-            writer.Write(ButtonPresses.Length);
-            foreach (var b in ButtonPresses)
+            writer.Write(buttonPresses.Length);
+            foreach (var b in buttonPresses)
             {
                 writer.Write(b.ControllerId);
                 writer.Write(b.ButtonId);

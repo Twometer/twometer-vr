@@ -33,8 +33,14 @@ namespace TVRSvc.Core.Tracking
             if (controllerId > Trackers.Length)
                 return;
 
-            Trackers[controllerId].Controller.Rotation = new Math.Vec3(pitch, yaw, roll);
-            Trackers[controllerId].Controller.PressedButtons = pressedButtons;
+            var controller = Trackers[controllerId].Controller;
+            controller.Rotation = new Math.Vec3(pitch, yaw, roll);
+            controller.PressedButtons = pressedButtons;
+
+            if (!controller.ZOffset.HasValue && pressedButtons?.Length > 0)
+            {
+                controller.ZOffset = controller.Position.Z;
+            }
         }
 
     }
