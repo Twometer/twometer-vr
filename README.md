@@ -11,7 +11,6 @@ In the Wiki you will also find setup instructions, implementation details, docum
 - TVRSvc: The service reading the position and orientation data
 - TVRDrv: The driver that maps the server's data to SteamVR
 - TVRFw:  The firmware that runs on the controller's chips
-- docs:   The protocol specification for the communication between the components
 - hw:     STL and PCB files if you want to make this project for yourself
 
 ## Thanks!
