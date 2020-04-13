@@ -2,6 +2,7 @@
 using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,20 +38,16 @@ namespace TVRSvc.Core.Tracking
             controller.Rotation = new Math.Vec3(pitch, yaw, roll);
 
 
-            // Don't process any further if there are no button presses
-            if (pressedButtons == null) return;
-
-
             var keys = new List<Button>();
             keys.AddRange(controller.Buttons.Keys);
 
             foreach (var btn in keys)
-                if (pressedButtons.Contains(btn))
+                if (pressedButtons?.Contains(btn) == true)
                     controller.Buttons[btn] = true;
                 else
                     controller.Buttons[btn] = false;
 
-            if (!controller.ZOffset.HasValue && pressedButtons.Length > 0)
+            if (!controller.ZOffset.HasValue && pressedButtons?.Length > 0)
             {
                 controller.ZOffset = controller.Position.Z;
             }

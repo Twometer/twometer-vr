@@ -120,10 +120,10 @@ namespace TVRSvc
             DrawUnits(0, 1, 0, 5);
             DrawUnits(1, 0, 0, 5);
 
-            GL.Color4(Color.Blue);
+            GL.Color4(Color.Red);
             DrawTracker(manager.Trackers[0]);
 
-            GL.Color4(Color.Red);
+            GL.Color4(Color.Blue);
             DrawTracker(manager.Trackers[1]);
 
             glControl1.SwapBuffers();

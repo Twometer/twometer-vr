@@ -7,7 +7,10 @@
 
 int main() {
     auto streamClient = new StreamClient([](const DataPacket &dataPacket) {
-        std::cout << "Received packet from server" << std::endl;
+        for(auto &d : dataPacket.controllerStates) {
+            auto a_pressed = d.buttons.at(Button::A);
+            std::cout << (int)d.controllerId << ", pressed=" << a_pressed << std::endl;
+        }
     });
 
     if (!streamClient->Connect())
