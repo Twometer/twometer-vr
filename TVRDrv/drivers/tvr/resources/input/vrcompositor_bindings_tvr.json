@@ -1,0 +1,55 @@
+{
+	"app_key": "openvr.component.vrcompositor",
+	"bindings": {
+		"/actions/lasermouse": {
+			"sources": [
+				{
+					"inputs": {
+						"single": {
+							"output": "/actions/lasermouse/in/leftclick"
+						}
+					},
+					"mode": "button",
+					"path": "/devices/tvr/TVRXTL_0002/input/a"
+				},
+				{
+					"inputs": {
+						"click": {
+							"output": "/actions/lasermouse/in/leftclick"
+						}
+					},
+					"mode": "button",
+					"path": "/user/hand/left/input/a"
+				},
+				{
+					"inputs": {
+						"click": {
+							"output": "/actions/lasermouse/in/leftclick"
+						}
+					},
+					"mode": "button",
+					"path": "/user/hand/right/input/a"
+				}
+			]
+		},
+		"/actions/system": {
+			"sources": [
+				{
+					"inputs": {
+						"single": {
+							"output": "/actions/system/in/toggledashboard"
+						}
+					},
+					"mode": "button",
+					"parameters": {
+						"sub_mode": "complex"
+					},
+					"path": "/devices/tvr/TVRXTL_0001/input/a"
+				}
+			]
+		}
+	},
+	"controller_type": "tvr_controller",
+	"description": "",
+	"name": "TwometerVR controller bindings"
+}

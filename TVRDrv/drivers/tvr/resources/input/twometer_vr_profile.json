@@ -1,23 +1,29 @@
 {
-  "jsonid": "input_profile",
-  "controller_type": "tvr_controller",
-  "input_bindingui_mode": "controller_handed",
-  "input_source": {
-    "/input/a": {
-      "binding_image_point": [
-        80,
-        60
-      ],
-      "type": "trigger",
-      "order": 1
-    },
-    "/input/b": {
-      "binding_image_point": [
-        250,
-        60
-      ],
-      "type": "button",
-      "order": 2
-    }
-  }
+	"jsonid": "input_profile",
+	"controller_type": "tvr_controller",
+	"input_bindingui_mode": "controller_handed",
+	"input_source": {
+		"/input/a": {
+			"binding_image_point": [
+				80,
+				60
+			],
+			"type": "button",
+			"order": 1
+		},
+		"/input/b": {
+			"binding_image_point": [
+				250,
+				60
+			],
+			"type": "button",
+			"order": 2
+		}
+	},
+	"default_bindings": [
+		{
+			"app_key": "openvr.component.vrcompositor",
+			"binding_url": "vrcompositor_bindings_tvr.json"
+		}
+	]
 }
