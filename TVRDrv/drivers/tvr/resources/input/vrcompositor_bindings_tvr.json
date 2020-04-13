@@ -11,21 +11,14 @@
 					},
 					"mode": "button",
 					"path": "/user/hand/right/input/a"
-				}
-			]
-		},
-		"/actions/system": {
-			"sources": [
+				},
 				{
 					"inputs": {
-						"single": {
-							"output": "/actions/system/in/toggledashboard"
+						"click": {
+							"output": "/actions/lasermouse/in/leftclick"
 						}
 					},
 					"mode": "button",
-					"parameters": {
-						"sub_mode": "complex"
-					},
 					"path": "/user/hand/left/input/a"
 				}
 			]
