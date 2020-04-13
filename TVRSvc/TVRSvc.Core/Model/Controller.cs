@@ -17,7 +17,9 @@ namespace TVRSvc.Core.Model
 
         public Vec3 Acceleration { get; set; }
 
-        public Vec3 Rotation { get; set; }
+        public float Yaw { get; set; }
+        public float Pitch { get; set; }
+        public float Roll { get; set; }
 
         public IDictionary<Button, bool> Buttons { get; } = new Dictionary<Button, bool>();
 

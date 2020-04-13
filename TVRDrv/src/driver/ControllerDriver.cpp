@@ -47,6 +47,8 @@ void ControllerDriver::DebugRequest(const char *pchRequest, char *pchResponseBuf
 
 }
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "ArgumentSelectionDefects"
 vr::DriverPose_t ControllerDriver::GetPose() {
     DriverPose_t pose = {0};
     pose.poseIsValid = controllerState.IsValid();
@@ -72,9 +74,13 @@ vr::DriverPose_t ControllerDriver::GetPose() {
     pose.vecWorldFromDriverTranslation[0] = controllerState.posX;
     pose.vecWorldFromDriverTranslation[1] = controllerState.posY;
     pose.vecWorldFromDriverTranslation[2] = controllerState.posZ;
-    pose.qRotation = ToQuaternion(controllerState.rotZ, controllerState.rotY, controllerState.rotX);
+
+    // Here, we have to shift the angles around again because SteamVR's coordinate system is again,
+    // different. God do I hate rotations.
+    pose.qRotation = ToQuaternion(controllerState.roll, controllerState.yaw, controllerState.pitch);
     return pose;
 }
+#pragma clang diagnostic pop
 
 std::string ControllerDriver::GetSerialNumber() {
     return serialNumber;
@@ -111,6 +117,9 @@ void ControllerDriver::SetControllerState(ControllerState controllerState) {
     vr::VRDriverInput()->UpdateBooleanComponent(buttonB, controllerState.buttons[Button::B], 0);
 }
 
+
+// Thank you, Wikipedia!
+// https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
 vr::HmdQuaternion_t ControllerDriver::ToQuaternion(float yaw, float pitch, float roll) {
     yaw = deg2rad(yaw);
     pitch = deg2rad(pitch);

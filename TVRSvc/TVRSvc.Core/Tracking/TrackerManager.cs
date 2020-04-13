@@ -36,14 +36,18 @@ namespace TVRSvc.Core.Tracking
 
             var controller = Trackers[controllerId].Controller;
 
-            // I mounted the controller in the right one the wrong way around, so I have to invert that here
             // TODO: Make this into a config file!
             //       Also, make the mapping of XYZ to yaw, pitch, roll for each controller in a config
             //       Because me was stupid and mounted one PCB inverse to the other
-            if (controller.Id == 1)
-                roll *= -1;
+            //       To make stuff even more complicated, the MPU has its base axis in a different plane than our coordinate system
+            //       So we have to shift around yaw, pitch and roll here to make it work with SteamVR and TVR
 
-            controller.Rotation = new Math.Vec3(pitch, -yaw, roll);
+            controller.Yaw = -yaw;
+            controller.Pitch = roll;
+            controller.Roll = pitch;
+
+            if (controller.Id == 1)
+                controller.Pitch *= -1;
 
             var keys = new List<Button>();
             keys.AddRange(controller.Buttons.Keys);

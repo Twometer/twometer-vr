@@ -50,11 +50,13 @@ namespace TVRSvc
                 }
                 else
                 {
-                    label1.Text = manager.Trackers[0].Detected ? manager.Trackers[0].Controller.Position.ToString() + "\n" + manager.Trackers[0].Controller.Rotation.ToString() : "out of range";
-                    label1.BackColor = manager.Trackers[0].Controller.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
+                    var controller0 = manager.Trackers[0].Controller;
+                    label1.Text = manager.Trackers[0].Detected ? $"{controller0.Position.ToString()}\nY={controller0.Yaw} P={controller0.Pitch} R={controller0.Roll}" : "out of range";
+                    label1.BackColor = controller0.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
 
-                    label6.Text = manager.Trackers[1].Detected ? manager.Trackers[1].Controller.Position.ToString() + "\n" + manager.Trackers[1].Controller.Rotation.ToString() : "out of range";
-                    label6.BackColor = manager.Trackers[1].Controller.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
+                    var controller1 = manager.Trackers[1].Controller;
+                    label6.Text = manager.Trackers[1].Detected ? $"{controller1.Position.ToString()}\nY={controller1.Yaw} P={controller1.Pitch} R={controller1.Roll}" : "out of range";
+                    label6.BackColor = controller1.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
                 }
 
                 if (radioButton1.Checked)
@@ -131,9 +133,9 @@ namespace TVRSvc
             {
                 DrawCross(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, 0.3f);
 
-                var rot = tracker.Controller.Rotation;
-                var yaw = rot.Y;
-                var pitch = rot.Z;
+                
+                var yaw = tracker.Controller.Yaw;
+                var pitch = tracker.Controller.Pitch;
 
                 var x = (float)-Math.Sin(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch));
                 var y = (float)-Math.Sin(MathHelper.DegreesToRadians(-pitch));

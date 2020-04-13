@@ -31,9 +31,9 @@ namespace TVRSvc.Network.DriverServer
                     writer.Write(c.Position.X);
                     writer.Write(c.Position.Y);
                     writer.Write(c.Position.Z - (c.ZOffset ?? 0));
-                    writer.Write(c.Rotation.X);
-                    writer.Write(c.Rotation.Y);
-                    writer.Write(c.Rotation.Z);
+                    writer.Write(c.Yaw);
+                    writer.Write(c.Pitch);
+                    writer.Write(c.Roll);
 
                     writer.Write((byte)c.Buttons.Keys.Count);
                     foreach (var btn in c.Buttons)
