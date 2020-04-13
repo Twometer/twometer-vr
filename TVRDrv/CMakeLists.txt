@@ -5,14 +5,15 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(lib/openvr)
 
-add_library(TVRDrv
+add_library(TVRDrv SHARED
         src/main.cpp
         src/net/StreamClient.cpp
         src/net/TcpClient.cpp
         src/net/Buffer.cpp
         src/driver/ServerDriver.cpp
         src/driver/ControllerDriver.cpp
-        src/driver/WatchdogDriver.cpp)
+        src/driver/WatchdogDriver.cpp
+        src/model/ControllerState.cpp)
 
 target_include_directories(TVRDrv PRIVATE lib/openvr/headers)
 target_link_libraries(TVRDrv Ws2_32.lib)

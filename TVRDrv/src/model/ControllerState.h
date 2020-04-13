@@ -5,6 +5,8 @@
 #ifndef TVRDRV_CONTROLLERSTATE_H
 #define TVRDRV_CONTROLLERSTATE_H
 
+#include <cstdint>
+
 struct ControllerState {
 public:
     static ControllerState invalid;
@@ -24,7 +26,5 @@ public:
         return controllerId != 255;
     }
 };
-
-ControllerState ControllerState::invalid(255, 0, 0, 0, 0, 0, 0);
 
 #endif //TVRDRV_CONTROLLERSTATE_H
