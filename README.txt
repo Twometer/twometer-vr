@@ -11,6 +11,7 @@ Folder structure:
 Thanks to:
  OpenCV
  OpenVR
+ I2CDev
 
 
 Everything here is released under MIT license,

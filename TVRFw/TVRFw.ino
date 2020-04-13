@@ -1,7 +1,7 @@
+#include "RotationSensor.h"
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 #include "WiFiConfig.h"
-#include "MPU6050.h"
 #include "Button.h"
 #include "ButtonId.h"
 
@@ -21,7 +21,7 @@ WiFiClient tcp;
 String serverIp;
 char udp_incoming[15];
 
-MPU6050 mpu;
+RotationSensor sensor;
 
 unsigned long last_update;
 
@@ -54,43 +54,28 @@ void setup() {
   Serial.print("Discovered server at ");
   Serial.println(serverIp);
 
+  Serial.println("Initializing MPU...");
+  sensor.begin();
+  Serial.println("Initialized");
+
   Serial.println("Connecting to server...");
   while (!tcp.connect(serverIp, CONTROLLER_PORT)) {
     delay(500);
   }
   Serial.println("Connection established");
-
-  Serial.println("Initializing MPU...");
-  
-  int mpu_error = mpu.begin();
-  if (mpu_error == MPU_ERR_NONE)
-    Serial.println("MPU initialized");
-  else if (mpu_error == MPU_ERR_SELFTEST)
-    Serial.println("MPU self-test failed, is the chip ok?");
-  else if (mpu_error == MPU_ERR_NO_CONN)
-    Serial.println("Failed to connect to MPU, check wiring");
-
   pinMode(14, INPUT_PULLUP);
 }
 
 void loop() {
-  mpu.update();
+  sensor.update();
 
-  if (millis() - last_update > 10)
-  {
+  if (millis() - last_update > 80) {
     if (trigger.isHeld()) {
       byte btn[] = {BUTTON_A};
-      sendPacket(1, btn, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
-    } else sendPacket(0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+      sendPacket(1, btn, sensor.getYaw(), sensor.getPitch(), sensor.getRoll());
+    } else sendPacket(0, NULL, sensor.getYaw(), sensor.getPitch(), sensor.getRoll());
     last_update = millis();
   }
-
-  //// Read buttons
-  // Send it to the server
-
-  // Test data
-  //byte pressed[] = {1, 2};
-  //sendPacket(2, pressed, 1.3456, 0.3199, millis());
 }
 
 bool discovery() {
