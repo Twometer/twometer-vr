@@ -59,6 +59,7 @@ void setup() {
   Serial.println("Initialized");
 
   Serial.println("Connecting to server...");
+  tcp.setNoDelay(true);
   while (!tcp.connect(serverIp, CONTROLLER_PORT)) {
     delay(500);
   }
