@@ -58,7 +58,10 @@ namespace TVRSvc
                 else
                 {
                     label1.Text = manager.Trackers[0].Detected ? manager.Trackers[0].Controller.Position.ToString() + "\n" + manager.Trackers[0].Controller.Rotation.ToString() : "out of range";
+                    label1.BackColor = manager.Trackers[0].Controller.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
+
                     label6.Text = manager.Trackers[1].Detected ? manager.Trackers[1].Controller.Position.ToString() + "\n" + manager.Trackers[1].Controller.Rotation.ToString() : "out of range";
+                    label6.BackColor = manager.Trackers[1].Controller.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
                 }
 
                 if (radioButton1.Checked)
