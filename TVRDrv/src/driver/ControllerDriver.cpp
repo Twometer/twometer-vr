@@ -7,6 +7,7 @@
 #include <utility>
 #include <cmath>
 
+
 #define deg2rad(angleDegrees) ((angleDegrees) * M_PI / 180.0)
 #define rad2deg(angleRadians) ((angleRadians) * 180.0 / M_PI)
 
@@ -81,7 +82,7 @@ std::string ControllerDriver::GetSerialNumber() {
 
 void ControllerDriver::RunFrame() {
     // Update buttons here
-    // vr::VRDriverInput()->UpdateBooleanComponent( m_compA, (0x8000 & GetAsyncKeyState( 'A' )) != 0, 0 );
+    vr::VRDriverInput()->UpdateBooleanComponent(buttonA, pressedButtons[Button::A], 0);
 }
 
 void ControllerDriver::ProcessEvent(vr::VREvent_t event) {
@@ -90,7 +91,8 @@ void ControllerDriver::ProcessEvent(vr::VREvent_t event) {
 
 ControllerDriver::ControllerDriver(int trackerId, StreamClient *streamClient, std::string serialNumber)
         : trackerId(trackerId), streamClient(streamClient), serialNumber(std::move(serialNumber)),
-          controllerState(ControllerState::invalid) {
+          controllerState(ControllerState::invalid), pressedButtons(new bool[2]) {
+    memset(pressedButtons, 0, sizeof(bool) * 2);
 }
 
 int32_t ControllerDriver::GetTrackerRole() {
@@ -127,4 +129,12 @@ vr::HmdQuaternion_t ControllerDriver::ToQuaternion(float yaw, float pitch, float
     q.z = cr * cp * sy - sr * sp * cy;
 
     return q;
+}
+
+ControllerDriver::~ControllerDriver() {
+    delete[] pressedButtons;
+}
+
+void ControllerDriver::SetButtonState(Button button, bool state) {
+    pressedButtons[button] = state;
 }

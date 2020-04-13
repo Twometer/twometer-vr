@@ -5,7 +5,7 @@
 #ifndef TVRDRV_BUTTON_H
 #define TVRDRV_BUTTON_H
 
-enum class Button {
+enum Button {
     NONE,
     A,
     B
