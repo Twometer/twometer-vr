@@ -2,13 +2,14 @@
 	"jsonid": "input_profile",
 	"controller_type": "tvr_controller",
 	"input_bindingui_mode": "controller_handed",
+	"legacy_binding": "{tvr}/input/legacy_bindings_tvr.json",
 	"input_source": {
 		"/input/a": {
 			"binding_image_point": [
 				80,
 				60
 			],
-			"type": "button",
+			"type": "trigger",
 			"order": 1
 		},
 		"/input/b": {
