@@ -23,6 +23,8 @@ namespace TVRSvc.Core.Math.Transform
 
         private const float HorizontalPixelsPerMeter = 590; // How many pixels it takes for one meter in XY direction (after normalization)
 
+        private const float HeightAboveGround = 1.25f; // Height of the camera above the ground in meters
+
         private const int Latency = 6; // Latency of the transform in frames. Higher values mean slower response time but smoother movement
 
         private PointF frameCenter;
@@ -46,7 +48,7 @@ namespace TVRSvc.Core.Math.Transform
             yAvg.Push(-offset.Y * Z / HorizontalPixelsPerMeter);
             zAvg.Push(Z);
 
-            return new Vec3(xAvg.Value, yAvg.Value, zAvg.Value);
+            return new Vec3(xAvg.Value, yAvg.Value + HeightAboveGround, zAvg.Value);
         }
 
         private float ComputeDistance(float diameter)

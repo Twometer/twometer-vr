@@ -15,5 +15,8 @@ add_library(TVRDrv SHARED
         src/driver/WatchdogDriver.cpp
         src/model/ControllerState.cpp)
 
+set_target_properties(TVRDrv PROPERTIES PREFIX "driver_")
+set_target_properties(TVRDrv PROPERTIES OUTPUT_NAME "tvr")
+
 target_include_directories(TVRDrv PRIVATE lib/openvr/headers)
 target_link_libraries(TVRDrv Ws2_32.lib)

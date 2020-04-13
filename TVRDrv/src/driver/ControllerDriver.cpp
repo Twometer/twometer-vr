@@ -7,6 +7,9 @@
 #include <utility>
 #include <cmath>
 
+#define deg2rad(angleDegrees) ((angleDegrees) * M_PI / 180.0)
+#define rad2deg(angleRadians) ((angleRadians) * 180.0 / M_PI)
+
 using namespace vr;
 
 vr::EVRInitError ControllerDriver::Activate(uint32_t unObjectId) {
@@ -68,7 +71,7 @@ vr::DriverPose_t ControllerDriver::GetPose() {
     pose.vecWorldFromDriverTranslation[0] = controllerState.posX;
     pose.vecWorldFromDriverTranslation[1] = controllerState.posY;
     pose.vecWorldFromDriverTranslation[2] = controllerState.posZ;
-    pose.qWorldFromDriverRotation = ToQuaternion(controllerState.rotZ, controllerState.rotY, controllerState.rotX);
+    pose.qRotation = ToQuaternion(controllerState.rotZ, controllerState.rotY, controllerState.rotX);
     return pose;
 }
 
@@ -105,6 +108,10 @@ void ControllerDriver::SetControllerState(ControllerState controllerState) {
 }
 
 vr::HmdQuaternion_t ControllerDriver::ToQuaternion(float yaw, float pitch, float roll) {
+    yaw = deg2rad(yaw);
+    pitch = deg2rad(pitch);
+    roll = deg2rad(roll);
+
     // Abbreviations for the various angular functions
     double cy = cos(yaw * 0.5);
     double sy = sin(yaw * 0.5);
