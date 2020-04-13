@@ -50,4 +50,13 @@ This works as of April 2020!
 
 3. In the Oculus app, under Settings->General enable unknown sources if it is not.
 
-4. Install SteamVR and the TVR driver, now you can start playing SteamVR games such as Beat Saber.
+4. Install SteamVR and the TVR driver using the installer script
+
+To make it work with Beat Saber (and other legacy-controller games):
+********************************************************************
+
+5. Start SteamVR, and go to the controller mapping config for Beat Saber
+
+6. Make Button A of left and right controller the Left and Right Trigger, respecitvely.
+
+7. In the 2nd Tab with legacy settings, set pretend to be controller to "Oculus Touch"
