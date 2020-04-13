@@ -35,7 +35,13 @@ namespace TVRSvc.Core.Tracking
                 return;
 
             var controller = Trackers[controllerId].Controller;
-            controller.Rotation = new Math.Vec3(pitch, yaw, roll);
+
+            // I mounted the controller in the right one the wrong way around, so I have to invert that here
+            // TODO: Make this into a config file!
+            if (controller.Id == 1)
+                pitch *= -1;
+
+            controller.Rotation = new Math.Vec3(pitch, -yaw, roll);
 
 
             var keys = new List<Button>();
