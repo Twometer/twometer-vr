@@ -20,16 +20,7 @@ vr::EVRInitError ServerDriver::Init(vr::IVRDriverContext *pDriverContext) {
         for (ControllerState state : dataPacket.controllerStates) {
             ControllerDriver *driver = (*controllerDrivers)[state.controllerId];
             driver->SetControllerState(state);
-
-            // Reset button states for all controllers that got updated in this packet
-            // so that we only set those to true below that are actually pressed
-            driver->SetButtonState(Button::A, false);
-            driver->SetButtonState(Button::B, false);
         }
-
-        for (ButtonPress press : dataPacket.buttonPresses)
-            (*controllerDrivers)[press.controllerId]->SetButtonState(static_cast<Button>(press.buttonId), true);
-
     });
     if (!streamClient->Connect())
         return VRInitError_Init_WebServerFailed;

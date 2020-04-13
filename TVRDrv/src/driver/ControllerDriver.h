@@ -31,7 +31,6 @@ private:
     vr::VRInputComponentHandle_t buttonB;
 
     ControllerState controllerState;
-    bool *pressedButtons;
 
     int32_t GetTrackerRole();
 
@@ -39,8 +38,6 @@ private:
 
 public:
     ControllerDriver(int trackerId, StreamClient *streamClient, std::string serialNumber);
-
-    ~ControllerDriver();
 
     vr::EVRInitError Activate(uint32_t unObjectId) override;
 
@@ -61,8 +58,6 @@ public:
     void ProcessEvent(vr::VREvent_t event);
 
     void SetControllerState(ControllerState controllerState);
-
-    void SetButtonState(Button button, bool state);
 };
 
 

@@ -35,9 +35,22 @@ namespace TVRSvc.Core.Tracking
 
             var controller = Trackers[controllerId].Controller;
             controller.Rotation = new Math.Vec3(pitch, yaw, roll);
-            controller.PressedButtons = pressedButtons;
 
-            if (!controller.ZOffset.HasValue && pressedButtons?.Length > 0)
+
+            // Don't process any further if there are no button presses
+            if (pressedButtons == null) return;
+
+
+            var keys = new List<Button>();
+            keys.AddRange(controller.Buttons.Keys);
+
+            foreach (var btn in keys)
+                if (pressedButtons.Contains(btn))
+                    controller.Buttons[btn] = true;
+                else
+                    controller.Buttons[btn] = false;
+
+            if (!controller.ZOffset.HasValue && pressedButtons.Length > 0)
             {
                 controller.ZOffset = controller.Position.Z;
             }

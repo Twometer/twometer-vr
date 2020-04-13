@@ -8,13 +8,13 @@ Protocol Controller<->Service:
 
 Protocol Service<->Driver:
   DriverPacket:
-    [int16 length][byte controllerStateCount][ControllerState[] controllerStates][byte buttonPressCount][ButtonPress[] buttonPresses]
+    [int16 length][byte controllerStateCount][ControllerState[] controllerStates]
   
   ControllerState:
-    [byte ctrlId][float posX][float posY][float posZ][float rotX][float rotY][float rotZ]
+    [byte ctrlId][float posX][float posY][float posZ][float rotX][float rotY][float rotZ][byte buttonCount][ButtonState[] states]
 
-  ButtonPress:
-    [byte ctrlId][byte buttonId]
+  ButtonState:
+    [byte btnId][bool pressed]
 
 Coordinate system:
   X: To the right

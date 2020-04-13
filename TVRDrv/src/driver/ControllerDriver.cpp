@@ -82,7 +82,7 @@ std::string ControllerDriver::GetSerialNumber() {
 
 void ControllerDriver::RunFrame() {
     // Update buttons here
-    vr::VRDriverInput()->UpdateBooleanComponent(buttonA, pressedButtons[Button::A], 0);
+
 }
 
 void ControllerDriver::ProcessEvent(vr::VREvent_t event) {
@@ -91,8 +91,7 @@ void ControllerDriver::ProcessEvent(vr::VREvent_t event) {
 
 ControllerDriver::ControllerDriver(int trackerId, StreamClient *streamClient, std::string serialNumber)
         : trackerId(trackerId), streamClient(streamClient), serialNumber(std::move(serialNumber)),
-          controllerState(ControllerState::invalid), pressedButtons(new bool[2]) {
-    memset(pressedButtons, 0, sizeof(bool) * 2);
+          controllerState(ControllerState::invalid) {
 }
 
 int32_t ControllerDriver::GetTrackerRole() {
@@ -107,6 +106,9 @@ int32_t ControllerDriver::GetTrackerRole() {
 void ControllerDriver::SetControllerState(ControllerState controllerState) {
     this->controllerState = controllerState;
     vr::VRServerDriverHost()->TrackedDevicePoseUpdated(objectId, GetPose(), sizeof(vr::DriverPose_t));
+
+    vr::VRDriverInput()->UpdateBooleanComponent(buttonA, controllerState.buttons[Button::A], 0);
+    vr::VRDriverInput()->UpdateBooleanComponent(buttonB, controllerState.buttons[Button::B], 0);
 }
 
 vr::HmdQuaternion_t ControllerDriver::ToQuaternion(float yaw, float pitch, float roll) {
@@ -129,12 +131,4 @@ vr::HmdQuaternion_t ControllerDriver::ToQuaternion(float yaw, float pitch, float
     q.z = cr * cp * sy - sr * sp * cy;
 
     return q;
-}
-
-ControllerDriver::~ControllerDriver() {
-    delete[] pressedButtons;
-}
-
-void ControllerDriver::SetButtonState(Button button, bool state) {
-    pressedButtons[button] = state;
 }

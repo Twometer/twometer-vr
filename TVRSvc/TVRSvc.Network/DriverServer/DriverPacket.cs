@@ -34,34 +34,21 @@ namespace TVRSvc.Network.DriverServer
                     writer.Write(c.Rotation.X);
                     writer.Write(c.Rotation.Y);
                     writer.Write(c.Rotation.Z);
+
+                    writer.Write((byte)c.Buttons.Keys.Count);
+                    foreach (var btn in c.Buttons)
+                    {
+                        writer.Write((byte)btn.Key);
+                        writer.Write(btn.Value);
+                    }
                 }
             }
             else
             {
                 writer.Write((byte)0);
             }
-
-
-            // Button presses
-            var buttonPresses = ControllerStates?
-                .Where(c => c.PressedButtons != null)
-                .Select(c => c.PressedButtons.Select(btn => new ButtonPress(c.Id, btn)))
-                .SelectMany(press => press)
-                .ToArray();
-
-            if (buttonPresses == null)
-            {
-                writer.Write((byte)0);
-                return;
-            }
-
-            writer.Write(buttonPresses.Length);
-            foreach (var b in buttonPresses)
-            {
-                writer.Write(b.ControllerId);
-                writer.Write(b.ButtonId);
-            }
         }
 
     }
 }
+

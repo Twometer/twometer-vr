@@ -19,11 +19,14 @@ namespace TVRSvc.Core.Model
 
         public Vec3 Rotation { get; set; }
 
-        public Button[] PressedButtons { get; set; }
+        public IDictionary<Button, bool> Buttons { get; } = new Dictionary<Button, bool>();
 
         public Controller(byte id)
         {
             Id = id;
+
+            Buttons[Button.A] = false;
+            Buttons[Button.B] = false;
         }
     }
 }

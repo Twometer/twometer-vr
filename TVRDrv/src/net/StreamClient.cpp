@@ -49,14 +49,16 @@ void StreamClient::ReceiveLoop() {
             auto rotX = buffer.Read<float>();
             auto rotY = buffer.Read<float>();
             auto rotZ = buffer.Read<float>();
-            packet.controllerStates.emplace_back(controllerId, posX, posY, posZ, rotX, rotY, rotZ);
-        }
 
-        int buttonPressCount = buffer.Read<uint8_t>();
-        for (int i = 0; i < buttonPressCount; i++) {
-            auto controllerId = buffer.Read<uint8_t>();
-            auto buttonId = buffer.Read<uint8_t>();
-            packet.buttonPresses.emplace_back(controllerId, buttonId);
+            ControllerState state(controllerId, posX, posY, posZ, rotX, rotY, rotZ);
+
+            auto btnCount = buffer.Read<uint8_t>();
+            for (int j = 0; j < btnCount; j++) {
+                auto btnId = buffer.Read<uint8_t>();
+                auto pressed = buffer.Read<uint8_t>() == 1;
+                state.buttons[static_cast<Button>(btnId)] = pressed;
+            }
+            packet.controllerStates.push_back(state);
         }
 
         callback(packet);
