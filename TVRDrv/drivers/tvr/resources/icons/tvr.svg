@@ -1,0 +1,13 @@
+<svg width="256" height="512" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="#fff" id="canvas_background" height="514" width="258" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect stroke="#000" id="svg_2" height="341.999999" width="142" y="118.453126" x="53.5" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#fff"/>
+  <ellipse stroke="#000" ry="52.000002" rx="52.5" id="svg_3" cy="65.453123" cx="126" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#fff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_4" y="491.453125" x="40.5" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">TWOMETER VR</text>
+ </g>
+</svg>

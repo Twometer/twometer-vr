@@ -3,19 +3,25 @@
 	"controller_type": "tvr_controller",
 	"input_bindingui_mode": "controller_handed",
 	"legacy_binding": "{tvr}/input/legacy_bindings_tvr.json",
+	"input_bindingui_left": {
+		"image": "{tvr}/icons/tvr.svg"
+	},
+	"input_bindingui_right": {
+		"image": "{tvr}/icons/tvr.svg"
+	},  
 	"input_source": {
 		"/input/a": {
 			"binding_image_point": [
 				80,
 				60
 			],
-			"type": "trigger",
+			"type": "button",
 			"order": 1
 		},
 		"/input/b": {
 			"binding_image_point": [
-				250,
-				60
+				80,
+				90
 			],
 			"type": "button",
 			"order": 2
