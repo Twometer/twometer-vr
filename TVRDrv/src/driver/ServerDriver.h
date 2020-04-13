@@ -7,6 +7,7 @@
 
 #include <openvr_driver.h>
 #include "ControllerDriver.h"
+#include <thread>
 
 #if defined(_WIN32)
 #define HMD_DLL_EXPORT extern "C" __declspec( dllexport )

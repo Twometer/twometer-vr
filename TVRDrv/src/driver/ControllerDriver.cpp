@@ -5,6 +5,7 @@
 #include "ControllerDriver.h"
 
 #include <utility>
+#include <cmath>
 
 using namespace vr;
 
@@ -50,25 +51,24 @@ vr::DriverPose_t ControllerDriver::GetPose() {
     pose.shouldApplyHeadModel = false;
     pose.willDriftInYaw = false;
 
-
-
     // No transform due to HMD pose
     pose.qDriverFromHeadRotation.w = 1.f;
     pose.qDriverFromHeadRotation.x = 0.0f;
     pose.qDriverFromHeadRotation.y = 0.0f;
     pose.qDriverFromHeadRotation.z = 0.0f;
+    pose.qWorldFromDriverRotation.w = 1.f;
+    pose.qWorldFromDriverRotation.x = 0.f;
+    pose.qWorldFromDriverRotation.y = 0.f;
+    pose.qWorldFromDriverRotation.z = 0.f;
     pose.vecDriverFromHeadTranslation[0] = 0.0f;
     pose.vecDriverFromHeadTranslation[1] = 0.0f;
-    pose.vecDriverFromHeadTranslation[1] = 0.0f;
-    //pose.qWorldFromDriverRotation = HmdQuaternion_Init( 1, 0, 0, 0 );
-    //pose.qDriverFromHeadRotation = HmdQuaternion_Init( 1, 0, 0, 0 );
+    pose.vecDriverFromHeadTranslation[2] = 0.0f;
 
-    // TODO: Translate absolute controller position to HMD-Space
-    //pose.vecWorldFromDriverTranslation = ;
-    // pose.qWorldFromDriverRotation = ;
-
-    // Call this from the network
-    // vr::VRServerDriverHost()->TrackedDevicePoseUpdated(m_unSteamVRTrackedDeviceId, m_Pose, sizeof(vr::DriverPose_t));
+    // Apply controller position and rotation
+    pose.vecWorldFromDriverTranslation[0] = controllerState.posX;
+    pose.vecWorldFromDriverTranslation[1] = controllerState.posY;
+    pose.vecWorldFromDriverTranslation[2] = controllerState.posZ;
+    pose.qWorldFromDriverRotation = ToQuaternion(controllerState.rotZ, controllerState.rotY, controllerState.rotX);
     return pose;
 }
 
@@ -78,7 +78,6 @@ std::string ControllerDriver::GetSerialNumber() {
 
 void ControllerDriver::RunFrame() {
     // Update buttons here
-
     // vr::VRDriverInput()->UpdateBooleanComponent( m_compA, (0x8000 & GetAsyncKeyState( 'A' )) != 0, 0 );
 }
 
@@ -102,4 +101,23 @@ int32_t ControllerDriver::GetTrackerRole() {
 
 void ControllerDriver::SetControllerState(ControllerState controllerState) {
     this->controllerState = controllerState;
+    vr::VRServerDriverHost()->TrackedDevicePoseUpdated(objectId, GetPose(), sizeof(vr::DriverPose_t));
+}
+
+vr::HmdQuaternion_t ControllerDriver::ToQuaternion(float yaw, float pitch, float roll) {
+    // Abbreviations for the various angular functions
+    double cy = cos(yaw * 0.5);
+    double sy = sin(yaw * 0.5);
+    double cp = cos(pitch * 0.5);
+    double sp = sin(pitch * 0.5);
+    double cr = cos(roll * 0.5);
+    double sr = sin(roll * 0.5);
+
+    HmdQuaternion_t q{};
+    q.w = cr * cp * cy + sr * sp * sy;
+    q.x = sr * cp * cy - cr * sp * sy;
+    q.y = cr * sp * cy + sr * cp * sy;
+    q.z = cr * cp * sy - sr * sp * cy;
+
+    return q;
 }

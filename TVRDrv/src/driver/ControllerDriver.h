@@ -33,6 +33,8 @@ private:
 
     int32_t GetTrackerRole();
 
+    vr::HmdQuaternion_t ToQuaternion(float yaw_z, float pitch_y, float roll_x);
+
 public:
     ControllerDriver(int trackerId, StreamClient *streamClient, std::string serialNumber);
 

@@ -35,6 +35,8 @@ namespace TVRSvc.Core.Tracking
 
             Trackers[controllerId].Controller.Rotation = new Math.Vec3(pitch, yaw, roll);
             Trackers[controllerId].Controller.PressedButtons = pressedButtons;
+            if (pressedButtons?.Length > 0)
+                Console.WriteLine(pressedButtons.Length);
         }
 
     }

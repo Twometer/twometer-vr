@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(lib/openvr)
 
-add_executable(TVRDrv
+add_library(TVRDrv
         src/main.cpp
         src/net/StreamClient.cpp
         src/net/TcpClient.cpp
