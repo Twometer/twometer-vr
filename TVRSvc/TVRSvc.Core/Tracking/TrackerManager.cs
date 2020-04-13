@@ -15,7 +15,7 @@ namespace TVRSvc.Core.Tracking
         public Tracker[] Trackers { get; } = new[]
         {
             new Tracker(0, TrackerSettings.Red),   // Left controller
-            new Tracker(1, TrackerSettings.Blue)     // Right controller
+            new Tracker(1, TrackerSettings.Blue)   // Right controller
         };
 
         public bool Detected => Trackers.Any(t => t.Detected);
@@ -38,11 +38,12 @@ namespace TVRSvc.Core.Tracking
 
             // I mounted the controller in the right one the wrong way around, so I have to invert that here
             // TODO: Make this into a config file!
+            //       Also, make the mapping of XYZ to yaw, pitch, roll for each controller in a config
+            //       Because me was stupid and mounted one PCB inverse to the other
             if (controller.Id == 1)
-                pitch *= -1;
+                roll *= -1;
 
             controller.Rotation = new Math.Vec3(pitch, -yaw, roll);
-
 
             var keys = new List<Button>();
             keys.AddRange(controller.Buttons.Keys);

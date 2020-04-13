@@ -54,8 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Math\RollingAverage.cs" />
-    <Compile Include="Math\Transform\ICameraTransform.cs" />
-    <Compile Include="Math\Transform\SimpleCameraTransform.cs" />
+    <Compile Include="Transform\ICameraTransform.cs" />
+    <Compile Include="Transform\SimpleCameraTransform.cs" />
     <Compile Include="Math\Vec2.cs" />
     <Compile Include="Math\Vec3.cs" />
     <Compile Include="Model\Button.cs" />

@@ -5,8 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVRSvc.Core.Math;
 
-namespace TVRSvc.Core.Math.Transform
+namespace TVRSvc.Core.Transform
 {
 
     // This transform is based on
