@@ -1,7 +1,7 @@
 #ifndef ROTATION_SENSOR_H
 #define ROTATION_SENSOR_H
 
-#define MPU6050_DMP_FIFO_RATE_DIVISOR 0x03
+#define MPU6050_DMP_FIFO_RATE_DIVISOR 0x02
 #include "I2Cdev.h"
 #include "MPU6050_6Axis_MotionApps20.h"
 #include "Wire.h"
@@ -46,7 +46,10 @@ class RotationSensor {
         Serial.println(F("FIFO overflow!"));
       } else {
         if (fifoCount % packetSize != 0) {
-          mpu.resetFIFO();
+          //mpu.resetFIFO();
+          Serial.println(fifoCount);
+          Serial.println(packetSize);
+          Serial.println("Resetting FIFO");
         }
         else {
           while (fifoCount >= packetSize) {

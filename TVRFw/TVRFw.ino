@@ -4,6 +4,7 @@
 #include "WiFiConfig.h"
 #include "Button.h"
 #include "ButtonId.h"
+#include "Profiler.h"
 
 #define PACKET_DELAY 40
 
@@ -14,8 +15,8 @@
 // IMPORTANT: Define whether you are flashing the red (left) or blue (right) controller
 //            Also, flash with CPU frequency set to 160 MHz or you will have A LOT of input lag
 
-#define CONTROLLER_RED
-// #define CONTROLLER_BLUE
+// #define CONTROLLER_RED
+#define CONTROLLER_BLUE
 
 #ifdef CONTROLLER_RED
 #define CONTROLLER_ID   0
@@ -81,7 +82,9 @@ void setup() {
 }
 
 void loop() {
+ // profiler_begin();
   sensor.update();
+ // profiler_end("SensorUpdate");
 
   trigger.isPressed(); // Check always to increase button response time
   if (millis() - last_update > PACKET_DELAY) {
@@ -112,10 +115,13 @@ bool discovery() {
 
 void sendPacket(byte numButtonPresses, byte* buttonPresses, float yaw, float pitch, float roll) {
 
+//  profiler_begin();
   int16_t packetLen = 2 + 1 + 1 + (numButtonPresses) + 4 * 3;
   byte data[packetLen];
   int offset = 0;
+ // profiler_end("PacketAlloc");
 
+//  profiler_begin();
   cpy(data, offset, int16_t(packetLen - 2));
   cpy(data, offset, byte(CONTROLLER_ID));
   cpy(data, offset, numButtonPresses);
@@ -125,9 +131,11 @@ void sendPacket(byte numButtonPresses, byte* buttonPresses, float yaw, float pit
   cpy(data, offset, yaw);
   cpy(data, offset, pitch);
   cpy(data, offset, roll);
+  //profiler_end("PacketBuild");
 
+ // profiler_begin();
   tcp.write(data, packetLen);
-  tcp.flush();
+  //profiler_end("PacketWrite");
 }
 
 template<typename T>
