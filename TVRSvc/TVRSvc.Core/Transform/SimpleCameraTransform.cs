@@ -15,6 +15,7 @@ namespace TVRSvc.Core.Transform
     public class SimpleCameraTransform : ICameraTransform
     {
         // Unit: Meters
+        // TODO: Make this into a config file
 
         private const float FocalLength = 656.25f; // Perceived focal length calculated using formula from web page
 

@@ -16,8 +16,6 @@ namespace TVRSvc.Core.Model
         public float? YawOffset { get; set; }
         public float? ZOffset { get; set; }
 
-        public Vec3 Acceleration { get; set; }
-
         public float Yaw { get; set; }
         public float Pitch { get; set; }
         public float Roll { get; set; }

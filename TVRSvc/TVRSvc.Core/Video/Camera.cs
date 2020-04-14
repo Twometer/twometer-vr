@@ -1,5 +1,6 @@
 ﻿using Emgu.CV;
 using System;
+using static Emgu.CV.VideoCapture;
 
 namespace TVRSvc.Core.Video
 {
@@ -17,8 +18,11 @@ namespace TVRSvc.Core.Video
 
         public Camera()
         {
-            videoCapture = new VideoCapture();
+            // TODO: Put camera index and resolution into config file
+            videoCapture = new VideoCapture(0, API.DShow);
             videoCapture.FlipHorizontal = true;
+            videoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth, 1280);
+            videoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight, 720);
             videoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.AutoExposure, 0);
         }
 

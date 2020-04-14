@@ -13,9 +13,10 @@ namespace TVRSvc.Core.Video
     {
         public bool IsCalibrated { get; private set; }
 
+        // TODO: Put in config file
         private const float BrightnessThreshold = 15f;
 
-        private const int BootupFrames = 3;
+        private const int BootupFrames = 15;
         private const int CooldownFrames = 5;
 
         private float exposure;
