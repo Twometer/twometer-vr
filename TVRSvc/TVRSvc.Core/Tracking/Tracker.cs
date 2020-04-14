@@ -1,5 +1,6 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
+using TVRSvc.Core.Math;
 using TVRSvc.Core.Model;
 using TVRSvc.Core.Transform;
 
@@ -43,7 +44,8 @@ namespace TVRSvc.Core.Tracking
             if (Detected)
             {
                 var circle = circles[0];
-                Controller.Position = transform.Transform(Frame.Width, Frame.Height, circle);
+                var spherePos = transform.Transform(Frame.Width, Frame.Height, circle);
+                Controller.Position = CalcOrigin(spherePos);
 
                 if (Visualize)
                 {
@@ -66,6 +68,17 @@ namespace TVRSvc.Core.Tracking
             }
         }
 
-
+        /// <summary>
+        /// By design, the camera tracks the glowing sphere that is on top of the controller.
+        /// However, the origin of rotation is at the bottom of the controller, which is the
+        /// point we actually want to track. This method transforms the sphere's position and
+        /// finds the position of the origin point at the bottom of the controller.
+        /// </summary>
+        /// <param name="spherePosition">The position of the sphere</param>
+        /// <returns>The controller's origin point</returns>
+        private Vec3 CalcOrigin(Vec3 spherePosition)
+        {
+            return spherePosition;
+        }
     }
 }

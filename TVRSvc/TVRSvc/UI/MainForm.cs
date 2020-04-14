@@ -124,11 +124,14 @@ namespace TVRSvc
                 var yaw = tracker.Controller.Yaw;
                 var pitch = tracker.Controller.Pitch;
 
-                var x = (float)-Math.Sin(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch));
-                var y = (float)-Math.Sin(MathHelper.DegreesToRadians(-pitch));
-                var z = (float)-Math.Cos(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch));
-                DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X + x, tracker.Controller.Position.Y + y, tracker.Controller.Position.Z + z);
-                //DrawCross(tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z, 0.3f);
+                var controllerLength = 0.154f; // meters
+
+                // TODO: With angles > 90° this calculation no longer works
+                var x = (float)-Math.Sin(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch)) * controllerLength;
+                var y = (float)-Math.Sin(MathHelper.DegreesToRadians(-pitch)) * controllerLength;
+                var z = (float)-Math.Cos(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch)) * controllerLength;
+                DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z);
+                DrawCross(tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z, 0.3f);
             }
         }
 
