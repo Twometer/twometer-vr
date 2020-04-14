@@ -5,14 +5,17 @@
 #include "Button.h"
 #include "ButtonId.h"
 
+#define PACKET_DELAY 40
+
 #define CONTROLLER_PORT 12742
 #define DISCOVERY_PORT  12743
 
 
 // IMPORTANT: Define whether you are flashing the red (left) or blue (right) controller
+//            Also, flash with CPU frequency set to 160 MHz or you will have A LOT of input lag
 
-// #define CONTROLLER_RED
-#define CONTROLLER_BLUE
+#define CONTROLLER_RED
+// #define CONTROLLER_BLUE
 
 #ifdef CONTROLLER_RED
 #define CONTROLLER_ID   0
@@ -80,7 +83,8 @@ void setup() {
 void loop() {
   sensor.update();
 
-  if (millis() - last_update > 80) {
+  trigger.isPressed(); // Check always to increase button response time
+  if (millis() - last_update > PACKET_DELAY) {
     if (trigger.isHeld()) {
       byte btn[] = {BUTTON_A};
       sendPacket(1, btn, sensor.getYaw(), sensor.getPitch(), sensor.getRoll());
