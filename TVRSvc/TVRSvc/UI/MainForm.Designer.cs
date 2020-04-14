@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbTracker1Pos = new System.Windows.Forms.Label();
             this.imageBox1 = new Emgu.CV.UI.ImageBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lbTracker2Pos = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label7 = new System.Windows.Forms.Label();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
@@ -46,6 +46,8 @@
             this.lbfps = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.lbConnectedDrivers = new System.Windows.Forms.Label();
+            this.lbConnectedControllers = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,14 +61,14 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label1
+            // lbTracker1Pos
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 74);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "<position here>";
+            this.lbTracker1Pos.AutoSize = true;
+            this.lbTracker1Pos.Location = new System.Drawing.Point(28, 74);
+            this.lbTracker1Pos.Name = "lbTracker1Pos";
+            this.lbTracker1Pos.Size = new System.Drawing.Size(79, 13);
+            this.lbTracker1Pos.TabIndex = 1;
+            this.lbTracker1Pos.Text = "<position here>";
             // 
             // imageBox1
             // 
@@ -103,14 +105,14 @@
             this.label5.TabIndex = 6;
             this.label5.Text = "Tracker 2:";
             // 
-            // label6
+            // lbTracker2Pos
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(28, 119);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(79, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "<position here>";
+            this.lbTracker2Pos.AutoSize = true;
+            this.lbTracker2Pos.Location = new System.Drawing.Point(28, 119);
+            this.lbTracker2Pos.Name = "lbTracker2Pos";
+            this.lbTracker2Pos.Size = new System.Drawing.Size(79, 13);
+            this.lbTracker2Pos.TabIndex = 7;
+            this.lbTracker2Pos.Text = "<position here>";
             // 
             // radioButton1
             // 
@@ -209,11 +211,31 @@
             this.radioButton4.Text = "Both";
             this.radioButton4.UseVisualStyleBackColor = true;
             // 
+            // lbConnectedDrivers
+            // 
+            this.lbConnectedDrivers.AutoSize = true;
+            this.lbConnectedDrivers.Location = new System.Drawing.Point(13, 205);
+            this.lbConnectedDrivers.Name = "lbConnectedDrivers";
+            this.lbConnectedDrivers.Size = new System.Drawing.Size(105, 13);
+            this.lbConnectedDrivers.TabIndex = 17;
+            this.lbConnectedDrivers.Text = "Connected drivers: 0";
+            // 
+            // lbConnectedControllers
+            // 
+            this.lbConnectedControllers.AutoSize = true;
+            this.lbConnectedControllers.Location = new System.Drawing.Point(13, 227);
+            this.lbConnectedControllers.Name = "lbConnectedControllers";
+            this.lbConnectedControllers.Size = new System.Drawing.Size(119, 13);
+            this.lbConnectedControllers.TabIndex = 18;
+            this.lbConnectedControllers.Text = "Connected controllers:0";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1599, 509);
+            this.Controls.Add(this.lbConnectedControllers);
+            this.Controls.Add(this.lbConnectedDrivers);
             this.Controls.Add(this.radioButton4);
             this.Controls.Add(this.lbfps);
             this.Controls.Add(this.label2);
@@ -223,12 +245,12 @@
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.lbTracker2Pos);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.imageBox1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbTracker1Pos);
             this.Controls.Add(this.button1);
             this.Name = "MainForm";
             this.Text = "TwometerVR Tracking Service";
@@ -241,12 +263,12 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbTracker1Pos;
         private Emgu.CV.UI.ImageBox imageBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lbTracker2Pos;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.RadioButton radioButton2;
@@ -257,6 +279,8 @@
         private System.Windows.Forms.Label lbfps;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.Label lbConnectedDrivers;
+        private System.Windows.Forms.Label lbConnectedControllers;
     }
 }
 

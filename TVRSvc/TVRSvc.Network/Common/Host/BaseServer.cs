@@ -22,6 +22,8 @@ namespace TVRSvc.Network.Common.Host
 
         private readonly bool receiving;
 
+        public int ConnectedClientCount => clients.Count;
+
         public BaseServer(IPAddress addr, int port, bool receiving = true)
         {
             listener = new TcpListener(addr, port);

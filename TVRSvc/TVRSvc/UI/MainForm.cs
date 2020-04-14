@@ -41,13 +41,13 @@ namespace TVRSvc
 
                 if (context.Calibration.IsCalibrated)
                 {
-                    var controller0 = manager.Trackers[0].Controller;
-                    label1.Text = manager.Trackers[0].Detected ? $"{controller0.Position.ToString()}\nY={controller0.Yaw} P={controller0.Pitch} R={controller0.Roll}" : "out of range";
-                    label1.BackColor = controller0.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
+                    var controller1 = manager.Trackers[0].Controller;
+                    lbTracker1Pos.Text = manager.Trackers[0].Detected ? $"{controller1.Position.ToString()}\nY={controller1.Yaw} P={controller1.Pitch} R={controller1.Roll}" : "out of range";
+                    lbTracker1Pos.BackColor = controller1.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
 
-                    var controller1 = manager.Trackers[1].Controller;
-                    label6.Text = manager.Trackers[1].Detected ? $"{controller1.Position.ToString()}\nY={controller1.Yaw} P={controller1.Pitch} R={controller1.Roll}" : "out of range";
-                    label6.BackColor = controller1.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
+                    var controller2 = manager.Trackers[1].Controller;
+                    lbTracker2Pos.Text = manager.Trackers[1].Detected ? $"{controller2.Position.ToString()}\nY={controller2.Yaw} P={controller2.Pitch} R={controller2.Roll}" : "out of range";
+                    lbTracker2Pos.BackColor = controller2.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
                 }
 
                 if (radioButton1.Checked)
@@ -62,6 +62,9 @@ namespace TVRSvc
                     CvInvoke.BitwiseOr(manager.Trackers[0].Frame, manager.Trackers[1].Frame, mat);
                     imageBox1.Image = mat;
                 }
+
+                lbConnectedControllers.Text = $"Connected controllers: {context.ControllerServer.ConnectedClientCount}";
+                lbConnectedDrivers.Text = $"Connected drivers: {context.DriverServer.ConnectedClientCount}";
 
                 glControl1.Invalidate();
 
