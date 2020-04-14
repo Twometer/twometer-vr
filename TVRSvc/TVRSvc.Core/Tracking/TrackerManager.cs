@@ -58,9 +58,38 @@ namespace TVRSvc.Core.Tracking
                 else
                     controller.Buttons[btn] = false;
 
-            if (!controller.ZOffset.HasValue && pressedButtons?.Length > 0)
+            HandleButtons();
+        }
+
+
+        private DateTime? pressBegin = null;
+
+        private void HandleButtons()
+        {
+            bool areAllButtonsPressed()
             {
-                controller.ZOffset = controller.Position.Z;
+                foreach (var ctrl in Trackers.Select(t => t.Controller))
+                    if (!ctrl.Buttons[Button.A])
+                        return false;
+                return true;
+            }
+
+            // If all buttons are pressed...
+            var allPressed = areAllButtonsPressed();
+            if (!allPressed)
+                pressBegin = null;
+            else if (!pressBegin.HasValue)
+                pressBegin = DateTime.Now;
+
+            // ...for more than 3 seconds...
+            if (pressBegin.HasValue && (DateTime.Now - pressBegin.Value).TotalSeconds > 3)
+            {
+                // ... then recalibrate all controllers
+                foreach (var ctrl in Trackers.Select(t => t.Controller))
+                {
+                    ctrl.ZOffset = ctrl.Position.Z;
+                    ctrl.YawOffset = ctrl.Yaw;
+                }
             }
         }
 

@@ -31,7 +31,7 @@ namespace TVRSvc.Network.DriverServer
                     writer.Write(c.Position.X);
                     writer.Write(c.Position.Y);
                     writer.Write(c.Position.Z - (c.ZOffset ?? 0));
-                    writer.Write(c.Yaw);
+                    writer.Write(c.Yaw - (c.YawOffset ?? 0));
                     writer.Write(c.Pitch);
                     writer.Write(c.Roll);
 
