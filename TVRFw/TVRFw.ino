@@ -8,7 +8,17 @@
 #define CONTROLLER_PORT 12742
 #define DISCOVERY_PORT  12743
 
+
+// IMPORTANT: Define whether you are flashing the red (left) or blue (right) controller
+
+// #define CONTROLLER_RED
+#define CONTROLLER_BLUE
+
+#ifdef CONTROLLER_RED
 #define CONTROLLER_ID   0
+#elif defined(CONTROLLER_BLUE)
+#define CONTROLLER_ID   1
+#endif
 
 Button trigger(14); // Main button
 
