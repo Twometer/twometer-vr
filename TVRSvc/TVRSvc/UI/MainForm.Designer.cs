@@ -173,9 +173,6 @@
             this.glControl1.TabIndex = 13;
             this.glControl1.VSync = true;
             this.glControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl1_Paint);
-            this.glControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseDown);
-            this.glControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseMove);
-            this.glControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseUp);
             // 
             // label2
             // 
@@ -185,7 +182,6 @@
             this.label2.Size = new System.Drawing.Size(49, 13);
             this.label2.TabIndex = 14;
             this.label2.Text = "3D view:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // lbfps
             // 

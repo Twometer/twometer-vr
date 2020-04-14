@@ -20,7 +20,7 @@ namespace TVRSvc.Network.Common.Host
 
         public event EventHandler<T> PacketReceived;
 
-        private bool receiving;
+        private readonly bool receiving;
 
         public BaseServer(IPAddress addr, int port, bool receiving = true)
         {

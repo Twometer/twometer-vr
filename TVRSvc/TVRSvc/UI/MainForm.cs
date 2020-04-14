@@ -11,12 +11,13 @@ using TVRSvc.Core.Video;
 using TVRSvc.Network.ControllerServer;
 using TVRSvc.Network.Discovery;
 using TVRSvc.Network.DriverServer;
+using TVRSvc.Service;
 
 namespace TVRSvc
 {
     public partial class MainForm : Form
     {
-        private TrackerManager manager;
+        private ServiceContext context;
 
         private int frames;
 
@@ -25,30 +26,20 @@ namespace TVRSvc
             InitializeComponent();
         }
 
+        // Main Tracker loop
         private void button1_Click(object sender, EventArgs e)
         {
-            manager = new TrackerManager();
+            context = new ServiceContext();
 
-            var camera = new Camera();
-            var calibration = new Calibration(camera, manager);
-            var driverServer = new DriverServer();
-            var controllerServer = new ControllerServer();
-            var discovery = new DiscoveryService();
-
+            var manager = context.TrackerManager;
             Application.Idle += (s, a) =>
             {
-                var frame = camera.QueryFrame();
-                manager.UpdateVideo(frame);
+                context.Update();
 
-                foreach (var t in manager.Trackers)
+                foreach (var t in context.TrackerManager.Trackers)
                     t.Visualize = checkBox1.Checked;
 
-                if (!calibration.IsCalibrated)
-                {
-                    calibration.Update(frame);
-                    label1.Text = label6.Text = "calibrating camera...";
-                }
-                else
+                if (context.Calibration.IsCalibrated)
                 {
                     var controller0 = manager.Trackers[0].Controller;
                     label1.Text = manager.Trackers[0].Detected ? $"{controller0.Position.ToString()}\nY={controller0.Yaw} P={controller0.Pitch} R={controller0.Roll}" : "out of range";
@@ -60,7 +51,7 @@ namespace TVRSvc
                 }
 
                 if (radioButton1.Checked)
-                    imageBox1.Image = frame;
+                    imageBox1.Image = context.Camera.Frame;
                 else if (radioButton2.Checked)
                     imageBox1.Image = manager.Trackers[0].Frame;
                 else if (radioButton3.Checked)
@@ -74,23 +65,16 @@ namespace TVRSvc
 
                 glControl1.Invalidate();
 
-                if (manager.Detected)
-                    driverServer.Broadcast(new DriverPacket() { ControllerStates = manager.Trackers.Select(t => t.Controller).ToArray() });
-
                 frames++;
             };
 
-            controllerServer.PacketReceived += ControllerServer_PacketReceived;
         }
 
-        private void ControllerServer_PacketReceived(object sender, ControllerInfoPacket e)
-        {
-            manager.UpdateMeta(e.ControllerId, e.Yaw, e.Pitch, e.Roll, e.PressedButtons);
-        }
 
+        // Visualization with OpenGL
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
-            if (manager == null)
+            if (context == null)
                 return;
 
             // Yes, this is immediate mode.
@@ -119,10 +103,10 @@ namespace TVRSvc
             DrawUnits(1, 0, 0, 5);
 
             GL.Color4(Color.Red);
-            DrawTracker(manager.Trackers[0]);
+            DrawTracker(context.TrackerManager.Trackers[0]);
 
             GL.Color4(Color.Blue);
-            DrawTracker(manager.Trackers[1]);
+            DrawTracker(context.TrackerManager.Trackers[1]);
 
             glControl1.SwapBuffers();
         }
@@ -133,14 +117,14 @@ namespace TVRSvc
             {
                 DrawCross(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, 0.3f);
 
-                
+
                 var yaw = tracker.Controller.Yaw;
                 var pitch = tracker.Controller.Pitch;
 
                 var x = (float)-Math.Sin(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch));
                 var y = (float)-Math.Sin(MathHelper.DegreesToRadians(-pitch));
                 var z = (float)-Math.Cos(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch));
-                DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X + x, tracker.Controller.Position.Y + y, tracker.Controller.Position.Z  + z);
+                DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X + x, tracker.Controller.Position.Y + y, tracker.Controller.Position.Z + z);
                 //DrawCross(tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z, 0.3f);
             }
         }
@@ -203,45 +187,11 @@ namespace TVRSvc
             }
         }
 
-        bool moving = false;
-
-        private void glControl1_MouseDown(object sender, MouseEventArgs e)
-        {
-            moving = true;
-        }
-
-        private void glControl1_MouseUp(object sender, MouseEventArgs e)
-        {
-            moving = false;
-        }
-
-
-        int lx;
-        int ly;
-
-        private void glControl1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (moving)
-            {
-
-
-
-            }
-
-            lx = e.X;
-            ly = e.Y;
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        // FPS Calculation
         private void timer1_Tick(object sender, EventArgs e)
         {
             lbfps.Text = $"{frames} fps";
             frames = 0;
-
         }
     }
 }

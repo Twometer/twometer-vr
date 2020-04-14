@@ -8,6 +8,8 @@ namespace TVRSvc.Core.Video
     {
         private readonly VideoCapture videoCapture;
 
+        public Mat Frame { get; private set; }
+
         public double Exposure
         {
             set
@@ -28,7 +30,8 @@ namespace TVRSvc.Core.Video
 
         public Mat QueryFrame()
         {
-            return videoCapture.QueryFrame();
+            Frame = videoCapture.QueryFrame();
+            return Frame;
         }
 
         public void Dispose()
