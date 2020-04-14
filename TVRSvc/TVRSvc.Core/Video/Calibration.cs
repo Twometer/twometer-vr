@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVRSvc.Core.Config;
 using TVRSvc.Core.Tracking;
 
 namespace TVRSvc.Core.Video
@@ -13,22 +14,17 @@ namespace TVRSvc.Core.Video
     {
         public bool IsCalibrated { get; private set; }
 
-        // TODO: Put in config file
-        private const float BrightnessThreshold = 15f;
-
-        private const int BootupFrames = 15;
-        private const int CooldownFrames = 5;
-
-        private float exposure;
-
+        private TVRConfig config;
         private Camera camera;
         private TrackerManager manager;
 
+        private float exposure;
         private int frameCounter;
         private int adjustFrames;
 
-        public Calibration(Camera camera, TrackerManager manager)
+        public Calibration(TVRConfig config, Camera camera, TrackerManager manager)
         {
+            this.config = config;
             this.camera = camera;
             this.manager = manager;
         }
@@ -37,7 +33,7 @@ namespace TVRSvc.Core.Video
         {
             // First frames deliver wrong values, so wait for camera to adjust
             frameCounter++;
-            if (frameCounter < BootupFrames)
+            if (frameCounter < config.Calibration.WarmupFrames)
                 return;
 
             // Cooldown between exposure adjustments because the camera takes time
@@ -54,10 +50,10 @@ namespace TVRSvc.Core.Video
 
             Debug.WriteLine("Brightness value: " + meanBrightness);
 
-            if (meanBrightness > BrightnessThreshold || manager.Detected)
+            if (meanBrightness > config.Calibration.BrightnessThreshold || manager.Detected)
             {
                 exposure--;
-                adjustFrames = CooldownFrames;
+                adjustFrames = config.Calibration.CooldownFrames;
                 camera.Exposure = exposure;
             }
             else

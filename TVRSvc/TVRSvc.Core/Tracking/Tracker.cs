@@ -19,11 +19,11 @@ namespace TVRSvc.Core.Tracking
 
         private readonly ICameraTransform transform;
 
-        public Tracker(byte controllerId, TrackerSettings settings)
+        public Tracker(byte controllerId, TrackerSettings settings, ICameraTransform transform)
         {
             Controller = new Controller(controllerId);
             Settings = settings;
-            transform = new SimpleCameraTransform();
+            this.transform = transform;
         }
 
         public void UpdateVideo(Mat frame)

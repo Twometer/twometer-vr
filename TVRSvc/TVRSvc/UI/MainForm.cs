@@ -29,7 +29,7 @@ namespace TVRSvc
         // Main Tracker loop
         private void button1_Click(object sender, EventArgs e)
         {
-            context = new ServiceContext();
+            context = new ServiceContext("tvrconfig.json");
 
             var manager = context.TrackerManager;
             Application.Idle += (s, a) =>

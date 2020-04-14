@@ -1,0 +1,23 @@
+// Default configuration
+{
+  "Calibration": {
+    "BrightnessThreshold": 15.0,
+    "WarmupFrames": 15,
+    "CooldownFrames": 5
+  },
+  "Camera": {
+    "CameraIndex": 0,
+    "FrameWidth": 1280,
+    "FrameHeight": 720,
+    "FocalLength": 656.25,
+    "SphereSize": 0.04,
+    "PixelsPerMeter": 590,
+    "HeightAboveGround": 1.35,
+    "Latency": 3
+  },
+  "Tracker": {
+    "LeftInvertPitch": false,
+    "RightInvertPitch": true,
+    "PoseResetDelay": 2.5
+  }
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVRSvc.Core.Config;
 using TVRSvc.Core.Tracking;
 using TVRSvc.Core.Video;
 using TVRSvc.Network.ControllerServer;
@@ -13,6 +14,8 @@ namespace TVRSvc.Service
 {
     public class ServiceContext
     {
+        public TVRConfig Config { get; set; }
+
         public TrackerManager TrackerManager { get; }
 
         public Camera Camera { get; }
@@ -25,11 +28,12 @@ namespace TVRSvc.Service
 
         public ControllerServer ControllerServer { get; }
 
-        public ServiceContext()
+        public ServiceContext(string configFile)
         {
-            TrackerManager = new TrackerManager();
-            Camera = new Camera();
-            Calibration = new Calibration(Camera, TrackerManager);
+            Config = TVRConfig.Load(configFile);
+            TrackerManager = new TrackerManager(Config);
+            Camera = new Camera(Config);
+            Calibration = new Calibration(Config, Camera, TrackerManager);
             Discovery = new DiscoveryService();
             DriverServer = new DriverServer();
             ControllerServer = new ControllerServer();

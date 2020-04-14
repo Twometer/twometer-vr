@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVRSvc.Core.Config;
 using TVRSvc.Core.Math;
 
 namespace TVRSvc.Core.Transform
@@ -17,23 +18,33 @@ namespace TVRSvc.Core.Transform
         // Unit: Meters
         // TODO: Make this into a config file
 
-        private const float FocalLength = 656.25f; // Perceived focal length calculated using formula from web page
+        //private const float FocalLength = 656.25f; // Perceived focal length calculated using formula from web page
 
-        private const float SphereSize = 0.04f; // Real-life Tracker sphere is 4cm in diameter
+        //private const float SphereSize = 0.04f; // Real-life Tracker sphere is 4cm in diameter
 
-        private const float FS = FocalLength * SphereSize;
+        //private const float FS = FocalLength * SphereSize;
 
-        private const float HorizontalPixelsPerMeter = 590; // How many pixels it takes for one meter in XY direction (after normalization)
+        //private const float HorizontalPixelsPerMeter = 590; // How many pixels it takes for one meter in XY direction (after normalization)
 
-        private const float HeightAboveGround = 1.35f; // Height of the camera above the ground in meters
+        //private const float HeightAboveGround = 1.35f; // Height of the camera above the ground in meters
 
-        private const int Latency = 3; // Latency of the transform in frames. Higher values mean slower response time but smoother movement
+        //private const int Latency = 3; // Latency of the transform in frames. Higher values mean slower response time but smoother movement
+
+        private readonly TVRConfig config;
 
         private PointF frameCenter;
 
-        private RollingAverage xAvg = new RollingAverage(Latency);
-        private RollingAverage yAvg = new RollingAverage(Latency);
-        private RollingAverage zAvg = new RollingAverage(Latency);
+        private RollingAverage xAvg;
+        private RollingAverage yAvg;
+        private RollingAverage zAvg;
+
+        public SimpleCameraTransform(TVRConfig config)
+        {
+            this.config = config;
+            xAvg = new RollingAverage(config.Camera.Latency);
+            yAvg = new RollingAverage(config.Camera.Latency);
+            zAvg = new RollingAverage(config.Camera.Latency);
+        }
 
         public Vec3 Transform(int frameWidth, int frameHeight, CircleF obj)
         {
@@ -46,16 +57,16 @@ namespace TVRSvc.Core.Transform
 
 
             var Z = ComputeDistance(diameter);
-            xAvg.Push(offset.X * Z / HorizontalPixelsPerMeter);
-            yAvg.Push(-offset.Y * Z / HorizontalPixelsPerMeter);
+            xAvg.Push(offset.X * Z / config.Camera.PixelsPerMeter);
+            yAvg.Push(-offset.Y * Z / config.Camera.PixelsPerMeter);
             zAvg.Push(Z);
 
-            return new Vec3(xAvg.Value, yAvg.Value + HeightAboveGround, zAvg.Value);
+            return new Vec3(xAvg.Value, yAvg.Value + config.Camera.HeightAboveGround, zAvg.Value);
         }
 
         private float ComputeDistance(float diameter)
         {
-            return FS / diameter;
+            return config.Camera.FocalLength * config.Camera.SphereSize / diameter;
         }
 
         private Point LockToPixel(PointF p)

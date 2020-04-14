@@ -6,19 +6,32 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVRSvc.Core.Config;
 using TVRSvc.Core.Model;
+using TVRSvc.Core.Transform;
 
 namespace TVRSvc.Core.Tracking
 {
     public class TrackerManager
     {
-        public Tracker[] Trackers { get; } = new[]
-        {
-            new Tracker(0, TrackerSettings.Red),   // Left controller
-            new Tracker(1, TrackerSettings.Blue)   // Right controller
-        };
+        public Tracker[] Trackers { get; }
 
         public bool Detected => Trackers.Any(t => t.Detected);
+
+        private readonly TVRConfig config;
+        private readonly ICameraTransform transform;
+
+        public TrackerManager(TVRConfig config)
+        {
+            this.config = config;
+            transform = new SimpleCameraTransform(config);
+
+            Trackers = new[]
+            {
+                new Tracker(0, TrackerSettings.Red, transform),   // Left controller
+                new Tracker(1, TrackerSettings.Blue, transform)   // Right controller
+            };
+        }
 
         public void UpdateVideo(Mat frame)
         {
@@ -36,17 +49,15 @@ namespace TVRSvc.Core.Tracking
 
             var controller = Trackers[controllerId].Controller;
 
-            // TODO: Make this into a config file!
-            //       Also, make the mapping of XYZ to yaw, pitch, roll for each controller in a config
-            //       Because me was stupid and mounted one PCB inverse to the other
-            //       To make stuff even more complicated, the MPU has its base axis in a different plane than our coordinate system
-            //       So we have to shift around yaw, pitch and roll here to make it work with SteamVR and TVR
-
+            // To make stuff complicated, The MPU has its base axis in a different plane than our coordinate system
+            // So we have to shift around yaw, pitch and roll here to make it work with SteamVR and TVR
             controller.Yaw = -yaw;
             controller.Pitch = roll;
             controller.Roll = pitch;
 
-            if (controller.Id == 1)
+            if (config.Tracker.LeftInvertPitch && controller.Id == 0)
+                controller.Pitch *= -1;
+            if (config.Tracker.RightInvertPitch && controller.Id == 1)
                 controller.Pitch *= -1;
 
             var keys = new List<Button>();
@@ -81,10 +92,10 @@ namespace TVRSvc.Core.Tracking
             else if (!pressBegin.HasValue)
                 pressBegin = DateTime.Now;
 
-            // ...for more than 3 seconds...
-            if (pressBegin.HasValue && (DateTime.Now - pressBegin.Value).TotalSeconds > 3)
+            // ...for more than X seconds...
+            if (pressBegin.HasValue && (DateTime.Now - pressBegin.Value).TotalSeconds > config.Tracker.PoseResetDelay)
             {
-                // ... then recalibrate all controllers
+                // ... then reset pose for all controllers
                 foreach (var ctrl in Trackers.Select(t => t.Controller))
                 {
                     ctrl.ZOffset = ctrl.Position.Z;
