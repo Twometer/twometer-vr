@@ -53,7 +53,7 @@ vr::DriverPose_t ControllerDriver::GetPose() {
     pose.vecPosition[1] = controllerState.posY;
     pose.vecPosition[2] = controllerState.posZ;
 
-    pose.qRotation = vrmath::quaternionFromYawPitchRoll(controllerState.yaw, controllerState.pitch, controllerState.roll);
+    pose.qRotation = vrmath::quaternionFromYawPitchRoll(deg2rad(controllerState.yaw), deg2rad(controllerState.pitch), deg2rad(controllerState.roll));
 
     return pose;
 }

@@ -50,16 +50,16 @@ namespace TVRSvc.Service
         {
             var frame = Camera.QueryFrame();
             TrackerManager.UpdateVideo(frame);
-
             if (!Calibration.IsCalibrated)
             {
                 Calibration.Update(frame);
             }
-            else
-            {
-                if (TrackerManager.Detected)
-                    DriverServer.Broadcast(new DriverPacket() { ControllerStates = TrackerManager.Trackers.Select(t => t.Controller).ToArray() });
-            }
+        }
+
+        public void Broadcast()
+        {
+            if (TrackerManager.Detected)
+                DriverServer.Broadcast(new DriverPacket() { ControllerStates = TrackerManager.Trackers.Select(t => t.Controller).ToArray() });
         }
 
     }

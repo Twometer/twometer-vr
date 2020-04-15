@@ -45,6 +45,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbfps = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.lbConnectedDrivers = new System.Windows.Forms.Label();
             this.lbConnectedControllers = new System.Windows.Forms.Label();
@@ -200,6 +201,12 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 16;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
             // radioButton4
             // 
             this.radioButton4.AutoSize = true;
@@ -281,6 +288,7 @@
         private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.Label lbConnectedDrivers;
         private System.Windows.Forms.Label lbConnectedControllers;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 

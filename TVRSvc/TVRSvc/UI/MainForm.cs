@@ -74,6 +74,11 @@ namespace TVRSvc
 
         }
 
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            context?.Broadcast();
+        }
+
 
         // Visualization with OpenGL
         private void glControl1_Paint(object sender, PaintEventArgs e)
