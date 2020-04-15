@@ -30,6 +30,7 @@ namespace TVRSvc
         private void button1_Click(object sender, EventArgs e)
         {
             context = new ServiceContext("tvrconfig.json");
+            button1.Enabled = false;
 
             var manager = context.TrackerManager;
             Application.Idle += (s, a) =>
@@ -121,17 +122,18 @@ namespace TVRSvc
                 DrawCross(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, 0.3f);
 
 
-                var yaw = tracker.Controller.Yaw;
-                var pitch = tracker.Controller.Pitch;
+                var yaw = MathHelper.DegreesToRadians(tracker.Controller.Yaw - 90);
+                var pitch = MathHelper.DegreesToRadians(-tracker.Controller.Pitch);
 
-                var controllerLength = 0.154f; // meters
-
-                // TODO: With angles > 90° this calculation no longer works
-                var x = (float)-Math.Sin(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch)) * controllerLength;
-                var y = (float)-Math.Sin(MathHelper.DegreesToRadians(-pitch)) * controllerLength;
-                var z = (float)-Math.Cos(MathHelper.DegreesToRadians(yaw)) * (float)Math.Sin(MathHelper.DegreesToRadians(90 - pitch)) * controllerLength;
+                var controllerLength = 0.07f; // meters
+                var xzlen = Math.Cos(pitch);
+                var x = (float)(xzlen * Math.Cos(yaw));
+                var y = (float)(Math.Sin(pitch));
+                var z = (float)(xzlen * Math.Sin(-yaw));
                 DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z);
-                DrawCross(tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z, 0.3f);
+
+                //GL.Color4(Color.Black);
+                //DrawCross(tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z, 0.3f);
             }
         }
 

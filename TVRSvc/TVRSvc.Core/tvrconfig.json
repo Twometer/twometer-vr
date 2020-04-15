@@ -18,8 +18,8 @@
   "Tracker": {
     "LeftInvertPitch": false,
     "RightInvertPitch": true,
-    "PoseResetDelay": 2.5,
+    "PoseResetDelay": 0.25,
     "ControllerLength": 0.154,
-    "ZOffset": -1.0
+    "ZOffset": 0.25
   }
 }

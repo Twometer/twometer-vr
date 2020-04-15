@@ -13,7 +13,7 @@ add_library(TVRDrv SHARED
         src/driver/ServerDriver.cpp
         src/driver/ControllerDriver.cpp
         src/driver/WatchdogDriver.cpp
-        src/model/ControllerState.cpp)
+        src/model/ControllerState.cpp src/util/openvr_math.h)
 
 add_executable(TVRDrvTest
         src/main_test.cpp

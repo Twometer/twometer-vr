@@ -9,6 +9,7 @@
 #include <openvr_driver.h>
 #include "../net/StreamClient.h"
 #include "../model/Button.h"
+#include "../util/openvr_math.h"
 
 #define TRACKER_LEFT  0
 #define TRACKER_RIGHT 1
