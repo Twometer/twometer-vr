@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace TVRSvc.Core.Model
         public float Pitch { get; set; }
         public float Roll { get; set; }
 
-        public IDictionary<Button, bool> Buttons { get; } = new Dictionary<Button, bool>();
+        public ConcurrentDictionary<Button, bool> Buttons { get; } = new ConcurrentDictionary<Button, bool>();
 
         public Controller(byte id)
         {

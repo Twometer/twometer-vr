@@ -71,9 +71,9 @@ vr::DriverPose_t ControllerDriver::GetPose() {
     pose.vecDriverFromHeadTranslation[2] = 0.0f;
 
     // Apply controller position and rotation
-    pose.vecWorldFromDriverTranslation[0] = controllerState.posX;
-    pose.vecWorldFromDriverTranslation[1] = controllerState.posY;
-    pose.vecWorldFromDriverTranslation[2] = controllerState.posZ;
+    pose.vecPosition[0] = controllerState.posX;
+    pose.vecPosition[1] = controllerState.posY;
+    pose.vecPosition[2] = controllerState.posZ;
 
     // Here, we have to shift the angles around again because SteamVR's coordinate system is again,
     // different. God do I hate rotations.

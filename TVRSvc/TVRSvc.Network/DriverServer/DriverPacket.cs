@@ -35,9 +35,8 @@ namespace TVRSvc.Network.DriverServer
                     writer.Write(c.Pitch);
                     writer.Write(c.Roll);
 
-                    var buttons = new Dictionary<Button, bool>(c.Buttons);
-                    writer.Write((byte)buttons.Keys.Count);
-                    foreach (var btn in buttons)
+                    writer.Write((byte)c.Buttons.Keys.Count);
+                    foreach (var btn in c.Buttons)
                     {
                         writer.Write((byte)btn.Key);
                         writer.Write(btn.Value);

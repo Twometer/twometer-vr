@@ -40,9 +40,11 @@ namespace TVRSvc.Network.Common.Host
             if (received == sizeof(short))
             {
                 var packetLen = BitConverter.ToInt16(buf, 0);
-                if (packetLen > buf.Length)
+                if (packetLen > buf.Length || packetLen < 0)
                 {
-                    throw new IOException("Buffer overflow: Message too long");
+                    Debug.WriteLine("Dropping invalid packet");
+                    BeginReceiving();
+                    return;
                 }
                 if (packetLen == 0)
                 {
