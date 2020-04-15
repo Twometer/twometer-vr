@@ -100,9 +100,11 @@
     <Compile Include="Config\CameraConfig.cs" />
     <Compile Include="Config\TrackerConfig.cs" />
     <Compile Include="Config\TVRConfig.cs" />
-    <Compile Include="Math\RollingAverage.cs" />
-    <Compile Include="Transform\ICameraTransform.cs" />
-    <Compile Include="Transform\SimpleCameraTransform.cs" />
+    <Compile Include="Math\Filters\IFilter.cs" />
+    <Compile Include="Math\Filters\KalmanFilter.cs" />
+    <Compile Include="Math\Filters\RollingAverageFilter.cs" />
+    <Compile Include="Math\Transform\ICameraTransform.cs" />
+    <Compile Include="Math\Transform\SimpleCameraTransform.cs" />
     <Compile Include="Math\Vec2.cs" />
     <Compile Include="Math\Vec3.cs" />
     <Compile Include="Model\Button.cs" />

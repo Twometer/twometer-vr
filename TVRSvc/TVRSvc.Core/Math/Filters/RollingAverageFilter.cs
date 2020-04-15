@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TVRSvc.Core.Math
+namespace TVRSvc.Core.Math.Filters
 {
-    public class RollingAverage
+    public class RollingAverageFilter : IFilter
     {
         public float Value => dataBuffer.Average();
 
@@ -14,7 +14,7 @@ namespace TVRSvc.Core.Math
 
         private int idx;
 
-        public RollingAverage(int size)
+        public RollingAverageFilter(int size)
         {
             dataBuffer = new float[size];
         }

@@ -1,9 +1,9 @@
 ﻿using Emgu.CV.Structure;
 using System.Drawing;
 using TVRSvc.Core.Config;
-using TVRSvc.Core.Math;
+using TVRSvc.Core.Math.Filters;
 
-namespace TVRSvc.Core.Transform
+namespace TVRSvc.Core.Math.Transform
 {
     // This transform is based on
     // https://www.pyimagesearch.com/2015/01/19/find-distance-camera-objectmarker-using-python-opencv/
@@ -13,16 +13,16 @@ namespace TVRSvc.Core.Transform
 
         private PointF frameCenter;
 
-        private RollingAverage xAvg;
-        private RollingAverage yAvg;
-        private RollingAverage zAvg;
+        private IFilter xAvg;
+        private IFilter yAvg;
+        private IFilter zAvg;
 
         public SimpleCameraTransform(TVRConfig config)
         {
             this.config = config;
-            xAvg = new RollingAverage(config.Camera.Latency);
-            yAvg = new RollingAverage(config.Camera.Latency);
-            zAvg = new RollingAverage(config.Camera.Latency);
+            xAvg = new RollingAverageFilter(config.Camera.Latency);
+            yAvg = new RollingAverageFilter(config.Camera.Latency);
+            zAvg = new RollingAverageFilter(config.Camera.Latency);
         }
 
         public Vec3 Transform(int frameWidth, int frameHeight, CircleF obj)

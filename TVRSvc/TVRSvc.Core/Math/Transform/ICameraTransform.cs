@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TVRSvc.Core.Math;
 
-namespace TVRSvc.Core.Transform
+namespace TVRSvc.Core.Math.Transform
 {
     public interface ICameraTransform
     {
