@@ -19,17 +19,14 @@ namespace TVRSvc.Core.Tracking
         public bool Detected => Trackers.Any(t => t.Detected);
 
         private readonly TVRConfig config;
-        private readonly ICameraTransform transform;
 
         public TrackerManager(TVRConfig config)
         {
             this.config = config;
-            transform = new SimpleCameraTransform(config);
-
             Trackers = new[]
             {
-                new Tracker(0, TrackerSettings.Red, transform),   // Left controller
-                new Tracker(1, TrackerSettings.Blue, transform)   // Right controller
+                new Tracker(0, TrackerSettings.Red, new SimpleCameraTransform(config)),   // Left controller
+                new Tracker(1, TrackerSettings.Blue, new SimpleCameraTransform(config))   // Right controller
             };
         }
 

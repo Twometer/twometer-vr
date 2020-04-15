@@ -17,7 +17,7 @@ vr::EVRInitError ServerDriver::Init(vr::IVRDriverContext *pDriverContext) {
     VR_INIT_SERVER_DRIVER_CONTEXT(pDriverContext);
 
     streamClient = new StreamClient([this](const DataPacket &dataPacket) {
-        for (const ControllerState& state : dataPacket.controllerStates) {
+        for (const ControllerState &state : dataPacket.controllerStates) {
             ControllerDriver *driver = (*controllerDrivers)[state.controllerId];
             driver->SetControllerState(state);
         }
@@ -28,22 +28,14 @@ vr::EVRInitError ServerDriver::Init(vr::IVRDriverContext *pDriverContext) {
     streamThread = new std::thread([&] { streamClient->ReceiveLoop(); });
 
     controllerDrivers = new std::vector<ControllerDriver *>();
-    controllerDrivers->push_back(new ControllerDriver(TRACKER_LEFT, nullptr, "TVRXTL_0001"));
-    controllerDrivers->push_back(new ControllerDriver(TRACKER_RIGHT, nullptr, "TVRXTL_0002"));
+    controllerDrivers->push_back(new ControllerDriver(TRACKER_LEFT, "TVRXTL_0001"));
+    controllerDrivers->push_back(new ControllerDriver(TRACKER_RIGHT, "TVRXTL_0002"));
 
     for (auto drv : *controllerDrivers)
-        VRServerDriverHost()->TrackedDeviceAdded(drv->GetSerialNumber().c_str(), vr::TrackedDeviceClass_Controller,
-                                                 drv);
+        VRServerDriverHost()->TrackedDeviceAdded(drv->GetSerialNumber().c_str(), vr::TrackedDeviceClass_Controller, drv);
+
     return VRInitError_None;
 }
 
 void ServerDriver::RunFrame() {
-    for (auto drv : *controllerDrivers)
-        drv->RunFrame();
-
-    VREvent_t vrEvent{};
-    while (VRServerDriverHost()->PollNextEvent(&vrEvent, sizeof(vrEvent))) {
-        for (auto drv : *controllerDrivers)
-            drv->ProcessEvent(vrEvent);
-    }
 }

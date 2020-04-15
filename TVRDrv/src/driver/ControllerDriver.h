@@ -17,27 +17,23 @@
 
 class ControllerDriver : public vr::ITrackedDeviceServerDriver {
 private:
-    StreamClient *streamClient = nullptr;
-
+    int trackerId = -1;
     std::string serialNumber;
+    uint32_t objectId = vr::k_unTrackedDeviceIndexInvalid;
 
     vr::PropertyContainerHandle_t propertyContainer = vr::k_ulInvalidPropertyContainer;
 
-    int trackerId = -1;
-
-    uint32_t objectId = vr::k_unTrackedDeviceIndexInvalid;
-
-    vr::VRInputComponentHandle_t buttonA;
-    vr::VRInputComponentHandle_t buttonB;
-
     ControllerState controllerState;
+
+    vr::VRInputComponentHandle_t buttonA{};
+    vr::VRInputComponentHandle_t buttonB{};
 
     int32_t GetTrackerRole();
 
     static vr::HmdQuaternion_t ToQuaternion(float yaw, float pitch, float roll);
 
 public:
-    ControllerDriver(int trackerId, StreamClient *streamClient, std::string serialNumber);
+    ControllerDriver(int trackerId, std::string serialNumber);
 
     vr::EVRInitError Activate(uint32_t unObjectId) override;
 
@@ -53,11 +49,7 @@ public:
 
     std::string GetSerialNumber();
 
-    void RunFrame();
-
-    void ProcessEvent(vr::VREvent_t event);
-
-    void SetControllerState(ControllerState controllerState);
+    void SetControllerState(ControllerState newState);
 };
 
 

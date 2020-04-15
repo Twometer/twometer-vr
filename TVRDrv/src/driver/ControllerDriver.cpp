@@ -4,12 +4,9 @@
 
 #include "ControllerDriver.h"
 
-#include <utility>
 #include <cmath>
 
-
 #define deg2rad(angleDegrees) ((angleDegrees) * M_PI / 180.0)
-#define rad2deg(angleRadians) ((angleRadians) * 180.0 / M_PI)
 
 using namespace vr;
 
@@ -35,20 +32,11 @@ void ControllerDriver::Deactivate() {
     objectId = k_unTrackedDeviceIndexInvalid;
 }
 
-void ControllerDriver::EnterStandby() {
-
-}
-
-void *ControllerDriver::GetComponent(const char *pchComponentNameAndVersion) {
-    return nullptr;
-}
-
-void ControllerDriver::DebugRequest(const char *pchRequest, char *pchResponseBuffer, uint32_t unResponseBufferSize) {
-
-}
-
+// CLion will complain about the wrong order of yaw, roll and pitch. However, the angles have to be shifted here due to the Quaternion transform.
+// Therefore, we disable this warning here
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "ArgumentSelectionDefects"
+
 vr::DriverPose_t ControllerDriver::GetPose() {
     DriverPose_t pose = {0};
     pose.poseIsValid = controllerState.IsValid();
@@ -58,45 +46,27 @@ vr::DriverPose_t ControllerDriver::GetPose() {
     pose.willDriftInYaw = false;
 
     // No transform due to HMD pose
-    pose.qDriverFromHeadRotation.w = 1.f;
-    pose.qDriverFromHeadRotation.x = 0.0f;
-    pose.qDriverFromHeadRotation.y = 0.0f;
-    pose.qDriverFromHeadRotation.z = 0.0f;
-    pose.qWorldFromDriverRotation.w = 1.f;
-    pose.qWorldFromDriverRotation.x = 0.f;
-    pose.qWorldFromDriverRotation.y = 0.f;
-    pose.qWorldFromDriverRotation.z = 0.f;
-    pose.vecDriverFromHeadTranslation[0] = 0.0f;
-    pose.vecDriverFromHeadTranslation[1] = 0.0f;
-    pose.vecDriverFromHeadTranslation[2] = 0.0f;
+    pose.qDriverFromHeadRotation.w = pose.qWorldFromDriverRotation.w = 1.f;
 
-    // Apply controller position and rotation
+    // Apply the positional data
     pose.vecPosition[0] = controllerState.posX;
     pose.vecPosition[1] = controllerState.posY;
     pose.vecPosition[2] = controllerState.posZ;
 
-    // Here, we have to shift the angles around again because SteamVR's coordinate system is again,
-    // different. God do I hate rotations.
+    // Here, we have to shift the angles around due to the coordinate system of the Quaternion calculation
     pose.qRotation = ToQuaternion(controllerState.roll, controllerState.yaw, controllerState.pitch);
+
     return pose;
 }
+
 #pragma clang diagnostic pop
 
 std::string ControllerDriver::GetSerialNumber() {
     return serialNumber;
 }
 
-void ControllerDriver::RunFrame() {
-    // Update buttons here
-
-}
-
-void ControllerDriver::ProcessEvent(vr::VREvent_t event) {
-
-}
-
-ControllerDriver::ControllerDriver(int trackerId, StreamClient *streamClient, std::string serialNumber)
-        : trackerId(trackerId), streamClient(streamClient), serialNumber(std::move(serialNumber)),
+ControllerDriver::ControllerDriver(int trackerId, std::string serialNumber)
+        : trackerId(trackerId), serialNumber(std::move(serialNumber)),
           controllerState(ControllerState::invalid) {
 }
 
@@ -109,8 +79,8 @@ int32_t ControllerDriver::GetTrackerRole() {
         return TrackedControllerRole_Invalid;
 }
 
-void ControllerDriver::SetControllerState(ControllerState controllerState) {
-    this->controllerState = controllerState;
+void ControllerDriver::SetControllerState(ControllerState newState) {
+    controllerState = std::move(newState);
     vr::VRServerDriverHost()->TrackedDevicePoseUpdated(objectId, GetPose(), sizeof(vr::DriverPose_t));
 
     vr::VRDriverInput()->UpdateBooleanComponent(buttonA, controllerState.buttons[Button::A], 0);
@@ -140,4 +110,16 @@ vr::HmdQuaternion_t ControllerDriver::ToQuaternion(float yaw, float pitch, float
     q.z = cr * cp * sy - sr * sp * cy;
 
     return q;
+}
+
+
+// Unused methods //
+void ControllerDriver::EnterStandby() {
+}
+
+void *ControllerDriver::GetComponent(const char *pchComponentNameAndVersion) {
+    return nullptr;
+}
+
+void ControllerDriver::DebugRequest(const char *pchRequest, char *pchResponseBuffer, uint32_t unResponseBufferSize) {
 }
