@@ -13,5 +13,7 @@ namespace TVRSvc.Core.Config
         public bool RightInvertPitch { get; set; }
 
         public double PoseResetDelay { get; set; }
+        
+        public float ZOffset { get; set; }
     }
 }

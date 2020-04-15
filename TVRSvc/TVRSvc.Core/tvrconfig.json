@@ -19,6 +19,7 @@
     "LeftInvertPitch": false,
     "RightInvertPitch": true,
     "PoseResetDelay": 2.5,
-    "ControllerLength": 0.154
+    "ControllerLength": 0.154,
+    "ZOffset": -1.0
   }
 }

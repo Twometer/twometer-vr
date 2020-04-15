@@ -95,7 +95,7 @@ namespace TVRSvc.Core.Tracking
                 // ... then reset pose for all controllers
                 foreach (var ctrl in Trackers.Select(t => t.Controller))
                 {
-                    ctrl.ZOffset = ctrl.Position.Z;
+                    ctrl.ZOffset = ctrl.Position.Z + config.Tracker.ZOffset;
                     ctrl.YawOffset = ctrl.Yaw;
                 }
             }
