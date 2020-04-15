@@ -12,7 +12,7 @@
     "FocalLength": 656.25,
     "SphereSize": 0.04,
     "PixelsPerMeter": 590,
-    "HeightAboveGround": 1.35,
+    "HeightAboveGround": 1.45,
     "Latency": 3
   },
   "Tracker": {

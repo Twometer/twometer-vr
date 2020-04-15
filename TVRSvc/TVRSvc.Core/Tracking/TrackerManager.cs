@@ -28,6 +28,8 @@ namespace TVRSvc.Core.Tracking
                 new Tracker(0, TrackerSettings.Red, new SimpleCameraTransform(config)),   // Left controller
                 new Tracker(1, TrackerSettings.Blue, new SimpleCameraTransform(config))   // Right controller
             };
+            foreach (var t in Trackers)
+                t.Controller.ZOffset = config.Tracker.ZOffset;
         }
 
         public void UpdateVideo(Mat frame)
@@ -95,7 +97,6 @@ namespace TVRSvc.Core.Tracking
                 // ... then reset pose for all controllers
                 foreach (var ctrl in Trackers.Select(t => t.Controller))
                 {
-                    ctrl.ZOffset = ctrl.Position.Z + config.Tracker.ZOffset;
                     ctrl.YawOffset = ctrl.Yaw;
                 }
             }
