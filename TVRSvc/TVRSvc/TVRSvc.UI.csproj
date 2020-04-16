@@ -107,7 +107,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Service\ServiceContext.cs" />
     <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +146,10 @@
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TVRSvc.Common\TVRSvc.Common.csproj">
+      <Project>{1037e92a-b94f-49a8-a62a-6460901e80c4}</Project>
+      <Name>TVRSvc.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TVRSvc.Core\TVRSvc.Core.csproj">
       <Project>{bf70d6f8-2ce6-4515-bd30-dd64a0ce297f}</Project>
       <Name>TVRSvc.Core</Name>

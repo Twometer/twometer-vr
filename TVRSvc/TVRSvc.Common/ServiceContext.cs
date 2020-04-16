@@ -10,7 +10,7 @@ using TVRSvc.Network.ControllerServer;
 using TVRSvc.Network.Discovery;
 using TVRSvc.Network.DriverServer;
 
-namespace TVRSvc.Service
+namespace TVRSvc.Common
 {
     public class ServiceContext
     {

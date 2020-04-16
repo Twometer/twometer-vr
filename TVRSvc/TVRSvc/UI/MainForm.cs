@@ -6,12 +6,12 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TVRSvc.Common;
 using TVRSvc.Core.Tracking;
 using TVRSvc.Core.Video;
 using TVRSvc.Network.ControllerServer;
 using TVRSvc.Network.Discovery;
 using TVRSvc.Network.DriverServer;
-using TVRSvc.Service;
 
 namespace TVRSvc
 {
