@@ -3,6 +3,9 @@
 
 #include "WiFiConfig.h"
 #include "Discovery.h"
+#include "ButtonId.h"
+#include "Button.h"
+#include "Packet.h"
 
 #define CONTROLLER_RED
 // #define CONTROLLER_BLUE
@@ -13,7 +16,11 @@
   #define CONTROLLER_ID   1
 #endif
 
+#define TRIGGER_PIN 14
+
+Button trigger(TRIGGER_PIN);
 Discovery discovery;
+WiFiClient tcp;
 
 void setup() {
   Serial.begin(38400);    // Ah yes, debug
@@ -21,8 +28,8 @@ void setup() {
 
   WiFi.persistent(true);  // Save those credentials
   WiFi.mode(WIFI_STA);    // Station mode for ESP-firmware glitch prevention
-  WiFi.begin(WIFI_SSID, WIFI_PASS);
-  pinMode(14, INPUT_PULLUP);
+  WiFi.begin(WIFI_SSID, WIFI_PASS); // Connect
+  pinMode(TRIGGER_PIN, INPUT_PULLUP); // Configure our pin
 
   Serial.println("Connecting to WiFi...");
   while (WiFi.status() != WL_CONNECTED) {
@@ -38,10 +45,17 @@ void setup() {
   // TODO initialize sensors here
 
   Serial.println("Connecting to server...");
-  // TODO connect
+  tcp.setNoDelay(true);
+  while (!tcp.connect(serverIp, CONTROLLER_PORT)) {
+    delay(500);
+  }
   Serial.println("Connection established");
 }
 
 void loop() {
+  // TODO update sensors
+  if (trigger.isPressed()) {
 
+  }
+  // TODO send packets:  Packet::Send()
 }
