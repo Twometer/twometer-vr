@@ -13,7 +13,7 @@ namespace TVR.Service.UI
         /// </summary>
         [STAThread]
         static void Main()
-      {
+        {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

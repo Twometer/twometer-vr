@@ -260,7 +260,7 @@
             this.Controls.Add(this.lbTracker1Pos);
             this.Controls.Add(this.button1);
             this.Name = "MainForm";
-            this.Text = "TwometerVR Tracking Service";
+            this.Text = "TwometerVR Tracking Service (Debug GUI)";
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

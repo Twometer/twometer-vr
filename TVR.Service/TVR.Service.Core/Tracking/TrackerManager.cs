@@ -21,6 +21,8 @@ namespace TVR.Service.Core.Tracking
 
         private readonly TVRConfig config;
 
+        private Mat hsvFrame = new Mat();
+
         public TrackerManager(TVRConfig config)
         {
             this.config = config;
@@ -35,7 +37,6 @@ namespace TVR.Service.Core.Tracking
 
         public void UpdateVideo(Mat frame)
         {
-            var hsvFrame = new Mat();
             CvInvoke.CvtColor(frame, hsvFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
 
             foreach (var tracker in Trackers)
@@ -60,10 +61,7 @@ namespace TVR.Service.Core.Tracking
             if (config.Tracker.RightInvertPitch && controller.Id == 1)
                 controller.Pitch *= -1;
 
-            var keys = new List<Button>();
-            keys.AddRange(controller.Buttons.Keys);
-
-            foreach (var btn in keys)
+            foreach (var btn in controller.Buttons.Keys)
                 if (pressedButtons?.Contains(btn) == true)
                     controller.Buttons[btn] = true;
                 else

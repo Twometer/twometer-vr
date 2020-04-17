@@ -6,7 +6,7 @@
 #include "ButtonId.h"
 #include "Profiler.h"
 
-#define PACKET_DELAY 25
+#define PACKET_DELAY 5
 
 #define CONTROLLER_PORT 12742
 #define DISCOVERY_PORT  12743

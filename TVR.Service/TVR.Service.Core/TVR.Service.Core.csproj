@@ -121,6 +121,7 @@
     <Compile Include="Tracking\TrackerSettings.cs" />
     <Compile Include="Video\Calibration.cs" />
     <Compile Include="Video\Camera.cs" />
+    <Compile Include="Video\ImageProcessing.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

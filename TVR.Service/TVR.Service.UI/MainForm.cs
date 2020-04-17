@@ -130,7 +130,7 @@ namespace TVR.Service.UI
                 var yaw = MathHelper.DegreesToRadians(tracker.Controller.Yaw - 90);
                 var pitch = MathHelper.DegreesToRadians(-tracker.Controller.Pitch);
 
-                var controllerLength = 0.07f; // meters
+                // var controllerLength = 0.07f; // meters
                 var xzlen = Math.Cos(pitch);
                 var x = (float)(xzlen * Math.Cos(yaw));
                 var y = (float)(Math.Sin(pitch));

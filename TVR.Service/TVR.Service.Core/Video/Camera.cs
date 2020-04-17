@@ -30,6 +30,7 @@ namespace TVR.Service.Core.Video
 
         public Mat QueryFrame()
         {
+            Frame?.Dispose();
             Frame = videoCapture.QueryFrame();
             return Frame;
         }

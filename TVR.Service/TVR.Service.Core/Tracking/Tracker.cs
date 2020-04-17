@@ -3,7 +3,7 @@ using Emgu.CV.Structure;
 using TVR.Service.Core.Math;
 using TVR.Service.Core.Math.Transform;
 using TVR.Service.Core.Model;
-
+using TVR.Service.Core.Video;
 
 namespace TVR.Service.Core.Tracking
 {
@@ -21,6 +21,8 @@ namespace TVR.Service.Core.Tracking
 
         private readonly ICameraTransform transform;
 
+        private Mat tempMat = new Mat();
+
         public Tracker(byte controllerId, TrackerSettings settings, ICameraTransform transform)
         {
             Controller = new Controller(controllerId);
@@ -34,10 +36,10 @@ namespace TVR.Service.Core.Tracking
                 Frame = new Image<Gray, byte>(frame.Width, frame.Height);
 
             RangeFilter(frame);
-            Frame = Frame.Erode(1);
-            Frame = Frame.Dilate(1);
-            Frame = Frame.ThresholdBinary(new Gray(150), new Gray(255));
-            Frame = Frame.SmoothGaussian(9);
+            ImageProcessing.Erode(Frame, 1);
+            ImageProcessing.Dilate(Frame, 1);
+            ImageProcessing.ThresholdBinary(Frame, new Gray(150), new Gray(255));
+            ImageProcessing.SmoothGaussian(Frame, 9);
 
             var circles = Frame.HoughCircles(new Gray(Settings.CannyThreshold), new Gray(1), 3, Frame.Height / 4, 2, 50)[0];
             Detected = circles.Length > 0;
@@ -63,9 +65,8 @@ namespace TVR.Service.Core.Tracking
             for (var i = 1; i < Settings.ColorRanges.Length; i++)
             {
                 var range = Settings.ColorRanges[i];
-                var mat = new Mat();
-                CvInvoke.InRange(frame, new ScalarArray(range.Minimum), new ScalarArray(range.Maximum), mat);
-                CvInvoke.BitwiseOr(Frame, mat, Frame);
+                CvInvoke.InRange(frame, new ScalarArray(range.Minimum), new ScalarArray(range.Maximum), tempMat);
+                CvInvoke.BitwiseOr(Frame, tempMat, Frame);
             }
         }
 
