@@ -92,8 +92,8 @@ namespace TVR.Service.UI
 
             GL.ClearColor(1, 1, 1, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            var perspective = Matrix4.CreatePerspectiveFieldOfView(1.04f, glControl1.Width / (float)glControl1.Height, 1, 10000); // Setup Perspective
-            var lookat = Matrix4.LookAt(1, 3, 5, 0, 0, 0, 0, 1, 0); // Setup camera
+            var perspective = Matrix4.CreatePerspectiveFieldOfView(1.04f, glControl1.Width / (float)glControl1.Height, 0.5f, 100); // Setup Perspective
+            var lookat = Matrix4.LookAt(1, 2, 3, 0, 0.5f, 0, 0, 1, 0); // Setup camera
             GL.MatrixMode(MatrixMode.Projection); // Load Perspective
             GL.LoadIdentity();
             GL.LoadMatrix(ref perspective);
@@ -118,6 +118,11 @@ namespace TVR.Service.UI
             DrawTracker(context.TrackerManager.Trackers[1]);
 
             glControl1.SwapBuffers();
+        }
+
+        private void GlControl1_Scroll(object sender, ScrollEventArgs e)
+        {
+
         }
 
         private void DrawTracker(Tracker tracker)
