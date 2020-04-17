@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using TVRSvc.Core.Logging;
 
 namespace TVRSvc.Network.Common.Host
 {
     internal class Client
     {
         public Guid Id { get; }
+
+        public EndPoint Endpoint { get; private set; }
 
         public BinaryWriter Writer { get; }
 
@@ -26,6 +30,7 @@ namespace TVRSvc.Network.Common.Host
             Id = id;
             stream = client.GetStream();
             Writer = new BinaryWriter(stream);
+            Endpoint = client.Client.RemoteEndPoint;
             this.callback = callback;
         }
 
@@ -42,13 +47,13 @@ namespace TVRSvc.Network.Common.Host
                 var packetLen = BitConverter.ToInt16(buf, 0);
                 if (packetLen > buf.Length || packetLen < 0)
                 {
-                    Debug.WriteLine("Dropping invalid packet");
+                    LoggerFactory.Current.Log(LogLevel.Error, "Invalid packet received, dropping");
                     BeginReceiving();
                     return;
                 }
                 if (packetLen == 0)
                 {
-                    Debug.WriteLine("Received packet with length 0, dropping.");
+                    LoggerFactory.Current.Log(LogLevel.Error, "Zero-length packet received, dropping");
                 }
                 else
                 {

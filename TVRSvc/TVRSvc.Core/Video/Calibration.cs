@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TVRSvc.Core.Config;
+using TVRSvc.Core.Logging;
 using TVRSvc.Core.Tracking;
 
 namespace TVRSvc.Core.Video
@@ -31,6 +32,9 @@ namespace TVRSvc.Core.Video
 
         public void Update(Mat frame)
         {
+            if (frameCounter == 0)
+                LoggerFactory.Current.Log(LogLevel.Info, "Calibrating camera...");
+
             // First frames deliver wrong values, so wait for camera to adjust
             frameCounter++;
             if (frameCounter < config.Calibration.WarmupFrames)
@@ -48,7 +52,7 @@ namespace TVRSvc.Core.Video
             CvInvoke.CvtColor(frame, grayMat, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
             var meanBrightness = CvInvoke.Mean(grayMat).V0;
 
-            Debug.WriteLine("Brightness value: " + meanBrightness);
+            LoggerFactory.Current.Log(LogLevel.Debug, $"Brightness value: {System.Math.Round(meanBrightness, 2)}");
 
             if (meanBrightness > config.Calibration.BrightnessThreshold || manager.Detected)
             {
@@ -58,7 +62,7 @@ namespace TVRSvc.Core.Video
             }
             else
             {
-                Debug.WriteLine("Final exposure: " + exposure);
+                LoggerFactory.Current.Log(LogLevel.Info, $"Calibration completed with exposure {exposure}");
                 IsCalibrated = true;
             }
         }

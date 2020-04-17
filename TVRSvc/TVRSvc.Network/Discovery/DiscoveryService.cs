@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using TVRSvc.Core.Logging;
 using TVRSvc.Network.Common;
 
 namespace TVRSvc.Network.Discovery
@@ -20,6 +21,8 @@ namespace TVRSvc.Network.Discovery
             udpClient = new UdpClient();
             udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, NetworkConfig.DiscoveryPort));
             udpClient.BeginReceive(new AsyncCallback(ReceiveCallback), null);
+
+            LoggerFactory.Current.Log(LogLevel.Info, $"Discovery service listening on port {NetworkConfig.DiscoveryPort}");
         }
 
         private void ReceiveCallback(IAsyncResult result)
@@ -29,6 +32,8 @@ namespace TVRSvc.Network.Discovery
 
             if (data.SequenceEqual(discoverySequence))
             {
+                LoggerFactory.Current.Log(LogLevel.Debug, $"Received discovery sequence from {sender}");
+
                 var ip = GetLocalIp();
                 var c_array = new byte[Encoding.ASCII.GetByteCount(ip) + 1]; // Build a NUL-terminated C-array for the ESP8266
                 Encoding.ASCII.GetBytes(ip, 0, ip.Length, c_array, 0);

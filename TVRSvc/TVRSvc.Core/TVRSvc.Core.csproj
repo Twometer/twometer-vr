@@ -100,6 +100,11 @@
     <Compile Include="Config\CameraConfig.cs" />
     <Compile Include="Config\TrackerConfig.cs" />
     <Compile Include="Config\TVRConfig.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\DebugLogger.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\LoggerFactory.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Math\Filters\IFilter.cs" />
     <Compile Include="Math\Filters\KalmanFilter.cs" />
     <Compile Include="Math\Filters\RollingAverageFilter.cs" />

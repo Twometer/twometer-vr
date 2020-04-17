@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVRSvc.Core.Logging;
 
 namespace TVRSvc.CLI
 {
@@ -10,8 +11,10 @@ namespace TVRSvc.CLI
     {
         public static void Main(string[] args)
         {
-            TVRHost vrHost = new TVRHost();
+            LoggerFactory.Current.Log(LogLevel.Info, "TwometerVR starting up...");
+            var vrHost = new TVRHost();
             vrHost.Start();
+            LoggerFactory.Current.Log(LogLevel.Info, "Initialized");
 
             while (true)
             {
@@ -23,7 +26,7 @@ namespace TVRSvc.CLI
                 }
                 else if (cmd == "stop")
                 {
-                    Console.WriteLine("Shutting down...");
+                    LoggerFactory.Current.Log(LogLevel.Info, "Shutting down...");
                     vrHost.Stop();
                     return;
                 }

@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TVRSvc.Core.Logging;
 
 namespace TVRSvc.Network.Common.Host
 {
@@ -50,11 +51,9 @@ namespace TVRSvc.Network.Common.Host
                     client.Writer.Write((short)payload.Length);
                     client.Writer.Write(payload);
                 }
-                catch (Exception e)
+                catch
                 {
-                    Console.WriteLine("Disconnect occurred: ");
-                    Console.WriteLine(e);
-
+                    LoggerFactory.Current.Log(LogLevel.Warning, $"Client {client.Endpoint} lost connection");
                     clients.TryRemove(client.Id, out _);
                 }
             }
@@ -68,7 +67,7 @@ namespace TVRSvc.Network.Common.Host
             {
                 var id = Guid.NewGuid();
                 var client = new Client(id, tcp, this);
-                Debug.WriteLine("Client connected");
+                LoggerFactory.Current.Log(LogLevel.Info, $"Client {client.Endpoint} connected");
                 if (receiving)
                     client.BeginReceiving();
                 clients[id] = client;
