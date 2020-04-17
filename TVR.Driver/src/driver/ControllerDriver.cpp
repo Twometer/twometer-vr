@@ -32,11 +32,6 @@ void ControllerDriver::Deactivate() {
     objectId = k_unTrackedDeviceIndexInvalid;
 }
 
-// CLion will complain about the wrong order of yaw, roll and pitch. However, the angles have to be shifted here due to the Quaternion transform.
-// Therefore, we disable this warning here
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "ArgumentSelectionDefects"
-
 vr::DriverPose_t ControllerDriver::GetPose() {
     DriverPose_t pose = {0};
     pose.poseIsValid = controllerState.IsValid();
@@ -57,8 +52,6 @@ vr::DriverPose_t ControllerDriver::GetPose() {
 
     return pose;
 }
-
-#pragma clang diagnostic pop
 
 std::string ControllerDriver::GetSerialNumber() {
     return serialNumber;
@@ -85,32 +78,6 @@ void ControllerDriver::SetControllerState(ControllerState newState) {
     vr::VRDriverInput()->UpdateBooleanComponent(buttonA, controllerState.buttons[Button::A], 0);
     vr::VRDriverInput()->UpdateBooleanComponent(buttonB, controllerState.buttons[Button::B], 0);
 }
-
-
-// Thank you, Wikipedia!
-// https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
-vr::HmdQuaternion_t ControllerDriver::ToQuaternion(float yaw, float pitch, float roll) {
-    yaw = deg2rad(yaw);
-    pitch = deg2rad(pitch);
-    roll = deg2rad(roll);
-
-    // Abbreviations for the various angular functions
-    double cy = cos(yaw * 0.5);
-    double sy = sin(yaw * 0.5);
-    double cp = cos(pitch * 0.5);
-    double sp = sin(pitch * 0.5);
-    double cr = cos(roll * 0.5);
-    double sr = sin(roll * 0.5);
-
-    HmdQuaternion_t q{};
-    q.w = cr * cp * cy + sr * sp * sy;
-    q.x = sr * cp * cy - cr * sp * sy;
-    q.y = cr * sp * cy + sr * cp * sy;
-    q.z = cr * cp * sy - sr * sp * cy;
-
-    return q;
-}
-
 
 // Unused methods //
 void ControllerDriver::EnterStandby() {
