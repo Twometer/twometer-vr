@@ -6,7 +6,6 @@
 #include "Constants.h"
 #include "WiFiConfig.h"
 #include "Discovery.h"
-#include "ButtonId.h"
 #include "Button.h"
 #include "Packet.h"
 
@@ -18,10 +17,11 @@ void setup() {
   Serial.begin(38400);    // Ah yes, debug
   Serial.println("Twometer VR Firmware v2.0");
 
+  pinMode(TRIGGER_PIN, INPUT_PULLUP); // Configure our pin
+
   WiFi.persistent(true);  // Save those credentials
   WiFi.mode(WIFI_STA);    // Station mode for ESP-firmware glitch prevention
   WiFi.begin(WIFI_SSID, WIFI_PASS); // Connect
-  pinMode(TRIGGER_PIN, INPUT_PULLUP); // Configure our pin
 
   Serial.println("Connecting to WiFi...");
   while (WiFi.status() != WL_CONNECTED) {
@@ -50,4 +50,8 @@ void loop() {
 
   }
   // TODO send packets:  Packet::Send()
+
+  if (!tcp.connected()) {
+    // TODO Reconnect here
+  }
 }
