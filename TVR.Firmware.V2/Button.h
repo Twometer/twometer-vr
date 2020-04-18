@@ -19,7 +19,7 @@ public:
       lastBounceTime = millis();
     }
 
-    if ((millis() - lastDebounceTime) > debounceDelay) {
+    if ((millis() - lastBounceTime) > debounceDelay) {
       // whatever the reading is at, it's been there for longer than the debounce
       // delay, so take it as the actual current state:
       buttonState = reading;

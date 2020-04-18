@@ -1,22 +1,14 @@
-#define CONTROLLER_PORT 12742
-#define DISCOVERY_PORT  12743
+#define CONTROLLER_RED
+// #define CONTROLLER_BLUE
 
+#include <ESP8266WiFi.h>
+
+#include "Constants.h"
 #include "WiFiConfig.h"
 #include "Discovery.h"
 #include "ButtonId.h"
 #include "Button.h"
 #include "Packet.h"
-
-#define CONTROLLER_RED
-// #define CONTROLLER_BLUE
-
-#ifdef CONTROLLER_RED
-  #define CONTROLLER_ID   0
-#elif defined(CONTROLLER_BLUE)
-  #define CONTROLLER_ID   1
-#endif
-
-#define TRIGGER_PIN 14
 
 Button trigger(TRIGGER_PIN);
 Discovery discovery;

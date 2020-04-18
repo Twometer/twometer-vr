@@ -1,6 +1,6 @@
 class Packet {
 public:
-  static void Send(WiFiClient tcp*, byte numButtonPresses, byte* buttonPresses, float yaw, float pitch, float roll) {
+  static void Send(WiFiClient *tcp, byte numButtonPresses, byte* buttonPresses, float yaw, float pitch, float roll) {
     int16_t packetLen = 2 + 1 + 1 + (numButtonPresses) + 4 * 3;
     byte data[packetLen];
     int offset = 0;
