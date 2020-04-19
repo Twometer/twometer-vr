@@ -6,12 +6,17 @@
 #include "Constants.h"
 #include "WiFiConfig.h"
 #include "Discovery.h"
+#include "MPU9250.h"
 #include "Button.h"
 #include "Packet.h"
 
 Button trigger(TRIGGER_PIN);
 Discovery discovery;
+
+String serverIp;
 WiFiClient tcp;
+
+MPU9250 mpu;
 
 void setup() {
   Serial.begin(38400);    // Ah yes, debug
@@ -30,11 +35,18 @@ void setup() {
   Serial.println("Connected.");
 
   Serial.println("Discovering server...");
-  String serverIp = discovery.discover();
+  serverIp = discovery.discover();
   Serial.print("Discovered server at ");
   Serial.println(serverIp);
 
-  // TODO initialize sensors here
+  Serial.println("Initializing MPU...");
+  bool ok = mpu.begin();
+  if (ok)
+    Serial.println("Initialized");
+  else {
+    Serial.println("Initialization failed");
+    while (true) delay(500); // Loop forever on failure
+  }
 
   Serial.println("Connecting to server...");
   tcp.setNoDelay(true);
@@ -45,13 +57,19 @@ void setup() {
 }
 
 void loop() {
-  // TODO update sensors
+  mpu.update();
   if (trigger.isPressed()) {
-
+    byte buttons[] = { BUTTON_A };
+    Packet::Send(&tcp, 1, buttons, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+  } else {
+    Packet::Send(&tcp, 0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
   }
-  // TODO send packets:  Packet::Send()
 
   if (!tcp.connected()) {
-    // TODO Reconnect here
+    Serial.println("Connection to server lost, reconnecting...");
+    while (!tcp.connect(serverIp, CONTROLLER_PORT)) {
+      delay(500);
+    }
+    Serial.println("Connected");
   }
 }
