@@ -25,6 +25,8 @@ namespace TVR.Service.Network.Common.Host
 
         private byte[] buf = new byte[1024];
 
+        private bool startedTransmit = false;
+
         public Client(Guid id, TcpClient client, IReceiveCallback callback)
         {
             Id = id;
@@ -57,6 +59,10 @@ namespace TVR.Service.Network.Common.Host
                 }
                 else
                 {
+                    if (!startedTransmit)
+                        LoggerFactory.Current.Log(LogLevel.Info, $"Client {Endpoint} started transmitting");
+                    startedTransmit = true;
+
                     stream.Read(buf, 0, packetLen);
                     var memstream = new MemoryStream(buf, 0, packetLen);
                     callback?.OnPacket(memstream);
