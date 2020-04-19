@@ -18,6 +18,7 @@ public:
     while (!sendRequest()) {
       delay(500);
     }
+    return serverIp;
   }
 
 private:
