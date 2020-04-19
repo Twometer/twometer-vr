@@ -180,10 +180,6 @@ class MPU9250 {
     uint8_t Mmode = 0x02;        // 2 for 8 Hz, 6 for 100 Hz continuous magnetometer data read
     float aRes, gRes, mRes;      // scale resolutions per LSB for the sensors
 
-    // Pin definitions
-    int intPin = 12;  // These can be changed, 2 and 3 are the Arduinos ext int pins
-    int myLed = 13; // Set up pin 13 led for toggling
-
     int16_t accelCount[3];  // Stores the 16-bit signed accelerometer sensor output
     int16_t gyroCount[3];   // Stores the 16-bit signed gyro sensor output
     int16_t magCount[3];    // Stores the 16-bit signed magnetometer sensor output
@@ -228,9 +224,11 @@ class MPU9250 {
     unsigned long startTime = 0;
 
     // Calibrated values
-    float _c_pitch;
-    float _c_yaw;
-    float _c_roll;
+    float _c_pitch = 0;
+    float _c_yaw   = 0;
+    float _c_roll  = 0;
+
+    bool available = false;
   public:
     bool begin() {
       Wire.begin(PIN_SDA, PIN_SCL);
@@ -267,7 +265,11 @@ class MPU9250 {
         Serial.println(c, HEX);
         return false;
       }
+    }
+
+    void beginCalibration() {
       startTime = millis();
+      calibrated = false;
     }
 
     void update() {
@@ -321,7 +323,7 @@ class MPU9250 {
 
       delt_t = millis() - count;
       if (delt_t > 16) {
-
+        available = true;
         yaw   = atan2(2.0f * (q[1] * q[2] + q[0] * q[3]), q[0] * q[0] + q[1] * q[1] - q[2] * q[2] - q[3] * q[3]);
         pitch = -asin(2.0f * (q[1] * q[3] - q[0] * q[2]));
         roll  = atan2(2.0f * (q[0] * q[1] + q[2] * q[3]), q[0] * q[0] - q[1] * q[1] - q[2] * q[2] + q[3] * q[3]);
@@ -330,11 +332,10 @@ class MPU9250 {
         yaw   -= 2.24; // Declination...
         roll  *= 180.0f / PI;
 
-        samples++;
         int runtime = millis() - startTime;
-        if (runtime < 5000)
+        if (runtime < 7000)
           return;
-        else if (runtime < 7000)
+        else if (runtime < 10000)
         {
           yo += yaw;
           po += pitch;
@@ -346,12 +347,18 @@ class MPU9250 {
           yo /= smc;
           po /= smc;
           ro /= smc;
-
+          Serial.println("MPU calibration is completed");
+          Serial.print("Offsets: ");
+          Serial.print(" y="); Serial.print(yo);
+          Serial.print(" p="); Serial.print(po);
+          Serial.print(" r="); Serial.println(ro);
           calibrated = true;
         }
-        _c_yaw = yaw - yo;
-        _c_pitch = pitch - po;
-        _c_roll = roll - ro;
+        if (calibrated) {
+          _c_yaw = yaw - yo;
+          _c_pitch = pitch - po;
+          _c_roll = roll - ro;
+        }
         count = millis();
         sumCount = 0;
         sum = 0;
@@ -369,6 +376,13 @@ class MPU9250 {
     float getRoll() {
       return _c_roll;
     }
+
+    bool hasData() {
+      bool hadData = available;
+      available = false;
+      return hadData && calibrated;
+    }
+
   private:
     //===================================================================================================================
     //====== Set of useful function to access acceleration. gyroscope, magnetometer, and temperature data

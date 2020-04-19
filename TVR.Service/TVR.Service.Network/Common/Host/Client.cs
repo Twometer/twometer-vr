@@ -47,7 +47,7 @@ namespace TVR.Service.Network.Common.Host
                 var packetLen = BitConverter.ToInt16(buf, 0);
                 if (packetLen > buf.Length || packetLen < 0)
                 {
-                    LoggerFactory.Current.Log(LogLevel.Error, "Invalid packet received, dropping");
+                    LoggerFactory.Current.Log(LogLevel.Error, $"Packet with invalid length {packetLen} received, dropping");
                     BeginReceiving();
                     return;
                 }

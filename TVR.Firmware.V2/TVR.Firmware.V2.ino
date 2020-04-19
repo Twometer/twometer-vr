@@ -49,20 +49,24 @@ void setup() {
   }
 
   Serial.println("Connecting to server...");
-  tcp.setNoDelay(true);
+  //tcp.setNoDelay(true);
   while (!tcp.connect(serverIp, CONTROLLER_PORT)) {
     delay(500);
   }
   Serial.println("Connection established");
+
+  mpu.beginCalibration();
 }
 
 void loop() {
   mpu.update();
-  if (trigger.isPressed()) {
-    byte buttons[] = { BUTTON_A };
-    Packet::Send(&tcp, 1, buttons, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
-  } else {
-    Packet::Send(&tcp, 0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+  if (mpu.hasData()) {
+    if (trigger.isPressed()) {
+      byte buttons[] = { BUTTON_A };
+      Packet::Send(&tcp, 1, buttons, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+    } else {
+      Packet::Send(&tcp, 0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+    }
   }
 
   if (!tcp.connected()) {
