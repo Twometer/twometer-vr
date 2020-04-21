@@ -6,7 +6,7 @@
 #include "Constants.h"
 #include "WiFiConfig.h"
 #include "Discovery.h"
-#include "MPU9250.h"
+#include "MPUSensor.h"
 #include "Button.h"
 #include "Packet.h"
 
@@ -16,7 +16,7 @@ Discovery discovery;
 String serverIp;
 WiFiClient tcp;
 
-MPU9250 mpu;
+MPUSensor mpu;
 
 void setup() {
   Serial.begin(38400);    // Ah yes, debug
@@ -49,17 +49,13 @@ void setup() {
   }
 
   Serial.println("Connecting to server...");
-  //tcp.setNoDelay(true);
   while (!tcp.connect(serverIp, CONTROLLER_PORT)) {
     delay(500);
   }
   Serial.println("Connection established");
-
-  mpu.beginCalibration();
 }
 
 void loop() {
-  mpu.update();
   if (mpu.hasData()) {
     if (trigger.isPressed()) {
       byte buttons[] = { BUTTON_A };
