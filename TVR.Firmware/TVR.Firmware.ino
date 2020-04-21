@@ -53,16 +53,15 @@ void setup() {
     delay(500);
   }
   Serial.println("Connection established");
+  mpu.beginCalibration();
 }
 
 void loop() {
   if (mpu.hasData()) {
-    if (trigger.isPressed()) {
-      byte buttons[] = { BUTTON_A };
-      Packet::Send(&tcp, 1, buttons, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
-    } else {
-      Packet::Send(&tcp, 0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
-    }
+    mpu.update();
+
+    if (mpu.isCalibrated())
+      sendPackets();
   }
 
   if (!tcp.connected()) {
@@ -71,5 +70,14 @@ void loop() {
       delay(500);
     }
     Serial.println("Connected");
+  }
+}
+
+void sendPackets() {
+  if (trigger.isPressed()) {
+    byte buttons[] = { BUTTON_A };
+    Packet::Send(&tcp, 1, buttons, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+  } else {
+    Packet::Send(&tcp, 0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
   }
 }
