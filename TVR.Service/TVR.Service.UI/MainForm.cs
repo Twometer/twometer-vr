@@ -43,12 +43,14 @@ namespace TVR.Service.UI
                 if (context.Calibration.IsCalibrated)
                 {
                     var controller1 = manager.Trackers[0].Controller;
-                    lbTracker1Pos.Text = manager.Trackers[0].Detected ? $"{controller1.Position.ToString()}\nY={controller1.Yaw} P={controller1.Pitch} R={controller1.Roll}" : "out of range";
+                    lbTracker1Pos.Text = $"{controller1.Position.ToString()}\nY={controller1.Yaw} P={controller1.Pitch} R={controller1.Roll}";
                     lbTracker1Pos.BackColor = controller1.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
+                    lbTracker1Pos.ForeColor = manager.Trackers[0].Detected ? Color.Black : Color.DimGray;
 
                     var controller2 = manager.Trackers[1].Controller;
-                    lbTracker2Pos.Text = manager.Trackers[1].Detected ? $"{controller2.Position.ToString()}\nY={controller2.Yaw} P={controller2.Pitch} R={controller2.Roll}" : "out of range";
+                    lbTracker2Pos.Text = $"{controller2.Position.ToString()}\nY={controller2.Yaw} P={controller2.Pitch} R={controller2.Roll}";
                     lbTracker2Pos.BackColor = controller2.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
+                    lbTracker2Pos.ForeColor = manager.Trackers[1].Detected ? Color.Black : Color.DimGray;
                 }
 
                 if (radioButton1.Checked)
@@ -127,24 +129,21 @@ namespace TVR.Service.UI
 
         private void DrawTracker(Tracker tracker)
         {
-            if (tracker.Detected)
-            {
-                DrawCross(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, 0.3f);
+            DrawCross(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, 0.3f);
 
 
-                var yaw = MathHelper.DegreesToRadians(tracker.Controller.Yaw - 90);
-                var pitch = MathHelper.DegreesToRadians(-tracker.Controller.Pitch);
+            var yaw = MathHelper.DegreesToRadians(tracker.Controller.Yaw - 90);
+            var pitch = MathHelper.DegreesToRadians(-tracker.Controller.Pitch);
 
-                // var controllerLength = 0.07f; // meters
-                var xzlen = Math.Cos(pitch);
-                var x = (float)(xzlen * Math.Cos(yaw));
-                var y = (float)(Math.Sin(pitch));
-                var z = (float)(xzlen * Math.Sin(-yaw));
-                DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z);
+            // var controllerLength = 0.07f; // meters
+            var xzlen = Math.Cos(pitch);
+            var x = (float)(xzlen * Math.Cos(yaw));
+            var y = (float)(Math.Sin(pitch));
+            var z = (float)(xzlen * Math.Sin(-yaw));
+            DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z);
 
-                //GL.Color4(Color.Black);
-                //DrawCross(tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z, 0.3f);
-            }
+            //GL.Color4(Color.Black);
+            //DrawCross(tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z, 0.3f);
         }
 
         private void DrawCross(float x, float y, float z, float size)
