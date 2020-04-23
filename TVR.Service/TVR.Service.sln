@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVR.Service.Common", "TVR.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVR.Service.CLI", "TVR.Service.CLI\TVR.Service.CLI.csproj", "{FD47B988-81D6-4EF5-BB95-4791238829DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVR.Service.Wizard", "TVR.Service.Wizard\TVR.Service.Wizard.csproj", "{A5AD287A-E460-4E89-B477-60E39CC58031}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FD47B988-81D6-4EF5-BB95-4791238829DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD47B988-81D6-4EF5-BB95-4791238829DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD47B988-81D6-4EF5-BB95-4791238829DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5AD287A-E460-4E89-B477-60E39CC58031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5AD287A-E460-4E89-B477-60E39CC58031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5AD287A-E460-4E89-B477-60E39CC58031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5AD287A-E460-4E89-B477-60E39CC58031}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
