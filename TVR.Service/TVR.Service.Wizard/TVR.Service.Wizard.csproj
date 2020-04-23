@@ -59,11 +59,23 @@
     <Compile Include="Pages\BasePage.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Pages\CalibrationPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\CalibrationPage.Designer.cs">
+      <DependentUpon>CalibrationPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CameraBasicsPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Pages\CameraBasicsPage.Designer.cs">
       <DependentUpon>CameraBasicsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TrackingPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\TrackingPage.Designer.cs">
+      <DependentUpon>TrackingPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Pages\WelcomePage.cs">
       <SubType>UserControl</SubType>
@@ -76,8 +88,14 @@
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\CalibrationPage.resx">
+      <DependentUpon>CalibrationPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pages\CameraBasicsPage.resx">
       <DependentUpon>CameraBasicsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\TrackingPage.resx">
+      <DependentUpon>TrackingPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\WelcomePage.resx">
       <DependentUpon>WelcomePage.cs</DependentUpon>

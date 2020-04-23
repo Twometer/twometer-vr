@@ -18,7 +18,9 @@ namespace TVR.Service.Wizard
             InitializeComponent();
             pagedPanel1.Pages.AddRange(new BasePage[] {
                 new WelcomePage(),
-                new CameraBasicsPage()
+                new CameraBasicsPage(),
+                new CalibrationPage(),
+                new TrackingPage()
             });
         }
 
