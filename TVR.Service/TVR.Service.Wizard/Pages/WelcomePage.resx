@@ -117,4 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Before you can start playing, we have to set up your
+Virtual Reality settings.
+
+This wizard will guide you through the process of calibrating
+your camera, personalizing your VR experience and takes over
+the hard math for you.
+
+
+To get started, click on Next
+</value>
+  </data>
 </root>
