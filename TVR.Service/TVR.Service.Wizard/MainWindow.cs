@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TVR.Service.Wizard.Pages;
 
 namespace TVR.Service.Wizard
 {
@@ -15,11 +16,14 @@ namespace TVR.Service.Wizard
         public MainWindow()
         {
             InitializeComponent();
+            pagedPanel1.Pages.AddRange(new BasePage[] {
+                new WelcomePage(),
+                new CameraBasicsPage()
+            });
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -28,6 +32,36 @@ namespace TVR.Service.Wizard
             {
                 Close();
             }
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            pagedPanel1.PreviousPage();
+            btnNextStep.Text = "Next";
+
+            if (pagedPanel1.IsOnFirstPage)
+                btnPrevious.Enabled = false;
+        }
+
+        private void btnNextStep_Click(object sender, EventArgs e)
+        {
+            btnPrevious.Enabled = true;
+            if (pagedPanel1.IsOnLastPage)
+            {
+                OnWizardComplete();
+                return;
+            }
+            else
+            {
+                pagedPanel1.NextPage();
+                if (pagedPanel1.IsOnLastPage)
+                    btnNextStep.Text = "Finish";
+            }
+        }
+
+        private void OnWizardComplete()
+        {
+            MessageBox.Show("You have completed the setup for TwometerVR and can now start playing your favourite VR games!", "Congratulations!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
