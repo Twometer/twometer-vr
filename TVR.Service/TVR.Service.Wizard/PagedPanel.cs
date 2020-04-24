@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TVR.Service.Wizard.Pages;
 
 namespace TVR.Service.Wizard
 {
     public class PagedPanel : Control
     {
-        public List<Control> Pages { get; } = new List<Control>();
+        public List<BasePage> Pages { get; } = new List<BasePage>();
 
         public bool IsOnLastPage => currentPage >= Pages.Count - 1;
 

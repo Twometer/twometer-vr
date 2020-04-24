@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace TVR.Service.Wizard.Pages
 {
-    public partial class DriverPage : TVR.Service.Wizard.Pages.BasePage
+    public partial class PreInstallationPage : TVR.Service.Wizard.Pages.BasePage
     {
-        public DriverPage()
+        public PreInstallationPage()
         {
             InitializeComponent();
         }

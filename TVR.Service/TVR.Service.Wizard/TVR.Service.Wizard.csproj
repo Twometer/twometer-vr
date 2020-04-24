@@ -74,11 +74,17 @@
     <Compile Include="Pages\CameraBasicsPage.Designer.cs">
       <DependentUpon>CameraBasicsPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DriverPage.cs">
+    <Compile Include="Pages\InstallationPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Pages\DriverPage.Designer.cs">
-      <DependentUpon>DriverPage.cs</DependentUpon>
+    <Compile Include="Pages\InstallationPage.Designer.cs">
+      <DependentUpon>InstallationPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PreInstallationPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\PreInstallationPage.Designer.cs">
+      <DependentUpon>PreInstallationPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Pages\TrackingPage.cs">
       <SubType>UserControl</SubType>
@@ -106,8 +112,11 @@
     <EmbeddedResource Include="Pages\CameraBasicsPage.resx">
       <DependentUpon>CameraBasicsPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\DriverPage.resx">
-      <DependentUpon>DriverPage.cs</DependentUpon>
+    <EmbeddedResource Include="Pages\InstallationPage.resx">
+      <DependentUpon>InstallationPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\PreInstallationPage.resx">
+      <DependentUpon>PreInstallationPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\TrackingPage.resx">
       <DependentUpon>TrackingPage.cs</DependentUpon>

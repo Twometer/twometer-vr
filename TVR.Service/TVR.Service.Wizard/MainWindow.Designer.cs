@@ -34,7 +34,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnPrevious = new System.Windows.Forms.Button();
-            this.pagedPanel1 = new TVR.Service.Wizard.PagedPanel();
+            this.pagedPanel = new TVR.Service.Wizard.PagedPanel();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -86,13 +86,13 @@
             this.btnPrevious.UseVisualStyleBackColor = true;
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
-            // pagedPanel1
+            // pagedPanel
             // 
-            this.pagedPanel1.Location = new System.Drawing.Point(15, 12);
-            this.pagedPanel1.Name = "pagedPanel1";
-            this.pagedPanel1.Size = new System.Drawing.Size(510, 310);
-            this.pagedPanel1.TabIndex = 6;
-            this.pagedPanel1.Text = "pagedPanel1";
+            this.pagedPanel.Location = new System.Drawing.Point(15, 12);
+            this.pagedPanel.Name = "pagedPanel";
+            this.pagedPanel.Size = new System.Drawing.Size(510, 310);
+            this.pagedPanel.TabIndex = 6;
+            this.pagedPanel.Text = "pagedPanel";
             // 
             // MainWindow
             // 
@@ -101,7 +101,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(541, 401);
             this.Controls.Add(this.btnPrevious);
-            this.Controls.Add(this.pagedPanel1);
+            this.Controls.Add(this.pagedPanel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnNextStep);
@@ -112,7 +112,6 @@
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TwometerVR Setup Wizard";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,7 +122,7 @@
         private System.Windows.Forms.Button btnNextStep;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel1;
-        private PagedPanel pagedPanel1;
+        private PagedPanel pagedPanel;
         private System.Windows.Forms.Button btnPrevious;
     }
 }
