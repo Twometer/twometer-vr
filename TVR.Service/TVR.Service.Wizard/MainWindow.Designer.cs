@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnNextStep = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -87,9 +88,9 @@
             // 
             // pagedPanel1
             // 
-            this.pagedPanel1.Location = new System.Drawing.Point(13, 13);
+            this.pagedPanel1.Location = new System.Drawing.Point(15, 12);
             this.pagedPanel1.Name = "pagedPanel1";
-            this.pagedPanel1.Size = new System.Drawing.Size(509, 310);
+            this.pagedPanel1.Size = new System.Drawing.Size(510, 310);
             this.pagedPanel1.TabIndex = 6;
             this.pagedPanel1.Text = "pagedPanel1";
             // 
@@ -106,6 +107,7 @@
             this.Controls.Add(this.btnNextStep);
             this.Controls.Add(this.btnCancel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

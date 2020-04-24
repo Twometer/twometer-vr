@@ -1,3 +1,2 @@
-# Pages
-
-GitHub Pages folder for TwometerVR
+# ![TwometerVR Logo](https://github.com/Twometer/twometer-vr/blob/master/Artwork/Icon54.png?raw=true) TwometerVR
+A FREE open-source alternative to commercial hand trackers such as Oculus Touch or PS Move.

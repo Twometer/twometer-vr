@@ -12,6 +12,17 @@ namespace TVR.Service.Wizard.Pages
     {
         protected WizardContext Context => (WizardContext)Tag;
 
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // BasePage
+            // 
+            this.BackColor = System.Drawing.Color.White;
+            this.Name = "BasePage";
+            this.Size = new System.Drawing.Size(510, 310);
+            this.ResumeLayout(false);
 
+        }
     }
 }

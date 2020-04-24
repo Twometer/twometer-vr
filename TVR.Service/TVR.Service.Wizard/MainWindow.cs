@@ -20,7 +20,8 @@ namespace TVR.Service.Wizard
                 new WelcomePage(),
                 new CameraBasicsPage(),
                 new CalibrationPage(),
-                new TrackingPage()
+                new TrackingPage(),
+                new DriverPage()
             });
         }
 

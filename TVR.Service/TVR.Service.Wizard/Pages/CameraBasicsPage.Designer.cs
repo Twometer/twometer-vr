@@ -36,7 +36,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(27, 67);
+            this.label3.Location = new System.Drawing.Point(27, 64);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(126, 15);
             this.label3.TabIndex = 7;
@@ -46,7 +46,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Calibri Light", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(25, 26);
+            this.label4.Location = new System.Drawing.Point(25, 25);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(87, 29);
             this.label4.TabIndex = 6;
@@ -57,7 +57,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
             this.Name = "CameraBasicsPage";
-            this.Size = new System.Drawing.Size(579, 345);
+            this.Size = new System.Drawing.Size(510, 310);
             this.ResumeLayout(false);
             this.PerformLayout();
 

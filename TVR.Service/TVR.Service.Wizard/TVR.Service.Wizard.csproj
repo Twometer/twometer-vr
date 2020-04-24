@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,6 +74,12 @@
     <Compile Include="Pages\CameraBasicsPage.Designer.cs">
       <DependentUpon>CameraBasicsPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pages\DriverPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\DriverPage.Designer.cs">
+      <DependentUpon>DriverPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pages\TrackingPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -88,11 +97,17 @@
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\BasePage.resx">
+      <DependentUpon>BasePage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pages\CalibrationPage.resx">
       <DependentUpon>CalibrationPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\CameraBasicsPage.resx">
       <DependentUpon>CameraBasicsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\DriverPage.resx">
+      <DependentUpon>DriverPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\TrackingPage.resx">
       <DependentUpon>TrackingPage.cs</DependentUpon>
@@ -121,6 +136,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
