@@ -4,10 +4,10 @@
 	"input_bindingui_mode": "controller_handed",
 	"legacy_binding": "{tvr}/input/legacy_bindings_tvr.json",
 	"input_bindingui_left": {
-		"image": "{tvr}/icons/tvr.svg"
+		"image": "{tvr}/icons/Red.svg"
 	},
 	"input_bindingui_right": {
-		"image": "{tvr}/icons/tvr.svg"
+		"image": "{tvr}/icons/Blue.svg"
 	},  
 	"input_source": {
 		"/input/a": {
