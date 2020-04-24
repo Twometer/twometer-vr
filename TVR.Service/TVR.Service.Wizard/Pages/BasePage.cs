@@ -8,7 +8,7 @@ using TVR.Service.Wizard.Model;
 
 namespace TVR.Service.Wizard.Pages
 {
-    public abstract class BasePage : UserControl
+    public class BasePage : UserControl
     {
         protected WizardContext Context => (WizardContext)Tag;
 
