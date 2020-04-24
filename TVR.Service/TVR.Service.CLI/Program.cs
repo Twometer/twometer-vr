@@ -21,8 +21,8 @@ namespace TVR.Service.CLI
                 var cmd = Console.ReadLine();
                 if (cmd == "help")
                 {
-                    Console.WriteLine("help: Show this help");
-                    Console.WriteLine("stop: Stop the service");
+                    Console.WriteLine(" help: Show this help");
+                    Console.WriteLine(" stop: Stop the service");
                 }
                 else if (cmd == "stop")
                 {
