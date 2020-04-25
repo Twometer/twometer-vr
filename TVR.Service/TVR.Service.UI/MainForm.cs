@@ -66,7 +66,7 @@ namespace TVR.Service.UI
                     imageBox1.Image = mat;
                 }
 
-                lbConnectedControllers.Text = $"Connected controllers: {context.ControllerServer.ConnectedClientCount}";
+                lbConnectedControllers.Text = $"Connected controllers: unknown";
                 lbConnectedDrivers.Text = $"Connected drivers: {context.DriverServer.ConnectedClientCount}";
 
                 glControl1.Invalidate();

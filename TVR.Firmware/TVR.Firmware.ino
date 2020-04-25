@@ -1,5 +1,5 @@
-#define CONTROLLER_RED
-// #define CONTROLLER_BLUE
+// #define CONTROLLER_RED
+#define CONTROLLER_BLUE
 
 #include <ESP8266WiFi.h>
 
@@ -13,8 +13,8 @@
 Button trigger(TRIGGER_PIN);
 Discovery discovery;
 
-String serverIp;
-WiFiClient tcp;
+IPAddress serverIp;
+WiFiUDP udp;
 
 MPUSensor mpu;
 
@@ -38,6 +38,7 @@ void setup() {
   serverIp = discovery.discover();
   Serial.print("Discovered server at ");
   Serial.println(serverIp);
+  udp.begin(CONTROLLER_PORT);
 
   Serial.println("Initializing MPU...");
   bool ok = mpu.begin();
@@ -47,12 +48,6 @@ void setup() {
     Serial.println("Initialization failed");
     while (true) delay(500); // Loop forever on failure
   }
-
-  Serial.println("Connecting to server...");
-  while (!tcp.connect(serverIp, CONTROLLER_PORT)) {
-    delay(500);
-  }
-  Serial.println("Connection established");
   mpu.beginCalibration();
 }
 
@@ -63,21 +58,13 @@ void loop() {
     if (mpu.isCalibrated())
       sendPackets();
   }
-
-  if (!tcp.connected()) {
-    Serial.println("Connection to server lost, reconnecting...");
-    while (!tcp.connect(serverIp, CONTROLLER_PORT)) {
-      delay(500);
-    }
-    Serial.println("Connected");
-  }
 }
 
 void sendPackets() {
   if (trigger.isPressed()) {
     byte buttons[] = { BUTTON_A };
-    Packet::Send(&tcp, 1, buttons, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+    Packet::Send(&udp, serverIp, 1, buttons, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
   } else {
-    Packet::Send(&tcp, 0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+    Packet::Send(&udp, serverIp, 0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
   }
 }

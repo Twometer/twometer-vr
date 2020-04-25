@@ -58,8 +58,8 @@ namespace TVR.Service.Common
 
         public void Broadcast()
         {
-            if (TrackerManager.Detected || ControllerServer.ConnectedClientCount >= 2)
-                DriverServer.Broadcast(new DriverPacket() { ControllerStates = TrackerManager.Trackers.Select(t => t.Controller).ToArray() });
+            //if (TrackerManager.Detected || ControllerServer.ConnectedClientCount >= 2)
+            DriverServer.Broadcast(new DriverPacket() { ControllerStates = TrackerManager.Trackers.Select(t => t.Controller).ToArray() });
         }
 
     }
