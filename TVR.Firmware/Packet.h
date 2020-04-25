@@ -1,11 +1,10 @@
 class Packet {
 public:
   static void Send(WiFiUDP *udp, IPAddress& serverIp, byte numButtonPresses, byte* buttonPresses, float yaw, float pitch, float roll) {
-    int16_t packetLen = 2 + 1 + 1 + (numButtonPresses) + 4 * 3;
+    int16_t packetLen = 1 + 1 + (numButtonPresses) + 4 * 3;
     byte data[packetLen];
     int offset = 0;
-
-    copy(data, offset, int16_t(packetLen - 2)); // Packet content length
+    
     copy(data, offset, byte(CONTROLLER_ID));    // Controller id
 
     copy(data, offset, numButtonPresses);      // Button presses

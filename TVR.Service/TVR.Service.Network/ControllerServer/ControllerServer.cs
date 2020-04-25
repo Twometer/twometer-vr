@@ -29,7 +29,6 @@ namespace TVR.Service.Network.ControllerServer
 
         private void ReceiveCallback(IAsyncResult result)
         {
-            LoggerFactory.Current.Log(LogLevel.Debug, $"Receive UDP packet");
             IPEndPoint ep = null;
             var message = udp.EndReceive(result, ref ep);
             var reader = new BinaryReader(new MemoryStream(message));
