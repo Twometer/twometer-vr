@@ -1,6 +1,6 @@
 # ![TwometerVR Logo](https://github.com/Twometer/twometer-vr/blob/master/Artwork/Icon54.png?raw=true) TwometerVR
 
-> Note: It's working, but still under development. That means fancy stuff like setup wizards may not be 100% complete and you may encounter 
+> Note: It's working, but still under development. That means fancy stuff like setup wizards may not be 100% complete and you may encounter bugs
 
 A FREE open-source alternative to commercial hand trackers such as Oculus Touch or PS Move.
 
