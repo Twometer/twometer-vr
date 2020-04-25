@@ -54,7 +54,8 @@ namespace TVR.Service.Core.Video
 
             LoggerFactory.Current.Log(LogLevel.Debug, $"Brightness value: {System.Math.Round(meanBrightness, 2)}");
 
-            if (meanBrightness > config.Calibration.BrightnessThreshold || manager.Detected)
+            // Don't let it calibrate forever
+            if ((meanBrightness > config.Calibration.BrightnessThreshold || manager.Detected) && exposure > -30)
             {
                 exposure--;
                 adjustFrames = config.Calibration.CooldownFrames;
