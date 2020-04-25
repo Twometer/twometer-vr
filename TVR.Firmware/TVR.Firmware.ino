@@ -38,7 +38,8 @@ void setup() {
   serverIp = discovery.discover();
   Serial.print("Discovered server at ");
   Serial.println(serverIp);
-  udp.begin(CONTROLLER_PORT);
+  if (!udp.begin(CONTROLLER_PORT))
+    Serial.println("Can't initialize UDP client");
 
   Serial.println("Initializing MPU...");
   bool ok = mpu.begin();
