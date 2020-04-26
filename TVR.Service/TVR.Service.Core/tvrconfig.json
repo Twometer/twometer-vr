@@ -1,7 +1,7 @@
 // Default configuration
 {
   "Calibration": {
-    "BrightnessThreshold": 15.0,
+    "BrightnessThreshold": 5.0,
     "WarmupFrames": 15,
     "CooldownFrames": 5
   },
