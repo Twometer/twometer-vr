@@ -6,7 +6,7 @@
 #define WARMUP_TIME 15000        // Wait 5 seconds for the chip to settle down, then start calibration
 #define CALIB_DURATION 2750     // Data collection should last 2.75 seconds. Then, we calculate the offsets.
 
-#define UPDATE_RATE 120
+#define UPDATE_RATE 90
 
 class MPUSensor {
   private:
