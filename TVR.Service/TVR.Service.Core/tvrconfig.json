@@ -13,7 +13,7 @@
     "SphereSize": 0.04,
     "PixelsPerMeter": 590,
     "HeightAboveGround": 1.45,
-    "Latency": 3
+    "Latency": 2
   },
   "Tracker": {
     "LeftInvertPitch": true,
