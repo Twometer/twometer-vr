@@ -4,14 +4,14 @@ class Discovery {
 private:
   WiFiUDP udpClient;
   
-  String serverIp;
+  IPAddress serverIp;
   IPAddress broadcastIp;
   
   byte discoverySequence[4] = { 0x79, 0x65, 0x65, 0x74 };
   char udpIncoming[15];
   
 public:
-  String discover() {
+  IPAddress discover() {
     broadcastIp = ~uint32_t(WiFi.subnetMask()) | uint32_t(WiFi.gatewayIP());
     udpClient.begin(DISCOVERY_PORT);
 
@@ -35,7 +35,8 @@ private:
     if (len <= 0)
       return false;
 
-    serverIp = String(udpIncoming);
+    serverIp = IPAddress();
+    serverIp.fromString(udpIncoming);
     return true;
   }
 
