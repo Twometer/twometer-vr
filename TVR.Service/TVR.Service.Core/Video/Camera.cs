@@ -9,7 +9,7 @@ namespace TVR.Service.Core.Video
     {
         private readonly VideoCapture videoCapture;
 
-        public Mat Frame { get; private set; }
+        public Mat Frame { get; } = new Mat();
 
         public double Exposure
         {
@@ -30,8 +30,8 @@ namespace TVR.Service.Core.Video
 
         public Mat QueryFrame()
         {
-            Frame?.Dispose();
-            Frame = videoCapture.QueryFrame();
+            if (videoCapture.Grab())
+                videoCapture.Retrieve(Frame);
             return Frame;
         }
 

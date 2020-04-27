@@ -18,7 +18,7 @@ namespace TVR.Service.CLI
         private volatile bool running = true;
 
         private const int UpdateRate = 120; // 120 Hz update rate
-        private int UpdateDelay = (int)(1000.0f / UpdateRate);
+        private readonly int UpdateDelay = (int)(1000.0f / UpdateRate);
         
         public void Start()
         {
@@ -51,7 +51,7 @@ namespace TVR.Service.CLI
                 serviceContext.Broadcast();
                 var broadcastDuration = (int)(DateTime.Now - start).TotalMilliseconds;
 
-                Thread.Sleep(UpdateDelay - broadcastDuration); // 60 updates per second for smooth movement
+                Thread.Sleep(UpdateDelay - broadcastDuration);
             }
         }
 
