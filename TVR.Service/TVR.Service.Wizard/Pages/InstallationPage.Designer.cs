@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.label4 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lbStatus = new System.Windows.Forms.Label();
+            this.pbStatus = new System.Windows.Forms.ProgressBar();
+            this.lbPercent = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label4
@@ -44,38 +44,38 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "Installation";
             // 
-            // label1
+            // lbStatus
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(27, 127);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 15);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "Status: {0}";
+            this.lbStatus.AutoSize = true;
+            this.lbStatus.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbStatus.Location = new System.Drawing.Point(27, 127);
+            this.lbStatus.Name = "lbStatus";
+            this.lbStatus.Size = new System.Drawing.Size(107, 15);
+            this.lbStatus.TabIndex = 12;
+            this.lbStatus.Text = "Status: Initializing...";
             // 
-            // progressBar1
+            // pbStatus
             // 
-            this.progressBar1.Location = new System.Drawing.Point(30, 162);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(416, 18);
-            this.progressBar1.TabIndex = 13;
+            this.pbStatus.Location = new System.Drawing.Point(30, 162);
+            this.pbStatus.Name = "pbStatus";
+            this.pbStatus.Size = new System.Drawing.Size(416, 18);
+            this.pbStatus.TabIndex = 13;
             // 
-            // label2
+            // lbPercent
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(452, 163);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(26, 15);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "0 %";
+            this.lbPercent.AutoSize = true;
+            this.lbPercent.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbPercent.Location = new System.Drawing.Point(452, 163);
+            this.lbPercent.Name = "lbPercent";
+            this.lbPercent.Size = new System.Drawing.Size(26, 15);
+            this.lbPercent.TabIndex = 14;
+            this.lbPercent.Text = "0 %";
             // 
             // InstallationPage
             // 
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbPercent);
+            this.Controls.Add(this.pbStatus);
+            this.Controls.Add(this.lbStatus);
             this.Controls.Add(this.label4);
             this.Name = "InstallationPage";
             this.Size = new System.Drawing.Size(510, 310);
@@ -87,8 +87,8 @@
         #endregion
 
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbStatus;
+        private System.Windows.Forms.ProgressBar pbStatus;
+        private System.Windows.Forms.Label lbPercent;
     }
 }

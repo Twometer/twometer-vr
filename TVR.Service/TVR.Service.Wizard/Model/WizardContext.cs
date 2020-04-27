@@ -13,13 +13,13 @@ namespace TVR.Service.Wizard.Model
 
         public bool CreateStartMenuEntry { get; set; }
 
-        private bool _allowNext;
+        private bool _allowNext = true;
         public bool AllowNext
         {
             set
             {
                 _allowNext = value;
-                AllowedStateChanged?.Invoke(this, new EventArgs());
+                UIStateChanged?.Invoke(this, new EventArgs());
             }
             get
             {
@@ -27,13 +27,13 @@ namespace TVR.Service.Wizard.Model
             }
         }
 
-        private bool _allowPrev;
+        private bool _allowPrev = true;
         public bool AllowPrevious
         {
             set
             {
                 _allowPrev = value;
-                AllowedStateChanged?.Invoke(this, new EventArgs());
+                UIStateChanged?.Invoke(this, new EventArgs());
             }
             get
             {
@@ -41,7 +41,21 @@ namespace TVR.Service.Wizard.Model
             }
         }
 
-        public event EventHandler AllowedStateChanged;
+        private string _nextButtonText = "Next";
+        public string NextButtonText
+        {
+            set
+            {
+                _nextButtonText = value;
+                UIStateChanged?.Invoke(this, new EventArgs());
+            }
+            get
+            {
+                return _nextButtonText;
+            }
+        }
+
+        public event EventHandler UIStateChanged;
 
 
     }

@@ -45,13 +45,16 @@ namespace TVR.Service.Wizard
             }
         }
 
-        private void SetContent(Control control)
+        private void SetContent(BasePage page)
         {
-            Debug.WriteLine($"Showing page '{control.GetType().Name}'");
+            if (Controls.Count > 0 && Controls[0] is BasePage oldPage)
+                oldPage.OnNavigatedAway();
+
             Controls.Clear();
-            control.Tag = Tag;
-            control.Dock = DockStyle.Fill;
-            Controls.Add(control);
+            page.Tag = Tag;
+            page.Dock = DockStyle.Fill;
+            Controls.Add(page);
+            page.OnNavigatedTo();
         }
     }
 }

@@ -12,6 +12,10 @@ namespace TVR.Service.Wizard.Pages
     {
         protected WizardContext Context => (WizardContext)Tag;
 
+        public event EventHandler NavigatedTo;
+
+        public event EventHandler NavigatedAway;
+
         private void InitializeComponent()
         {
             this.SuspendLayout();
@@ -22,7 +26,17 @@ namespace TVR.Service.Wizard.Pages
             this.Name = "BasePage";
             this.Size = new System.Drawing.Size(510, 310);
             this.ResumeLayout(false);
-
         }
+
+        public void OnNavigatedTo()
+        {
+            NavigatedTo?.Invoke(this, new EventArgs());
+        }
+
+        public void OnNavigatedAway()
+        {
+            NavigatedAway?.Invoke(this, new EventArgs());
+        }
+
     }
 }

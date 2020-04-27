@@ -30,9 +30,9 @@
         {
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.tbPath = new System.Windows.Forms.TextBox();
+            this.btnChooser = new System.Windows.Forms.Button();
+            this.cbStartMenu = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label4
@@ -55,37 +55,40 @@
             this.label1.TabIndex = 13;
             this.label1.Text = "Install location:";
             // 
-            // textBox1
+            // tbPath
             // 
-            this.textBox1.Location = new System.Drawing.Point(130, 120);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(312, 20);
-            this.textBox1.TabIndex = 14;
+            this.tbPath.Location = new System.Drawing.Point(130, 120);
+            this.tbPath.Name = "tbPath";
+            this.tbPath.Size = new System.Drawing.Size(319, 20);
+            this.tbPath.TabIndex = 14;
             // 
-            // button1
+            // btnChooser
             // 
-            this.button1.Location = new System.Drawing.Point(448, 118);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(34, 23);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnChooser.Location = new System.Drawing.Point(455, 119);
+            this.btnChooser.Name = "btnChooser";
+            this.btnChooser.Size = new System.Drawing.Size(31, 22);
+            this.btnChooser.TabIndex = 15;
+            this.btnChooser.Text = "...";
+            this.btnChooser.UseVisualStyleBackColor = true;
+            this.btnChooser.Click += new System.EventHandler(this.btnChooser_Click);
             // 
-            // checkBox1
+            // cbStartMenu
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(30, 183);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(128, 17);
-            this.checkBox1.TabIndex = 16;
-            this.checkBox1.Text = "Create start menu link";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbStartMenu.AutoSize = true;
+            this.cbStartMenu.Checked = true;
+            this.cbStartMenu.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbStartMenu.Location = new System.Drawing.Point(30, 183);
+            this.cbStartMenu.Name = "cbStartMenu";
+            this.cbStartMenu.Size = new System.Drawing.Size(128, 17);
+            this.cbStartMenu.TabIndex = 16;
+            this.cbStartMenu.Text = "Create start menu link";
+            this.cbStartMenu.UseVisualStyleBackColor = true;
             // 
             // PreInstallationPage
             // 
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.cbStartMenu);
+            this.Controls.Add(this.btnChooser);
+            this.Controls.Add(this.tbPath);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label4);
             this.Name = "PreInstallationPage";
@@ -99,8 +102,8 @@
 
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TextBox tbPath;
+        private System.Windows.Forms.Button btnChooser;
+        private System.Windows.Forms.CheckBox cbStartMenu;
     }
 }

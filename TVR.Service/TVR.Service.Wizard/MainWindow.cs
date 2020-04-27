@@ -28,11 +28,12 @@ namespace TVR.Service.Wizard
                 new TrackingPage()
             });
             pagedPanel.Tag = context;
-            context.AllowedStateChanged += Context_AllowedStateChanged;
+            context.UIStateChanged += Context_UIStateChanged;
         }
 
-        private void Context_AllowedStateChanged(object sender, EventArgs e)
+        private void Context_UIStateChanged(object sender, EventArgs e)
         {
+            btnNextStep.Text = context.NextButtonText;
             btnNextStep.Enabled = context.AllowNext;
             btnPrevious.Enabled = context.AllowPrevious;
         }
