@@ -30,6 +30,10 @@
         {
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // label3
@@ -53,8 +57,47 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Tracking";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(30, 122);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(210, 166);
+            this.groupBox1.TabIndex = 10;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Preview";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Calibri Light", 14F);
+            this.label1.Location = new System.Drawing.Point(246, 122);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(136, 23);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Current step: {0}";
+            // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(246, 158);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(235, 94);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Current step explanation";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(250, 270);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(231, 17);
+            this.progressBar1.TabIndex = 13;
+            // 
             // TrackingPage
             // 
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
             this.Name = "TrackingPage";
@@ -68,5 +111,9 @@
 
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
