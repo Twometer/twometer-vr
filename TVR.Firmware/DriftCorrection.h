@@ -13,7 +13,7 @@ class DriftCorrection {
     bool calibrated = false;
     float calibAccum = 0;
     int calibSamples = 0;
-    
+
   public:
     DriftCorrection() : ringBuffer(new float[ringBufferSize]) {
 
@@ -22,6 +22,9 @@ class DriftCorrection {
     void finishCalibration() {
       headingOffset = calibAccum / float(calibSamples);
       calibrated = true;
+
+      Serial.print("Compass calibration finished with offset=");
+      Serial.println(headingOffset);
     }
 
     void update(MPU9250_DMP* imu, float yaw) {
@@ -48,7 +51,7 @@ class DriftCorrection {
     float getCorrectedYaw() {
       return correctedYaw;
     }
-    
+
   private:
     void pushRingBuffer(float value) {
       ringBuffer[ringBufferIndex] = value;

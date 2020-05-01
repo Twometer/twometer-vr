@@ -4,7 +4,7 @@
 #define PIN_SDA 4
 #define PIN_SCL 5
 
-#define WARMUP_TIME 15000        // Wait 5 seconds for the chip to settle down, then start calibration
+#define WARMUP_TIME 15000       // Wait a few seconds for the chip to settle down, then start calibration
 #define CALIB_DURATION 2750     // Data collection should last 2.75 seconds. Then, we calculate the offsets.
 
 #define UPDATE_RATE 90
@@ -80,9 +80,9 @@ class MPUSensor {
         yawOffset += imu.yaw;
         pitchOffset += imu.pitch;
         rollOffset += imu.roll;
-        driftCorrection.update(&imu, getYaw());
-
         samples++;
+
+        driftCorrection.update(&imu, getYaw());
       }
     }
 
