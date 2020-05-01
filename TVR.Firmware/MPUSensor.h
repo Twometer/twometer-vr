@@ -1,4 +1,5 @@
 #include <SparkFunMPU9250-DMP.h>
+#include "DriftCorrection.h"
 
 #define PIN_SDA 4
 #define PIN_SCL 5
@@ -11,6 +12,7 @@
 class MPUSensor {
   private:
     MPU9250_DMP imu{};
+    DriftCorrection driftCorrection;
 
     unsigned long calibrationStarted = 0;
     bool calibrated = false;
@@ -47,6 +49,8 @@ class MPUSensor {
       imu.computeEulerAngles();
       if (!calibrated) {
         calibrationUpdate();
+      } else {
+        driftCorrection.update(&imu, getYaw());
       }
     }
 
@@ -71,10 +75,12 @@ class MPUSensor {
         Serial.print(pitchOffset);
         Serial.print(", Roll=");
         Serial.println(rollOffset);
+        driftCorrection.finishCalibration();
       } else if (elapsed > WARMUP_TIME) {
         yawOffset += imu.yaw;
         pitchOffset += imu.pitch;
         rollOffset += imu.roll;
+        driftCorrection.update(&imu, getYaw());
 
         samples++;
       }
@@ -86,6 +92,10 @@ class MPUSensor {
 
     float getYaw() {
       return imu.yaw - yawOffset;
+    }
+
+    float getCorrectedYaw() {
+      return driftCorrection.getCorrectedYaw();
     }
 
     float getPitch() {

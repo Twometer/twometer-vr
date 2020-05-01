@@ -2,36 +2,53 @@
 
 class DriftCorrection {
   private:
-    float offset;
-    float correctedYaw;
+    float drift = 0;
+    float correctedYaw = 0;
+    float headingOffset = 0;
 
+    int ringBufferSize = 15;
+    int ringBufferIndex = 0;
     float *ringBuffer;
-    int ringBufferSize;
-    int ringBufferIndex;
-  public:
-    DriftCorrection() : ringBufferSize(15), ringBufferIndex(0), ringBuffer(new float[ringBufferSize]) {
 
+    bool calibrated = false;
+    float calibAccum = 0;
+    int calibSamples = 0;
+    
+  public:
+    DriftCorrection() : ringBuffer(new float[ringBufferSize]) {
+
+    }
+
+    void finishCalibration() {
+      headingOffset = calibAccum / float(calibSamples);
+      calibrated = true;
     }
 
     void update(MPU9250_DMP* imu, float yaw) {
       imu->updateCompass();
       imu->computeCompassHeading();
 
-      float absoluteHeading = imu->heading;
-      // TODO remove heading offset
+      if (!calibrated) {
+        calibAccum += imu->heading;
+        calibSamples++;
+        return;
+      }
 
-      float drift = absoluteHeading - yaw;
-      pushRingBuffer(drift);
+      float absoluteHeading = imu->heading - headingOffset;
+
+      float currentDrift = absoluteHeading - yaw;
+      pushRingBuffer(currentDrift);
 
       if (ringBufferIndex == 0)
-        offset = computeRingBufferAverage();
+        drift = computeRingBufferAverage();
 
-      this->correctedYaw = yaw - offset;
+      this->correctedYaw = yaw - drift;
     }
 
     float getCorrectedYaw() {
       return correctedYaw;
     }
+    
   private:
     void pushRingBuffer(float value) {
       ringBuffer[ringBufferIndex] = value;
@@ -42,7 +59,7 @@ class DriftCorrection {
 
     float computeRingBufferAverage() {
       float val = 0;
-      for(int i = 0; i < ringBufferSize; i++)
+      for (int i = 0; i < ringBufferSize; i++)
         val += ringBuffer[i];
       val /= ringBufferSize;
       return val;
