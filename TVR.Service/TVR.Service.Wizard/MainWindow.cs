@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -40,7 +41,15 @@ namespace TVR.Service.Wizard
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you really want to cancel the setup?", "TwometerVR", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            var dialog = new TaskDialog
+            {
+                Icon = TaskDialogStandardIcon.Error,
+                Caption = "TwometerVR Setup",
+                InstructionText = "Cancel setup?",
+                Text = "Progress made during the setup will be lost.",
+                StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No
+            };
+            if (dialog.Show() == TaskDialogResult.Yes)
             {
                 Close();
             }
@@ -73,7 +82,16 @@ namespace TVR.Service.Wizard
 
         private void OnWizardComplete()
         {
-            MessageBox.Show("You have completed the setup for TwometerVR and can now start playing your favourite VR games!", "Congratulations!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var dialog = new TaskDialog
+            {
+                Icon = TaskDialogStandardIcon.Information,
+                Caption = "TwometerVR Setup",
+                InstructionText = "Congratulations!",
+                Text = "You have completed the setup for TwometerVR and can now start playing your favourite VR games!",
+                StandardButtons = TaskDialogStandardButtons.Ok
+            };
+            dialog.Show();
+            Close();
         }
     }
 }

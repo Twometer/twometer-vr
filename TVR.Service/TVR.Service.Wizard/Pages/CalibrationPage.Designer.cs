@@ -36,7 +36,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAutoDetect = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
@@ -138,14 +138,15 @@
             this.label1.TabIndex = 15;
             this.label1.Text = "Brightness threshold:";
             // 
-            // button1
+            // btnAutoDetect
             // 
-            this.button1.Location = new System.Drawing.Point(390, 66);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(92, 23);
-            this.button1.TabIndex = 21;
-            this.button1.Text = "Auto-detect";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnAutoDetect.Location = new System.Drawing.Point(390, 66);
+            this.btnAutoDetect.Name = "btnAutoDetect";
+            this.btnAutoDetect.Size = new System.Drawing.Size(92, 23);
+            this.btnAutoDetect.TabIndex = 21;
+            this.btnAutoDetect.Text = "Auto-detect";
+            this.btnAutoDetect.UseVisualStyleBackColor = true;
+            this.btnAutoDetect.Click += new System.EventHandler(this.btnAutoDetect_Click);
             // 
             // numericUpDown1
             // 
@@ -221,7 +222,7 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAutoDetect);
             this.Controls.Add(this.nCamIndex);
             this.Controls.Add(this.nFrameHeight);
             this.Controls.Add(this.nFrameWidth);
@@ -253,7 +254,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAutoDetect;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
