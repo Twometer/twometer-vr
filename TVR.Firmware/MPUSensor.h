@@ -24,8 +24,8 @@ class MPUSensor {
   public:
     bool begin() {
       if (imu.begin(PIN_SDA, PIN_SCL) == INV_SUCCESS) {
-        imu.setAccelFSR(4);
-        imu.dmpBegin(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_GYRO_CAL | DMP_FEATURE_SEND_CAL_GYRO, UPDATE_RATE);
+        // Initialize the DMP with 6-Axis Gyro and 60 Hz update rate
+        imu.dmpBegin(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_GYRO_CAL, UPDATE_RATE);
         return true;
       }
       return false;
