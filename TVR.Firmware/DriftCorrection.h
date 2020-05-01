@@ -39,7 +39,7 @@ class DriftCorrection {
 
       float absoluteHeading = imu->heading - headingOffset;
 
-      float currentDrift = absoluteHeading - yaw;
+      float currentDrift = yaw - absoluteHeading;
       pushRingBuffer(currentDrift);
 
       if (ringBufferIndex == 0)
