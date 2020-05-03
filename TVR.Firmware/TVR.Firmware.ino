@@ -49,7 +49,12 @@ void setup() {
     Serial.println("Initialization failed");
     while (true) delay(500); // Loop forever on failure
   }
-  mpu.beginCalibration();
+
+  Serial.println("Calibrating...");
+  mpu.beginCalibration([udp, serverIp]() {
+    Serial.println("Calibration finished");
+    Packet::SendCalibrationComplete(&udp, serverIp);
+  });
 }
 
 void loop() {

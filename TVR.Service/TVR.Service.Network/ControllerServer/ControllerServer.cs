@@ -16,6 +16,8 @@ namespace TVR.Service.Network.ControllerServer
     {
         public event EventHandler<ControllerInfoPacket> PacketReceived;
 
+        public event EventHandler<CalibrationCompletedEventArgs> CalibrationCompleted;
+
         private UdpClient udp;
 
         public ControllerServer()
@@ -31,10 +33,17 @@ namespace TVR.Service.Network.ControllerServer
         {
             IPEndPoint ep = null;
             var message = udp.EndReceive(result, ref ep);
-            var reader = new BinaryReader(new MemoryStream(message));
-            var packet = new ControllerInfoPacket();
-            packet.Deserialize(reader);
-            PacketReceived?.Invoke(this, packet);
+            if (message.Length == 2 && message[0] == 0xFF && message[1] == 0xFF)
+            {
+                CalibrationCompleted?.Invoke(this, new CalibrationCompletedEventArgs() { ControllerEndpoint = ep });
+            }
+            else
+            {
+                var reader = new BinaryReader(new MemoryStream(message));
+                var packet = new ControllerInfoPacket();
+                packet.Deserialize(reader);
+                PacketReceived?.Invoke(this, packet);
+            }
 
             udp.BeginReceive(new AsyncCallback(ReceiveCallback), null);
         }

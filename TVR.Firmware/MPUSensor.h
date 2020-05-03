@@ -1,3 +1,4 @@
+#include <functional>
 #include <SparkFunMPU9250-DMP.h>
 #include "DriftCorrection.h"
 
@@ -26,6 +27,8 @@ class MPUSensor {
     float rollOffset = 0;
     int samples = 0;
 
+    std::function<void()> calibrationCompleted;
+
   public:
     bool begin() {
       if (imu.begin(PIN_SDA, PIN_SCL) == INV_SUCCESS) {
@@ -45,8 +48,9 @@ class MPUSensor {
       return false;
     }
 
-    void beginCalibration() {
+    void beginCalibration(std::function<void()> calibrationCompleted) {
       calibrationStarted = millis();
+      this->calibrationCompleted = std::move(calibrationCompleted);
     }
 
     void update() {
@@ -85,6 +89,7 @@ class MPUSensor {
 #ifdef USE_DRIFT_CORRECTION
         driftCorrection.finishCalibration();
 #endif
+        calibrationCompleted();
       } else if (elapsed > WARMUP_TIME) {
         yawOffset += imu.yaw;
         pitchOffset += imu.pitch;

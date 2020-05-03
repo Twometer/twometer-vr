@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TVR.Service.Core.Config;
+using TVR.Service.Core.Logging;
 using TVR.Service.Core.Tracking;
 using TVR.Service.Core.Video;
 using TVR.Service.Network.ControllerServer;
@@ -39,6 +40,12 @@ namespace TVR.Service.Common
             ControllerServer = new ControllerServer();
 
             ControllerServer.PacketReceived += ControllerServer_PacketReceived;
+            ControllerServer.CalibrationCompleted += ControllerServer_CalibrationCompleted;
+        }
+
+        private void ControllerServer_CalibrationCompleted(object sender, CalibrationCompletedEventArgs e)
+        {
+            LoggerFactory.Current.Log(LogLevel.Info, $"Controller at endpoint {e.ControllerEndpoint} completed calibration");
         }
 
         private void ControllerServer_PacketReceived(object sender, ControllerInfoPacket e)
