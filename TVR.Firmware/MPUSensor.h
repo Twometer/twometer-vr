@@ -9,10 +9,14 @@
 
 #define UPDATE_RATE 90
 
+// #define USE_DRIFT_CORRECTION  // Drift correction does not work ATM due to compass not doing what it is supposed to
+
 class MPUSensor {
   private:
     MPU9250_DMP imu{};
+#ifdef USE_DRIFT_CORRECTION
     DriftCorrection driftCorrection;
+#endif
 
     unsigned long calibrationStarted = 0;
     bool calibrated = false;
@@ -49,9 +53,12 @@ class MPUSensor {
       imu.computeEulerAngles();
       if (!calibrated) {
         calibrationUpdate();
-      } else {
-        driftCorrection.update(&imu, getYaw());
       }
+#ifdef USE_DRIFT_CORRECTION
+      else {
+        driftCorrection.update(&imu, imu.yaw - yawOffset);
+      }
+#endif
     }
 
     void calibrationUpdate() {
@@ -75,14 +82,18 @@ class MPUSensor {
         Serial.print(pitchOffset);
         Serial.print(", Roll=");
         Serial.println(rollOffset);
+#ifdef USE_DRIFT_CORRECTION
         driftCorrection.finishCalibration();
+#endif
       } else if (elapsed > WARMUP_TIME) {
         yawOffset += imu.yaw;
         pitchOffset += imu.pitch;
         rollOffset += imu.roll;
         samples++;
 
-        driftCorrection.update(&imu, getYaw());
+#ifdef USE_DRIFT_CORRECTION
+        driftCorrection.update(&imu, imu.yaw - yawOffset);
+#endif
       }
     }
 
@@ -91,11 +102,11 @@ class MPUSensor {
     }
 
     float getYaw() {
-      return imu.yaw - yawOffset;
-    }
-
-    float getCorrectedYaw() {
+#ifdef USE_DRIFT_CORRECTION
       return driftCorrection.getCorrectedYaw();
+#else
+      return imu.yaw - yawOffset;
+#endif
     }
 
     float getPitch() {

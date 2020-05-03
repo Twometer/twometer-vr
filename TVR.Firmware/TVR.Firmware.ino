@@ -64,8 +64,8 @@ void loop() {
 void sendPackets() {
   if (trigger.isPressed()) {
     byte buttons[] = { BUTTON_A };
-    Packet::Send(&udp, serverIp, 1, buttons, mpu.getCorrectedYaw(), mpu.getPitch(), mpu.getRoll());
+    Packet::Send(&udp, serverIp, 1, buttons, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
   } else {
-    Packet::Send(&udp, serverIp, 0, NULL, mpu.getCorrectedYaw(), mpu.getPitch(), mpu.getRoll());
+    Packet::Send(&udp, serverIp, 0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
   }
 }

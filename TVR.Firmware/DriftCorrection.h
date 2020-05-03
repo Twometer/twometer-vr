@@ -1,5 +1,7 @@
 #include <SparkFunMPU9250-DMP.h>
 
+// TODO Compass gives wrong values for some reason
+
 class DriftCorrection {
   private:
     float drift = 0;
@@ -25,27 +27,38 @@ class DriftCorrection {
 
       Serial.print("Compass calibration finished with offset=");
       Serial.println(headingOffset);
+      Serial.println("mx, my, mz");
     }
 
     void update(MPU9250_DMP* imu, float yaw) {
       imu->updateCompass();
       imu->computeCompassHeading();
 
+      float head = atan2(imu->my, imu->mx) * 180 / PI;
+
       if (!calibrated) {
-        calibAccum += imu->heading;
+        calibAccum += head;
         calibSamples++;
         return;
       }
 
-      float absoluteHeading = imu->heading - headingOffset;
+      float absoluteHeading = head - headingOffset;
+      pushRingBuffer(absoluteHeading);
 
+      //Serial.println(absoluteHeading);
+
+      /*Serial.print(imu->mx);
+        Serial.print(", ");
+        Serial.print(imu->my);
+        Serial.print(", ");
+        Serial.print(imu->mz);
+        Serial.print(", ");
+        Serial.println(head);*/
       float currentDrift = yaw - absoluteHeading;
-      pushRingBuffer(currentDrift);
-
       if (ringBufferIndex == 0)
         drift = computeRingBufferAverage();
 
-      this->correctedYaw = yaw - drift;
+      this->correctedYaw = yaw;
     }
 
     float getCorrectedYaw() {
