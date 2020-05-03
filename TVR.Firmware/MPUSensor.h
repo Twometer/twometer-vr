@@ -1,16 +1,22 @@
 #include <SparkFunMPU9250-DMP.h>
+#include "DriftCorrection.h"
 
 #define PIN_SDA 4
 #define PIN_SCL 5
 
-#define WARMUP_TIME 15000        // Wait 5 seconds for the chip to settle down, then start calibration
+#define WARMUP_TIME 15000       // Wait a few seconds for the chip to settle down, then start calibration
 #define CALIB_DURATION 2750     // Data collection should last 2.75 seconds. Then, we calculate the offsets.
 
 #define UPDATE_RATE 90
 
+// #define USE_DRIFT_CORRECTION  // Drift correction does not work ATM due to compass not doing what it is supposed to
+
 class MPUSensor {
   private:
     MPU9250_DMP imu{};
+#ifdef USE_DRIFT_CORRECTION
+    DriftCorrection driftCorrection;
+#endif
 
     unsigned long calibrationStarted = 0;
     bool calibrated = false;
@@ -23,8 +29,8 @@ class MPUSensor {
   public:
     bool begin() {
       if (imu.begin(PIN_SDA, PIN_SCL) == INV_SUCCESS) {
-        // Initialize the DMP with 6-Axis Gyro and 60 Hz update rate
-        imu.dmpBegin(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_GYRO_CAL, UPDATE_RATE);
+        imu.setAccelFSR(4);
+        imu.dmpBegin(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_GYRO_CAL | DMP_FEATURE_SEND_CAL_GYRO, UPDATE_RATE);
         return true;
       }
       return false;
@@ -48,6 +54,11 @@ class MPUSensor {
       if (!calibrated) {
         calibrationUpdate();
       }
+#ifdef USE_DRIFT_CORRECTION
+      else {
+        driftCorrection.update(&imu, imu.yaw - yawOffset);
+      }
+#endif
     }
 
     void calibrationUpdate() {
@@ -71,12 +82,18 @@ class MPUSensor {
         Serial.print(pitchOffset);
         Serial.print(", Roll=");
         Serial.println(rollOffset);
+#ifdef USE_DRIFT_CORRECTION
+        driftCorrection.finishCalibration();
+#endif
       } else if (elapsed > WARMUP_TIME) {
         yawOffset += imu.yaw;
         pitchOffset += imu.pitch;
         rollOffset += imu.roll;
-
         samples++;
+
+#ifdef USE_DRIFT_CORRECTION
+        driftCorrection.update(&imu, imu.yaw - yawOffset);
+#endif
       }
     }
 
@@ -85,7 +102,11 @@ class MPUSensor {
     }
 
     float getYaw() {
+#ifdef USE_DRIFT_CORRECTION
+      return driftCorrection.getCorrectedYaw();
+#else
       return imu.yaw - yawOffset;
+#endif
     }
 
     float getPitch() {

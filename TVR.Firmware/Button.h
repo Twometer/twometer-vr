@@ -2,8 +2,8 @@ class Button {
 private:
   int pin;
 
-  int buttonState;
-  int lastButtonState;
+  int buttonState = HIGH;
+  int lastButtonState = HIGH;
 
   unsigned long lastBounceTime = 0;  // the last time the pin was toggled
   unsigned long debounceDelay = 50;
