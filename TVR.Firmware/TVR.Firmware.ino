@@ -20,7 +20,7 @@ MPUSensor mpu;
 
 void setup() {
   Serial.begin(38400);    // Ah yes, debug
-  Serial.println("Twometer VR Firmware v2.0");
+  Serial.println("Twometer VR Firmware v2.1");
 
   pinMode(TRIGGER_PIN, INPUT_PULLUP); // Configure our pin
 
@@ -41,6 +41,8 @@ void setup() {
   if (!udp.begin(CONTROLLER_PORT))
     Serial.println("Can't initialize UDP client");
 
+  Packet::SendStatusPacket(&udp, serverIp, STATUS_CONNECTED);
+
   Serial.println("Initializing MPU...");
   bool ok = mpu.begin();
   if (ok)
@@ -51,9 +53,10 @@ void setup() {
   }
 
   Serial.println("Calibrating...");
+  Packet::SendStatusPacket(&udp, serverIp, STATUS_CALC_OFFSETS);
   mpu.beginCalibration([udp, serverIp]() {
     Serial.println("Calibration finished");
-    Packet::SendCalibrationComplete(&udp, serverIp);
+    Packet::SendStatusPacket(&udp, serverIp, STATUS_READY);
   });
 }
 
@@ -69,8 +72,8 @@ void loop() {
 void sendPackets() {
   if (trigger.isPressed()) {
     byte buttons[] = { BUTTON_A };
-    Packet::Send(&udp, serverIp, 1, buttons, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+    Packet::SendDataPacket(&udp, serverIp, 1, buttons, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
   } else {
-    Packet::Send(&udp, serverIp, 0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+    Packet::SendDataPacket(&udp, serverIp, 0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
   }
 }

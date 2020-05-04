@@ -40,12 +40,32 @@ namespace TVR.Service.Common
             ControllerServer = new ControllerServer();
 
             ControllerServer.PacketReceived += ControllerServer_PacketReceived;
-            ControllerServer.CalibrationCompleted += ControllerServer_CalibrationCompleted;
+            ControllerServer.StatusChanged += ControllerServer_StatusChanged; ;
         }
 
-        private void ControllerServer_CalibrationCompleted(object sender, CalibrationCompletedEventArgs e)
+        private void ControllerServer_StatusChanged(object sender, StatusChangedEventArgs e)
         {
-            LoggerFactory.Current.Log(LogLevel.Info, $"Controller at endpoint {e.ControllerEndpoint} completed calibration");
+            switch (e.ControllerStatus)
+            {
+                case ControllerStatus.Connected:
+                    LoggerFactory.Current.Log(LogLevel.Info, $"Controller at endpoint {e.ControllerEndpoint} connected");
+                    break;
+                case ControllerStatus.BeginCalibrationMode:
+                    LoggerFactory.Current.Log(LogLevel.Info, $"Controller at endpoint {e.ControllerEndpoint} entered calibration mode");
+                    break;
+                case ControllerStatus.MagnetometerCalibration:
+                    LoggerFactory.Current.Log(LogLevel.Info, $"Controller at endpoint {e.ControllerEndpoint} started magnetometer calibration mode.");
+                    break;
+                case ControllerStatus.ExitCalibrationMode:
+                    LoggerFactory.Current.Log(LogLevel.Info, $"Controller at endpoint {e.ControllerEndpoint} completed calibration");
+                    break;
+                case ControllerStatus.BeginCalculatingOffsets:
+                    LoggerFactory.Current.Log(LogLevel.Info, $"Controller at endpoint {e.ControllerEndpoint} started calculating offets");
+                    break;
+                case ControllerStatus.Ready:
+                    LoggerFactory.Current.Log(LogLevel.Info, $"Controller at endpoint {e.ControllerEndpoint} is ready for use");
+                    break;
+            }
         }
 
         private void ControllerServer_PacketReceived(object sender, ControllerInfoPacket e)

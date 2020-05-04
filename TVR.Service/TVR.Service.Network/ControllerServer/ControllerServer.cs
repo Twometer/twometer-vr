@@ -14,11 +14,11 @@ namespace TVR.Service.Network.ControllerServer
 {
     public class ControllerServer
     {
+        private readonly UdpClient udp;
+
         public event EventHandler<ControllerInfoPacket> PacketReceived;
 
-        public event EventHandler<CalibrationCompletedEventArgs> CalibrationCompleted;
-
-        private UdpClient udp;
+        public event EventHandler<StatusChangedEventArgs> StatusChanged;
 
         public ControllerServer()
         {
@@ -33,9 +33,9 @@ namespace TVR.Service.Network.ControllerServer
         {
             IPEndPoint ep = null;
             var message = udp.EndReceive(result, ref ep);
-            if (message.Length == 2 && message[0] == 0xFF && message[1] == 0xFF)
+            if (message[0] == 0xFF && message.Length == 2)
             {
-                CalibrationCompleted?.Invoke(this, new CalibrationCompletedEventArgs() { ControllerEndpoint = ep });
+                StatusChanged?.Invoke(this, new StatusChangedEventArgs() { ControllerEndpoint = ep, ControllerStatus = (ControllerStatus)message[1] });
             }
             else
             {

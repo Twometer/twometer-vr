@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace TVR.Service.Network.ControllerServer
 {
-    public class CalibrationCompletedEventArgs : EventArgs
+    public class StatusChangedEventArgs : EventArgs
     {
         public IPEndPoint ControllerEndpoint { get; set; }
+
+        public ControllerStatus ControllerStatus { get; set; }
 
     }
 }

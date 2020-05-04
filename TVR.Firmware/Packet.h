@@ -1,13 +1,13 @@
 class Packet {
   public:
-    static void SendCalibrationComplete(WiFiUDP *udp, IPAddress& serverIp) {
-      byte data[] = { 0xFF, 0xFF };
+    static void SendStatusPacket(WiFiUDP *udp, IPAddress& serverIp, byte status) {
+      byte data[] = { 0xFF, status };
       udp->beginPacket(serverIp, CONTROLLER_PORT);
       udp->write(data, 2);
       udp->endPacket();
     }
 
-    static void Send(WiFiUDP *udp, IPAddress& serverIp, byte numButtonPresses, byte* buttonPresses, float yaw, float pitch, float roll) {
+    static void SendDataPacket(WiFiUDP *udp, IPAddress& serverIp, byte numButtonPresses, byte* buttonPresses, float yaw, float pitch, float roll) {
       int16_t packetLen = 1 + 1 + (numButtonPresses) + 4 * 3;
       byte data[packetLen];
       int offset = 0;
