@@ -2,7 +2,7 @@
 This is the TwometerVR firmware utilizing the MPU-9250 IMU chip.
 
 Technically, this is version 2 because there was a previous version that utilized the MPU-6050 IMU, which
-was an absolute nightmare to use so I rewrote it. That's why the version in the code say v2.0.
+was an absolute nightmare to use so I rewrote it. That's why the version in the code says `v2.x`.
 
 # Usage
 To be able to build the Firmware, you need:
