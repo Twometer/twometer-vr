@@ -9,7 +9,7 @@ To be able to build the Firmware, you need:
 - Arduino IDE
 - ESP8266 [platform files](https://github.com/esp8266/Arduino#installing-with-boards-manager)
 - An ESP8266 programming board
-- This ESP8266-modified [SparkFun library](https://github.com/Twometer/SparkFun_MPU-9250-DMP_ESP8266_Library)
+- This MPU-9250 [library](https://github.com/hideakitai/MPU9250)
 - A new file called `WiFiConfig.h` in this directory that contains your WiFi credentials, like this:
 
 ```cpp

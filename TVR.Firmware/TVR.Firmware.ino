@@ -6,7 +6,7 @@
 #include "Constants.h"
 #include "WiFiConfig.h"
 #include "Discovery.h"
-#include "MPUSensor.h"
+#include "IMUController.h"
 #include "Button.h"
 #include "Packet.h"
 
@@ -16,7 +16,7 @@ Discovery discovery;
 IPAddress serverIp;
 WiFiUDP udp;
 
-MPUSensor mpu;
+IMUController imu;
 
 void setup() {
   Serial.begin(38400);    // Ah yes, debug
@@ -44,36 +44,32 @@ void setup() {
   Packet::SendStatusPacket(&udp, serverIp, STATUS_CONNECTED);
 
   Serial.println("Initializing MPU...");
-  bool ok = mpu.begin();
-  if (ok)
-    Serial.println("Initialized");
-  else {
-    Serial.println("Initialization failed");
-    while (true) delay(500); // Loop forever on failure
-  }
+  imu.begin();
+  Serial.println("Initialized");
 
   Serial.println("Calibrating...");
+  Packet::SendStatusPacket(&udp, serverIp, STATUS_ENTER_CALIB);
+  imu.calibrateAccelGyro();
+  Packet::SendStatusPacket(&udp, serverIp, STATUS_CALIB_MAG);
+  imu.calibrateMagnetometer();
+  Packet::SendStatusPacket(&udp, serverIp, STATUS_EXIT_CALIB);
+
+  Serial.println("Calculating offsets...");
   Packet::SendStatusPacket(&udp, serverIp, STATUS_CALC_OFFSETS);
-  mpu.beginCalibration([udp, serverIp]() {
-    Serial.println("Calibration finished");
-    Packet::SendStatusPacket(&udp, serverIp, STATUS_READY);
-  });
+  imu.calcOffsets();
 }
 
 void loop() {
-  if (mpu.hasData()) {
-    mpu.update();
-
-    if (mpu.isCalibrated())
-      sendPackets();
+  if (imu.update()) {
+    sendPackets();
   }
 }
 
 void sendPackets() {
   if (trigger.isPressed()) {
     byte buttons[] = { BUTTON_A };
-    Packet::SendDataPacket(&udp, serverIp, 1, buttons, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+    Packet::SendDataPacket(&udp, serverIp, 1, buttons, imu.getYaw(), imu.getPitch(), imu.getRoll());
   } else {
-    Packet::SendDataPacket(&udp, serverIp, 0, NULL, mpu.getYaw(), mpu.getPitch(), mpu.getRoll());
+    Packet::SendDataPacket(&udp, serverIp, 0, NULL, imu.getYaw(), imu.getPitch(), imu.getRoll());
   }
 }
