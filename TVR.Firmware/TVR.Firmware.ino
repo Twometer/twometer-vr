@@ -57,6 +57,9 @@ void setup() {
   Serial.println("Calculating offsets...");
   Packet::SendStatusPacket(&udp, serverIp, STATUS_CALC_OFFSETS);
   imu.calcOffsets();
+
+  Serial.println("Controller is ready!");
+  Packet::SendStatusPacket(&udp, serverIp, STATUS_READY);
 }
 
 void loop() {
