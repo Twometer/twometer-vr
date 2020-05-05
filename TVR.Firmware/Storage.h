@@ -72,6 +72,7 @@ class Storage {
       for (int i = 0; i < 256; i++) {
         EEPROM.write(i, 0);
       }
+      EEPROM.commit();
     }
 
   private:

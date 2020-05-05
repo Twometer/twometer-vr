@@ -1,5 +1,5 @@
-// #define CONTROLLER_RED
-#define CONTROLLER_BLUE
+#define CONTROLLER_RED
+// #define CONTROLLER_BLUE
 
 #include <ESP8266WiFi.h>
 
@@ -51,9 +51,11 @@ void setup() {
   Storage storage;
 
   // If the storage has data and the trigger is pressed at startup
-  if (storage.hasData() && trigger.isPressed()) {
+  if (storage.hasData() && digitalRead(TRIGGER_PIN) == LOW) {
     delay(2500); // And the trigger is held for 2.5s
-    if (trigger.isPressed()) {
+    if (digitalRead(TRIGGER_PIN) == LOW) {
+      Packet::SendStatusPacket(&udp, serverIp, STATUS_RESET);
+      delay(500);
       storage.clear(); // We do a factory reset
       ESP.restart();
       return;
@@ -66,13 +68,13 @@ void setup() {
   } else {
     Serial.println("Calibrating...");
     Packet::SendStatusPacket(&udp, serverIp, STATUS_ENTER_CALIB);
+    delay(4000);
     imu.calibrateAccelGyro();
     Packet::SendStatusPacket(&udp, serverIp, STATUS_CALIB_MAG);
     delay(4000);
     imu.calibrateMagnetometer();
     Packet::SendStatusPacket(&udp, serverIp, STATUS_EXIT_CALIB);
     storage.storeCalibrationData(imu.getMpu());
-
     delay(5000);
   }
 
