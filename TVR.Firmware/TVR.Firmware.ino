@@ -9,6 +9,7 @@
 #include "IMUController.h"
 #include "Button.h"
 #include "Packet.h"
+#include "Storage.h"
 
 Button trigger(TRIGGER_PIN);
 Discovery discovery;
@@ -47,12 +48,23 @@ void setup() {
   imu.begin();
   Serial.println("Initialized");
 
-  Serial.println("Calibrating...");
-  Packet::SendStatusPacket(&udp, serverIp, STATUS_ENTER_CALIB);
-  imu.calibrateAccelGyro();
-  Packet::SendStatusPacket(&udp, serverIp, STATUS_CALIB_MAG);
-  imu.calibrateMagnetometer();
-  Packet::SendStatusPacket(&udp, serverIp, STATUS_EXIT_CALIB);
+  Storage storage;
+
+  if (storage.hasData()) {
+    Serial.println("EEPROM has data!");
+    storage.loadCalibrationData(imu.getMpu());
+  } else {
+    Serial.println("Calibrating...");
+    Packet::SendStatusPacket(&udp, serverIp, STATUS_ENTER_CALIB);
+    imu.calibrateAccelGyro();
+    Packet::SendStatusPacket(&udp, serverIp, STATUS_CALIB_MAG);
+    delay(4000);
+    imu.calibrateMagnetometer();
+    Packet::SendStatusPacket(&udp, serverIp, STATUS_EXIT_CALIB);
+    storage.storeCalibrationData(imu.getMpu());
+
+    delay(5000);
+  }
 
   Serial.println("Calculating offsets...");
   Packet::SendStatusPacket(&udp, serverIp, STATUS_CALC_OFFSETS);

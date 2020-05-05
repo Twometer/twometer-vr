@@ -26,7 +26,7 @@ class IMUController {
     float rollOffset = 0.0f;
 
     int samples = 0;
-  public:
+  public: 
     void begin() {
       Wire.begin(PIN_SDA, PIN_SCL);
       mpu.setup();
@@ -68,6 +68,10 @@ class IMUController {
         return true;
       }
       return false;
+    }
+
+    MPU9250* getMpu() {
+      return &mpu;
     }
 
     float getYaw() {
