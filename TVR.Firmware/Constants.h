@@ -23,3 +23,4 @@
 #define STATUS_EXIT_CALIB   0x03
 #define STATUS_CALC_OFFSETS 0x04
 #define STATUS_READY        0x05
+#define STATUS_RESET        0x06

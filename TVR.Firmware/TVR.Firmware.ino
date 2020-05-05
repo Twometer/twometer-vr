@@ -1,5 +1,5 @@
-#define CONTROLLER_RED
-// #define CONTROLLER_BLUE
+// #define CONTROLLER_RED
+#define CONTROLLER_BLUE
 
 #include <ESP8266WiFi.h>
 
@@ -49,6 +49,16 @@ void setup() {
   Serial.println("Initialized");
 
   Storage storage;
+
+  // If the storage has data and the trigger is pressed at startup
+  if (storage.hasData() && trigger.isPressed()) {
+    delay(2500); // And the trigger is held for 2.5s
+    if (trigger.isPressed()) {
+      storage.clear(); // We do a factory reset
+      ESP.restart();
+      return;
+    }
+  }
 
   if (storage.hasData()) {
     Serial.println("EEPROM has data!");

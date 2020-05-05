@@ -65,6 +65,9 @@ namespace TVR.Service.Common
                 case ControllerStatus.Ready:
                     LoggerFactory.Current.Log(LogLevel.Info, $"Controller at endpoint {e.ControllerEndpoint} is ready for use");
                     break;
+                case ControllerStatus.Reset:
+                    LoggerFactory.Current.Log(LogLevel.Info, $"Controller at endpoint {e.ControllerEndpoint} did a factory reset");
+                    break;
             }
         }
 

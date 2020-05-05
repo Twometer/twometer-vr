@@ -13,6 +13,7 @@ namespace TVR.Service.Network.ControllerServer
         MagnetometerCalibration,
         ExitCalibrationMode,
         BeginCalculatingOffsets,
-        Ready
+        Ready,
+        Reset
     }
 }
