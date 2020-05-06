@@ -1,11 +1,15 @@
 #define CONTROLLER_RED
 // #define CONTROLLER_BLUE
 
+#define PACKET_RATE  60
+#define PACKET_DELAY (1.0 / PACKET_RATE)
+
 #include <ESP8266WiFi.h>
 
 #include "Constants.h"
 #include "WiFiConfig.h"
 #include "Discovery.h"
+#include "Timer.h"
 #include "IMUController.h"
 #include "Button.h"
 #include "Packet.h"
@@ -18,6 +22,7 @@ IPAddress serverIp;
 WiFiUDP udp;
 
 IMUController imu;
+Timer packetTimer;
 
 void setup() {
   Serial.begin(38400);    // Ah yes, debug
@@ -88,7 +93,10 @@ void setup() {
 
 void loop() {
   if (imu.update()) {
-    sendPackets();
+    if (packetTimer.elapsed(PACKET_DELAY)) {
+      sendPackets();
+      packetTimer.reset();
+    }
   }
 }
 

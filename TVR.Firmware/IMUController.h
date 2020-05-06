@@ -26,6 +26,8 @@ class IMUController {
     float rollOffset = 0.0f;
 
     int samples = 0;
+
+    Timer updateTimer;
   public: 
     void begin() {
       Wire.begin(PIN_SDA, PIN_SCL);
@@ -62,9 +64,9 @@ class IMUController {
     }
 
     bool update() {
-      if (millis() - lastUpdate > UPDATE_DELAY) {
+      if (updateTimer.elapsed(UPDATE_DELAY)) {
         mpu.update();
-        lastUpdate = millis();
+        updateTimer.reset();
         return true;
       }
       return false;

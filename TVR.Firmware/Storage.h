@@ -66,6 +66,8 @@ class Storage {
       mpu->setMagScale(0, read_eeprom<float>(idx));
       mpu->setMagScale(1, read_eeprom<float>(idx));
       mpu->setMagScale(2, read_eeprom<float>(idx));
+
+      mpu->printCalibration();
     }
 
     void clear() {
