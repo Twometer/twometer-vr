@@ -1,3 +1,6 @@
+#ifndef TVR_SWPOSESOURCE
+#define TVR_SWPOSESOURCE
+
 #include <MPU9250.h>
 #include "IPoseSource.h"
 
@@ -68,7 +71,7 @@ class SwPoseSource : public IPoseSource {
       rollOffset = rollAccum / samplesF;
     }
 
-    void update() override {
+    bool update() override {
       if (updateTimer.elapsed(UPDATE_DELAY)) {
         mpu.update();
         updateTimer.reset();
@@ -90,3 +93,5 @@ class SwPoseSource : public IPoseSource {
     }
 
 };
+
+#endif // TVR_SWPOSESOURCE

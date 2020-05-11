@@ -15,8 +15,7 @@ In the wiki you will also find setup instructions, implementation details, docum
 ## Thanks!
 - OpenCV
 - OpenVR
-- I2CDev
-- [Sparkfun](https://github.com/Twometer/SparkFun_MPU-9250-DMP_ESP8266_Library)
+- ...
 
 Without these awesome open-source projects, TwometerVR would not be possible!
 

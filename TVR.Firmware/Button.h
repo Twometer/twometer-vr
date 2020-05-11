@@ -1,3 +1,6 @@
+#ifndef TVR_BUTTON
+#define TVR_BUTTON
+
 class Button {
 private:
   int pin;
@@ -29,3 +32,5 @@ public:
     return buttonState == LOW;
   }
 };
+
+#endif // TVR_BUTTON

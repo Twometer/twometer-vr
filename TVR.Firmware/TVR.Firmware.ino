@@ -10,19 +10,22 @@
 #include "WiFiConfig.h"
 #include "Discovery.h"
 #include "Timer.h"
-#include "IMUController.h"
+#include "Storage.h"
+#include "IPoseSource.h"
+#include "SwPoseSource.h"
+#include "DmpPoseSource.h"
 #include "Button.h"
 #include "Packet.h"
-#include "Storage.h"
 
 Button trigger(TRIGGER_PIN);
 Discovery discovery;
 
+Timer packetTimer;
 IPAddress serverIp;
 WiFiUDP udp;
 
-IMUController imu;
-Timer packetTimer;
+// Here, select software or DMP pose source
+IPoseSource *imu = new SwPoseSource();
 
 void setup() {
   Serial.begin(38400);    // Ah yes, debug
@@ -49,8 +52,8 @@ void setup() {
 
   Packet::SendStatusPacket(&udp, serverIp, STATUS_CONNECTED);
 
-  Serial.println("Initializing MPU...");
-  imu.begin();
+  Serial.println("Initializing imu->..");
+  imu->begin();
   Serial.println("Initialized");
 
   Storage storage;
@@ -67,32 +70,28 @@ void setup() {
     }
   }
 
-  if (storage.hasData()) {
-    Serial.println("EEPROM has data!");
-    storage.loadCalibrationData(imu.getMpu());
-  } else {
-    Serial.println("Calibrating...");
-    Packet::SendStatusPacket(&udp, serverIp, STATUS_ENTER_CALIB);
-    delay(4000);
-    imu.calibrateAccelGyro();
-    Packet::SendStatusPacket(&udp, serverIp, STATUS_CALIB_MAG);
-    delay(4000);
-    imu.calibrateMagnetometer();
-    Packet::SendStatusPacket(&udp, serverIp, STATUS_EXIT_CALIB);
-    storage.storeCalibrationData(imu.getMpu());
-    delay(5000);
-  }
+  Serial.println("Calibrating...");
+  Packet::SendStatusPacket(&udp, serverIp, STATUS_ENTER_CALIB);
+  delay(4000);
+  imu->calibrateAccelGyro();
+
+  Packet::SendStatusPacket(&udp, serverIp, STATUS_CALIB_MAG);
+  delay(4000);
+  imu->calibrateMagnetometer();
+
+  Packet::SendStatusPacket(&udp, serverIp, STATUS_EXIT_CALIB);
+  delay(5000);
 
   Serial.println("Calculating offsets...");
   Packet::SendStatusPacket(&udp, serverIp, STATUS_CALC_OFFSETS);
-  imu.calcOffsets();
+  imu->calculateOffsets();
 
   Serial.println("Controller is ready!");
   Packet::SendStatusPacket(&udp, serverIp, STATUS_READY);
 }
 
 void loop() {
-  if (imu.update()) {
+  if (imu->update()) {
     if (packetTimer.elapsed(PACKET_DELAY)) {
       sendPackets();
       packetTimer.reset();
@@ -103,8 +102,8 @@ void loop() {
 void sendPackets() {
   if (trigger.isPressed()) {
     byte buttons[] = { BUTTON_A };
-    Packet::SendDataPacket(&udp, serverIp, 1, buttons, imu.getYaw(), imu.getPitch(), imu.getRoll());
+    Packet::SendDataPacket(&udp, serverIp, 1, buttons, imu->getYaw(), imu->getPitch(), imu->getRoll());
   } else {
-    Packet::SendDataPacket(&udp, serverIp, 0, NULL, imu.getYaw(), imu.getPitch(), imu.getRoll());
+    Packet::SendDataPacket(&udp, serverIp, 0, NULL, imu->getYaw(), imu->getPitch(), imu->getRoll());
   }
 }

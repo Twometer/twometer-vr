@@ -1,3 +1,6 @@
+#ifndef TVR_STORAGE
+#define TVR_STORAGE
+
 #include <EEPROM.h>
 #include <MPU9250.h>
 
@@ -92,3 +95,5 @@ class Storage {
       return t;
     }
 };
+
+#endif TVR_STORAGE

@@ -1,3 +1,6 @@
+#ifndef TVR_TIMER
+#define TVR_TIMER
+
 class Timer {
 private:
   uint32_t lastTick = 0;
@@ -10,5 +13,7 @@ public:
   void reset() {
     lastTick = millis();
   }
-  
+
 };
+
+#endif // TVR_TIMER
