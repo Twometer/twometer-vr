@@ -19,7 +19,7 @@ namespace TVR.Service.CLI
 
         private const int UpdateRate = 120; // 120 Hz update rate
         private readonly int UpdateDelay = (int)(1000.0f / UpdateRate);
-        
+
         public void Start()
         {
             serviceContext = new ServiceContext("tvrconfig.json");
@@ -51,7 +51,9 @@ namespace TVR.Service.CLI
                 serviceContext.Broadcast();
                 var broadcastDuration = (int)(DateTime.Now - start).TotalMilliseconds;
 
-                Thread.Sleep(UpdateDelay - broadcastDuration);
+                var timeout = UpdateDelay - broadcastDuration;
+                if (timeout > 0)
+                    Thread.Sleep(timeout);
             }
         }
 

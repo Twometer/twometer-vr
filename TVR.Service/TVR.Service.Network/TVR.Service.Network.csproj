@@ -86,7 +86,8 @@
     <Compile Include="Common\IPacket.cs" />
     <Compile Include="Common\IReceiveCallback.cs" />
     <Compile Include="Common\NetworkConfig.cs" />
-    <Compile Include="ControllerServer\CalibrationCompletedEventArgs.cs" />
+    <Compile Include="ControllerServer\ControllerStatus.cs" />
+    <Compile Include="ControllerServer\StatusChangedEventArgs.cs" />
     <Compile Include="ControllerServer\ControllerInfoPacket.cs" />
     <Compile Include="ControllerServer\ControllerServer.cs" />
     <Compile Include="Discovery\DiscoveryService.cs" />

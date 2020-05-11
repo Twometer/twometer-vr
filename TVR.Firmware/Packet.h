@@ -1,3 +1,6 @@
+#ifndef TVR_PACKET
+#define TVR_PACKET
+
 class Packet {
   public:
     static void SendStatusPacket(WiFiUDP *udp, IPAddress& serverIp, byte status) {
@@ -36,3 +39,5 @@ class Packet {
       offset += sizeof(data);
     }
 };
+
+#endif // TVR_PACKET

@@ -1,15 +1,18 @@
+#ifndef TVR_DISCOVERY
+#define TVR_DISCOVERY
+
 #include <WiFiUdp.h>
 
 class Discovery {
 private:
   WiFiUDP udpClient;
-  
+
   IPAddress serverIp;
   IPAddress broadcastIp;
-  
+
   byte discoverySequence[4] = { 0x79, 0x65, 0x65, 0x74 };
   char udpIncoming[15];
-  
+
 public:
   IPAddress discover() {
     broadcastIp = ~uint32_t(WiFi.subnetMask()) | uint32_t(WiFi.gatewayIP());
@@ -41,3 +44,5 @@ private:
   }
 
 };
+
+#endif // TVR_DISCOVERY
