@@ -11,7 +11,7 @@ To be able to build the Firmware, you need:
 - An ESP8266 programming board
 - This MPU-9250 [library](https://github.com/hideakitai/MPU9250) for software AHRS
   or [this one](https://github.com/Twometer/SparkFun_MPU-9250-DMP_ESP8266_Library) for hardware AHRS
-- A new file called `WiFiConfig.h` in this directory that contains your WiFi credentials, like this:
+- A new file called `WiFiConfig.h` in the `net` directory that contains your WiFi credentials, like this:
 
 ```cpp
 const String WIFI_SSID = "";

@@ -1,6 +1,9 @@
 #ifndef TVR_IPOSESOURCE
 #define TVR_IPOSESOURCE
 
+/**
+ * Base class for all pose sources
+ */
 class IPoseSource {
   public:
     virtual void begin() = 0;

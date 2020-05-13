@@ -15,8 +15,10 @@
 #define WARMUP_TIME 9000        // Wait a few seconds for the values to settle down, then start data collection
 #define CALIB_DURATION 2750     // Data collection should last 2.75 seconds. Then, we calculate the offsets.
 
-// Pose source that uses the Madgwick algorithm
-// to produce 9-axis sensor fusion data
+/**
+ * Pose source that uses the Madgwick algorithm
+ * to produce 9-axis sensor fusion data
+ */
 class SwPoseSource : public IPoseSource {
   private:
     MPU9250 mpu;

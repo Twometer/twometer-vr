@@ -12,8 +12,10 @@
 
 #define UPDATE_RATE 90
 
-// Pose source that uses the MPU's DMP chip
-// to do 6-axis sensor fusion
+/**
+ * Pose source that uses the MPU's DMP chip
+ * to do 6-axis sensor fusion
+ */
 class DmpPoseSource : public IPoseSource {
 private:
   MPU9250_DMP imu{};
