@@ -2,9 +2,9 @@
 // Created by twome on 06/04/2020.
 //
 
+#include <iostream>
 #include "StreamClient.h"
 
-#include <utility>
 #include "Buffer.h"
 
 bool StreamClient::Connect() {
@@ -17,7 +17,9 @@ void StreamClient::Close() {
 
 int16_t StreamClient::ReadShort() {
     uint8_t data[2];
-    tcpClient.Receive(data, 2);
+    int r = tcpClient.Receive(data, 2);
+    if (r < 0)
+        return r;
 
     int16_t value;
     memcpy(&value, data, 2);
@@ -32,10 +34,11 @@ void StreamClient::ReceiveLoop() {
 
     do {
         int packetLen = ReadShort();
-        if (packetLen <= 0) continue;
+        if (packetLen == 0) continue;
+        if (packetLen < 0) Reconnect();
 
         int received = tcpClient.Receive(recvBuf, packetLen);
-        if (received <= 0) return;
+        if (received <= 0) Reconnect();
 
         Buffer buffer(recvBuf, received);
         DataPacket packet;
@@ -63,4 +66,13 @@ void StreamClient::ReceiveLoop() {
 
         callback(packet);
     } while (!closeRequested);
+
+    tcpClient.Close();
+}
+
+void StreamClient::Reconnect() {
+    std::cout << "Connection lost, reconnecting..." << std::endl;
+    do {
+        tcpClient.Close();
+    } while (!Connect());
 }

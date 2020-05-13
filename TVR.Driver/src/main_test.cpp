@@ -7,9 +7,9 @@
 
 int main() {
     auto streamClient = new StreamClient([](const DataPacket &dataPacket) {
-        for(auto &d : dataPacket.controllerStates) {
+        for (auto &d : dataPacket.controllerStates) {
             auto a_pressed = d.buttons.at(Button::A);
-            std::cout << (int)d.controllerId << " " << d.posX << " " << d.posY << " " << d.posZ << std::endl;
+            std::cout << (int) d.controllerId << " " << d.posX << " " << d.posY << " " << d.posZ << std::endl;
         }
     });
 

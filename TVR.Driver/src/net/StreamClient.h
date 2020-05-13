@@ -26,6 +26,8 @@ public:
 
     bool Connect();
 
+    void Reconnect();
+
     void Close();
 
     void ReceiveLoop();
