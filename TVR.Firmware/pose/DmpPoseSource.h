@@ -8,7 +8,7 @@
 #define PIN_SCL 5
 
 #define WARMUP_TIME 15000       // Wait a few seconds for the chip to settle down, then start calibration
-#define CALIB_DURATION 2750     // Data collection should last 2.75 seconds. Then, we calculate the offsets.
+#define CALIB_DURATION 3000     // Data collection should last 3 seconds. Then, we calculate the offsets.
 
 #define UPDATE_RATE 90
 
@@ -35,8 +35,7 @@ public:
 
     void begin() override {
       if (imu.begin(PIN_SDA, PIN_SCL) == INV_SUCCESS) {
-        imu.setAccelFSR(4);
-        imu.dmpBegin(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_GYRO_CAL | DMP_FEATURE_SEND_CAL_GYRO, UPDATE_RATE);
+        imu.dmpBegin(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_GYRO_CAL, UPDATE_RATE);
       }
     }
 
@@ -52,8 +51,7 @@ public:
       uint32_t begin = millis();
       uint32_t elapsed = 0;
       while ((elapsed = millis() - begin) < WARMUP_TIME + CALIB_DURATION) {
-        imu.update();
-        if (elapsed > WARMUP_TIME) {
+        if (update() && elapsed > WARMUP_TIME) {
           yawAccum += imu.yaw;
           pitchAccum += imu.pitch;
           rollAccum += imu.roll;
@@ -86,6 +84,10 @@ public:
 
     float getRoll() override {
       return imu.roll - rollOffset;
+    }
+
+    bool requiresCalibration() override {
+      return false;
     }
 
 };

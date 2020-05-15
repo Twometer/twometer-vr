@@ -19,6 +19,8 @@ class IPoseSource {
     virtual float getYaw() = 0;
     virtual float getPitch() = 0;
     virtual float getRoll() = 0;
+
+    virtual bool requiresCalibration() = 0;
 };
 
 #endif // TVR_IPOSESOURCE

@@ -94,6 +94,11 @@ class SwPoseSource : public IPoseSource {
       return mpu.getRoll() - rollOffset;
     }
 
+    bool requiresCalibration() override {
+      // TODO check for storage
+      return true;
+    }
+
 };
 
 #endif // TVR_SWPOSESOURCE

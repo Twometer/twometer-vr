@@ -1,5 +1,5 @@
-#define CONTROLLER_RED
-// #define CONTROLLER_BLUE
+// #define CONTROLLER_RED
+#define CONTROLLER_BLUE
 
 #define PACKET_RATE  60
 #define PACKET_DELAY (1.0 / PACKET_RATE)
@@ -26,7 +26,7 @@ Timer packetTimer;
 WiFiUDP udp;
 
 // Here, select software or DMP pose source
-IPoseSource *imu = new SwPoseSource();
+IPoseSource *imu = new DmpPoseSource();
 
 void setup() {
   Serial.begin(38400);    // Ah yes, debug
@@ -67,18 +67,20 @@ void setup() {
   }
 
   // Calibration steps
-  Serial.println("Calibrating...");
-  Packet::SendStatusPacket(&udp, serverIp, STATUS_ENTER_CALIB);
-  delay(4000);
-  imu->calibrateAccelGyro();
+  if (imu->requiresCalibration()) {
+    Serial.println("Calibrating...");
+    Packet::SendStatusPacket(&udp, serverIp, STATUS_ENTER_CALIB);
+    delay(4000);
+    imu->calibrateAccelGyro();
 
-  Packet::SendStatusPacket(&udp, serverIp, STATUS_CALIB_MAG);
-  delay(4000);
-  imu->calibrateMagnetometer();
+    Packet::SendStatusPacket(&udp, serverIp, STATUS_CALIB_MAG);
+    delay(4000);
+    imu->calibrateMagnetometer();
 
-  Packet::SendStatusPacket(&udp, serverIp, STATUS_EXIT_CALIB);
-  delay(4000);
-  Serial.println("Calibration completed");
+    Packet::SendStatusPacket(&udp, serverIp, STATUS_EXIT_CALIB);
+    delay(4000);
+    Serial.println("Calibration completed");
+  }
 
   Serial.println("Calculating offsets...");
   Packet::SendStatusPacket(&udp, serverIp, STATUS_CALC_OFFSETS);

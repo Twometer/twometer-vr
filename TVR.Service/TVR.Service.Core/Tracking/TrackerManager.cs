@@ -53,7 +53,7 @@ namespace TVR.Service.Core.Tracking
             // To make stuff complicated, The MPU has its base axis in a different plane than our coordinate system
             // So we have to shift around yaw, pitch and roll here to make it work with SteamVR and TVR
             controller.Yaw = yaw;
-            controller.Pitch = -roll;
+            controller.Pitch = roll;
             controller.Roll = pitch;
 
             if (config.Tracker.LeftInvertPitch && controller.Id == 0)
@@ -62,10 +62,7 @@ namespace TVR.Service.Core.Tracking
                 controller.Pitch *= -1;
 
             foreach (var btn in controller.Buttons.Keys)
-                if (pressedButtons?.Contains(btn) == true)
-                    controller.Buttons[btn] = true;
-                else
-                    controller.Buttons[btn] = false;
+                controller.Buttons[btn] = pressedButtons?.Contains(btn) == true;
 
             HandleButtons();
         }
