@@ -1,6 +1,8 @@
 # ![TwometerVR Logo](https://github.com/Twometer/twometer-vr/blob/master/Artwork/Icon54.png?raw=true) TwometerVR
 A FREE open-source alternative to commercial hand trackers such as Oculus Touch or PS Move.
 
+> **Disclaimer**: This project is currently in a beta-state. This means, that in general, the concept and controllers are working and you can play VR games with them. I have tested that. But you may encounter bugs, crashes, annyoing setup procedures, unfinished features and the like.
+
 ## Get started
 To get started with TwometerVR, check out the [wiki](https://github.com/Twometer/twometer-vr/wiki)
 
