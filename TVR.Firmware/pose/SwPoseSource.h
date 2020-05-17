@@ -12,7 +12,7 @@
 
 #define MAGNETIC_DECLINATION 2.85 // Deg
 
-#define WARMUP_TIME 9000        // Wait a few seconds for the values to settle down, then start data collection
+#define WARMUP_TIME 15000        // Wait a few seconds for the values to settle down, then start data collection
 #define CALIB_DURATION 2750     // Data collection should last 2.75 seconds. Then, we calculate the offsets.
 
 /**
@@ -22,6 +22,7 @@
 class SwPoseSource : public IPoseSource {
   private:
     MPU9250 mpu;
+    Storage storage;
     uint32_t lastUpdate = 0;
 
     float yawAccum = 0.0f;
@@ -41,6 +42,7 @@ class SwPoseSource : public IPoseSource {
 
     void begin() override {
       Wire.begin(PIN_SDA, PIN_SCL);
+      Wire.setClock(400000L);
       mpu.setup();
     }
 
@@ -49,8 +51,8 @@ class SwPoseSource : public IPoseSource {
     }
 
     void calibrateMagnetometer() override {
-      mpu.calibrateMag();
       mpu.setMagneticDeclination(MAGNETIC_DECLINATION);
+      mpu.calibrateMag();
     }
 
     void calculateOffsets() override {
@@ -71,15 +73,15 @@ class SwPoseSource : public IPoseSource {
       yawOffset = yawAccum / samplesF;
       pitchOffset = pitchAccum / samplesF;
       rollOffset = rollAccum / samplesF;
+
+      Serial.print("Yaw offset: "); Serial.println(yawOffset);
+      Serial.print("Pitch offset: "); Serial.println(pitchOffset);
+      Serial.print("Roll offset: "); Serial.println(rollOffset);
     }
 
     bool update() override {
-      if (updateTimer.elapsed(UPDATE_DELAY)) {
-        mpu.update();
-        updateTimer.reset();
-        return true;
-      }
-      return false;
+      mpu.update();
+      return true;
     }
 
     float getYaw() override {
@@ -95,8 +97,7 @@ class SwPoseSource : public IPoseSource {
     }
 
     bool requiresCalibration() override {
-      // TODO check for storage
-      return true;
+      return true; // !storage.hasData()
     }
 
 };

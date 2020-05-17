@@ -34,6 +34,7 @@ private:
 public:
 
     void begin() override {
+      Wire.setClock(400000L);
       if (imu.begin(PIN_SDA, PIN_SCL) == INV_SUCCESS) {
         imu.dmpBegin(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_GYRO_CAL, UPDATE_RATE);
       }
@@ -64,6 +65,10 @@ public:
       yawOffset = yawAccum / samplesF;
       pitchOffset = pitchAccum / samplesF;
       rollOffset = rollAccum / samplesF;
+
+      Serial.print("Yaw offset: "); Serial.println(yawOffset);
+      Serial.print("Pitch offset: "); Serial.println(pitchOffset);
+      Serial.print("Roll offset: "); Serial.println(rollOffset);
     }
 
     bool update() override {
