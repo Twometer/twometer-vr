@@ -7,12 +7,12 @@
 #define PIN_SDA 4
 #define PIN_SCL 5
 
-#define UPDATE_RATE  90   // Hz
-#define UPDATE_DELAY (1.0 / UPDATE_RATE)
+#define UPDATE_RATE  250   // Hz
+#define UPDATE_DELAY (1000.0 / UPDATE_RATE)
 
 #define MAGNETIC_DECLINATION 2.85 // Deg
 
-#define WARMUP_TIME 15000        // Wait a few seconds for the values to settle down, then start data collection
+#define WARMUP_TIME 20000        // Wait a few seconds for the values to settle down, then start data collection
 #define CALIB_DURATION 2750     // Data collection should last 2.75 seconds. Then, we calculate the offsets.
 
 /**
@@ -43,7 +43,11 @@ class SwPoseSource : public IPoseSource {
     void begin() override {
       Wire.begin(PIN_SDA, PIN_SCL);
       Wire.setClock(400000L);
+      mpu.setMagneticDeclination(MAGNETIC_DECLINATION);
       mpu.setup();
+
+      if (storage.hasData())
+        storage.loadCalibrationData(&mpu);
     }
 
     void calibrateAccelGyro() override {
@@ -51,8 +55,9 @@ class SwPoseSource : public IPoseSource {
     }
 
     void calibrateMagnetometer() override {
-      mpu.setMagneticDeclination(MAGNETIC_DECLINATION);
       mpu.calibrateMag();
+
+      storage.storeCalibrationData(&mpu);
     }
 
     void calculateOffsets() override {
@@ -80,8 +85,12 @@ class SwPoseSource : public IPoseSource {
     }
 
     bool update() override {
-      mpu.update();
-      return true;
+      if (updateTimer.elapsed(UPDATE_DELAY)) {
+        mpu.update();
+        updateTimer.reset();
+        return true;
+      }
+      return false;
     }
 
     float getYaw() override {
@@ -97,7 +106,7 @@ class SwPoseSource : public IPoseSource {
     }
 
     bool requiresCalibration() override {
-      return true; // !storage.hasData()
+      return !storage.hasData();
     }
 
 };
