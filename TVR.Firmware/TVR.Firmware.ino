@@ -1,5 +1,5 @@
-// #define CONTROLLER_RED
-#define CONTROLLER_BLUE
+#define CONTROLLER_RED
+// #define CONTROLLER_BLUE
 
 #define PACKET_RATE  75
 #define PACKET_DELAY (1000.0 / PACKET_RATE)
@@ -26,7 +26,7 @@ Timer packetTimer;
 WiFiUDP udp;
 
 // Here, select software or DMP pose source
-IPoseSource *imu = new SwPoseSource();
+IPoseSource *imu = new DmpPoseSource();
 
 void setup() {
   Serial.begin(38400);    // Ah yes, debug

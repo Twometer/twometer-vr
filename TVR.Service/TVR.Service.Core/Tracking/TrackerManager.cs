@@ -52,9 +52,15 @@ namespace TVR.Service.Core.Tracking
 
             // To make stuff complicated, The MPU has its base axis in a different plane than our coordinate system
             // So we have to shift around yaw, pitch and roll here to make it work with SteamVR and TVR
+
             controller.Yaw = -yaw;
-            controller.Pitch = -roll;
             controller.Roll = pitch;
+
+            // Pose Source: Madgwick
+            // controller.Pitch = -roll;
+
+            // Pose Source: DMP
+            controller.Pitch = roll;
 
             if (config.Tracker.LeftInvertPitch && controller.Id == 0)
                 controller.Pitch *= -1;
