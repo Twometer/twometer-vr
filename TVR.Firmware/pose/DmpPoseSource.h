@@ -31,6 +31,8 @@ private:
 
   int samples = 0;
 
+  float mx0, my0, mz0;
+
 public:
 
     void begin() override {
@@ -58,6 +60,8 @@ public:
           rollAccum += imu.roll;
           samples++;
         }
+        if (imu.dataReady())
+          imu.update(UPDATE_COMPASS);
         delay(5);
       }
 
@@ -69,12 +73,27 @@ public:
       Serial.print("Yaw offset: "); Serial.println(yawOffset);
       Serial.print("Pitch offset: "); Serial.println(pitchOffset);
       Serial.print("Roll offset: "); Serial.println(rollOffset);
+
+      Serial.print("mx0: "); Serial.println(mx0);
+      Serial.print("my0: "); Serial.println(my0);
+      Serial.print("mz0: "); Serial.println(mz0);
+
+      mx0 = imu.mx;
+      my0 = imu.my;
+      mz0 = imu.mz;
     }
 
     bool update() override {
+      if (imu.dataReady()) {
+        imu.update(UPDATE_COMPASS);
+        if (imu.mx == mx0 && imu.my == my0 && imu.mz == mz0) {
+          Serial.println("Crossed zero point");
+        }
+      }
+
       if (imu.fifoAvailable() && imu.dmpUpdateFifo() == INV_SUCCESS) {
-          imu.computeEulerAngles();
-          return true;
+        imu.computeEulerAngles();
+        return true;
       }
       return false;
     }
@@ -93,6 +112,11 @@ public:
 
     bool requiresCalibration() override {
       return false;
+    }
+
+private:
+    void resetYaw() {
+      yawOffset += getYaw();
     }
 
 };
