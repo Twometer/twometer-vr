@@ -12,8 +12,6 @@
 
 #define UPDATE_RATE 90
 
-// #define USE_COMPASS
-
 /**
  * Pose source that uses the MPU's DMP chip
  * to do 6-axis sensor fusion
@@ -22,24 +20,7 @@ class DmpPoseSource : public IPoseSource {
 private:
   MPU9250_DMP imu{};
 
-  float yawAccum = 0.0f;
-  float yawOffset = 0.0f;
-
-  float pitchAccum = 0.0f;
-  float pitchOffset = 0.0f;
-
-  float rollAccum = 0.0f;
-  float rollOffset = 0.0f;
-
-  int samples = 0;
-
-#ifdef USE_COMPASS
-  float head0;
-  Timer yawResetTimer;
-#endif
-
 public:
-
     void begin() override {
       Wire.setClock(400000L);
       if (imu.begin(PIN_SDA, PIN_SCL) == INV_SUCCESS) {
@@ -47,86 +28,38 @@ public:
       }
     }
 
+    // The DMP does this stuff for us
     void calibrateAccelGyro() override {
-
     }
 
     void calibrateMagnetometer() override {
-
     }
 
     void calculateOffsets() override {
-      uint32_t begin = millis();
-      uint32_t elapsed = 0;
-      while ((elapsed = millis() - begin) < WARMUP_TIME + CALIB_DURATION) {
-        if (update() && elapsed > WARMUP_TIME) {
-          yawAccum += imu.yaw;
-          pitchAccum += imu.pitch;
-          rollAccum += imu.roll;
-          samples++;
-        }
-#ifdef USE_COMPASS
-        if (imu.dataReady()) {
-          imu.update(UPDATE_COMPASS);
-          imu.computeCompassHeading();
-        }
-#endif
-        delay(5);
-      }
-
-      float samplesF = float(samples);
-      yawOffset = yawAccum / samplesF;
-      pitchOffset = pitchAccum / samplesF;
-      rollOffset = rollAccum / samplesF;
-
-      Serial.print("Yaw offset: "); Serial.println(yawOffset);
-      Serial.print("Pitch offset: "); Serial.println(pitchOffset);
-      Serial.print("Roll offset: "); Serial.println(rollOffset);
-
-#ifdef USE_COMPASS
-      head0 = imu.heading;
-      Serial.print("head0: "); Serial.println(head0);
-#endif
     }
 
     bool update() override {
-#ifdef USE_COMPASS
-      if (imu.dataReady()) {
-        imu.update(UPDATE_COMPASS);
-        imu.computeCompassHeading();
-        if (abs(imu.heading - head0) < 0.25 && yawResetTimer.elapsed(15000)) {
-          resetYaw();
-          yawResetTimer.reset();
-        }
-      }
-#endif
-
-      if (imu.fifoAvailable() && imu.dmpUpdateFifo() == INV_SUCCESS) {
-        imu.computeEulerAngles();
-        return true;
-      }
-      return false;
+      return imu.fifoAvailable() && imu.dmpUpdateFifo() == INV_SUCCESS;
     }
 
-    float getYaw() override {
-      return imu.yaw - yawOffset;
+    float getQx() override {
+      return imu.qx;
     }
 
-    float getPitch() override {
-      return imu.pitch - pitchOffset;
+    float getQy() override {
+      return imu.qy;
     }
 
-    float getRoll() override {
-      return imu.roll - rollOffset;
+    float getQz() override {
+      return imu.qz;
+    }
+
+    float getQw() override {
+      return imu.qw;
     }
 
     bool requiresCalibration() override {
       return false;
-    }
-
-private:
-    void resetYaw() {
-      yawOffset = imu.yaw;
     }
 
 };

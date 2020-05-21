@@ -17,14 +17,15 @@ public:
     float posX;
     float posY;
     float posZ;
-    float roll;
-    float pitch;
-    float yaw;
+    float qx;
+    float qy;
+    float qz;
+    float qw;
 
     std::map<Button, bool> buttons;
 
-    ControllerState(uint8_t controllerId, float posX, float posY, float posZ, float yaw, float pitch, float roll) : controllerId(
-            controllerId), posX(posX), posY(posY), posZ(posZ), yaw(yaw), pitch(pitch), roll(roll) {
+    ControllerState(uint8_t controllerId, float posX, float posY, float posZ, float qx, float qy, float qz, float qw) : controllerId(
+            controllerId), posX(posX), posY(posY), posZ(posZ), qx(qx), qy(qy), qz(qz), qw(qw) {
         buttons[Button::A] = false;
         buttons[Button::B] = false;
     }

@@ -14,12 +14,9 @@ namespace TVR.Service.Core.Model
 
         public Vec3 Position { get; set; }
 
-        public Vec3? RotOffset { get; set; }
         public float? ZOffset { get; set; }
 
-        public float Yaw { get; set; }
-        public float Pitch { get; set; }
-        public float Roll { get; set; }
+        public Vec4 Rotation { get; set; }
 
         public ConcurrentDictionary<Button, bool> Buttons { get; } = new ConcurrentDictionary<Button, bool>();
 

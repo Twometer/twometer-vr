@@ -10,7 +10,7 @@ class Packet {
       udp->endPacket();
     }
 
-    static void SendDataPacket(WiFiUDP *udp, IPAddress& serverIp, byte numButtonPresses, byte* buttonPresses, float yaw, float pitch, float roll) {
+    static void SendDataPacket(WiFiUDP *udp, IPAddress& serverIp, byte numButtonPresses, byte* buttonPresses, float qx, float qy, float qz, float qw) {
       int16_t packetLen = 1 + 1 + (numButtonPresses) + 4 * 3;
       byte data[packetLen];
       int offset = 0;
@@ -23,9 +23,10 @@ class Packet {
       }
 
       // Rotations
-      copy(data, offset, yaw);
-      copy(data, offset, pitch);
-      copy(data, offset, roll);
+      copy(data, offset, qx);
+      copy(data, offset, qy);
+      copy(data, offset, qz);
+      copy(data, offset, qw);
 
       udp->beginPacket(serverIp, CONTROLLER_PORT);
       udp->write(data, packetLen);

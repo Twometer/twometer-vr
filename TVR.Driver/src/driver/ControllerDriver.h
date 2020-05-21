@@ -9,7 +9,6 @@
 #include <openvr_driver.h>
 #include "../net/StreamClient.h"
 #include "../model/Button.h"
-#include "../util/openvr_math.h"
 
 #define TRACKER_LEFT  0
 #define TRACKER_RIGHT 1
@@ -30,8 +29,6 @@ private:
     vr::VRInputComponentHandle_t buttonB{};
 
     int32_t GetTrackerRole();
-
-    static vr::HmdQuaternion_t ToQuaternion(float yaw, float pitch, float roll);
 
 public:
     ControllerDriver(int trackerId, std::string serialNumber);

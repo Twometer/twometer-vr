@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TVR.Service.Core.Config;
 using TVR.Service.Core.Logging;
+using TVR.Service.Core.Math;
 using TVR.Service.Core.Tracking;
 using TVR.Service.Core.Video;
 using TVR.Service.Network.ControllerServer;
@@ -73,7 +74,8 @@ namespace TVR.Service.Common
 
         private void ControllerServer_PacketReceived(object sender, ControllerInfoPacket e)
         {
-            TrackerManager.UpdateMeta(e.ControllerId, e.Yaw, e.Pitch, e.Roll, e.PressedButtons);
+            var quaternion = new Vec4(e.Qx, e.Qy, e.Qz, e.Qw);
+            TrackerManager.UpdateMeta(e.ControllerId, quaternion, e.PressedButtons);
         }
 
         public void Update()

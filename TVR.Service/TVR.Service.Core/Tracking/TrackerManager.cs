@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using TVR.Service.Core.Config;
+using TVR.Service.Core.Math;
 using TVR.Service.Core.Math.Transform;
 using TVR.Service.Core.Model;
 
@@ -37,13 +38,14 @@ namespace TVR.Service.Core.Tracking
                 tracker.UpdateVideo(hsvFrame);
         }
 
-        public void UpdateMeta(byte controllerId, float yaw, float pitch, float roll, Button[] pressedButtons)
+        public void UpdateMeta(byte controllerId, Vec4 quat, Button[] pressedButtons)
         {
             if (controllerId > Trackers.Length)
                 return;
 
             var controller = Trackers[controllerId].Controller;
 
+            /*
             // To make stuff complicated, The MPU has its base axis in a different plane than our coordinate system
             // So we have to shift around yaw, pitch and roll here to make it work with SteamVR and TVR
 
@@ -59,7 +61,9 @@ namespace TVR.Service.Core.Tracking
             if (config.Tracker.LeftInvertPitch && controller.Id == 0)
                 controller.Pitch *= -1;
             if (config.Tracker.RightInvertPitch && controller.Id == 1)
-                controller.Pitch *= -1;
+                controller.Pitch *= -1;*/
+
+            controller.Rotation = quat;
 
             foreach (var btn in controller.Buttons.Keys)
                 controller.Buttons[btn] = pressedButtons?.Contains(btn) == true;
@@ -93,7 +97,8 @@ namespace TVR.Service.Core.Tracking
                 // ... then reset pose for all controllers
                 foreach (var ctrl in Trackers.Select(t => t.Controller))
                 {
-                    ctrl.RotOffset = new Math.Vec3(ctrl.Yaw, ctrl.Pitch, ctrl.Roll);
+                    // TODO How to do pose reset with Quaternions
+                    //ctrl.RotOffset = new Math.Vec3(ctrl.Yaw, ctrl.Pitch, ctrl.Roll);
                 }
             }
         }

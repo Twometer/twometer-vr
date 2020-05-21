@@ -43,12 +43,12 @@ namespace TVR.Service.UI
                 if (context.Calibration.IsCalibrated)
                 {
                     var controller1 = manager.Trackers[0].Controller;
-                    lbTracker1Pos.Text = $"{controller1.Position.ToString()}\nY={controller1.Yaw} P={controller1.Pitch} R={controller1.Roll}";
+                    lbTracker1Pos.Text = $"{controller1.Position.ToString()}\nQ={controller1.Rotation}";
                     lbTracker1Pos.BackColor = controller1.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
                     lbTracker1Pos.ForeColor = manager.Trackers[0].Detected ? Color.Black : Color.DimGray;
 
                     var controller2 = manager.Trackers[1].Controller;
-                    lbTracker2Pos.Text = $"{controller2.Position.ToString()}\nY={controller2.Yaw} P={controller2.Pitch} R={controller2.Roll}";
+                    lbTracker2Pos.Text = $"{controller2.Position.ToString()}\nQ={controller2.Rotation}";
                     lbTracker2Pos.BackColor = controller2.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
                     lbTracker2Pos.ForeColor = manager.Trackers[1].Detected ? Color.Black : Color.DimGray;
                 }
@@ -131,19 +131,11 @@ namespace TVR.Service.UI
         {
             DrawCross(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, 0.3f);
 
+            var forward = Vector3.UnitZ;
+            var quat = new Quaternion(tracker.Controller.Rotation.X, tracker.Controller.Rotation.Y, tracker.Controller.Rotation.Z, tracker.Controller.Rotation.W);
+            var vec = quat * forward;
 
-            var yaw = MathHelper.DegreesToRadians(tracker.Controller.Yaw - 90);
-            var pitch = MathHelper.DegreesToRadians(-tracker.Controller.Pitch);
-
-            // var controllerLength = 0.07f; // meters
-            var xzlen = Math.Cos(pitch);
-            var x = (float)(xzlen * Math.Cos(yaw));
-            var y = (float)(Math.Sin(pitch));
-            var z = (float)(xzlen * Math.Sin(-yaw));
-            DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z);
-
-            //GL.Color4(Color.Black);
-            //DrawCross(tracker.Controller.Position.X - x, tracker.Controller.Position.Y - y, tracker.Controller.Position.Z - z, 0.3f);
+            DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X - vec.X, tracker.Controller.Position.Y - vec.Y, tracker.Controller.Position.Z - vec.Z);
         }
 
         private void DrawCross(float x, float y, float z, float size)
