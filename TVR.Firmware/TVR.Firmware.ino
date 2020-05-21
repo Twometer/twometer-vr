@@ -1,5 +1,5 @@
-#define CONTROLLER_RED
-// #define CONTROLLER_BLUE
+// #define CONTROLLER_RED
+#define CONTROLLER_BLUE
 
 #define PACKET_RATE  75
 #define PACKET_DELAY (1000.0 / PACKET_RATE)
@@ -90,21 +90,10 @@ void setup() {
   Packet::SendStatusPacket(&udp, serverIp, STATUS_READY);
 }
 
-int updates = 0;
-int ctr = 0;
 void loop() {
-  if (imu->update()) {
-    updates++;
-    if (packetTimer.elapsed(PACKET_DELAY)) {
-      ctr++;
-      if (ctr % PACKET_RATE == 0)
-      {
-        Serial.println(updates);
-        updates = 0;
-      }
-      sendPackets();
-      packetTimer.reset();
-    }
+  if (imu->update() && packetTimer.elapsed(PACKET_DELAY)) {
+    sendPackets();
+    packetTimer.reset();
   }
 }
 

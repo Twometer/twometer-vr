@@ -12,6 +12,8 @@
 
 #define UPDATE_RATE 90
 
+// #define USE_COMPASS
+
 /**
  * Pose source that uses the MPU's DMP chip
  * to do 6-axis sensor fusion
@@ -31,7 +33,10 @@ private:
 
   int samples = 0;
 
-  float mx0, my0, mz0;
+#ifdef USE_COMPASS
+  float head0;
+  Timer yawResetTimer;
+#endif
 
 public:
 
@@ -60,8 +65,12 @@ public:
           rollAccum += imu.roll;
           samples++;
         }
-        if (imu.dataReady())
+#ifdef USE_COMPASS
+        if (imu.dataReady()) {
           imu.update(UPDATE_COMPASS);
+          imu.computeCompassHeading();
+        }
+#endif
         delay(5);
       }
 
@@ -74,22 +83,23 @@ public:
       Serial.print("Pitch offset: "); Serial.println(pitchOffset);
       Serial.print("Roll offset: "); Serial.println(rollOffset);
 
-      Serial.print("mx0: "); Serial.println(mx0);
-      Serial.print("my0: "); Serial.println(my0);
-      Serial.print("mz0: "); Serial.println(mz0);
-
-      mx0 = imu.mx;
-      my0 = imu.my;
-      mz0 = imu.mz;
+#ifdef USE_COMPASS
+      head0 = imu.heading;
+      Serial.print("head0: "); Serial.println(head0);
+#endif
     }
 
     bool update() override {
+#ifdef USE_COMPASS
       if (imu.dataReady()) {
         imu.update(UPDATE_COMPASS);
-        if (imu.mx == mx0 && imu.my == my0 && imu.mz == mz0) {
-          Serial.println("Crossed zero point");
+        imu.computeCompassHeading();
+        if (abs(imu.heading - head0) < 0.25 && yawResetTimer.elapsed(15000)) {
+          resetYaw();
+          yawResetTimer.reset();
         }
       }
+#endif
 
       if (imu.fifoAvailable() && imu.dmpUpdateFifo() == INV_SUCCESS) {
         imu.computeEulerAngles();
@@ -116,7 +126,7 @@ public:
 
 private:
     void resetYaw() {
-      yawOffset += getYaw();
+      yawOffset = imu.yaw;
     }
 
 };

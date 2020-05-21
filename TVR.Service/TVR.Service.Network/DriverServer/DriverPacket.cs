@@ -27,13 +27,15 @@ namespace TVR.Service.Network.DriverServer
                 writer.Write((byte)ControllerStates.Length);
                 foreach (var c in ControllerStates)
                 {
+                    var offset = c.RotOffset ?? new Core.Math.Vec3(0, 0, 0);
+
                     writer.Write(c.Id);
                     writer.Write(c.Position.X);
                     writer.Write(c.Position.Y);
                     writer.Write(c.Position.Z - (c.ZOffset ?? 0));
-                    writer.Write(c.Yaw - (c.YawOffset ?? 0));
-                    writer.Write(c.Pitch);
-                    writer.Write(c.Roll);
+                    writer.Write(c.Yaw - offset.X);
+                    writer.Write(c.Pitch - offset.Y);
+                    writer.Write(c.Roll - offset.Z);
 
                     writer.Write((byte)c.Buttons.Keys.Count);
                     foreach (var btn in c.Buttons)

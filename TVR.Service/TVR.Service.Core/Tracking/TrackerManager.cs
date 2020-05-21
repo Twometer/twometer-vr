@@ -1,15 +1,9 @@
 ﻿using Emgu.CV;
-using Emgu.CV.Structure;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TVR.Service.Core.Config;
 using TVR.Service.Core.Math.Transform;
 using TVR.Service.Core.Model;
-
 
 namespace TVR.Service.Core.Tracking
 {
@@ -99,7 +93,7 @@ namespace TVR.Service.Core.Tracking
                 // ... then reset pose for all controllers
                 foreach (var ctrl in Trackers.Select(t => t.Controller))
                 {
-                    ctrl.YawOffset = ctrl.Yaw;
+                    ctrl.RotOffset = new Math.Vec3(ctrl.Yaw, ctrl.Pitch, ctrl.Roll);
                 }
             }
         }
