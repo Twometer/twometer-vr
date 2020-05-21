@@ -38,32 +38,19 @@ namespace TVR.Service.Core.Tracking
                 tracker.UpdateVideo(hsvFrame);
         }
 
-        public void UpdateMeta(byte controllerId, Vec4 quat, Button[] pressedButtons)
+        public void UpdateMeta(byte controllerId, float qx, float qy, float qz, float qw, Button[] pressedButtons)
         {
             if (controllerId > Trackers.Length)
                 return;
 
             var controller = Trackers[controllerId].Controller;
 
-            /*
             // To make stuff complicated, The MPU has its base axis in a different plane than our coordinate system
-            // So we have to shift around yaw, pitch and roll here to make it work with SteamVR and TVR
+            // So we have to shift around the quaternion here to make it work with SteamVR
 
-            controller.Yaw = -yaw;
-            controller.Roll = pitch;
+            // Believe me, this combination took me a while to figure out
 
-            // Pose Source: Madgwick
-            // controller.Pitch = -roll;
-
-            // Pose Source: DMP
-            controller.Pitch = roll;
-
-            if (config.Tracker.LeftInvertPitch && controller.Id == 0)
-                controller.Pitch *= -1;
-            if (config.Tracker.RightInvertPitch && controller.Id == 1)
-                controller.Pitch *= -1;*/
-
-            controller.Rotation = quat;
+            controller.Rotation = new Vec4(-qy, qz, qx, qw);
 
             foreach (var btn in controller.Buttons.Keys)
                 controller.Buttons[btn] = pressedButtons?.Contains(btn) == true;

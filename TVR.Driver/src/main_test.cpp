@@ -10,6 +10,7 @@ int main() {
         for (auto &d : dataPacket.controllerStates) {
             auto a_pressed = d.buttons.at(Button::A);
             std::cout << (int) d.controllerId << " " << d.posX << " " << d.posY << " " << d.posZ << std::endl;
+            std::cout << (int) d.controllerId << " " << d.qx << " " << d.qy << " " << d.qz << " " << d.qw << std::endl;
         }
     });
 

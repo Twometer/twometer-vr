@@ -74,8 +74,7 @@ namespace TVR.Service.Common
 
         private void ControllerServer_PacketReceived(object sender, ControllerInfoPacket e)
         {
-            var quaternion = new Vec4(e.Qx, e.Qy, e.Qz, e.Qw);
-            TrackerManager.UpdateMeta(e.ControllerId, quaternion, e.PressedButtons);
+            TrackerManager.UpdateMeta(e.ControllerId, e.Qx, e.Qy, e.Qz, e.Qw, e.PressedButtons);
         }
 
         public void Update()

@@ -39,29 +39,45 @@ public:
     }
 
     bool update() override {
-      return imu.fifoAvailable() && imu.dmpUpdateFifo() == INV_SUCCESS;
+      if (imu.fifoAvailable() && imu.dmpUpdateFifo() == INV_SUCCESS)
+      {
+        Serial.print(getQx()); Serial.print(", ");
+        Serial.print(getQy()); Serial.print(", ");
+        Serial.print(getQz()); Serial.print(", ");
+        Serial.println(getQw());
+        return true;
+      }
+      return false;
     }
 
     float getQx() override {
-      return imu.qx;
+      return calcQuat(imu.qx, 30);
     }
 
     float getQy() override {
-      return imu.qy;
+      return calcQuat(imu.qy, 30);
     }
 
     float getQz() override {
-      return imu.qz;
+      return calcQuat(imu.qz, 30);
     }
 
     float getQw() override {
-      return imu.qw;
+      return calcQuat(imu.qw, 30);
     }
 
     bool requiresCalibration() override {
       return false;
     }
 
+    float calcQuat(long number, uint8_t q) {
+      unsigned long mask = 0;
+    	for (int i=0; i<q; i++)
+    	{
+    		mask |= (1<<i);
+    	}
+    	return (number >> q) + ((number & mask) / (float) (2<<(q-1)));
+    }
 };
 
 #endif TVR_DMPPOSESOURCE

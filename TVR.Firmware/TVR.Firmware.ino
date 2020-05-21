@@ -1,5 +1,5 @@
-// #define CONTROLLER_RED
-#define CONTROLLER_BLUE
+#define CONTROLLER_RED
+// #define CONTROLLER_BLUE
 
 #define PACKET_RATE  75
 #define PACKET_DELAY (1000.0 / PACKET_RATE)

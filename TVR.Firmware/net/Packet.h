@@ -11,7 +11,7 @@ class Packet {
     }
 
     static void SendDataPacket(WiFiUDP *udp, IPAddress& serverIp, byte numButtonPresses, byte* buttonPresses, float qx, float qy, float qz, float qw) {
-      int16_t packetLen = 1 + 1 + (numButtonPresses) + 4 * 3;
+      int16_t packetLen = 1 + 1 + (numButtonPresses) + 4 * 4;
       byte data[packetLen];
       int offset = 0;
 

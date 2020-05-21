@@ -134,6 +134,7 @@ namespace TVR.Service.UI
             var forward = Vector3.UnitZ;
             var quat = new Quaternion(tracker.Controller.Rotation.X, tracker.Controller.Rotation.Y, tracker.Controller.Rotation.Z, tracker.Controller.Rotation.W);
             var vec = quat * forward;
+            vec.Normalize();
 
             DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X - vec.X, tracker.Controller.Position.Y - vec.Y, tracker.Controller.Position.Z - vec.Z);
         }
