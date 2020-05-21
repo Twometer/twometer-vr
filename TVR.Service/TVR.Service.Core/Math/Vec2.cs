@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TVR.Service.Core.Math
+﻿namespace TVR.Service.Core.Math
 {
     public struct Vec2
     {
         public float X { get; set; }
 
         public float Y { get; set; }
+
+        public float LengthSquared => X * X + Y * Y;
 
         public Vec2(float x, float y)
         {

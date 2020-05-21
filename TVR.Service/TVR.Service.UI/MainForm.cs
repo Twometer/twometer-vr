@@ -43,12 +43,12 @@ namespace TVR.Service.UI
                 if (context.Calibration.IsCalibrated)
                 {
                     var controller1 = manager.Trackers[0].Controller;
-                    lbTracker1Pos.Text = $"{controller1.Position.ToString()}\nQ={controller1.Rotation}";
+                    lbTracker1Pos.Text = $"{controller1.Position.ToString()}\n{controller1.Rotation}";
                     lbTracker1Pos.BackColor = controller1.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
                     lbTracker1Pos.ForeColor = manager.Trackers[0].Detected ? Color.Black : Color.DimGray;
 
                     var controller2 = manager.Trackers[1].Controller;
-                    lbTracker2Pos.Text = $"{controller2.Position.ToString()}\nQ={controller2.Rotation}";
+                    lbTracker2Pos.Text = $"{controller2.Position.ToString()}\n{controller2.Rotation}";
                     lbTracker2Pos.BackColor = controller2.Buttons[Core.Model.Button.A] ? Color.Green : Color.Transparent;
                     lbTracker2Pos.ForeColor = manager.Trackers[1].Detected ? Color.Black : Color.DimGray;
                 }

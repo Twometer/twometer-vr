@@ -31,10 +31,12 @@ namespace TVR.Service.Network.DriverServer
                     writer.Write(c.Position.X);
                     writer.Write(c.Position.Y);
                     writer.Write(c.Position.Z - (c.ZOffset ?? 0));
-                    writer.Write(c.Rotation.X);
-                    writer.Write(c.Rotation.Y);
-                    writer.Write(c.Rotation.Z);
-                    writer.Write(c.Rotation.W);
+
+                    var correctedRotation = c.Rotation; // * c.RotationOffset;
+                    writer.Write(correctedRotation.X);
+                    writer.Write(correctedRotation.Y);
+                    writer.Write(correctedRotation.Z);
+                    writer.Write(correctedRotation.W);
 
                     writer.Write((byte)c.Buttons.Keys.Count);
                     foreach (var btn in c.Buttons)

@@ -16,7 +16,9 @@ namespace TVR.Service.Core.Model
 
         public float? ZOffset { get; set; }
 
-        public Vec4 Rotation { get; set; }
+        public Quaternion Rotation { get; set; } = Quaternion.Identity;
+
+        public Quaternion RotationOffset { get; set; } = Quaternion.Identity;
 
         public ConcurrentDictionary<Button, bool> Buttons { get; } = new ConcurrentDictionary<Button, bool>();
 
@@ -24,8 +26,8 @@ namespace TVR.Service.Core.Model
         {
             Id = id;
 
-            Buttons[Button.A] = false;
-            Buttons[Button.B] = false;
+            foreach (Button btn in Enum.GetValues(typeof(Button)))
+                Buttons[btn] = false;
         }
     }
 }

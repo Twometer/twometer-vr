@@ -112,7 +112,7 @@
     <Compile Include="Math\Transform\SimpleCameraTransform.cs" />
     <Compile Include="Math\Vec2.cs" />
     <Compile Include="Math\Vec3.cs" />
-    <Compile Include="Math\Vec4.cs" />
+    <Compile Include="Math\Quaternion.cs" />
     <Compile Include="Model\Button.cs" />
     <Compile Include="Model\Controller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

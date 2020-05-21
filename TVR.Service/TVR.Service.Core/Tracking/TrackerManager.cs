@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using TVR.Service.Core.Config;
+using TVR.Service.Core.Logging;
 using TVR.Service.Core.Math;
 using TVR.Service.Core.Math.Transform;
 using TVR.Service.Core.Model;
@@ -16,7 +17,7 @@ namespace TVR.Service.Core.Tracking
 
         private readonly TVRConfig config;
 
-        private Mat hsvFrame = new Mat();
+        private readonly Mat hsvFrame = new Mat();
 
         public TrackerManager(TVRConfig config)
         {
@@ -50,7 +51,7 @@ namespace TVR.Service.Core.Tracking
 
             // Believe me, this combination took me a while to figure out
 
-            controller.Rotation = new Vec4(-qy, qz, qx, qw);
+            controller.Rotation = new Quaternion(-qy, qz, qx, qw);
 
             foreach (var btn in controller.Buttons.Keys)
                 controller.Buttons[btn] = pressedButtons?.Contains(btn) == true;
@@ -84,9 +85,9 @@ namespace TVR.Service.Core.Tracking
                 // ... then reset pose for all controllers
                 foreach (var ctrl in Trackers.Select(t => t.Controller))
                 {
-                    // TODO How to do pose reset with Quaternions
-                    //ctrl.RotOffset = new Math.Vec3(ctrl.Yaw, ctrl.Pitch, ctrl.Roll);
+                    ctrl.RotationOffset = ctrl.Rotation.Invert();
                 }
+                LoggerFactory.Current.Log(LogLevel.Info, "Pose reset complete");
             }
         }
 

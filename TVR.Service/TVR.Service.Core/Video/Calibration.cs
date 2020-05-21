@@ -1,10 +1,4 @@
 ﻿using Emgu.CV;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TVR.Service.Core.Config;
 using TVR.Service.Core.Logging;
 using TVR.Service.Core.Tracking;
