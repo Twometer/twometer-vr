@@ -3,4 +3,4 @@
 //
 #include "ControllerState.h"
 
-ControllerState ControllerState::invalid(255, 0, 0, 0, 0, 0, 0);
+ControllerState ControllerState::invalid(255, 0, 0, 0, 0, 0, 0, 1);

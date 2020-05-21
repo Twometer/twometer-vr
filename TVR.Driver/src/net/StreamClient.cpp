@@ -52,8 +52,9 @@ void StreamClient::ReceiveLoop() {
             auto rotX = buffer.Read<float>();
             auto rotY = buffer.Read<float>();
             auto rotZ = buffer.Read<float>();
+            auto rotW = buffer.Read<float>();
 
-            ControllerState state(controllerId, posX, posY, posZ, rotX, rotY, rotZ);
+            ControllerState state(controllerId, posX, posY, posZ, rotX, rotY, rotZ, rotW);
 
             auto btnCount = buffer.Read<uint8_t>();
             for (int j = 0; j < btnCount; j++) {

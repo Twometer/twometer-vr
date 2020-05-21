@@ -1,5 +1,5 @@
-// #define CONTROLLER_RED
-#define CONTROLLER_BLUE
+#define CONTROLLER_RED
+// #define CONTROLLER_BLUE
 
 #define PACKET_RATE  75
 #define PACKET_DELAY (1000.0 / PACKET_RATE)
@@ -12,7 +12,7 @@
 #include "util/Timer.h"
 #include "util/Storage.h"
 #include "pose/IPoseSource.h"
-#include "pose/SwPoseSource.h"
+// #include "pose/SwPoseSource.h"
 #include "pose/DmpPoseSource.h"
 #include "util/Button.h"
 #include "net/Packet.h"
@@ -100,8 +100,8 @@ void loop() {
 void sendPackets() {
   if (trigger.isPressed()) {
     byte buttons[] = { BUTTON_A };
-    Packet::SendDataPacket(&udp, serverIp, 1, buttons, imu->getYaw(), imu->getPitch(), imu->getRoll());
+    Packet::SendDataPacket(&udp, serverIp, 1, buttons, imu->getQx(), imu->getQy(), imu->getQz(), imu->getQw());
   } else {
-    Packet::SendDataPacket(&udp, serverIp, 0, NULL, imu->getYaw(), imu->getPitch(), imu->getRoll());
+    Packet::SendDataPacket(&udp, serverIp, 0, NULL, imu->getQx(), imu->getQy(), imu->getQz(), imu->getQw());
   }
 }

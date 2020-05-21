@@ -16,9 +16,10 @@ class IPoseSource {
 
     virtual bool update();
 
-    virtual float getYaw() = 0;
-    virtual float getPitch() = 0;
-    virtual float getRoll() = 0;
+    virtual float getQx() = 0;
+    virtual float getQy() = 0;
+    virtual float getQz() = 0;
+    virtual float getQw() = 0;
 
     virtual bool requiresCalibration() = 0;
 };

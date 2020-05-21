@@ -15,11 +15,13 @@ namespace TVR.Service.Network.ControllerServer
 
         public Button[] PressedButtons { get; set; }
 
-        public float Yaw { get; set; }
+        public float Qx { get; set; }
 
-        public float Pitch { get; set; }
+        public float Qy { get; set; }
 
-        public float Roll { get; set; }
+        public float Qz { get; set; }
+
+        public float Qw { get; set; }
 
         public void Deserialize(BinaryReader reader)
         {
@@ -32,9 +34,10 @@ namespace TVR.Service.Network.ControllerServer
                     PressedButtons[i] = (Button)reader.ReadByte();
             }
 
-            Yaw = reader.ReadSingle();
-            Pitch = reader.ReadSingle();
-            Roll = reader.ReadSingle();
+            Qx = reader.ReadSingle();
+            Qy = reader.ReadSingle();
+            Qz = reader.ReadSingle();
+            Qw = reader.ReadSingle();
         }
 
         public void Serialize(BinaryWriter writer)
