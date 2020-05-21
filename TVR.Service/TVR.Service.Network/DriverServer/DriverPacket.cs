@@ -32,7 +32,7 @@ namespace TVR.Service.Network.DriverServer
                     writer.Write(c.Position.Y);
                     writer.Write(c.Position.Z - (c.ZOffset ?? 0));
 
-                    var correctedRotation = c.Rotation; // * c.RotationOffset;
+                    var correctedRotation = c.Rotation * c.RotationOffset;
                     writer.Write(correctedRotation.X);
                     writer.Write(correctedRotation.Y);
                     writer.Write(correctedRotation.Z);

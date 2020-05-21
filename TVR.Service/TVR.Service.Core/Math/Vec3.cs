@@ -39,7 +39,7 @@
 
         public static Vec3 operator +(Vec3 a, Vec3 b)
         {
-            return new Vec3(a.X * b.X, a.Y * b.Y, a.Z * b.Z);
+            return new Vec3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
         }
     }
 }

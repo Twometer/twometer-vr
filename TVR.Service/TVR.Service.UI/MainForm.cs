@@ -132,7 +132,7 @@ namespace TVR.Service.UI
             DrawCross(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, 0.3f);
 
             var forward = Vector3.UnitZ;
-            var quat = new Quaternion(tracker.Controller.Rotation.X, tracker.Controller.Rotation.Y, tracker.Controller.Rotation.Z, tracker.Controller.Rotation.W);
+            var quat = new Quaternion(tracker.Controller.Rotation.X, tracker.Controller.Rotation.Y, tracker.Controller.Rotation.Z, tracker.Controller.Rotation.W) * Quaternion.Identity;
             var vec = quat * forward;
             vec.Normalize();
 
