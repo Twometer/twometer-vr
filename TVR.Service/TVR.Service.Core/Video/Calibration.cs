@@ -14,6 +14,8 @@ namespace TVR.Service.Core.Video
         private readonly TrackerManager manager;
 
         private float exposure;
+        private double prevBrightness;
+        private int eqBrightnessCounter;
         private int frameCounter;
         private int adjustFrames;
 
@@ -45,7 +47,7 @@ namespace TVR.Service.Core.Video
             LoggerFactory.Current.Log(LogLevel.Debug, $"Brightness value: {System.Math.Round(meanBrightness, 2)}");
 
             // Don't let it calibrate forever
-            if ((meanBrightness > config.Calibration.BrightnessThreshold || manager.Detected) && exposure > -30)
+            if ((meanBrightness > config.Calibration.BrightnessThreshold || manager.Detected) && EnsureBrightnessChanged(meanBrightness))
             {
                 exposure--;
                 adjustFrames = config.Calibration.CooldownFrames;
@@ -56,6 +58,17 @@ namespace TVR.Service.Core.Video
                 LoggerFactory.Current.Log(LogLevel.Info, $"Calibration completed with exposure {exposure}");
                 IsCalibrated = true;
             }
+        }
+
+        private bool EnsureBrightnessChanged(double brightness)
+        {
+            if (System.Math.Abs(brightness - prevBrightness) < 2.0)
+                eqBrightnessCounter++;
+            else eqBrightnessCounter = 0;
+
+            prevBrightness = brightness;
+
+            return eqBrightnessCounter < 3;
         }
 
     }

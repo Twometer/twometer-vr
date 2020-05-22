@@ -1,17 +1,12 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
-using System;
-using System.Collections.Generic;
+using Emgu.CV.Structure;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TVR.Service.Core.Video
 {
     public class ImageProcessing
     {
-
         public static void Erode<TColor, TDepth>(Image<TColor, TDepth> image, int iterations) where TColor : struct, IColor where TDepth : new()
         {
             CvInvoke.Erode(image, image, null, new Point(-1, -1), iterations, BorderType.Constant, CvInvoke.MorphologyDefaultBorderValue);
@@ -32,5 +27,9 @@ namespace TVR.Service.Core.Video
             CvInvoke.GaussianBlur(image, image, new Size(kernelSize, kernelSize), 0, 0);
         }
 
+        public static CircleF[] HoughCircles<TColor, TDepth>(Image<TColor, TDepth> image, double cannyThreshold, double accumulatorThreshold, double dp, double minDist, int minRadius = 0, int maxRadius = 0) where TColor : struct, IColor where TDepth : new()
+        {
+            return CvInvoke.HoughCircles(image, HoughType.Gradient, dp, minDist, cannyThreshold, accumulatorThreshold, minRadius, maxRadius);
+        }
     }
 }
