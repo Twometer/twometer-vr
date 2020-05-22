@@ -1,4 +1,5 @@
 ﻿using System;
+using TVR.Service.Common;
 using TVR.Service.Core.Logging;
 
 namespace TVR.Service.CLI

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading;
-using TVR.Service.Common;
 
-namespace TVR.Service.CLI
+namespace TVR.Service.Common
 {
     public class TVRHost
     {
