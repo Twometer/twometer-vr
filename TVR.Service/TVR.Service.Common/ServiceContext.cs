@@ -1,12 +1,6 @@
-﻿using Emgu.CV;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using TVR.Service.Core.Config;
 using TVR.Service.Core.Logging;
-using TVR.Service.Core.Math;
 using TVR.Service.Core.Tracking;
 using TVR.Service.Core.Video;
 using TVR.Service.Network.ControllerServer;
@@ -90,6 +84,5 @@ namespace TVR.Service.Common
         {
             DriverServer.Broadcast(new DriverPacket() { ControllerStates = TrackerManager.Trackers.Select(t => t.Controller).ToArray() });
         }
-
     }
 }

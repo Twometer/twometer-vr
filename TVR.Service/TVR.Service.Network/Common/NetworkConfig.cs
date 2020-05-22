@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TVR.Service.Network.Common
+﻿namespace TVR.Service.Network.Common
 {
     public static class NetworkConfig
     {
@@ -25,6 +19,5 @@ namespace TVR.Service.Network.Common
         /// UDP broadcasts
         /// </summary>
         public const int DiscoveryPort = 12743;
-
     }
 }

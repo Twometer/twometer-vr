@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TVR.Service.Network.ControllerServer
+﻿namespace TVR.Service.Network.ControllerServer
 {
     public enum ControllerStatus
     {

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 using TVR.Service.Core.Logging;
 using TVR.Service.Network.Common;
 
@@ -52,6 +50,5 @@ namespace TVR.Service.Network.Discovery
                 return endPoint.Address.ToString();
             }
         }
-
     }
 }

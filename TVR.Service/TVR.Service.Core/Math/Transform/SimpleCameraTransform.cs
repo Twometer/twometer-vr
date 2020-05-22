@@ -11,11 +11,11 @@ namespace TVR.Service.Core.Math.Transform
     {
         private readonly TVRConfig config;
 
-        private PointF frameCenter;
+        private readonly IFilter xAvg;
+        private readonly IFilter yAvg;
+        private readonly IFilter zAvg;
 
-        private IFilter xAvg;
-        private IFilter yAvg;
-        private IFilter zAvg;
+        private PointF frameCenter;
 
         public SimpleCameraTransform(TVRConfig config)
         {

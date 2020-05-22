@@ -1,5 +1,4 @@
-﻿using Emgu.CV;
-using TVR.Service.Core.Config;
+﻿using TVR.Service.Core.Config;
 using TVR.Service.Core.Logging;
 using TVR.Service.Core.Tracking;
 

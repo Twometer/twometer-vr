@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using TVR.Service.Core.Model;
 using TVR.Service.Network.Common;
 
@@ -51,7 +46,6 @@ namespace TVR.Service.Network.DriverServer
                 writer.Write((byte)0);
             }
         }
-
     }
 }
 

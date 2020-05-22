@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using TVR.Service.Core.Logging;
 using TVR.Service.Network.Common;
-using TVR.Service.Network.Common.Host;
 
 namespace TVR.Service.Network.ControllerServer
 {
@@ -47,6 +42,5 @@ namespace TVR.Service.Network.ControllerServer
 
             udp.BeginReceive(new AsyncCallback(ReceiveCallback), null);
         }
-
     }
 }

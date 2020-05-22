@@ -17,7 +17,7 @@
   },
   "Tracker": {
     "PoseResetDelay": 0.25,
-    "ControllerLength": 0.154,
+    "ControllerLength": 0.055,
     "ZOffset": 0.25
   }
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TVR.Service.Wizard.Model
 {
@@ -56,7 +52,5 @@ namespace TVR.Service.Wizard.Model
         }
 
         public event EventHandler UIStateChanged;
-
-
     }
 }
