@@ -12,16 +12,16 @@
 	"input_source": {
 		"/input/a": {
 			"binding_image_point": [
-				80,
-				60
+				540,
+				800
 			],
 			"type": "button",
 			"order": 1
 		},
 		"/input/b": {
 			"binding_image_point": [
-				80,
-				90
+				540,
+				800
 			],
 			"type": "button",
 			"order": 2
