@@ -2,18 +2,12 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using TVR.Service.Common;
 using TVR.Service.Core.Tracking;
-using TVR.Service.Core.Video;
-using TVR.Service.Network.ControllerServer;
-using TVR.Service.Network.Discovery;
-using TVR.Service.Network.DriverServer;
 
-namespace TVR.Service.UI
+namespace TVR.Service.DebugUI
 {
     public partial class MainForm : Form
     {
@@ -81,7 +75,6 @@ namespace TVR.Service.UI
             context?.Broadcast();
         }
 
-
         // Visualization with OpenGL
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
@@ -120,11 +113,6 @@ namespace TVR.Service.UI
             DrawTracker(context.TrackerManager.Trackers[1]);
 
             glControl1.SwapBuffers();
-        }
-
-        private void GlControl1_Scroll(object sender, ScrollEventArgs e)
-        {
-
         }
 
         private void DrawTracker(Tracker tracker)

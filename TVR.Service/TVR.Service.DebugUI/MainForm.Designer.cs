@@ -1,4 +1,4 @@
-﻿namespace TVR.Service.UI
+﻿namespace TVR.Service.DebugUI
 {
     partial class MainForm
     {
@@ -176,7 +176,6 @@
             this.glControl1.TabIndex = 13;
             this.glControl1.VSync = true;
             this.glControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl1_Paint);
-            this.glControl1.Scroll += GlControl1_Scroll;
             // 
             // label2
             // 
