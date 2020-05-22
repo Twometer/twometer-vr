@@ -29,10 +29,10 @@ namespace TVR.Service.Core.Tracking
                 t.Controller.ZOffset = config.Tracker.ZOffset;
         }
 
-        public void UpdateVideo(Mat hsvFrame)
+        public void UpdateVideo(Mat hsvFrame, double meanBrightness)
         {
             foreach (var tracker in Trackers)
-                tracker.UpdateVideo(hsvFrame);
+                tracker.UpdateVideo(hsvFrame, meanBrightness);
         }
 
         public void UpdateMeta(byte controllerId, float qx, float qy, float qz, float qw, Button[] pressedButtons)

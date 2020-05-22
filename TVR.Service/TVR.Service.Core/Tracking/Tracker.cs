@@ -30,12 +30,12 @@ namespace TVR.Service.Core.Tracking
             this.transform = transform;
         }
 
-        public void UpdateVideo(Mat frame)
+        public void UpdateVideo(Mat frame, double brightness)
         {
             if (Frame == null)
                 Frame = new Image<Gray, byte>(frame.Width, frame.Height);
 
-            RangeFilter(frame);
+            RangeFilter(frame, brightness);
             ImageProcessing.Erode(Frame, 1);
             ImageProcessing.Dilate(Frame, 1);
             ImageProcessing.ThresholdBinary(Frame, new Gray(150), new Gray(255));
@@ -51,23 +51,27 @@ namespace TVR.Service.Core.Tracking
                 Controller.Position = CalcOrigin(spherePos);
 
                 if (Visualize)
-                {
                     Frame.Draw(circle, new Gray(128), 4);
-                }
             }
         }
 
-        private void RangeFilter(Mat frame)
+        private void RangeFilter(Mat frame, double brightness)
         {
             var range0 = Settings.ColorRanges[0];
-            CvInvoke.InRange(frame, new ScalarArray(range0.Minimum), new ScalarArray(range0.Maximum), Frame);
+            CvInvoke.InRange(frame, new ScalarArray(AdaptMinimum(range0.Minimum, brightness)), new ScalarArray(range0.Maximum), Frame);
 
             for (var i = 1; i < Settings.ColorRanges.Length; i++)
             {
                 var range = Settings.ColorRanges[i];
-                CvInvoke.InRange(frame, new ScalarArray(range.Minimum), new ScalarArray(range.Maximum), tempMat);
+                CvInvoke.InRange(frame, new ScalarArray(AdaptMinimum(range.Minimum, brightness)), new ScalarArray(range.Maximum), tempMat);
                 CvInvoke.BitwiseOr(Frame, tempMat, Frame);
             }
+        }
+
+        private MCvScalar AdaptMinimum(MCvScalar minimum, double brightness)
+        {
+            minimum.V2 += brightness;
+            return minimum;
         }
 
         /// <summary>

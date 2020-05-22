@@ -13,6 +13,8 @@ namespace TVR.Service.Core.Video
 
         public Mat HsvFrame { get; } = new Mat();
 
+        public double FrameBrightness { get; private set; } = 0.0f;
+
         public double Exposure
         {
             set
@@ -32,8 +34,13 @@ namespace TVR.Service.Core.Video
         public void Update()
         {
             if (videoCapture.Grab())
+            {
                 videoCapture.Retrieve(Frame);
-            CvInvoke.CvtColor(Frame, HsvFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
+
+                CvInvoke.CvtColor(Frame, HsvFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
+                FrameBrightness = CvInvoke.Mean(HsvFrame).V2;
+            }
+
         }
 
         public void Dispose()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emgu.CV;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -79,11 +80,10 @@ namespace TVR.Service.Common
 
         public void Update()
         {
-            
             Camera.Update();
-            TrackerManager.UpdateVideo(Camera.HsvFrame);
+            TrackerManager.UpdateVideo(Camera.HsvFrame, Camera.FrameBrightness);
             if (!Calibration.IsCalibrated)
-                Calibration.Update(Camera.HsvFrame);
+                Calibration.Update(Camera.FrameBrightness);
         }
 
         public void Broadcast()

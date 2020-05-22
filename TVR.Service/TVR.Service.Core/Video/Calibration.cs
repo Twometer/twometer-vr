@@ -24,7 +24,7 @@ namespace TVR.Service.Core.Video
             this.manager = manager;
         }
 
-        public void Update(Mat hsvFrame)
+        public void Update(double meanBrightness)
         {
             if (frameCounter == 0)
                 LoggerFactory.Current.Log(LogLevel.Info, "Calibrating camera...");
@@ -41,8 +41,6 @@ namespace TVR.Service.Core.Video
                 adjustFrames--;
                 return;
             }
-
-            var meanBrightness = CvInvoke.Mean(hsvFrame).V2;
 
             LoggerFactory.Current.Log(LogLevel.Debug, $"Brightness value: {System.Math.Round(meanBrightness, 2)}");
 
