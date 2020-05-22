@@ -16,8 +16,6 @@
     "Latency": 2
   },
   "Tracker": {
-    "LeftInvertPitch": false,
-    "RightInvertPitch": false,
     "PoseResetDelay": 0.25,
     "ControllerLength": 0.154,
     "ZOffset": 0.25
