@@ -36,12 +36,9 @@ namespace TVR.Service.Core.Tracking
                 Frame = new Image<Gray, byte>(frame.Width, frame.Height);
 
             RangeFilter(frame, brightness);
-            ImageProcessing.Erode(Frame, 1);
-            ImageProcessing.Dilate(Frame, 1);
-            ImageProcessing.ThresholdBinary(Frame, new Gray(150), new Gray(255));
             ImageProcessing.SmoothGaussian(Frame, 9);
 
-            var circles = ImageProcessing.HoughCircles(Frame, Settings.CannyThreshold, 1, 3, Frame.Width / 2, 2, 50);
+            var circles = ImageProcessing.HoughCircles(Frame, Settings.CannyThreshold, 1, 3, Frame.Width / 2, 3, 75);
             Detected = circles.Length > 0;
 
             if (Detected)
