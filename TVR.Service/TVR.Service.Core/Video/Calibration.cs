@@ -9,9 +9,9 @@ namespace TVR.Service.Core.Video
     {
         public bool IsCalibrated { get; private set; }
 
-        private TVRConfig config;
-        private Camera camera;
-        private TrackerManager manager;
+        private readonly TVRConfig config;
+        private readonly Camera camera;
+        private readonly TrackerManager manager;
 
         private float exposure;
         private int frameCounter;
@@ -24,7 +24,7 @@ namespace TVR.Service.Core.Video
             this.manager = manager;
         }
 
-        public void Update(Mat frame)
+        public void Update(Mat hsvFrame)
         {
             if (frameCounter == 0)
                 LoggerFactory.Current.Log(LogLevel.Info, "Calibrating camera...");
@@ -42,9 +42,7 @@ namespace TVR.Service.Core.Video
                 return;
             }
 
-            var grayMat = new Mat();
-            CvInvoke.CvtColor(frame, grayMat, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
-            var meanBrightness = CvInvoke.Mean(grayMat).V0;
+            var meanBrightness = CvInvoke.Mean(hsvFrame).V2;
 
             LoggerFactory.Current.Log(LogLevel.Debug, $"Brightness value: {System.Math.Round(meanBrightness, 2)}");
 

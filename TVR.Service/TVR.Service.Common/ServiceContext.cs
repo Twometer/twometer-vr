@@ -79,12 +79,11 @@ namespace TVR.Service.Common
 
         public void Update()
         {
-            var frame = Camera.QueryFrame();
-            TrackerManager.UpdateVideo(frame);
+            
+            Camera.Update();
+            TrackerManager.UpdateVideo(Camera.HsvFrame);
             if (!Calibration.IsCalibrated)
-            {
-                Calibration.Update(frame);
-            }
+                Calibration.Update(Camera.HsvFrame);
         }
 
         public void Broadcast()

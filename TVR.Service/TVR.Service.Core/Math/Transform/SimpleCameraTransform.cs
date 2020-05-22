@@ -36,7 +36,7 @@ namespace TVR.Service.Core.Math.Transform
 
 
             var Z = ComputeDistance(diameter);
-            xAvg.Push(offset.X * Z / config.Camera.PixelsPerMeter);
+            xAvg.Push(-offset.X * Z / config.Camera.PixelsPerMeter);
             yAvg.Push(-offset.Y * Z / config.Camera.PixelsPerMeter);
             zAvg.Push(Z);
 

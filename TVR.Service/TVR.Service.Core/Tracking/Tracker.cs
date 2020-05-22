@@ -21,7 +21,7 @@ namespace TVR.Service.Core.Tracking
 
         private readonly ICameraTransform transform;
 
-        private Mat tempMat = new Mat();
+        private readonly Mat tempMat = new Mat();
 
         public Tracker(byte controllerId, TrackerSettings settings, ICameraTransform transform)
         {
@@ -72,9 +72,9 @@ namespace TVR.Service.Core.Tracking
 
         /// <summary>
         /// By design, the camera tracks the glowing sphere that is on top of the controller.
-        /// However, the origin of rotation is at the bottom of the controller, which is the
+        /// However, the origin of rotation is where the IMU is placed, which is the
         /// point we actually want to track. This method transforms the sphere's position and
-        /// finds the position of the origin point at the bottom of the controller.
+        /// finds the position of the origin point at the position of the IMU.
         /// </summary>
         /// <param name="spherePosition">The position of the sphere</param>
         /// <returns>The controller's origin point</returns>

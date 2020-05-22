@@ -33,6 +33,7 @@ namespace TVR.Service.UI
             button1.Enabled = false;
 
             var manager = context.TrackerManager;
+            var tempMat = new Mat();
             Application.Idle += (s, a) =>
             {
                 context.Update();
@@ -61,9 +62,8 @@ namespace TVR.Service.UI
                     imageBox1.Image = manager.Trackers[1].Frame;
                 else if (radioButton4.Checked)
                 {
-                    var mat = new Mat();
-                    CvInvoke.BitwiseOr(manager.Trackers[0].Frame, manager.Trackers[1].Frame, mat);
-                    imageBox1.Image = mat;
+                    CvInvoke.BitwiseOr(manager.Trackers[0].Frame, manager.Trackers[1].Frame, tempMat);
+                    imageBox1.Image = tempMat;
                 }
 
                 lbConnectedControllers.Text = $"Connected controllers: unknown";

@@ -17,8 +17,6 @@ namespace TVR.Service.Core.Tracking
 
         private readonly TVRConfig config;
 
-        private readonly Mat hsvFrame = new Mat();
-
         public TrackerManager(TVRConfig config)
         {
             this.config = config;
@@ -31,10 +29,8 @@ namespace TVR.Service.Core.Tracking
                 t.Controller.ZOffset = config.Tracker.ZOffset;
         }
 
-        public void UpdateVideo(Mat frame)
+        public void UpdateVideo(Mat hsvFrame)
         {
-            CvInvoke.CvtColor(frame, hsvFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
-
             foreach (var tracker in Trackers)
                 tracker.UpdateVideo(hsvFrame);
         }
@@ -48,9 +44,6 @@ namespace TVR.Service.Core.Tracking
 
             // To make stuff complicated, The MPU has its base axis in a different plane than our coordinate system
             // So we have to shift around the quaternion here to make it work with SteamVR
-
-            // Believe me, this combination took me a while to figure out
-
             controller.Rotation = new Quaternion(-qy, qz, qx, qw);
 
             foreach (var btn in controller.Buttons.Keys)
@@ -61,6 +54,7 @@ namespace TVR.Service.Core.Tracking
 
 
         private DateTime? pressBegin = null;
+        private bool poseResetExecuted = false;
 
         private void HandleButtons()
         {
@@ -75,18 +69,22 @@ namespace TVR.Service.Core.Tracking
             // If all buttons are pressed...
             var allPressed = areAllButtonsPressed();
             if (!allPressed)
+            {
+                poseResetExecuted = false;
                 pressBegin = null;
+            }
             else if (!pressBegin.HasValue)
                 pressBegin = DateTime.Now;
 
             // ...for more than X seconds...
-            if (pressBegin.HasValue && (DateTime.Now - pressBegin.Value).TotalSeconds > config.Tracker.PoseResetDelay)
+            if (pressBegin.HasValue && !poseResetExecuted && (DateTime.Now - pressBegin.Value).TotalSeconds > config.Tracker.PoseResetDelay)
             {
                 // ... then reset pose for all controllers
                 foreach (var ctrl in Trackers.Select(t => t.Controller))
                 {
                     ctrl.RotationOffset = ctrl.Rotation.Invert();
                 }
+                poseResetExecuted = true;
                 LoggerFactory.Current.Log(LogLevel.Info, "Pose reset complete");
             }
         }

@@ -11,6 +11,8 @@ namespace TVR.Service.Core.Video
 
         public Mat Frame { get; } = new Mat();
 
+        public Mat HsvFrame { get; } = new Mat();
+
         public double Exposure
         {
             set
@@ -22,17 +24,16 @@ namespace TVR.Service.Core.Video
         public Camera(TVRConfig config)
         {
             videoCapture = new VideoCapture(config.Camera.CameraIndex, API.DShow);
-            videoCapture.FlipHorizontal = true;
             videoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth, config.Camera.FrameWidth);
             videoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight, config.Camera.FrameHeight);
             videoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.AutoExposure, 0);
         }
 
-        public Mat QueryFrame()
+        public void Update()
         {
             if (videoCapture.Grab())
                 videoCapture.Retrieve(Frame);
-            return Frame;
+            CvInvoke.CvtColor(Frame, HsvFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Hsv);
         }
 
         public void Dispose()
