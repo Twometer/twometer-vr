@@ -12,7 +12,7 @@
 #include "util/Timer.h"
 #include "util/Storage.h"
 #include "pose/IPoseSource.h"
-// #include "pose/SwPoseSource.h"
+#include "pose/SwPoseSource.h"
 #include "pose/DmpPoseSource.h"
 #include "util/Button.h"
 #include "net/Packet.h"
@@ -81,10 +81,6 @@ void setup() {
     delay(4000);
     Serial.println("Calibration completed");
   }
-
-  Serial.println("Calculating offsets...");
-  Packet::SendStatusPacket(&udp, serverIp, STATUS_CALC_OFFSETS);
-  imu->calculateOffsets();
 
   Serial.println("Controller is ready!");
   Packet::SendStatusPacket(&udp, serverIp, STATUS_READY);

@@ -7,9 +7,6 @@
 #define PIN_SDA 4
 #define PIN_SCL 5
 
-#define WARMUP_TIME 15000       // Wait a few seconds for the chip to settle down, then start calibration
-#define CALIB_DURATION 3000     // Data collection should last 3 seconds. Then, we calculate the offsets.
-
 #define UPDATE_RATE 90
 
 /**
