@@ -8,6 +8,8 @@ namespace TVR.Service.CLI
     {
         public static void Main(string[] args)
         {
+            LoggerFactory.ForceLogger(new ConsoleLogger());
+
             LoggerFactory.Current.Log(LogLevel.Info, "TwometerVR starting up...");
             var vrHost = new TVRHost();
             vrHost.Start();
