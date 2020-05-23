@@ -19,7 +19,7 @@ public:
     udpClient.begin(DISCOVERY_PORT);
 
     while (!sendRequest()) {
-      delay(500);
+      delay(100);
     }
     return serverIp;
   }

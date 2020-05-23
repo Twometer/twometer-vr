@@ -4,9 +4,6 @@
 #include <SparkFunMPU9250-DMP.h>
 #include "IPoseSource.h"
 
-#define PIN_SDA 4
-#define PIN_SCL 5
-
 #define UPDATE_RATE 90
 
 /**
@@ -36,15 +33,7 @@ public:
     }
 
     bool update() override {
-      if (imu.fifoAvailable() && imu.dmpUpdateFifo() == INV_SUCCESS)
-      {
-        Serial.print(getQx()); Serial.print(", ");
-        Serial.print(getQy()); Serial.print(", ");
-        Serial.print(getQz()); Serial.print(", ");
-        Serial.println(getQw());
-        return true;
-      }
-      return false;
+      return imu.fifoAvailable() && imu.dmpUpdateFifo() == INV_SUCCESS;
     }
 
     float getQx() override {
@@ -69,11 +58,10 @@ public:
 
     float calcQuat(long number, uint8_t q) {
       unsigned long mask = 0;
-    	for (int i=0; i<q; i++)
-    	{
-    		mask |= (1<<i);
+    	for (int i=0; i < q; i++) {
+    		mask |= (1 << i);
     	}
-    	return (number >> q) + ((number & mask) / (float) (2<<(q-1)));
+    	return (number >> q) + ((number & mask) / (float) (2 << (q - 1)));
     }
 };
 

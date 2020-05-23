@@ -9,10 +9,17 @@
     #define CONTROLLER_ID   1
   #endif
 
-  #define TRIGGER_PIN 14
+  // Hardware
+  #define PIN_TRIG 14
+  #define PIN_SDA  4
+  #define PIN_SCL  5
 
+  // Network
   #define CONTROLLER_PORT 12742
   #define DISCOVERY_PORT  12743
+
+  // Tick rates [Hz]
+  #define PACKET_RATE  75
 
   // Button enum
   #define BUTTON_NONE   0

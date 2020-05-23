@@ -15,6 +15,10 @@ public:
   Button(int pin) : pin(pin) {
   }
 
+  void init() {
+    pinMode(pin, INPUT_PULLUP); 
+  }
+
   bool isPressed() {
     int reading = digitalRead(pin);
     if (reading != lastButtonState) {

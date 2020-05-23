@@ -1,36 +1,36 @@
 #ifndef TVR_PACKET
 #define TVR_PACKET
 
+#include "UdpClient.h"
+
 class Packet {
   public:
-    static void SendStatusPacket(WiFiUDP *udp, IPAddress& serverIp, byte status) {
+    static void sendStatusPacket(UdpClient& client, byte status) {
       byte data[] = { 0xFF, status };
-      udp->beginPacket(serverIp, CONTROLLER_PORT);
-      udp->write(data, 2);
-      udp->endPacket();
+      client.send(data, 2);
     }
 
-    static void SendDataPacket(WiFiUDP *udp, IPAddress& serverIp, byte numButtonPresses, byte* buttonPresses, float qx, float qy, float qz, float qw) {
-      int16_t packetLen = 1 + 1 + (numButtonPresses) + 4 * 4;
+    static void sendDataPacket(UdpClient& client, byte numButtonPresses, byte* buttonPresses, float qx, float qy, float qz, float qw) {
+      int16_t packetLen = 1 + 1 + numButtonPresses + 4 * 4;
       byte data[packetLen];
       int offset = 0;
 
-      copy(data, offset, byte(CONTROLLER_ID));    // Controller id
+      // Controller id
+      copy(data, offset, byte(CONTROLLER_ID));
 
-      copy(data, offset, numButtonPresses);      // Button presses
+      // Button presses
+      copy(data, offset, numButtonPresses);
       for (int i = 0; i < numButtonPresses; i++) {
         copy(data, offset, buttonPresses[i]);
       }
 
-      // Rotations
+      // Quaternion rotations
       copy(data, offset, qx);
       copy(data, offset, qy);
       copy(data, offset, qz);
       copy(data, offset, qw);
 
-      udp->beginPacket(serverIp, CONTROLLER_PORT);
-      udp->write(data, packetLen);
-      udp->endPacket();
+      client.send(data, packetLen);
     }
 
   private:

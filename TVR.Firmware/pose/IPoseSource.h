@@ -1,6 +1,8 @@
 #ifndef TVR_IPOSESOURCE
 #define TVR_IPOSESOURCE
 
+#include "../util/Constants.h"
+
 /**
  * Base class for all pose sources
  */

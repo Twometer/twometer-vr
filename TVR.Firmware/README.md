@@ -19,6 +19,6 @@ const String WIFI_PASS = "";
 ```
 
 ## Features
-- No more yaw drifting due to 9-DOF sensor fusion with the MPU-9250
+- No more yaw drifting due to 9-DOF sensor fusion with the MPU-9250 (if you use the software)
 - Much faster response times and update rates
 - More readable, maintainable and cleaner code.
