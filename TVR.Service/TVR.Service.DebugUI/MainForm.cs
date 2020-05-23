@@ -119,11 +119,9 @@ namespace TVR.Service.DebugUI
         {
             DrawCross(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, 0.3f);
 
-            var forward = Vector3.UnitZ;
-            var quat = new Quaternion(tracker.Controller.Rotation.X, tracker.Controller.Rotation.Y, tracker.Controller.Rotation.Z, tracker.Controller.Rotation.W) * Quaternion.Identity;
-            var vec = quat * forward;
-            vec.Normalize();
-
+            var rot = tracker.Controller.Rotation;
+            var quat = new Quaternion(rot.Z, rot.Y, rot.X, rot.W);
+            var vec = (quat * Vector3.UnitZ).Normalized();
             DrawLine(tracker.Controller.Position.X, tracker.Controller.Position.Y, tracker.Controller.Position.Z, tracker.Controller.Position.X - vec.X, tracker.Controller.Position.Y - vec.Y, tracker.Controller.Position.Z - vec.Z);
         }
 
