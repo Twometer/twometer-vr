@@ -5,5 +5,7 @@
         public double PoseResetDelay { get; set; }
         
         public float ZOffset { get; set; }
+
+        public int UpdateRate { get; set; }
     }
 }

@@ -12,8 +12,7 @@ namespace TVR.Service.Common
 
         private volatile bool running = true;
 
-        private const int UpdateRate = 120; // 120 Hz update rate
-        private readonly int UpdateDelay = (int)(1000.0f / UpdateRate);
+        private int updateDelay;
 
         public void Start()
         {
@@ -21,6 +20,8 @@ namespace TVR.Service.Common
 
             (updateThread = new Thread(UpdateLoop)).Start();
             (broadcastThread = new Thread(BroadcastLoop)).Start();
+
+            updateDelay = (int)(1000.0f / serviceContext.Config.Tracker.UpdateRate);
         }
 
         public void Stop()
@@ -46,7 +47,7 @@ namespace TVR.Service.Common
                 serviceContext.Broadcast();
                 var broadcastDuration = (int)(DateTime.Now - start).TotalMilliseconds;
 
-                var timeout = UpdateDelay - broadcastDuration;
+                var timeout = updateDelay - broadcastDuration;
                 if (timeout > 0)
                     Thread.Sleep(timeout);
             }

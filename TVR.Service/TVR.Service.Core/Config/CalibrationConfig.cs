@@ -7,5 +7,7 @@
         public int WarmupFrames { get; set; }
 
         public int CooldownFrames { get; set; }
+
+        public int StableFrameThreshold { get; set; }
     }
 }

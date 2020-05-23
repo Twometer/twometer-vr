@@ -1,9 +1,9 @@
-// Default configuration
 {
   "Calibration": {
     "BrightnessThreshold": 5.0,
     "WarmupFrames": 15,
-    "CooldownFrames": 5
+    "CooldownFrames": 5,
+    "StableFrameThreshold": 3
   },
   "Camera": {
     "CameraIndex": 0,
@@ -18,6 +18,7 @@
   "Tracker": {
     "PoseResetDelay": 0.25,
     "ControllerLength": 0.055,
-    "ZOffset": 0.25
+    "ZOffset": 0.25,
+    "UpdateRate": 120
   }
 }

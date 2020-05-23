@@ -67,7 +67,7 @@ namespace TVR.Service.Core.Video
 
             prevBrightness = brightness;
 
-            return eqBrightnessCounter < 3;
+            return eqBrightnessCounter < config.Calibration.StableFrameThreshold;
         }
 
     }
