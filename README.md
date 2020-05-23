@@ -18,6 +18,7 @@ In the wiki you will find building and setup instructions, implementation detail
 - TVR.Driver:    The driver that maps the server's data to SteamVR
 - TVR.Firmware:  The firmware that runs on the controllers' chips
 - TVR.Hardware:  The hardware files which the controllers are built from
+- TVR.Setup:     The setup files for building new releases
 - Website:       Contains the source files for the TwometerVR web page 
 
 ## Open Source!
