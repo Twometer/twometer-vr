@@ -1,14 +1,15 @@
 # Driver
-The TwometerVR driver that routes the controllers' input to SteamVR.
+This is the driver that registers the TwometerVR controllers with SteamVR, routes the inputs accordingly and provides
+the binding UI in Steam.
 
 ## Installing
-Download the TwometerVR package from GitHub Downloads. In the `drivers` folder (or the drivers folder in this repository), run `Install.ps1`.
+The driver is automatically installed with the main installation package. If you want to build and install it yourself, see the next section.
 
 ## Building from Source
-The driver is written with CLion as an IDE, but you should be able to use any other IDE that can read CMake projects.
+I wrote this driver using the CLion IDE, so that's the used project format. However, as it is basically CMake underneath, you should be able to use any IDE (or just CMake itself). Just make sure that you cloned all submodules, so that you have the `lib/openvr` library which is required in order to build the driver.
 
-The CMake project is configured so that it outputs the correct `driver_tvr.dll` file.
+SteamVR expects a driver file that has a special naming format. The CMake project is configured so that it automatically builds the correct `driver_vr.dll` file. Before installing the driver, copy it to `.\drivers\tvr\bin\win64\driver_tvr.dll` in this folder.
 
-To make use of this file, copy it to `drivers\tvr\bin\win64\driver_tvr.dll` and run `Install.ps1` or `Reinstall.ps1`, depending on whether you already registered it with SteamVR.
+Now, we can install the driver: The `drivers` folder contains the required folder structure for SteamVR. Just run `Install.ps1`, and when starting SteamVR the next time you should be able to use the TwometerVR controllers. If you changed something and want to deregister and reregister the driver file quickly, use `Reinstall.ps1` to update all changes, if required.
 
-> Note: Supports only Windows. Tested and working on MinGW/gcc.
+> Note: Currently only supports Windows. Tested on MinGW/gcc.

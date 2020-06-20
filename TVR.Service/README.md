@@ -1,4 +1,4 @@
-# TwometerVR Service
+# Service
 The Service is the core of TwometerVR. It is the bridge between all the connected
 devices, SteamVR and much more.
 
