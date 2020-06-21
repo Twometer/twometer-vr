@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using TVR.Service.Core.Logging;
-using TVR.Service.Core.Video;
 using TVR.Service.Network.Controllers;
 using TVR.Service.Network.Driver;
 
