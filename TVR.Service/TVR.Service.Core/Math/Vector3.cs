@@ -2,6 +2,8 @@
 {
     public struct Vector3
     {
+        public static Vector3 Zero { get; } = new Vector3(0, 0, 0);
+
         public float X { get; set; }
 
         public float Y { get; set; }

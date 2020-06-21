@@ -4,9 +4,10 @@ namespace TVR.Service.Model.Config
 {
     public class CameraInfo
     {
-        public int Index { get; }
+        public int Index { get; set; }
 
-        public CameraProfile Profile { get; }
+        public string ProfileName { get; set; }
 
+        public CameraProfile Profile { get; set; }
     }
 }

@@ -48,8 +48,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=8.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.8.1.2\lib\net45\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IO\CameraLoader.cs" />
+    <Compile Include="IO\ConfigLoader.cs" />
     <Compile Include="Math\Quaternion.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Model\Camera\CalibrationParameters.cs" />
@@ -57,6 +62,7 @@
     <Compile Include="Model\Camera\CameraProfile.cs" />
     <Compile Include="Model\Camera\ColorProfile.cs" />
     <Compile Include="Model\Camera\ColorRange.cs" />
+    <Compile Include="Model\Config\CameraInfo.cs" />
     <Compile Include="Model\Config\HardwareConfig.cs" />
     <Compile Include="Model\Config\InputConfig.cs" />
     <Compile Include="Model\Config\UserConfig.cs" />
@@ -64,6 +70,7 @@
     <Compile Include="Model\Controller\Device.cs" />
     <Compile Include="Model\Controller\Hand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Video\Camera.cs" />
     <Compile Include="Video\ImageProcessing.cs" />
   </ItemGroup>
   <ItemGroup>
