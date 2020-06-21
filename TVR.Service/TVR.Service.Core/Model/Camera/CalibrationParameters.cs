@@ -4,10 +4,10 @@
     {
         public double BrightnessThreshold { get; set; }
 
-        public double WarmupFrames { get; set; }
+        public int WarmupFrames { get; set; }
 
-        public double CooldownFrames { get; set; }
+        public int CooldownFrames { get; set; }
 
-        public double StableFrames { get; set; }
+        public int StableFrames { get; set; }
     }
 }

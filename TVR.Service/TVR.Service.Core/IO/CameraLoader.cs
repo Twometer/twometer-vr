@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using TVR.Service.Model.Camera;
+using TVR.Service.Core.Model.Camera;
 
 namespace TVR.Service.Core.IO
 {

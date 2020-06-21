@@ -76,6 +76,7 @@
     <Compile Include="Model\Device\Controller.cs" />
     <Compile Include="Model\Device\Hand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Video\Calibration.cs" />
     <Compile Include="Video\Camera.cs" />
     <Compile Include="Video\ImageProcessing.cs" />
   </ItemGroup>

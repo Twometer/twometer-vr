@@ -51,7 +51,7 @@
       <Name>TVR.Service.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\TVR.Service.Network\TVR.Service.Network.csproj">
-      <Project>{61547D7D-3DFF-4AFF-B3DD-45F9489C556D}</Project>
+      <Project>{61547d7d-3dff-4aff-b3dd-45f9489c556d}</Project>
       <Name>TVR.Service.Network</Name>
     </ProjectReference>
   </ItemGroup>

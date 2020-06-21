@@ -54,7 +54,6 @@
     <Compile Include="Driver\DriverServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\TVR.Service.Core\TVR.Service.Core.csproj">
       <Project>{e2e45e90-09f4-4a9a-b6a9-203833a3ca68}</Project>

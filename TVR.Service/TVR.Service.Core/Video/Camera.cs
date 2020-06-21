@@ -8,6 +8,9 @@ namespace TVR.Service.Core.Video
     public class Camera : IDisposable
     {
         private readonly VideoCapture videoCapture;
+        private readonly Calibration calibration;
+
+        public CameraInfo CameraInfo { get; }
 
         public Mat Frame { get; } = new Mat();
 
@@ -19,15 +22,17 @@ namespace TVR.Service.Core.Video
         {
             set
             {
-                videoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Exposure, value);
+                videoCapture.SetCaptureProperty(CapProp.Exposure, value);
             }
         }
 
-        public Camera(CameraInfo camera)
+        public Camera(CameraInfo cameraInfo)
         {
-            videoCapture = new VideoCapture(camera.Index, VideoCapture.API.DShow);
-            videoCapture.SetCaptureProperty(CapProp.FrameWidth, camera.Profile.CameraParameters.FrameWidth);
-            videoCapture.SetCaptureProperty(CapProp.FrameHeight, camera.Profile.CameraParameters.FrameHeight);
+            CameraInfo = cameraInfo;
+            calibration = new Calibration(this);
+            videoCapture = new VideoCapture(cameraInfo.Index, VideoCapture.API.DShow);
+            videoCapture.SetCaptureProperty(CapProp.FrameWidth, cameraInfo.Profile.CameraParameters.FrameWidth);
+            videoCapture.SetCaptureProperty(CapProp.FrameHeight, cameraInfo.Profile.CameraParameters.FrameHeight);
             videoCapture.SetCaptureProperty(CapProp.AutoExposure, 0);
         }
 
@@ -39,6 +44,9 @@ namespace TVR.Service.Core.Video
 
                 CvInvoke.CvtColor(Frame, HsvFrame, ColorConversion.Bgr2Hsv);
                 FrameBrightness = CvInvoke.Mean(HsvFrame).V2;
+
+                if (!calibration.IsCalibrated)
+                    calibration.Update(FrameBrightness);
             }
         }
 

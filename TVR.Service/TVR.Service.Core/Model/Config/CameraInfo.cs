@@ -1,4 +1,4 @@
-﻿using TVR.Service.Model.Camera;
+﻿using TVR.Service.Core.Model.Camera;
 
 namespace TVR.Service.Core.Model.Config
 {

@@ -1,4 +1,4 @@
-﻿using TVR.Service.Math;
+﻿using TVR.Service.Core.Math;
 
 namespace TVR.Service.Core.Model.Config
 {

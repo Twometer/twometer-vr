@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using TVR.Service.Model.Device;
+using TVR.Service.Core.Model.Device;
 using TVR.Service.Network.Common;
 
 namespace TVR.Service.Network.Driver

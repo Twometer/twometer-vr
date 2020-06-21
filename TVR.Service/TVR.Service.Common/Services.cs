@@ -1,9 +1,9 @@
-﻿using TVR.Service.IO;
-using TVR.Service.Model.Config;
+﻿using TVR.Service.Core.IO;
+using TVR.Service.Core.Model.Config;
+using TVR.Service.Core.Video;
 using TVR.Service.Network.Controllers;
 using TVR.Service.Network.Discovery;
 using TVR.Service.Network.Driver;
-using TVR.Service.Video;
 
 namespace TVR.Service.Common
 {
