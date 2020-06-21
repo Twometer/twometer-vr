@@ -4,8 +4,6 @@ namespace TVR.Service.Core.Model.Camera
 {
     public class ColorProfile
     {
-        public Hand Hand { get; set; }
-
         public ColorRange[] ColorRanges { get; set; }
     }
 }

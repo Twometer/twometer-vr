@@ -4,14 +4,8 @@ namespace TVR.Service.Core.Model.Camera
 {
     public class ColorRange
     {
-        public MCvScalar Minimum { get; }
+        public HSVColor Minimum { get; set; }
 
-        public MCvScalar Maximum { get; }
-
-        public ColorRange(MCvScalar minimum, MCvScalar maximum)
-        {
-            Minimum = minimum;
-            Maximum = maximum;
-        }
+        public HSVColor Maximum { get; set; }
     }
 }

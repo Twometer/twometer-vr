@@ -69,13 +69,13 @@
     <Compile Include="Model\Camera\CameraProfile.cs" />
     <Compile Include="Model\Camera\ColorProfile.cs" />
     <Compile Include="Model\Camera\ColorRange.cs" />
+    <Compile Include="Model\Camera\HSVColor.cs" />
     <Compile Include="Model\Config\CameraInfo.cs" />
     <Compile Include="Model\Config\HardwareConfig.cs" />
     <Compile Include="Model\Config\InputConfig.cs" />
     <Compile Include="Model\Config\UserConfig.cs" />
     <Compile Include="Model\Device\Button.cs" />
     <Compile Include="Model\Device\Controller.cs" />
-    <Compile Include="Model\Device\Hand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tracking\CameraTransform.cs" />
     <Compile Include="Tracking\Tracker.cs" />

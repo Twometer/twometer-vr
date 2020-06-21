@@ -58,12 +58,12 @@ namespace TVR.Service.Core.Tracking
         private void ColorFilter(Mat hsvFrame, double brightness)
         {
             var range0 = ColorProfile.ColorRanges[0];
-            CvInvoke.InRange(hsvFrame, new ScalarArray(AdaptMinimum(range0.Minimum, brightness)), new ScalarArray(range0.Maximum), frame);
+            CvInvoke.InRange(hsvFrame, new ScalarArray(AdaptMinimum(range0.Minimum.ToMCvScalar(), brightness)), new ScalarArray(range0.Maximum.ToMCvScalar()), frame);
 
             for (var i = 1; i < ColorProfile.ColorRanges.Length; i++)
             {
                 var range = ColorProfile.ColorRanges[i];
-                CvInvoke.InRange(hsvFrame, new ScalarArray(AdaptMinimum(range.Minimum, brightness)), new ScalarArray(range.Maximum), temp);
+                CvInvoke.InRange(hsvFrame, new ScalarArray(AdaptMinimum(range.Minimum.ToMCvScalar(), brightness)), new ScalarArray(range.Maximum.ToMCvScalar()), temp);
                 CvInvoke.BitwiseOr(frame, temp, frame);
             }
         }
