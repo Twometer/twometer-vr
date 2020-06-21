@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TVR.Service.Core.Logging;
+﻿using TVR.Service.Core.Logging;
 using TVR.Service.Core.Model.Camera;
 
 namespace TVR.Service.Core.Video

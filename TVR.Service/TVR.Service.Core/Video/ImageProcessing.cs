@@ -2,6 +2,7 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System.Drawing;
+using TVR.Service.Core.Model.Camera;
 
 namespace TVR.Service.Core.Video
 {

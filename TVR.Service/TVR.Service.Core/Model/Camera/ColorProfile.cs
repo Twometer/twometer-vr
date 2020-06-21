@@ -6,6 +6,6 @@ namespace TVR.Service.Core.Model.Camera
     {
         public Hand Hand { get; set; }
 
-        public ColorRange ColorRange { get; set; }
+        public ColorRange[] ColorRanges { get; set; }
     }
 }

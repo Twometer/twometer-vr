@@ -1,5 +1,6 @@
 ﻿using TVR.Service.Core.IO;
 using TVR.Service.Core.Model.Config;
+using TVR.Service.Core.Tracking;
 using TVR.Service.Core.Video;
 using TVR.Service.Network.Controllers;
 using TVR.Service.Network.Discovery;
@@ -15,6 +16,8 @@ namespace TVR.Service.Common
 
         public Camera Camera { get; }
 
+        public TrackingManager TrackingManager { get; }
+
         public DiscoveryServer DiscoveryServer { get; }
 
         public DriverServer DriverServer { get; }
@@ -26,6 +29,7 @@ namespace TVR.Service.Common
             FileManager = new FileManager();
             Config = ConfigLoader.LoadUserConfig(FileManager);
             Camera = new Camera(Config.CameraInfo);
+            TrackingManager = new TrackingManager(Config);
             DiscoveryServer = new DiscoveryServer();
             DriverServer = new DriverServer();
             ControllerServer = new ControllerServer();

@@ -36,7 +36,7 @@ namespace TVR.Service.Core.Video
             videoCapture.SetCaptureProperty(CapProp.AutoExposure, 0);
         }
 
-        public void Update()
+        public bool Update()
         {
             if (videoCapture.Grab())
             {
@@ -47,7 +47,10 @@ namespace TVR.Service.Core.Video
 
                 if (!calibration.IsCalibrated)
                     calibration.Update(FrameBrightness);
+                else
+                    return true;
             }
+            return false;
         }
 
         public void Dispose()
