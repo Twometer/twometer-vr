@@ -1,6 +1,4 @@
-﻿using Emgu.CV.Structure;
-
-namespace TVR.Service.Core.Model.Camera
+﻿namespace TVR.Service.Core.Model.Camera
 {
     public class ColorRange
     {
