@@ -1,6 +1,6 @@
-﻿using TVR.Service.Model.Device;
+﻿using TVR.Service.Core.Model.Device;
 
-namespace TVR.Service.Model.Camera
+namespace TVR.Service.Core.Model.Camera
 {
     public class ColorProfile
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
-using TVR.Service.Model.Config;
+using TVR.Service.Core.Model.Config;
 
-namespace TVR.Service.Video
+namespace TVR.Service.Core.Video
 {
     public class Camera : IDisposable
     {

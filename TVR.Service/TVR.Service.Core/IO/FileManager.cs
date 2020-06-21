@@ -2,7 +2,7 @@
 using System.IO;
 using TVR.Service.Core.Logging;
 
-namespace TVR.Service.IO
+namespace TVR.Service.Core.IO
 {
     public class FileManager
     {

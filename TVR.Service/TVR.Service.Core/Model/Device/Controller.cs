@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using TVR.Service.Math;
+using TVR.Service.Core.Math;
 
-namespace TVR.Service.Model.Device
+namespace TVR.Service.Core.Model.Device
 {
     public class Controller
     {

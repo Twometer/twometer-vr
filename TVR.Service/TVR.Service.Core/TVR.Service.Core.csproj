@@ -7,8 +7,8 @@
     <ProjectGuid>{E2E45E90-09F4-4A9A-B6A9-203833A3CA68}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TVR.Service</RootNamespace>
-    <AssemblyName>TVR.Service</AssemblyName>
+    <RootNamespace>TVR.Service.Core</RootNamespace>
+    <AssemblyName>TVR.Service.Core</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

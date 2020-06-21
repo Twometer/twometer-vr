@@ -1,4 +1,4 @@
-﻿namespace TVR.Service.Model.Camera
+﻿namespace TVR.Service.Core.Model.Camera
 {
     public class CameraParameters
     {

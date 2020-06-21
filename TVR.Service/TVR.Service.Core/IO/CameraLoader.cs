@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using TVR.Service.Model.Camera;
 
-namespace TVR.Service.IO
+namespace TVR.Service.Core.IO
 {
     public class CameraLoader
     {

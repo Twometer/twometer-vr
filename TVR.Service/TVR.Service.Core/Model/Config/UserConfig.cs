@@ -1,6 +1,6 @@
 ﻿using TVR.Service.Math;
 
-namespace TVR.Service.Model.Config
+namespace TVR.Service.Core.Model.Config
 {
     public class UserConfig
     {

@@ -1,7 +1,7 @@
 ﻿using System.IO;
-using TVR.Service.Model.Config;
+using TVR.Service.Core.Model.Config;
 
-namespace TVR.Service.IO
+namespace TVR.Service.Core.IO
 {
     public class ConfigLoader
     {

@@ -1,4 +1,4 @@
-﻿namespace TVR.Service.Model.Device
+﻿namespace TVR.Service.Core.Model.Device
 {
     public enum Button
     {

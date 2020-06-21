@@ -1,4 +1,4 @@
-﻿namespace TVR.Service.Math
+﻿namespace TVR.Service.Core.Math
 {
     public struct Quaternion
     {

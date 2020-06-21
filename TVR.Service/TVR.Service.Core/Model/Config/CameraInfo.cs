@@ -1,6 +1,6 @@
 ﻿using TVR.Service.Model.Camera;
 
-namespace TVR.Service.Model.Config
+namespace TVR.Service.Core.Model.Config
 {
     public class CameraInfo
     {
