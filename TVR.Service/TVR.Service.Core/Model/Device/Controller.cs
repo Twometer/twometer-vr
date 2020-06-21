@@ -2,9 +2,9 @@
 using System.Collections.Concurrent;
 using TVR.Service.Math;
 
-namespace TVR.Service.Model.Controller
+namespace TVR.Service.Model.Device
 {
-    public class Device
+    public class Controller
     {
         public byte Id { get; }
 
@@ -16,7 +16,7 @@ namespace TVR.Service.Model.Controller
 
         public ConcurrentDictionary<Button, bool> Buttons { get; } = new ConcurrentDictionary<Button, bool>();
 
-        public Device(byte id)
+        public Controller(byte id)
         {
             Id = id;
 

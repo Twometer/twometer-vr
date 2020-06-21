@@ -1,4 +1,4 @@
-﻿namespace TVR.Service.Model.Controller
+﻿namespace TVR.Service.Model.Device
 {
     public enum Hand
     {

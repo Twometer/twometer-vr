@@ -1,4 +1,4 @@
-﻿using TVR.Service.Model.Controller;
+﻿using TVR.Service.Model.Device;
 
 namespace TVR.Service.Model.Camera
 {

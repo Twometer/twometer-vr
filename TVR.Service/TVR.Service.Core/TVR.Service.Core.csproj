@@ -55,6 +55,11 @@
   <ItemGroup>
     <Compile Include="IO\CameraLoader.cs" />
     <Compile Include="IO\ConfigLoader.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\DebugLogger.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\LoggerFactory.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Math\Quaternion.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Model\Camera\CalibrationParameters.cs" />
@@ -66,9 +71,9 @@
     <Compile Include="Model\Config\HardwareConfig.cs" />
     <Compile Include="Model\Config\InputConfig.cs" />
     <Compile Include="Model\Config\UserConfig.cs" />
-    <Compile Include="Model\Controller\Button.cs" />
-    <Compile Include="Model\Controller\Device.cs" />
-    <Compile Include="Model\Controller\Hand.cs" />
+    <Compile Include="Model\Device\Button.cs" />
+    <Compile Include="Model\Device\Controller.cs" />
+    <Compile Include="Model\Device\Hand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Video\Camera.cs" />
     <Compile Include="Video\ImageProcessing.cs" />
