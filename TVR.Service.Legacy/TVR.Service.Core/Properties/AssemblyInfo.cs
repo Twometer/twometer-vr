@@ -1,15 +1,14 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TVR.Service")]
+[assembly: AssemblyTitle("TVR.Service.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TVR.Service")]
+[assembly: AssemblyProduct("TVR.Service.Core")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e2e45e90-09f4-4a9a-b6a9-203833a3ca68")]
+[assembly: Guid("bf70d6f8-2ce6-4515-bd30-dd64a0ce297f")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,6 +1,6 @@
 ﻿using Emgu.CV.Structure;
 
-namespace TVR.Service.Core.Tracking
+namespace TVR.Service.Core.Config
 {
     public struct ColorRange
     {
