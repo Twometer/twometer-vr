@@ -2,8 +2,8 @@
 {
     public class HardwareConfig
     {
-        public double SphereSize { get; }
+        public double SphereSize { get; set; }
 
-        public double SphereDistance { get; }
+        public double SphereDistance { get; set; }
     }
 }

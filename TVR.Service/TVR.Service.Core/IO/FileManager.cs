@@ -1,16 +1,19 @@
 ﻿using System;
 using System.IO;
-using TVR.Service.Core.Logging;
 
 namespace TVR.Service.Core.IO
 {
     public class FileManager
     {
+        public static FileManager Instance { get; } = new FileManager();
+
         public DirectoryInfo ProfilesFolder { get; }
 
         public FileInfo ConfigFile { get; }
 
-        public FileManager()
+        public bool IsFirstStart { get; }
+
+        private FileManager()
         {
             var baseDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TwometerVR");
             if (!Directory.Exists(baseDirectory))
@@ -19,16 +22,8 @@ namespace TVR.Service.Core.IO
             ProfilesFolder = new DirectoryInfo(Path.Combine(baseDirectory, "CameraProfiles"));
             ConfigFile = new FileInfo(Path.Combine(baseDirectory, "Config.yml"));
 
-            if (!ProfilesFolder.Exists)
-                PrepareFirstBoot();
+            IsFirstStart = !ProfilesFolder.Exists;
         }
 
-        private void PrepareFirstBoot()
-        {
-            LoggerFactory.Current.Log(LogLevel.Info, "First startup: Loading defaults...");
-            ProfilesFolder.Create();
-            // TODO Load default configuration
-            // TODO Load default camera profiles
-        }
     }
 }

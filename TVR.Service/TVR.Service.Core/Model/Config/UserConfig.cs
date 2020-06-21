@@ -8,8 +8,8 @@ namespace TVR.Service.Core.Model.Config
 
         public Vector3 Offset { get; set; }
 
-        public HardwareConfig HardwareConfig { get; }
+        public HardwareConfig HardwareConfig { get; set; }
 
-        public InputConfig InputConfig { get; }
+        public InputConfig InputConfig { get; set; }
     }
 }

@@ -5,9 +5,9 @@ namespace TVR.Service.Core.IO
 {
     public class ConfigLoader
     {
-        public static UserConfig LoadUserConfig(FileManager fileManager)
+        public static UserConfig LoadUserConfig()
         {
-            var configFile = fileManager.ConfigFile.FullName;
+            var configFile = FileManager.Instance.ConfigFile.FullName;
 
             if (!File.Exists(configFile))
                 throw new FileNotFoundException($"Cannot load user config because {configFile} does not exist.");
@@ -15,7 +15,7 @@ namespace TVR.Service.Core.IO
             var data = File.ReadAllText(configFile);
             var deserializer = new YamlDotNet.Serialization.Deserializer();
             var config = deserializer.Deserialize<UserConfig>(data);
-            config.CameraInfo.Profile = CameraLoader.LoadCameraProfile(fileManager, config.CameraInfo.ProfileName);
+            config.CameraInfo.Profile = CameraLoader.LoadCameraProfile(config.CameraInfo.ProfileName);
             return config;
         }
     }

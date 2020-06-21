@@ -10,8 +10,6 @@ namespace TVR.Service.Common
 {
     public class Services
     {
-        public FileManager FileManager { get; }
-
         public UserConfig Config { get; }
 
         public Camera Camera { get; }
@@ -26,8 +24,7 @@ namespace TVR.Service.Common
 
         public Services()
         {
-            FileManager = new FileManager();
-            Config = ConfigLoader.LoadUserConfig(FileManager);
+            Config = ConfigLoader.LoadUserConfig();
             Camera = new Camera(Config.CameraInfo);
             TrackingManager = new TrackingManager(Config);
             DiscoveryServer = new DiscoveryServer();

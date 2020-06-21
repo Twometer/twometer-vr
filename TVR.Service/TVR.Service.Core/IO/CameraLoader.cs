@@ -5,9 +5,9 @@ namespace TVR.Service.Core.IO
 {
     public class CameraLoader
     {
-        public static CameraProfile LoadCameraProfile(FileManager fileManager, string cameraProfile)
+        public static CameraProfile LoadCameraProfile(string cameraProfile)
         {
-            var path = Path.Combine(fileManager.ProfilesFolder.FullName, cameraProfile + ".yml");
+            var path = Path.Combine(FileManager.Instance.ProfilesFolder.FullName, cameraProfile + ".yml");
             if (!File.Exists(path))
                 throw new FileNotFoundException($"Cannot load camera profile because {path} does not exist.");
 
