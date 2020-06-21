@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="IO\CameraLoader.cs" />
     <Compile Include="IO\ConfigLoader.cs" />
+    <Compile Include="IO\FileManager.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\DebugLogger.cs" />
     <Compile Include="Logging\ILogger.cs" />
