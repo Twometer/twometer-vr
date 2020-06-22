@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using TVR.Service.Core.Logging;
 using TVR.Service.Network.Controllers;
 using TVR.Service.Network.Driver;
@@ -43,6 +44,16 @@ namespace TVR.Service.Common
             tokenSource.Cancel();
             updateThread?.Join();
             broadcastThread?.Join();
+        }
+
+        public Task StopAsync()
+        {
+            return Task.Run(() => Stop());
+        }
+
+        public Task StartAsync()
+        {
+            return Task.Run(() => Start());
         }
 
         private void UpdateLoop()
