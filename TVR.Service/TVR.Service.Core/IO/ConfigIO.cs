@@ -3,7 +3,7 @@ using TVR.Service.Core.Model.Config;
 
 namespace TVR.Service.Core.IO
 {
-    public class ConfigLoader
+    public class ConfigIO
     {
         public static UserConfig LoadUserConfig()
         {
@@ -15,8 +15,15 @@ namespace TVR.Service.Core.IO
             var data = File.ReadAllText(configFile);
             var deserializer = new YamlDotNet.Serialization.Deserializer();
             var config = deserializer.Deserialize<UserConfig>(data);
-            config.CameraInfo.Profile = CameraLoader.LoadCameraProfile(config.CameraInfo.ProfileName);
+            config.CameraInfo.Profile = CameraProfileIO.LoadCameraProfile(config.CameraInfo.ProfileName);
             return config;
+        }
+
+        public static void WriteUserConfig(UserConfig config)
+        {
+            var serializer = new YamlDotNet.Serialization.Serializer();
+            var data = serializer.Serialize(config);
+            File.WriteAllText(FileManager.Instance.ConfigFile.FullName, data);
         }
     }
 }

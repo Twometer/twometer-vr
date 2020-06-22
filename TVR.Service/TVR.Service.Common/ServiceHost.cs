@@ -11,7 +11,6 @@ namespace TVR.Service.Common
     public class ServiceHost
     {
         private Services services;
-
         private Thread updateThread;
         private Thread broadcastThread;
 

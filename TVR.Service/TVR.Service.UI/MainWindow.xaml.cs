@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +18,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TVR.Service.Common;
 using TVR.Service.Core.IO;
+using TVR.Service.Core.Math;
+using TVR.Service.Core.Model.Config;
 
 namespace TVR.Service.UI
 {
@@ -31,16 +36,43 @@ namespace TVR.Service.UI
 
             if (FileManager.Instance.IsFirstStart)
             {
-                MessageBox.Show("No configurations!");
-                // TODO: Show initial configuration dialog
+                var welcomeWindow = new WelcomeWindow();
+                var newCameraDialog = new NewCameraDialog();
+                if (welcomeWindow.ShowDialog() == true && newCameraDialog.ShowDialog() == true)
+                {
+                    var defaultUserConfig = new UserConfig
+                    {
+                        CameraInfo = new CameraInfo() { Index = 0, ProfileName = newCameraDialog.NewCameraIdentifier },
+                        Offset = Vector3.Zero,
+                        InputConfig = new InputConfig() { Latency = 2, PoseResetDelay = 0.2, UpdateRate = 120 },
+                        HardwareConfig = new HardwareConfig() { SphereDistance = 0.055, SphereSize = 0.04 }
+                    };
+                    ConfigIO.WriteUserConfig(defaultUserConfig);
+                }
+                else
+                {
+                    Close();
+                    return;
+                }
             }
-            Start();
-        }
 
-        private async void Start()
-        {
-            ServiceStatusLabel.Content = "Starting...";
-            await serviceHost.StartAsync();
+            try
+            {
+                serviceHost.Start();
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Cannot find config files!");
+                Close();
+                return;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Failed to start the service!\n" + e.ToString());
+                Close();
+                return;
+            }
+
             ServiceStatusLabel.Content = "Active";
         }
 
@@ -53,7 +85,9 @@ namespace TVR.Service.UI
         {
             ServiceStatusLabel.Content = "Shutting down...";
             await serviceHost.StopAsync();
-            Start();
+            ServiceStatusLabel.Content = "Starting...";
+            await serviceHost.StartAsync();
+            ServiceStatusLabel.Content = "Active";
         }
 
         private void RecalibrateMenuItem_Click(object sender, RoutedEventArgs e)

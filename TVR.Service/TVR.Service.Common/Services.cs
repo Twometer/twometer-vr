@@ -24,7 +24,7 @@ namespace TVR.Service.Common
 
         public Services()
         {
-            Config = ConfigLoader.LoadUserConfig();
+            Config = ConfigIO.LoadUserConfig();
             Camera = new Camera(Config.CameraInfo);
             TrackingManager = new TrackingManager(Config);
             DiscoveryServer = new DiscoveryServer();
