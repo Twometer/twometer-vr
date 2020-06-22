@@ -51,8 +51,7 @@ namespace TVR.Service.UI
                 }
                 else
                 {
-                    Close();
-                    return;
+                    Environment.Exit(0);
                 }
             }
 
@@ -63,14 +62,12 @@ namespace TVR.Service.UI
             catch (FileNotFoundException)
             {
                 MessageBox.Show("Cannot find config files!");
-                Close();
-                return;
+                Environment.Exit(1);
             }
             catch (Exception e)
             {
                 MessageBox.Show("Failed to start the service!\n" + e.ToString());
-                Close();
-                return;
+                Environment.Exit(1);
             }
 
             ServiceStatusLabel.Content = "Active";

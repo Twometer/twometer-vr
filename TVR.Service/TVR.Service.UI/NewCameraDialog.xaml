@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TVR.Service.UI"
         mc:Ignorable="d"
-        Title="TwometerVR Camera Setup" Height="468.991" Width="800" WindowStartupLocation="CenterScreen">
+        Title="TwometerVR Camera Setup" Height="468.991" Width="800" WindowStartupLocation="CenterScreen" Icon="Icon.ico">
     <Grid Margin="25">
         <Label Content="Add a new camera" FontSize="30" FontWeight="Light"/>
 

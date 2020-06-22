@@ -5,15 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TVR.Service.UI"
         mc:Ignorable="d"
-        Title="TwometerVR" Height="420.78" Width="413.339" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="TwometerVR" Height="420.78" Width="413.339" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="Icon.ico">
     <Grid Margin="25">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="Welcome to TwometerVR!" FontSize="30" FontWeight="Light"/>
-        <TextBlock Text="The setup assistant will guide you through the process of registering your webcam with TwometerVR and it does all the math for you :-)" Grid.Row="1" TextWrapping="Wrap" LineHeight="19" Margin="10,20" FontSize="15"/>
-        <Button x:Name="LaunchButton" Content="Launch setup assistant" Grid.Row="2" Margin="5" Padding="5" FontSize="15" Click="LaunchButton_Click"/>
+        <Image Grid.Row="0" Source="Icon.ico" Height="64" Margin="4"/>
+        <Label Content="Welcome to TwometerVR!" FontSize="30" FontWeight="Light" Grid.Row="1" HorizontalAlignment="Center"/>
+        <TextBlock Text="The setup assistant will guide you through the process of registering your webcam with TwometerVR and it does all the math for you :-)" Grid.Row="2" TextWrapping="Wrap" LineHeight="19" Margin="10,20" FontSize="15"/>
+        <Button x:Name="LaunchButton" Content="Launch setup assistant" Grid.Row="3" Margin="5" Padding="5" FontSize="15" Click="LaunchButton_Click"/>
     </Grid>
 </Window>

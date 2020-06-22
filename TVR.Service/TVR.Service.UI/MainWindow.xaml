@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="TwometerVR Service" Height="190.735" Width="375.596"
-        SizeToContent="Height" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        SizeToContent="Height" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="Icon.ico">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
