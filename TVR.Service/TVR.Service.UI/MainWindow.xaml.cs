@@ -61,12 +61,24 @@ namespace TVR.Service.UI
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show("Cannot find config files!");
+                var dialog = new CommonDialog
+                {
+                    Title = "TwometerVR Error",
+                    Caption = "Failed to start",
+                    Content = "Cannot find configuration files! Make sure that the config store was not corrupted or alternatively, reconfigure the service."
+                };
+                dialog.ShowDialog();
                 Environment.Exit(1);
             }
             catch (Exception e)
             {
-                MessageBox.Show("Failed to start the service!\n" + e.ToString());
+                var dialog = new CommonDialog
+                {
+                    Title = "TwometerVR Error",
+                    Caption = "Failed to start",
+                    Content = e.ToString()
+                };
+                dialog.ShowDialog();
                 Environment.Exit(1);
             }
 
@@ -109,7 +121,13 @@ namespace TVR.Service.UI
 
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Product: TwometerVR Service\nVersion: 2.0");
+            var dialog = new CommonDialog
+            {
+                Title = "About TwometerVR",
+                Caption = "About",
+                Content = "Product: TwometerVR Service\nVersion: 2.0"
+            };
+            dialog.ShowDialog();
         }
     }
 }

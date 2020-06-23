@@ -54,7 +54,7 @@ namespace TVR.Service.UI
         {
             if (CameraComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Please select your webcam from the dropdown.");
+                MessageBox.Show("Please select your webcam from the dropdown.", "Invalid selection", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
 
