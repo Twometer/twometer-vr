@@ -2,6 +2,7 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System.Drawing;
+using TVR.Service.Core.Model.Camera;
 
 namespace TVR.Service.Core.Video
 {
@@ -40,6 +41,25 @@ namespace TVR.Service.Core.Video
         public static void BgrToHsv(Mat bgr, Mat hsv)
         {
             CvInvoke.CvtColor(bgr, hsv, ColorConversion.Bgr2Hsv);
+        }
+
+        public static void ColorFilter(Mat hsvFrame, Image<Gray, byte> dstFrame, Mat tmpFrame, ColorProfile colorProfile, double brightness)
+        {
+            var range0 = colorProfile.ColorRanges[0];
+            CvInvoke.InRange(hsvFrame, new ScalarArray(AdaptMinimum(range0.Minimum.ToMCvScalar(), brightness)), new ScalarArray(range0.Maximum.ToMCvScalar()), dstFrame);
+
+            for (var i = 1; i < colorProfile.ColorRanges.Length; i++)
+            {
+                var range = colorProfile.ColorRanges[i];
+                CvInvoke.InRange(hsvFrame, new ScalarArray(AdaptMinimum(range.Minimum.ToMCvScalar(), brightness)), new ScalarArray(range.Maximum.ToMCvScalar()), tmpFrame);
+                CvInvoke.BitwiseOr(dstFrame, tmpFrame, dstFrame);
+            }
+        }
+
+        private static MCvScalar AdaptMinimum(MCvScalar minimum, double brightness)
+        {
+            minimum.V2 += brightness;
+            return minimum;
         }
     }
 }

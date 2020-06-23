@@ -1,19 +1,25 @@
 ﻿using Emgu.CV.Structure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TVR.Service.Core.Model.Camera
 {
-    public struct HSVColor
+    public class HSVColor
     {
         public double H { get; set; }
 
         public double S { get; set; }
 
         public double V { get; set; }
+
+        public HSVColor(double h, double s, double v)
+        {
+            H = h;
+            S = s;
+            V = v;
+        }
+
+        public HSVColor()
+        {
+        }
 
         public MCvScalar ToMCvScalar()
         {

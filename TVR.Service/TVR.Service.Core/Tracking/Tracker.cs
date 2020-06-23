@@ -20,7 +20,7 @@ namespace TVR.Service.Core.Tracking
         private Image<Gray, byte> frame;
 
         private readonly CameraTransform transform;
-        
+
         private readonly Mat temp = new Mat();
 
         public Tracker(byte controllerId, ColorProfile colorProfile, CameraTransform transform)
@@ -34,7 +34,7 @@ namespace TVR.Service.Core.Tracking
         {
             if (frame == null)
                 frame = new Image<Gray, byte>(hsvFrame.Width, hsvFrame.Height);
-            ColorFilter(hsvFrame, brightness);
+            ImageProcessing.ColorFilter(hsvFrame, frame, temp, ColorProfile, brightness);
             ImageProcessing.SmoothGaussian(frame, 7);
 
             var circles = ImageProcessing.HoughCircles(frame, 125, 1, 3, frame.Width / 2, 3, 75);
@@ -53,25 +53,6 @@ namespace TVR.Service.Core.Tracking
             foreach (var btn in TrackedController.Buttons.Keys)
                 TrackedController.Buttons[btn] = pressedButtons?.Contains(btn) == true;
         }
-        
 
-        private void ColorFilter(Mat hsvFrame, double brightness)
-        {
-            var range0 = ColorProfile.ColorRanges[0];
-            CvInvoke.InRange(hsvFrame, new ScalarArray(AdaptMinimum(range0.Minimum.ToMCvScalar(), brightness)), new ScalarArray(range0.Maximum.ToMCvScalar()), frame);
-
-            for (var i = 1; i < ColorProfile.ColorRanges.Length; i++)
-            {
-                var range = ColorProfile.ColorRanges[i];
-                CvInvoke.InRange(hsvFrame, new ScalarArray(AdaptMinimum(range.Minimum.ToMCvScalar(), brightness)), new ScalarArray(range.Maximum.ToMCvScalar()), temp);
-                CvInvoke.BitwiseOr(frame, temp, frame);
-            }
-        }
-
-        private MCvScalar AdaptMinimum(MCvScalar minimum, double brightness)
-        {
-            minimum.V2 += brightness;
-            return minimum;
-        }
     }
 }
