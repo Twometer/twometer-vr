@@ -42,7 +42,7 @@ namespace TVR.Service.UI
                 {
                     var defaultUserConfig = new UserConfig
                     {
-                        CameraInfo = new CameraInfo() { Index = 0, ProfileName = newCameraDialog.NewCameraIdentifier },
+                        CameraInfo = new CameraInfo() { Index = 0, ProfileName = newCameraDialog.CameraProfile.Identifier },
                         Offset = Vector3.Zero,
                         InputConfig = new InputConfig() { Latency = 2, PoseResetDelay = 0.2, UpdateRate = 120 },
                         HardwareConfig = new HardwareConfig() { SphereDistance = 0.055, SphereSize = 0.04 }

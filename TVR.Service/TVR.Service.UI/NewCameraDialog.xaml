@@ -7,8 +7,28 @@
         mc:Ignorable="d"
         Title="TwometerVR Camera Setup" Height="468.991" Width="800" WindowStartupLocation="CenterScreen" Icon="Icon.ico">
     <Grid Margin="25">
-        <Label Content="Add a new camera" FontSize="30" FontWeight="Light"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Add a new camera" FontSize="30" FontWeight="Light" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <Label Content="Select your camera:" Grid.Row="1"/>
+        <ComboBox Name="CameraComboBox" Grid.Row="2"/>
 
+        <Button x:Name="BeginSetupButton" Grid.Row="3" Margin="15" Padding="15,3" Content="Setup camera" HorizontalAlignment="Center" Click="BeginSetupButton_Click"/>
+
+        <TextBlock x:Name="InstructionBox" Grid.Row="4" Margin="15" Text="You will have to complete some actions to set up your camera. Select your camera from the box above, click the button and then the assistant will guide you through the next steps." VerticalAlignment="Bottom" TextWrapping="Wrap"/>
+
+        <GroupBox Header="Live feed" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" VerticalAlignment="Stretch" Margin="15,10">
+            <WindowsFormsHost Name="VideoFeedHost" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
+        </GroupBox>
 
     </Grid>
 </Window>

@@ -2,7 +2,6 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System.Drawing;
-using TVR.Service.Core.Model.Camera;
 
 namespace TVR.Service.Core.Video
 {
@@ -31,6 +30,16 @@ namespace TVR.Service.Core.Video
         public static CircleF[] HoughCircles<TColor, TDepth>(Image<TColor, TDepth> image, double cannyThreshold, double accumulatorThreshold, double dp, double minDist, int minRadius = 0, int maxRadius = 0) where TColor : struct, IColor where TDepth : new()
         {
             return CvInvoke.HoughCircles(image, HoughModes.Gradient, dp, minDist, cannyThreshold, accumulatorThreshold, minRadius, maxRadius);
+        }
+
+        public static double GetBrightness(Mat hsvImage)
+        {
+            return CvInvoke.Mean(hsvImage).V2;
+        }
+
+        public static void BgrToHsv(Mat bgr, Mat hsv)
+        {
+            CvInvoke.CvtColor(bgr, hsv, ColorConversion.Bgr2Hsv);
         }
     }
 }

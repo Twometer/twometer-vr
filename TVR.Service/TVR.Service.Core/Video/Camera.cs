@@ -42,8 +42,8 @@ namespace TVR.Service.Core.Video
             {
                 videoCapture.Retrieve(Frame);
 
-                CvInvoke.CvtColor(Frame, HsvFrame, ColorConversion.Bgr2Hsv);
-                FrameBrightness = CvInvoke.Mean(HsvFrame).V2;
+                ImageProcessing.BgrToHsv(Frame, HsvFrame);
+                FrameBrightness = ImageProcessing.GetBrightness(HsvFrame);
 
                 if (!calibration.IsCalibrated)
                     calibration.Update(FrameBrightness);
