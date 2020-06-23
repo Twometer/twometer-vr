@@ -135,8 +135,14 @@ namespace TVR.Service.UI
 
         private void OnCalibParametersDetected()
         {
-            MessageBox.Show("Calibration completed! Please follow the instructions on the bottom left (your instruction panel) to continue the setup!");
             InstructionBox.Text = "Please now switch on the red controller and hold it up from your playing position.";
+            var dialog = new CommonDialog
+            {
+                Title = "TwometerVR Setup Assistant",
+                Caption = "Calibration completed!",
+                ContentText = "Please now follow the instructions on the bottom left (your instruction panel) to continue the setup!"
+            };
+            dialog.ShowDialog();
         }
 
         private bool CheckStability(double frameBrightness, int th)
