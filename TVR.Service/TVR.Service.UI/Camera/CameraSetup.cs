@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVR.Service.Core.Logging;
 using TVR.Service.Core.Model.Camera;
 using TVR.Service.Core.Video;
 
@@ -92,10 +93,23 @@ namespace TVR.Service.UI.Camera
             var circles = ImageProcessing.HoughCircles(filteredImage, 125, 1, 3, filteredImage.Width / 2, 3, 75);
             if (circles.Length == 0)
                 return;
-
             var circle = circles[0];
-
-            Console.WriteLine(circle.Radius);
+            /*
+             * This has to explain the following steps to the user while calculating the camera parameters:
+             * 
+             *  1. Place tracker sphere 2 meters away from the camera
+             *  2. Calculate Parameters.FocalLength = (circleDiameter * 2m) / 0.04m
+             *  3. Stay at 2 meters away from the camera, go to left side of frame with the ball and move 2 meters to the right
+             *     and back multiple times
+             *      
+             *      Code: Correct the XY coordinates for distance
+             *            Take the maximums of each run, average those together
+             *            Divide the pixel difference from left to right by two (because 2 meters)
+             *            That's the px/m
+             *            Save that.
+             *            Be happy.
+             */
+            
         }
 
         private void HandleDetectCalibrationParameters(double frameBrightness)
@@ -103,10 +117,12 @@ namespace TVR.Service.UI.Camera
             if (CameraProfile.CalibrationParameters.WarmupFrames == 0)
             {
                 warmupFrames++;
-                if (CheckStability(frameBrightness, 30))
+                LoggerFactory.Current.Log(LogLevel.Debug, "Warming up... " + warmupFrames + "; " + frameBrightness);
+                if (CheckStability(frameBrightness, 30, 10.0))
                 {
                     CameraProfile.CalibrationParameters.WarmupFrames = warmupFrames - 20;
                     CameraProfile.CalibrationParameters.StableFrames = Math.Min((warmupFrames - 30) / 2 + 1, 4);
+                    LoggerFactory.Current.Log(LogLevel.Debug, "Warmup complete! " + CameraProfile.CalibrationParameters.WarmupFrames + "; " + CameraProfile.CalibrationParameters.StableFrames);
                 }
             }
             else if (CameraProfile.CalibrationParameters.CooldownFrames == 0)
@@ -117,7 +133,7 @@ namespace TVR.Service.UI.Camera
                 }
                 cooldownFrames++;
 
-                if (CheckStability(frameBrightness, CameraProfile.CalibrationParameters.StableFrames))
+                if (CheckStability(frameBrightness, CameraProfile.CalibrationParameters.StableFrames, 2.0))
                 {
                     CameraProfile.CalibrationParameters.CooldownFrames = cooldownFrames;
                 }
@@ -126,11 +142,10 @@ namespace TVR.Service.UI.Camera
             {
                 VideoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Exposure, exposure);
                 exposure--;
-                if ((CheckStability(frameBrightness, CameraProfile.CalibrationParameters.StableFrames) && frameBrightness < 50) || exposure < -30)
+                if ((CheckStability(frameBrightness, CameraProfile.CalibrationParameters.StableFrames, 2.0) && frameBrightness < 20) || exposure < -30)
                 {
                     CameraProfile.CalibrationParameters.BrightnessThreshold = frameBrightness + 5.0f; // Offset for some error room
                     OnCalibParametersDetected();
-
                 }
             }
             prevBrightness = frameBrightness;
@@ -160,12 +175,12 @@ namespace TVR.Service.UI.Camera
             UpdateState(State.DetectingCameraParameters);
         }
 
-        private bool CheckStability(double frameBrightness, int th)
+        private bool CheckStability(double frameBrightness, int stability, double threshold)
         {
-            if (Math.Abs(frameBrightness - prevBrightness) < 2.0)
+            if (Math.Abs(frameBrightness - prevBrightness) < threshold)
                 stableCounter++;
             else stableCounter = 0;
-            return stableCounter > th;
+            return stableCounter > stability;
         }
 
 

@@ -81,8 +81,8 @@ namespace TVR.Service.UI
                     var dialog = new CommonDialog
                     {
                         Title = "TwometerVR Setup Assistant",
-                        Caption = "Calibration completed!",
-                        ContentText = "Please now follow the instructions on the bottom left (your instruction panel) to continue the setup!"
+                        Caption = "Calibration guide",
+                        ContentText = "Please now switch on the red controller and hold it up from your playing position, preferrably in the center and most importantly two meters away from the camera. When you are ready, press OK. A 20-second timer will start after which the calculations will take place. Hold the controller in place until the next dialog box pops up."
                     };
                     dialog.ShowDialog();
                     break;
