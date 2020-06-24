@@ -48,6 +48,8 @@ namespace TVR.Service.UI
                         HardwareConfig = new HardwareConfig() { SphereDistance = 0.055, SphereSize = 0.04 }
                     };
                     ConfigIO.WriteUserConfig(defaultUserConfig);
+                    FileManager.Instance.ProfilesFolder.Create();
+                    CameraProfileIO.WriteCameraProfile(newCameraDialog.CameraProfile);
                 }
                 else
                 {
@@ -65,7 +67,7 @@ namespace TVR.Service.UI
                 {
                     Title = "TwometerVR Error",
                     Caption = "Failed to start",
-                    Content = "Cannot find configuration files! Make sure that the config store was not corrupted or alternatively, reconfigure the service."
+                    ContentText = "Cannot find configuration files! Make sure that the config store was not corrupted or alternatively, reconfigure the service."
                 };
                 dialog.ShowDialog();
                 Environment.Exit(1);
@@ -76,7 +78,7 @@ namespace TVR.Service.UI
                 {
                     Title = "TwometerVR Error",
                     Caption = "Failed to start",
-                    Content = e.ToString()
+                    ContentText = e.ToString()
                 };
                 dialog.ShowDialog();
                 Environment.Exit(1);
@@ -87,7 +89,7 @@ namespace TVR.Service.UI
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            Close();
         }
 
         private async void RestartMenuItem_Click(object sender, RoutedEventArgs e)
@@ -128,6 +130,18 @@ namespace TVR.Service.UI
                 Content = "Product: TwometerVR Service\nVersion: 2.0"
             };
             dialog.ShowDialog();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Really close TwometerVR Service?", "Close service?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                serviceHost.Stop();
+            }
+            else
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

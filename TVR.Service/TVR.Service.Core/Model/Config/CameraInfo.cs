@@ -1,4 +1,5 @@
 ﻿using TVR.Service.Core.Model.Camera;
+using YamlDotNet.Serialization;
 
 namespace TVR.Service.Core.Model.Config
 {
@@ -8,6 +9,7 @@ namespace TVR.Service.Core.Model.Config
 
         public string ProfileName { get; set; }
 
+        [YamlIgnore]
         public CameraProfile Profile { get; set; }
     }
 }

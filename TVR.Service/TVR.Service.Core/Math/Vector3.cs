@@ -1,4 +1,6 @@
-﻿namespace TVR.Service.Core.Math
+﻿using YamlDotNet.Serialization;
+
+namespace TVR.Service.Core.Math
 {
     public struct Vector3
     {
@@ -10,6 +12,7 @@
 
         public float Z { get; set; }
 
+        [YamlIgnore]
         public float LengthSquared => X * X + Y * Y + Z * Z;
 
         public Vector3(float x, float y, float z)

@@ -94,10 +94,10 @@ namespace TVR.Service.UI
                     InstructionBox.Text = $"Sampling! Please do not move the controller!";
                     break;
                 case CameraSetup.StatusMessage.AwaitingZeroPosition:
-                    InstructionBox.Text = "Complete. Now please stay at 2 meter distance from the camera and move all the way to the left side of the frame!";
+                    InstructionBox.Text = "Complete. Now please stay at one meter distance from the camera and move all the way to the left side of the frame!";
                     break;
                 case CameraSetup.StatusMessage.BeginSamplingPixelsPerMeter:
-                    InstructionBox.Text = "Horizontal calibration starting. Please move two meter to the right and back again!";
+                    InstructionBox.Text = "Horizontal calibration starting. Please move one meter to the right and back again!";
                     break;
                 case CameraSetup.StatusMessage.Completed:
                     InstructionBox.Text = "Setup completed successfully!";

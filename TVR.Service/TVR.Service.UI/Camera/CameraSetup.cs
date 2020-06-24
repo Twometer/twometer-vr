@@ -25,7 +25,7 @@ namespace TVR.Service.UI.Camera
 
         public event EventHandler<StatusMessage> StatusMessageReceived;
 
-        public int TimerSeconds { get; private set; } = 5;
+        public int TimerSeconds { get; private set; } = 30;
 
         private DsDevice device;
 
@@ -220,7 +220,7 @@ namespace TVR.Service.UI.Camera
                     {
                         circle_maxX = xOffset;
                     }
-                    else if (circle_maxX - xOffset > Math.Max(50, circle_maxX / 2))
+                    else if (xOffset > 0 && circle_maxX - xOffset > Math.Max(50, circle_maxX / 2))
                     {
                         double pxm = circle_maxX - circle_x0;
 
