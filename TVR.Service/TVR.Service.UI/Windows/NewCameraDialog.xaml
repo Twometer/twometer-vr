@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
@@ -24,9 +25,10 @@
 
         <Button x:Name="BeginSetupButton" Grid.Row="3" Margin="15" Padding="15,3" Content="Setup camera" HorizontalAlignment="Center" Click="BeginSetupButton_Click"/>
 
-        <TextBlock x:Name="InstructionBox" Grid.Row="4" Margin="15" Text="You will have to complete some actions to set up your camera. Select your camera from the box above, click the button and then the assistant will guide you through the next steps." VerticalAlignment="Bottom" TextWrapping="Wrap"/>
+        <Label Content="Instructions" Grid.Row="4" Margin="10,0" VerticalAlignment="Bottom" FontSize="18" FontWeight="Light"/>
+        <TextBlock x:Name="InstructionBox" Grid.Row="5" Margin="15,5,15,15" Text="You will have to complete some actions to set up your camera. Select your camera from the box above, click the button and then the assistant will guide you through the next steps." VerticalAlignment="Bottom" TextWrapping="Wrap"/>
 
-        <GroupBox Header="Live feed" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" VerticalAlignment="Stretch" Margin="15,10">
+        <GroupBox Header="Live feed" Grid.Row="0" Grid.Column="1" Grid.RowSpan="6" VerticalAlignment="Stretch" Margin="15,10">
             <WindowsFormsHost Name="VideoFeedHost" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
         </GroupBox>
 

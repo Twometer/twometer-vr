@@ -67,24 +67,48 @@ namespace TVR.Service.UI
 
             var device = (CameraComboBox.SelectedItem as ComboBoxItem).Tag as DsDevice;
             setup = new CameraSetup(device, CameraComboBox.SelectedIndex);
-            setup.OnStateChanged += Setup_OnStateChanged;
+            setup.StatusMessageReceived += Setup_StatusMessageReceived;
 
             BeginCaptureLoop();
         }
 
-        private void Setup_OnStateChanged(object sender, CameraSetup.State e)
+        private void Setup_StatusMessageReceived(object sender, CameraSetup.StatusMessage e)
         {
             switch (e)
             {
-                case CameraSetup.State.DetectingCameraParameters:
+                case CameraSetup.StatusMessage.CalibrationParametersDetected:
                     InstructionBox.Text = "Please now switch on the red controller and hold it up from your playing position.";
                     var dialog = new CommonDialog
                     {
                         Title = "TwometerVR Setup Assistant",
                         Caption = "Calibration guide",
-                        ContentText = "Please now switch on the red controller and hold it up from your playing position, preferrably in the center and most importantly two meters away from the camera. When you are ready, press OK. A 20-second timer will start after which the calculations will take place. Hold the controller in place until the next dialog box pops up."
+                        ContentText = "Please now switch on the red controller and hold it up from your playing position, preferrably in the center and most importantly a meter away from the camera.\n\nWhen you are ready, press OK. A 30-second timer will then start after which the calculations will take place.\n\nMore instructions will be shown in the bottom left corner!"
                     };
                     dialog.ShowDialog();
+                    setup.BeginCamParamsStep1Countdown();
+                    break;
+                case CameraSetup.StatusMessage.CountdownChanged:
+                    InstructionBox.Text = $"Sampling of the depth will begin in {setup.TimerSeconds} seconds...";
+                    break;
+                case CameraSetup.StatusMessage.BeginSamplingCircleDiameter:
+                    InstructionBox.Text = $"Sampling! Please do not move the controller!";
+                    break;
+                case CameraSetup.StatusMessage.AwaitingZeroPosition:
+                    InstructionBox.Text = "Complete. Now please stay at 2 meter distance from the camera and move all the way to the left side of the frame!";
+                    break;
+                case CameraSetup.StatusMessage.BeginSamplingPixelsPerMeter:
+                    InstructionBox.Text = "Horizontal calibration starting. Please move two meter to the right and back again!";
+                    break;
+                case CameraSetup.StatusMessage.Completed:
+                    InstructionBox.Text = "Setup completed successfully!";
+                    var success = new CommonDialog
+                    {
+                        Title = "TwometerVR Setup Assistant",
+                        Caption = "Congratulations",
+                        ContentText = "Your camera is successfully calibrated! Now you can enjoy your favorite VR games :3"
+                    };
+                    success.ShowDialog();
+                    DialogResult = true;
                     break;
             }
         }
