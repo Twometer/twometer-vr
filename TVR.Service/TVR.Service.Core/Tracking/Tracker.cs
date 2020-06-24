@@ -35,9 +35,9 @@ namespace TVR.Service.Core.Tracking
             if (frame == null)
                 frame = new Image<Gray, byte>(hsvFrame.Width, hsvFrame.Height);
             ImageProcessing.ColorFilter(hsvFrame, frame, temp, ColorProfile, brightness);
-            ImageProcessing.SmoothMedian(frame, 3);
+            ImageProcessing.SmoothGaussian(frame, 9);
 
-            var circles = ImageProcessing.HoughCircles(frame, 85, 1, 3, frame.Width / 2, 3, 80);
+            var circles = ImageProcessing.HoughCircles(frame, 125, 1, 3, frame.Width / 2, 3, 80);
             Detected = circles.Length > 0;
 
             if (!Detected)
