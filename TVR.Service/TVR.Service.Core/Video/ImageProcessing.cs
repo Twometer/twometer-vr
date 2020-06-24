@@ -28,6 +28,11 @@ namespace TVR.Service.Core.Video
             CvInvoke.GaussianBlur(image, image, new Size(kernelSize, kernelSize), 0, 0);
         }
 
+        public static void SmoothMedian<TColor, TDepth>(Image<TColor, TDepth> image, int kernelSize) where TColor : struct, IColor where TDepth : new()
+        {
+            CvInvoke.MedianBlur(image, image, kernelSize);
+        }
+
         public static CircleF[] HoughCircles<TColor, TDepth>(Image<TColor, TDepth> image, double cannyThreshold, double accumulatorThreshold, double dp, double minDist, int minRadius = 0, int maxRadius = 0) where TColor : struct, IColor where TDepth : new()
         {
             return CvInvoke.HoughCircles(image, HoughModes.Gradient, dp, minDist, cannyThreshold, accumulatorThreshold, minRadius, maxRadius);

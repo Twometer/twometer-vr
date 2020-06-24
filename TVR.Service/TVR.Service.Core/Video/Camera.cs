@@ -33,6 +33,7 @@ namespace TVR.Service.Core.Video
             videoCapture = new VideoCapture(cameraInfo.Index, VideoCapture.API.DShow);
             videoCapture.SetCaptureProperty(CapProp.FrameWidth, cameraInfo.Profile.CameraParameters.FrameWidth);
             videoCapture.SetCaptureProperty(CapProp.FrameHeight, cameraInfo.Profile.CameraParameters.FrameHeight);
+            videoCapture.SetCaptureProperty(CapProp.Exposure, 0);
             videoCapture.SetCaptureProperty(CapProp.AutoExposure, 0);
         }
 

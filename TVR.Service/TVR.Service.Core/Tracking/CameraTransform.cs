@@ -8,6 +8,7 @@ namespace TVR.Service.Core.Tracking
 {
     public class CameraTransform
     {
+        private readonly Vector3 offset;
         private readonly CameraParameters cameraParameters;
         private readonly HardwareConfig hardwareConfig;
 
@@ -17,13 +18,14 @@ namespace TVR.Service.Core.Tracking
 
         private PointF frameCenter;
 
-        public CameraTransform(CameraParameters cameraParameters, HardwareConfig hardwareConfig, int latency)
+        public CameraTransform(Vector3 offset, CameraParameters cameraParameters, HardwareConfig hardwareConfig, int latency)
         {
+            this.offset = offset;
             this.cameraParameters = cameraParameters;
             this.hardwareConfig = hardwareConfig;
             xAvg = new RollingAverageFilter(latency);
             yAvg = new RollingAverageFilter(latency);
-            zAvg = new RollingAverageFilter(latency);
+            zAvg = new RollingAverageFilter(latency * 2);
         }
 
         public Vector3 Transform(int frameWidth, int frameHeight, CircleF obj)
@@ -37,9 +39,9 @@ namespace TVR.Service.Core.Tracking
 
 
             var Z = ComputeDistance(diameter);
-            xAvg.Push(-offset.X * Z / cameraParameters.PixelsPerMeter);
-            yAvg.Push(-offset.Y * Z / cameraParameters.PixelsPerMeter);
-            zAvg.Push(Z);
+            xAvg.Push((-offset.X * Z / cameraParameters.PixelsPerMeter) + this.offset.X);
+            yAvg.Push((-offset.Y * Z / cameraParameters.PixelsPerMeter) + this.offset.Y);
+            zAvg.Push(Z + this.offset.Z);
 
             return new Vector3(xAvg.Value, yAvg.Value, zAvg.Value);
         }

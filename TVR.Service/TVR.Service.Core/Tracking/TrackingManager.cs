@@ -47,7 +47,7 @@ namespace TVR.Service.Core.Tracking
         {
             for (byte i = 0; i < colorProfiles.Length; i++)
             {
-                var transform = new CameraTransform(config.CameraInfo.Profile.CameraParameters, config.HardwareConfig, config.InputConfig.Latency);
+                var transform = new CameraTransform(config.Offset, config.CameraInfo.Profile.CameraParameters, config.HardwareConfig, config.InputConfig.Latency);
                 Trackers[i] = new Tracker(i, colorProfiles[i], transform);
             }
         }
