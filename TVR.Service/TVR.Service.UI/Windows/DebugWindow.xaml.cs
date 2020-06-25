@@ -25,7 +25,6 @@ namespace TVR.Service.UI.Windows
         private readonly ServiceHost host;
         private readonly ImageBox imageBox;
 
-
         public DebugWindow(ServiceHost host)
         {
             InitializeComponent();
@@ -52,6 +51,9 @@ namespace TVR.Service.UI.Windows
 
                 LeftInfoBlock.Text = host.Services.TrackingManager.Trackers[0].TrackedController.Position.ToString();
                 RightInfoBlock.Text = host.Services.TrackingManager.Trackers[1].TrackedController.Position.ToString();
+
+                ExposureLabel.Text = $"Exposure: {host.Services.Camera.Exposure}";
+                BrightnessLabel.Text = $"Brightness: {host.Services.Camera.FrameBrightness:0.###}";
 
                 await Task.Delay(10);
             }

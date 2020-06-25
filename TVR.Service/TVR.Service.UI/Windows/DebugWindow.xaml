@@ -33,6 +33,12 @@
             <TextBlock x:Name="RightInfoBlock" Margin="4" Text="unknown"/>
         </GroupBox>
 
+        <GroupBox Header="Camera" Grid.Row="5" VerticalAlignment="Bottom">
+            <StackPanel Orientation="Vertical">
+                <TextBlock x:Name="BrightnessLabel" Margin="4" Text="Brightness: 0"/>
+                <TextBlock x:Name="ExposureLabel" Margin="4" Text="Exposure: 0"/>
+            </StackPanel>
+        </GroupBox>
         <WindowsFormsHost Name="VideoFeedHost" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" Grid.Column="1" Grid.RowSpan="6"/>
         
     </Grid>

@@ -26,6 +26,10 @@ namespace TVR.Service.Core.Video
             {
                 videoCapture.SetCaptureProperty(CapProp.Exposure, value);
             }
+            get
+            {
+                return videoCapture.GetCaptureProperty(CapProp.Exposure);
+            }
         }
 
         public Camera(CameraInfo cameraInfo)
