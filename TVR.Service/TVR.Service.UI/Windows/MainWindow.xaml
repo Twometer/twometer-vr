@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="TwometerVR Service" Height="190.735" Width="375.596"
-        SizeToContent="Height" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="../Icon.ico" Closing="Window_Closing">
+        SizeToContent="Height" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="../Icon.ico" Closing="Window_Closing" Loaded="Window_Loaded">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -32,13 +32,14 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="170*"/>
+                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="147*"/>
             </Grid.ColumnDefinitions>
-            <Label Name="ServiceStatusLabel" Content="Inactive" FontSize="25" Grid.Row="0" Grid.ColumnSpan="2"/>
-            <Label Name="CurrentCamLabel" Content="Camera: &lt;none&gt;" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <Label Name="ServiceStatusLabel" Content="Inactive" FontSize="25" Grid.Row="0" Grid.ColumnSpan="3" FontWeight="Light"/>
+            <Label Name="CurrentCamLabel" Content="Camera: &lt;none&gt;" Grid.Row="1" Grid.ColumnSpan="3"/>
             <Label Name="ConnectedControllersLabel" Content="Controllers: 0" Grid.Row="2"/>
-            <Label Name="ConnectedDriversLabel" Content="SteamVR Clients: 0" Grid.Row="2" Grid.Column="1"/>
+            <Label Name="ConnectedDriversLabel" Content="SteamVR Clients: 0" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
         </Grid>
     </DockPanel>
 </Window>

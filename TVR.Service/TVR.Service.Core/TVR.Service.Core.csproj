@@ -80,6 +80,7 @@
     <Compile Include="Tracking\CameraTransform.cs" />
     <Compile Include="Tracking\Tracker.cs" />
     <Compile Include="Tracking\TrackingManager.cs" />
+    <Compile Include="TVRCore.cs" />
     <Compile Include="Video\Calibration.cs" />
     <Compile Include="Video\Camera.cs" />
     <Compile Include="Video\ImageProcessing.cs" />

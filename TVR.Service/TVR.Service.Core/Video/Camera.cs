@@ -18,6 +18,8 @@ namespace TVR.Service.Core.Video
 
         public double FrameBrightness { get; private set; } = 0.0f;
 
+        public bool Calibrated => calibration.IsCalibrated;
+
         public double Exposure
         {
             set

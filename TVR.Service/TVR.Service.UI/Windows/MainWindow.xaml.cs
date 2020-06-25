@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TVR.Service.Common;
+using TVR.Service.Core;
 using TVR.Service.Core.IO;
 using TVR.Service.Core.Math;
 using TVR.Service.Core.Model.Config;
@@ -84,8 +73,17 @@ namespace TVR.Service.UI
                 dialog.ShowDialog();
                 Environment.Exit(1);
             }
+        }
 
-            ServiceStatusLabel.Content = "Active";
+        private async void StartUpdateLoop()
+        {
+            while (IsLoaded)
+            {
+                ServiceStatusLabel.Content = serviceHost.State.ToString();
+                CurrentCamLabel.Content = $"Camera: {serviceHost.Services.Config.CameraInfo.Profile.Model}";
+
+                await Task.Delay(250);
+            }
         }
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
@@ -95,11 +93,8 @@ namespace TVR.Service.UI
 
         private async void RestartMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ServiceStatusLabel.Content = "Shutting down...";
             await serviceHost.StopAsync();
-            ServiceStatusLabel.Content = "Starting...";
             await serviceHost.StartAsync();
-            ServiceStatusLabel.Content = "Active";
         }
 
         private void RecalibrateMenuItem_Click(object sender, RoutedEventArgs e)
@@ -128,7 +123,7 @@ namespace TVR.Service.UI
             {
                 Title = "About TwometerVR",
                 Caption = "About",
-                Content = "Product: TwometerVR Service\nVersion: 2.0"
+                ContentText = $"Product: TwometerVR Service\n\nFrontend Version: {Assembly.GetExecutingAssembly().GetName().Version}\nCore Version: {TVRCore.Version}\n\nmade by Twometer\nReleased under the MIT license"
             };
             dialog.ShowDialog();
         }
@@ -148,6 +143,11 @@ namespace TVR.Service.UI
         private void DebugMenuItem_Click(object sender, RoutedEventArgs e)
         {
             new DebugWindow(serviceHost).Show();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            StartUpdateLoop();
         }
     }
 }
