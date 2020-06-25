@@ -9,6 +9,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
+                <MenuItem Name="DebugMenuItem" Header="_Debug view"  Click="DebugMenuItem_Click"/>
                 <MenuItem Name="ExitMenuItem" Header="_Exit" Click="ExitMenuItem_Click" />
             </MenuItem>
             <MenuItem Header="_Service">

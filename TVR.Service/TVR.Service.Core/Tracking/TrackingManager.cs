@@ -29,10 +29,12 @@ namespace TVR.Service.Core.Tracking
             InitTrackers(colorProfiles);
         }
 
-        public void UpdateVideo(Mat hsvFrame, double meanBrightness)
+        public Task UpdateVideo(Mat hsvFrame, double meanBrightness)
         {
+            var tasks = new List<Task>();
             foreach (var tracker in Trackers)
-                tracker.UpdateVideo(hsvFrame, meanBrightness);
+                tasks.Add(Task.Run(() => { tracker.UpdateVideo(hsvFrame, meanBrightness); }));
+            return Task.WhenAll(tasks.ToArray());
         }
 
         public void UpdateMeta(byte controllerId, float qx, float qy, float qz, float qw, Button[] pressedButtons)

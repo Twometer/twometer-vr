@@ -10,7 +10,8 @@ namespace TVR.Service.Common
 {
     public class ServiceHost
     {
-        private Services services;
+        public Services Services { get; private set; }
+
         private Thread updateThread;
         private Thread broadcastThread;
 
@@ -21,7 +22,7 @@ namespace TVR.Service.Common
 
         public void Start()
         {
-            services = new Services();
+            Services = new Services();
 
             tokenSource = new CancellationTokenSource();
             token = tokenSource.Token;
@@ -29,15 +30,15 @@ namespace TVR.Service.Common
             (updateThread = new Thread(UpdateLoop)).Start();
             (broadcastThread = new Thread(BroadcastLoop)).Start();
 
-            services.ControllerServer.PacketReceived += ControllerServer_PacketReceived;
-            services.ControllerServer.StatusChanged += ControllerServer_StatusChanged;
+            Services.ControllerServer.PacketReceived += ControllerServer_PacketReceived;
+            Services.ControllerServer.StatusChanged += ControllerServer_StatusChanged;
 
-            broadcastDelay = (int)(1000.0f / services.Config.InputConfig.UpdateRate);
+            broadcastDelay = (int)(1000.0f / Services.Config.InputConfig.UpdateRate);
         }
 
         public void Stop()
         {
-            if (services == null)
+            if (Services == null)
                 throw new InvalidOperationException("Cannot stop a service that's already stopped!");
 
             tokenSource.Cancel();
@@ -55,12 +56,12 @@ namespace TVR.Service.Common
             return Task.Run(() => Start());
         }
 
-        private void UpdateLoop()
+        private async void UpdateLoop()
         {
             while (!token.IsCancellationRequested)
             {
-                if (services.Camera.Update())
-                    services.TrackingManager.UpdateVideo(services.Camera.HsvFrame, services.Camera.FrameBrightness);
+                if (Services.Camera.Update())
+                    await Services.TrackingManager.UpdateVideo(Services.Camera.HsvFrame, Services.Camera.FrameBrightness);
             }
         }
 
@@ -69,7 +70,7 @@ namespace TVR.Service.Common
             while (!token.IsCancellationRequested)
             {
                 var start = DateTime.Now;
-                services.DriverServer.Broadcast(new DriverPacket() { ControllerStates = services.TrackingManager.Trackers.Select(t => t.TrackedController).ToArray() });
+                Services.DriverServer.Broadcast(new DriverPacket() { ControllerStates = Services.TrackingManager.Trackers.Select(t => t.TrackedController).ToArray() });
                 var broadcastDuration = (int)(DateTime.Now - start).TotalMilliseconds;
 
                 var timeout = broadcastDelay - broadcastDuration;
@@ -108,7 +109,7 @@ namespace TVR.Service.Common
 
         private void ControllerServer_PacketReceived(object sender, ControllerInfoPacket e)
         {
-            services.TrackingManager.UpdateMeta(e.ControllerId, e.Qx, e.Qy, e.Qz, e.Qw, e.PressedButtons);
+            Services.TrackingManager.UpdateMeta(e.ControllerId, e.Qx, e.Qy, e.Qz, e.Qw, e.PressedButtons);
         }
     }
 }

@@ -301,8 +301,8 @@ namespace TVR.Service.UI.Camera
             {
                 ColorRanges = new ColorRange[]
                 {
-                    new ColorRange() { Minimum = new HSVColor(0, 76, 69), Maximum = new HSVColor(70, 255, 255) },
-                    new ColorRange() { Minimum = new HSVColor(151, 76, 69), Maximum = new HSVColor(179, 255, 255) }
+                    new ColorRange() { Minimum = new HSVColor(0, 76, 66), Maximum = new HSVColor(70, 255, 255) },
+                    new ColorRange() { Minimum = new HSVColor(151, 76, 66), Maximum = new HSVColor(179, 255, 255) }
                 }
             };
             CameraProfile.ColorProfiles[1] = new ColorProfile()

@@ -3,7 +3,6 @@ using Emgu.CV.Structure;
 using System.Linq;
 using TVR.Service.Core.Math;
 using TVR.Service.Core.Model.Camera;
-using TVR.Service.Core.Model.Config;
 using TVR.Service.Core.Model.Device;
 using TVR.Service.Core.Video;
 
@@ -11,13 +10,13 @@ namespace TVR.Service.Core.Tracking
 {
     public class Tracker
     {
+        public Image<Gray, byte> Frame { get; private set; }
+
         public Controller TrackedController { get; }
 
         public ColorProfile ColorProfile { get; }
 
         public bool Detected { get; private set; }
-
-        private Image<Gray, byte> frame;
 
         private readonly CameraTransform transform;
 
@@ -32,18 +31,21 @@ namespace TVR.Service.Core.Tracking
 
         public void UpdateVideo(Mat hsvFrame, double brightness)
         {
-            if (frame == null)
-                frame = new Image<Gray, byte>(hsvFrame.Width, hsvFrame.Height);
-            ImageProcessing.ColorFilter(hsvFrame, frame, temp, ColorProfile, brightness);
-            ImageProcessing.SmoothGaussian(frame, 9);
+            if (Frame == null)
+                Frame = new Image<Gray, byte>(hsvFrame.Width, hsvFrame.Height);
+            ImageProcessing.ColorFilter(hsvFrame, Frame, temp, ColorProfile, brightness);
+            ImageProcessing.Erode(Frame, 1);
+            ImageProcessing.SmoothGaussian(Frame, 7);
 
-            var circles = ImageProcessing.HoughCircles(frame, 125, 1, 3, frame.Width / 2, 3, 80);
+            var circles = ImageProcessing.HoughCircles(Frame, 80, 1, 3, Frame.Width / 2, 3, 80);
             Detected = circles.Length > 0;
 
             if (!Detected)
                 return;
 
-            TrackedController.Position = transform.Transform(frame.Width, frame.Height, circles[0]);
+            Frame.Draw(circles[0], new Gray(128), 4);
+
+            TrackedController.Position = transform.Transform(Frame.Width, Frame.Height, circles[0]);
         }
 
         public void UpdateMeta(float qx, float qy, float qz, float qw, Button[] pressedButtons)

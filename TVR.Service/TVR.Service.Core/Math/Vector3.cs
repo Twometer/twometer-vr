@@ -31,7 +31,7 @@ namespace TVR.Service.Core.Math
 
         public override string ToString()
         {
-            return $"X={X}, Y={Y}, Z={Z}";
+            return $"X:{X:0.###}, Y:{Y:0.###}, Z:{Z:0.###}";
         }
 
         public static Vector3 Cross(Vector3 a, Vector3 b)

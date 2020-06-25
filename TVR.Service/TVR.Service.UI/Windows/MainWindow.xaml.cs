@@ -20,6 +20,7 @@ using TVR.Service.Common;
 using TVR.Service.Core.IO;
 using TVR.Service.Core.Math;
 using TVR.Service.Core.Model.Config;
+using TVR.Service.UI.Windows;
 
 namespace TVR.Service.UI
 {
@@ -142,6 +143,11 @@ namespace TVR.Service.UI
             {
                 e.Cancel = true;
             }
+        }
+
+        private void DebugMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            new DebugWindow(serviceHost).Show();
         }
     }
 }
