@@ -97,14 +97,9 @@ namespace TVR.Service.UI
             await serviceHost.StartAsync();
         }
 
-        private void RecalibrateMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ConfigMenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            new ConfigDialog() { Owner = this }.ShowDialog();
         }
 
         private void GitHubMenuItem_Click(object sender, RoutedEventArgs e)
@@ -119,18 +114,18 @@ namespace TVR.Service.UI
 
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new CommonDialog
+            new CommonDialog
             {
                 Title = "About TwometerVR",
                 Caption = "About",
-                ContentText = $"Product: TwometerVR Service\n\nFrontend Version: {Assembly.GetExecutingAssembly().GetName().Version}\nCore Version: {TVRCore.Version}\n\nmade by Twometer\nReleased under the MIT license"
-            };
-            dialog.ShowDialog();
+                ContentText = $"Product: TwometerVR Service\n\nFrontend Version: {Assembly.GetExecutingAssembly().GetName().Version}\nCore Version: {TVRCore.Version}\n\nmade by Twometer\nReleased under the MIT license",
+                Owner = this
+            }.ShowDialog();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("Really close TwometerVR Service?", "Close service?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("If you close the service, TwometerVR controllers will stop working. Continue?", "Close service?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 serviceHost.Stop();
             }

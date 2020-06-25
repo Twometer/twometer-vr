@@ -1,0 +1,17 @@
+﻿<Window x:Class="TVR.Service.UI.Windows.ConfigDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TVR.Service.UI.Windows"
+        mc:Ignorable="d"
+        Title="Configuration" Height="360" Width="500" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TreeView x:Name="ConfigTree" BorderThickness="0"/>
+        <ContentControl x:Name="ConfigContent" Grid.Column="1"/>
+    </Grid>
+</Window>

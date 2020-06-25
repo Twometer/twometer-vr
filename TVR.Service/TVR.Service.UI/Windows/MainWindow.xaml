@@ -9,14 +9,13 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Name="DebugMenuItem" Header="_Debug view"  Click="DebugMenuItem_Click"/>
                 <MenuItem Name="ExitMenuItem" Header="_Exit" Click="ExitMenuItem_Click" />
             </MenuItem>
             <MenuItem Header="_Service">
                 <MenuItem Name="RestartMenuItem" Header="_Restart"  Click="RestartMenuItem_Click"/>
-                <MenuItem Name="RecalibrateMenuItem" Header="Re_calibrate" Click="RecalibrateMenuItem_Click" />
+                <MenuItem Name="DebugMenuItem" Header="_Debug..."  Click="DebugMenuItem_Click"/>
                 <Separator />
-                <MenuItem Name="ConfigMenuItem" Header="Con_figure" Click="ConfigMenuItem_Click"/>
+                <MenuItem Name="ConfigMenuItem" Header="Con_figure..." Click="ConfigMenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="_?">
                 <MenuItem Name="GitHubMenuItem" Header="_GitHub" Click="GitHubMenuItem_Click"/>
