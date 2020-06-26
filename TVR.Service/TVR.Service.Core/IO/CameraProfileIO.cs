@@ -8,10 +8,16 @@ namespace TVR.Service.Core.IO
         public static CameraProfile LoadCameraProfile(string cameraProfile)
         {
             var path = Path.Combine(FileManager.Instance.ProfilesFolder.FullName, cameraProfile + ".yml");
-            if (!File.Exists(path))
+            var file = new FileInfo(path);
+            if (!file.Exists)
                 throw new FileNotFoundException($"Cannot load camera profile because {path} does not exist.");
 
-            var data = File.ReadAllText(path);
+            return LoadCameraProfile(file);
+        }
+
+        public static CameraProfile LoadCameraProfile(FileInfo file)
+        {
+            var data = File.ReadAllText(file.FullName);
             var deserializer = new YamlDotNet.Serialization.Deserializer();
             return deserializer.Deserialize<CameraProfile>(data);
         }

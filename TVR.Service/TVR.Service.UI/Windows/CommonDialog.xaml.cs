@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace TVR.Service.UI
 {
@@ -38,6 +26,22 @@ namespace TVR.Service.UI
         public CommonDialog()
         {
             InitializeComponent();
+        }
+
+        public static void ShowError(Window owner, string caption, string error)
+        {
+            Show(owner, "TwometerVR Error", caption, error);
+        }
+
+        public static void Show(Window owner, string title, string caption, string info)
+        {
+            new CommonDialog
+            {
+                Title = title,
+                Caption = caption,
+                ContentText = info,
+                Owner = owner
+            }.ShowDialog();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

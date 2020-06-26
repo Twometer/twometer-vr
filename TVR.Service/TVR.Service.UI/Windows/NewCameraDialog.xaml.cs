@@ -18,7 +18,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 using TVR.Service.Core.Model.Camera;
 using TVR.Service.Core.Video;
-using TVR.Service.UI.Camera;
+using TVR.Service.UI.Setup;
 
 namespace TVR.Service.UI
 {
@@ -85,7 +85,7 @@ namespace TVR.Service.UI
                         ContentText = "Please now switch on the red controller and hold it up from your playing position, preferrably in the center and most importantly a meter away from the camera.\n\nWhen you are ready, press OK. A 30-second timer will then start after which the calculations will take place.\n\nMore instructions will be shown in the bottom left corner!"
                     };
                     dialog.ShowDialog();
-                    setup.BeginCamParamsStep1Countdown();
+                    setup.BeginDepthSamplingCountdown();
                     break;
                 case CameraSetup.StatusMessage.CountdownChanged:
                     InstructionBox.Text = $"Sampling of the depth will begin in {setup.TimerSeconds} seconds...";

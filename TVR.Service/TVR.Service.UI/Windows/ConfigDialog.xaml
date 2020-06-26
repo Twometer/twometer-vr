@@ -11,7 +11,12 @@
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TreeView x:Name="ConfigTree" BorderThickness="0"/>
-        <ContentControl x:Name="ConfigContent" Grid.Column="1"/>
+        <TreeView x:Name="ConfigTree" BorderThickness="0" SelectedItemChanged="ConfigTree_SelectedItemChanged">
+            <TreeViewItem x:Name="GeneralItem" Header="General" Tag="general"/>
+            <TreeViewItem x:Name="HardwareItem" Header="Hardware" Tag="hardware"/>
+            <TreeViewItem x:Name="InputItem" Header="Input" Tag="input"/>
+            <TreeViewItem x:Name="CamerasItem" Header="Cameras" Tag="cameras"/>
+        </TreeView>
+        <Frame x:Name="ConfigContent" Grid.Column="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

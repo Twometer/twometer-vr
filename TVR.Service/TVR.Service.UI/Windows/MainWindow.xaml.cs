@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using TVR.Service.Common;
 using TVR.Service.Core;
-using TVR.Service.Core.IO;
-using TVR.Service.Core.Math;
-using TVR.Service.Core.Model.Config;
+using TVR.Service.UI.Setup;
 using TVR.Service.UI.Windows;
 
 namespace TVR.Service.UI
@@ -24,28 +22,7 @@ namespace TVR.Service.UI
         {
             InitializeComponent();
 
-            if (FileManager.Instance.IsFirstStart)
-            {
-                var welcomeWindow = new WelcomeWindow();
-                var newCameraDialog = new NewCameraDialog();
-                if (welcomeWindow.ShowDialog() == true && newCameraDialog.ShowDialog() == true)
-                {
-                    var defaultUserConfig = new UserConfig
-                    {
-                        CameraInfo = new CameraInfo() { Index = 0, ProfileName = newCameraDialog.CameraProfile.Identifier },
-                        Offset = Vector3.Zero,
-                        InputConfig = new InputConfig() { Latency = 2, PoseResetDelay = 0.2, UpdateRate = 120 },
-                        HardwareConfig = new HardwareConfig() { SphereDistance = 0.055, SphereSize = 0.04 }
-                    };
-                    ConfigIO.WriteUserConfig(defaultUserConfig);
-                    FileManager.Instance.ProfilesFolder.Create();
-                    CameraProfileIO.WriteCameraProfile(newCameraDialog.CameraProfile);
-                }
-                else
-                {
-                    Environment.Exit(0);
-                }
-            }
+            FirstStartup.CheckFirstStart();
 
             try
             {
@@ -53,24 +30,12 @@ namespace TVR.Service.UI
             }
             catch (FileNotFoundException)
             {
-                var dialog = new CommonDialog
-                {
-                    Title = "TwometerVR Error",
-                    Caption = "Failed to start",
-                    ContentText = "Cannot find configuration files! Make sure that the config store was not corrupted or alternatively, reconfigure the service."
-                };
-                dialog.ShowDialog();
+                CommonDialog.ShowError(this, "Failed to start", "Cannot find configuration files! Make sure that the config store was not corrupted or alternatively, reconfigure the service.");
                 Environment.Exit(1);
             }
             catch (Exception e)
             {
-                var dialog = new CommonDialog
-                {
-                    Title = "TwometerVR Error",
-                    Caption = "Failed to start",
-                    ContentText = e.ToString()
-                };
-                dialog.ShowDialog();
+                CommonDialog.ShowError(this, "Failed to start", e.ToString());
                 Environment.Exit(1);
             }
         }
@@ -86,6 +51,19 @@ namespace TVR.Service.UI
             }
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            StartUpdateLoop();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("If you close the service, TwometerVR controllers will stop working. Continue?", "Close service?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                serviceHost.Stop();
+            else
+                e.Cancel = true;
+        }
+
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -99,7 +77,17 @@ namespace TVR.Service.UI
 
         private void ConfigMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            new ConfigDialog() { Owner = this }.ShowDialog();
+            var conf = new ConfigDialog(serviceHost.Services.Config) { Owner = this };
+            conf.ShowDialog();
+            if (conf.RequiresRestart)
+            {
+                // TODO Correctly restart service
+            }
+        }
+
+        private void DebugMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            new DebugWindow(serviceHost).Show();
         }
 
         private void GitHubMenuItem_Click(object sender, RoutedEventArgs e)
@@ -114,35 +102,8 @@ namespace TVR.Service.UI
 
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            new CommonDialog
-            {
-                Title = "About TwometerVR",
-                Caption = "About",
-                ContentText = $"Product: TwometerVR Service\n\nFrontend Version: {Assembly.GetExecutingAssembly().GetName().Version}\nCore Version: {TVRCore.Version}\n\nmade by Twometer\nReleased under the MIT license",
-                Owner = this
-            }.ShowDialog();
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (MessageBox.Show("If you close the service, TwometerVR controllers will stop working. Continue?", "Close service?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                serviceHost.Stop();
-            }
-            else
-            {
-                e.Cancel = true;
-            }
-        }
-
-        private void DebugMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            new DebugWindow(serviceHost).Show();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            StartUpdateLoop();
+            var aboutMessage = $"Product: TwometerVR Service\n\nFrontend Version: {Assembly.GetExecutingAssembly().GetName().Version}\nCore Version: {TVRCore.Version}\n\nmade by Twometer\nReleased under the MIT license";
+            CommonDialog.Show(this, "About TwometerVR", "About", aboutMessage);
         }
     }
 }

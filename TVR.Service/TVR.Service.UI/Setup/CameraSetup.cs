@@ -2,20 +2,13 @@
 using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing.Design;
-using System.Drawing.Printing;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
 using TVR.Service.Core.Logging;
 using TVR.Service.Core.Model.Camera;
 using TVR.Service.Core.Video;
 
-namespace TVR.Service.UI.Camera
+namespace TVR.Service.UI.Setup
 {
     public class CameraSetup
     {
@@ -23,25 +16,39 @@ namespace TVR.Service.UI.Camera
 
         public VideoCapture VideoCapture { get; private set; }
 
-        public event EventHandler<StatusMessage> StatusMessageReceived;
-
         public int TimerSeconds { get; private set; } = 30;
 
-        private DsDevice device;
+        public event EventHandler<StatusMessage> StatusMessageReceived;
 
-        // Left is red
-        // Right is blue
-
+        // Setup state
         private CameraDetectionState currentDetectionState = CameraDetectionState.CircleDiameter;
         private SetupState currentState = SetupState.DetectingCalibrationParameters;
-        private int warmupFrames = 0;
-        private int cooldownFrames = 0;
-        private int exposure = 0;
+
+        // Capture state
         private Mat hsvFrame = new Mat();
         private Mat tempFrame = new Mat();
         private Image<Gray, byte> filteredImage;
+        private readonly DsDevice device;
+
+        // Brightness calibration
+        private int warmupFrames = 0;
+        private int cooldownFrames = 0;
+        private int exposure = 0;
+        private int frameTimeout;
+
+        // Utils for brightness
         private double prevBrightness;
         private int stableCounter = 0;
+
+        // Depth calibration
+        private double totalCircleDia;
+        private double circleDiaSamples;
+        private double perceivedCircleSize;
+
+        // Horizontal calibration
+        private double circle_x0;
+        private int circle0time;
+        private double circle_maxX;
 
         /*
          * After the automatic calibration step the following has to be done:
@@ -61,6 +68,9 @@ namespace TVR.Service.UI.Camera
          *            Save that.
          *            Be happy.
          */
+
+        // Left is red
+        // Right is blue
 
 
         private enum SetupState
@@ -113,7 +123,7 @@ namespace TVR.Service.UI.Camera
             filteredImage = new Image<Gray, byte>(CameraProfile.CameraParameters.FrameWidth, CameraProfile.CameraParameters.FrameHeight);
         }
 
-        public async void BeginCamParamsStep1Countdown()
+        public async void BeginDepthSamplingCountdown()
         {
             while (TimerSeconds > 0)
             {
@@ -151,13 +161,6 @@ namespace TVR.Service.UI.Camera
             return frame;
         }
 
-        private double totalCircleDia;
-        private double circleDiaSamples;
-        private double perceivedCircleSize;
-
-        private double circle_x0;
-        private int circle0time;
-        private double circle_maxX;
 
         private void FilterImage(double frameBrightness)
         {
@@ -235,8 +238,6 @@ namespace TVR.Service.UI.Camera
             }
         }
 
-        private int fto;
-
         private void HandleDetectCalibrationParameters(double frameBrightness)
         {
             if (CameraProfile.CalibrationParameters.WarmupFrames == 0)
@@ -275,13 +276,13 @@ namespace TVR.Service.UI.Camera
             }
             else if (frameBrightness < CameraProfile.CalibrationParameters.BrightnessThreshold)
             {
-                if (fto <= 0)
+                if (frameTimeout <= 0)
                 {
                     exposure++;
                     VideoCapture.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Exposure, exposure);
-                    fto = CameraProfile.CalibrationParameters.CooldownFrames;
+                    frameTimeout = CameraProfile.CalibrationParameters.CooldownFrames;
                 }
-                fto--;
+                frameTimeout--;
             }
             else
             {

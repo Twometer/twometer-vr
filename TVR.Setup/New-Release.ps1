@@ -5,7 +5,7 @@ param (
 $CurrentPath = (Get-Location).Path
 
 $DriverReleasePath = "$CurrentPath\..\TVR.Driver\drivers"
-$ServiceReleasePath = "$CurrentPath\..\TVR.Service\TVR.Service.CLI\bin\Release"
+$ServiceReleasePath = "$CurrentPath\..\TVR.Service\TVR.Service.UI\bin\Release"
 
 $ReleasePath = "$CurrentPath\releases\rel-$ReleaseVersion"
 

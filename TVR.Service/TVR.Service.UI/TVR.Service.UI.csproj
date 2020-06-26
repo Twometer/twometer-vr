@@ -79,7 +79,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Camera\CameraSetup.cs" />
+    <Compile Include="Config\GeneralPage.xaml.cs">
+      <DependentUpon>GeneralPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\HardwarePage.xaml.cs">
+      <DependentUpon>HardwarePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\InputPage.xaml.cs">
+      <DependentUpon>InputPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\CameraSetup.cs" />
+    <Compile Include="Setup\FirstStartup.cs" />
+    <Compile Include="Util\TreeViewItemHelper.cs" />
     <Compile Include="Windows\CommonDialog.xaml.cs">
       <DependentUpon>CommonDialog.xaml</DependentUpon>
     </Compile>
@@ -95,6 +106,18 @@
     <Compile Include="Windows\WelcomeWindow.xaml.cs">
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Config\GeneralPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\HardwarePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\InputPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\CommonDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,6 +192,7 @@
   <ItemGroup>
     <Resource Include="Icon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Emgu.CV.runtime.windows.4.3.0.3890\build\Emgu.CV.runtime.windows.targets" Condition="Exists('..\packages\Emgu.CV.runtime.windows.4.3.0.3890\build\Emgu.CV.runtime.windows.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
