@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing.Printing;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -44,9 +45,10 @@ namespace TVR.Service.UI
         {
             while (IsLoaded)
             {
-                ServiceStatusLabel.Content = serviceHost.State.ToString();
+                ServiceStatusLabel.Content = PrettifyHostState(serviceHost.State);
                 CurrentCamLabel.Content = $"Camera: {serviceHost.Services.Config.CameraInfo.Profile.Model}";
-
+                ConnectedControllersLabel.Content = $"Controllers: {serviceHost.Services.ControllerServer.ConnectedClientCount}";
+                ConnectedDriversLabel.Content = $"SteamVR Clients: {serviceHost.Services.DriverServer.ConnectedClientCount}";
                 await Task.Delay(250);
             }
         }
@@ -104,6 +106,21 @@ namespace TVR.Service.UI
         {
             var aboutMessage = $"Product: TwometerVR Service\n\nFrontend Version: {Assembly.GetExecutingAssembly().GetName().Version}\nCore Version: {TVRCore.Version}\n\nmade by Twometer\nReleased under the MIT license";
             CommonDialog.Show(this, "About TwometerVR", "About", aboutMessage);
+        }
+
+        private string PrettifyHostState(HostState state)
+        {
+            switch (state) {
+                case HostState.Starting:
+                    return "Initializing...";
+                case HostState.Active:
+                    return "Service online";
+                case HostState.Stopping:
+                    return "Shutting down...";
+                case HostState.Inactive:
+                    return "Service offline";
+            }
+            throw new ArgumentException("Unknown host state" + state);
         }
     }
 }

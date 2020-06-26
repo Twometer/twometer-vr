@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using TVR.Service.Core.IO;
@@ -47,6 +48,21 @@ namespace TVR.Service.UI.Windows
         {
             if (tag is string str && pages.ContainsKey(str))
                 ConfigContent.Content = pages[str];
+        }
+
+        private void OpenConfigFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(FileManager.Instance.ConfigFile.DirectoryName);
+        }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

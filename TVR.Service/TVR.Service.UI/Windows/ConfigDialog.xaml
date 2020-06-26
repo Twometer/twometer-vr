@@ -11,6 +11,10 @@
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <TreeView x:Name="ConfigTree" BorderThickness="0" SelectedItemChanged="ConfigTree_SelectedItemChanged">
             <TreeViewItem x:Name="GeneralItem" Header="General" Tag="general"/>
             <TreeViewItem x:Name="HardwareItem" Header="Hardware" Tag="hardware"/>
@@ -18,5 +22,10 @@
             <TreeViewItem x:Name="CamerasItem" Header="Cameras" Tag="cameras"/>
         </TreeView>
         <Frame x:Name="ConfigContent" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+        <Button x:Name="OpenConfigFolderButton" Content="Open config folder" Margin="2" Padding="15,2" Grid.Row="2" HorizontalAlignment="Left" Click="OpenConfigFolderButton_Click"/>
+        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="OkButton" IsDefault="True" Content="OK" Margin="3" Padding="2" Width="75" Click="OkButton_Click"/>
+            <Button x:Name="CancelButton" Content="Cancel" Margin="3" Padding="2" Width="75" Click="CancelButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

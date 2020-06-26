@@ -11,6 +11,8 @@ namespace TVR.Service.Network.Controllers
     {
         private readonly UdpClient udp;
 
+        public int ConnectedClientCount { get; private set; } = 0;
+
         public event EventHandler<ControllerInfoPacket> PacketReceived;
 
         public event EventHandler<StatusChangedEventArgs> StatusChanged;
@@ -30,7 +32,8 @@ namespace TVR.Service.Network.Controllers
             var message = udp.EndReceive(result, ref ep);
             if (message[0] == 0xFF && message.Length == 2)
             {
-                StatusChanged?.Invoke(this, new StatusChangedEventArgs() { ControllerEndpoint = ep, StatusMessage = (StatusMessage)message[1] });
+                var msg = (StatusMessage)message[1];
+                HandleStatusMessage(ep, msg);
             }
             else
             {
@@ -41,6 +44,15 @@ namespace TVR.Service.Network.Controllers
             }
 
             udp.BeginReceive(new AsyncCallback(ReceiveCallback), null);
+        }
+
+        private void HandleStatusMessage(IPEndPoint ep, StatusMessage msg)
+        {
+            StatusChanged?.Invoke(this, new StatusChangedEventArgs() { ControllerEndpoint = ep, StatusMessage = msg });
+            if (msg == StatusMessage.Ready)
+            {
+                ConnectedClientCount++;
+            }
         }
     }
 }
