@@ -1,8 +1,6 @@
 # Service
 The Service is the core of TwometerVR. It is the bridge between all the connected devices and SteamVR, provides a user interface and handles visual controller tracking using the webcam.
 
-> This is the rewrite for the service in order to make it more user-friendly and versatile.
-
 ## Project structure
 - Core libraries
   - `TVR.Service.Core`: Contains all the tracking and processing logic
