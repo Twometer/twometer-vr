@@ -25,10 +25,10 @@ namespace TVR.Service.UI.Setup
         private SetupState currentState = SetupState.DetectingCalibrationParameters;
 
         // Capture state
-        private Mat hsvFrame = new Mat();
-        private Mat tempFrame = new Mat();
-        private Image<Gray, byte> filteredImage;
         private readonly DsDevice device;
+        private readonly Mat hsvFrame = new Mat();
+        private readonly Mat tempFrame = new Mat();
+        private Image<Gray, byte> filteredImage;
 
         // Brightness calibration
         private int warmupFrames = 0;
@@ -180,16 +180,13 @@ namespace TVR.Service.UI.Setup
             switch (currentDetectionState)
             {
                 case CameraDetectionState.CircleDiameter:
-                    Console.WriteLine("DIAMETER: " + circle.Radius * 2);
                     totalCircleDia += Math.Floor(circle.Radius * 2);
                     circleDiaSamples++;
 
                     if (circleDiaSamples > 10)
                     {
                         perceivedCircleSize = totalCircleDia / circleDiaSamples;
-                        Console.WriteLine(perceivedCircleSize);
                         CameraProfile.CameraParameters.FocalLength = (perceivedCircleSize * 1) / 0.04; // TODO: Don't hardcode real-world sphere size of 4cm
-                        Console.WriteLine("Computed focal length: " + CameraProfile.CameraParameters.FocalLength);
                         SendStatusMessage(StatusMessage.AwaitingZeroPosition);
                         currentDetectionState = CameraDetectionState.AwaitingZeroPosition;
                     }
@@ -210,7 +207,6 @@ namespace TVR.Service.UI.Setup
                     if (circle0time > 5)
                     {
                         circle_x0 /= circle0time;
-                        Console.WriteLine(circle_x0);
                         SendStatusMessage(StatusMessage.BeginSamplingPixelsPerMeter);
                         currentDetectionState = CameraDetectionState.PixelsPerMeter;
                     }
@@ -226,9 +222,6 @@ namespace TVR.Service.UI.Setup
                     else if (xOffset > 0 && circle_maxX - xOffset > Math.Max(50, circle_maxX / 2))
                     {
                         double pxm = circle_maxX - circle_x0;
-
-                        Console.WriteLine(xOffset);
-                        Console.WriteLine("Pixels per meter: " + pxm);
                         CameraProfile.CameraParameters.PixelsPerMeter = pxm;
 
                         SendStatusMessage(StatusMessage.Completed);
@@ -286,8 +279,6 @@ namespace TVR.Service.UI.Setup
             }
             else
             {
-                Console.WriteLine("Adjusted!");
-                Console.WriteLine(CameraProfile.CalibrationParameters.BrightnessThreshold + " " + frameBrightness);
                 OnCalibParametersDetected();
             }
             prevBrightness = frameBrightness;

@@ -20,7 +20,7 @@ namespace TVR.Service.Core.Tracking
 
         private readonly CameraTransform transform;
 
-        private readonly Mat temp = new Mat();
+        private readonly Mat tempFrame = new Mat();
 
         public Tracker(byte controllerId, ColorProfile colorProfile, CameraTransform transform)
         {
@@ -33,7 +33,7 @@ namespace TVR.Service.Core.Tracking
         {
             if (Frame == null)
                 Frame = new Image<Gray, byte>(hsvFrame.Width, hsvFrame.Height);
-            ImageProcessing.ColorFilter(hsvFrame, Frame, temp, ColorProfile, brightness);
+            ImageProcessing.ColorFilter(hsvFrame, Frame, tempFrame, ColorProfile, brightness);
             ImageProcessing.Erode(Frame, 1);
             ImageProcessing.SmoothGaussian(Frame, 7);
 

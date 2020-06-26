@@ -40,8 +40,8 @@ namespace TVR.Service.Core.Tracking
 
             zAvg.Push(ComputeDistance(diameter));
             var Z = zAvg.Value;
-            xAvg.Push((-offset.X * Z / cameraParameters.PixelsPerMeter));
-            yAvg.Push((-offset.Y * Z / cameraParameters.PixelsPerMeter));
+            xAvg.Push(-offset.X * Z / cameraParameters.PixelsPerMeter);
+            yAvg.Push(-offset.Y * Z / cameraParameters.PixelsPerMeter);
 
             return new Vector3(xAvg.Value + this.offset.X, yAvg.Value + this.offset.Y, Z + this.offset.Z);
         }
@@ -50,11 +50,5 @@ namespace TVR.Service.Core.Tracking
         {
             return cameraParameters.FocalLength * hardwareConfig.SphereSize / diameter;
         }
-
-        private Point LockToPixel(PointF p)
-        {
-            return new Point((int)System.Math.Floor(p.X), (int)System.Math.Floor(p.Y));
-        }
-
     }
 }

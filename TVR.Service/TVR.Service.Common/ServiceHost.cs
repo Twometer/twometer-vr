@@ -16,13 +16,13 @@ namespace TVR.Service.Common
         {
             get
             {
-                if (_hostState == HostState.Starting && Services.Camera.Calibrated)
-                    _hostState = HostState.Active;
-                return _hostState;
+                if (hostState == HostState.Starting && Services.Camera.Calibrated)
+                    hostState = HostState.Active;
+                return hostState;
             }
         }
 
-        private HostState _hostState;
+        private HostState hostState;
         private Thread updateThread;
         private Thread broadcastThread;
 
@@ -33,7 +33,7 @@ namespace TVR.Service.Common
 
         public void Start()
         {
-            _hostState = HostState.Starting;
+            hostState = HostState.Starting;
             if (Services == null)
                 Services = new Services();
 
@@ -54,12 +54,12 @@ namespace TVR.Service.Common
             if (Services == null)
                 throw new InvalidOperationException("Cannot stop a service that's already stopped!");
 
-            _hostState = HostState.Stopping;
+            hostState = HostState.Stopping;
 
             tokenSource.Cancel();
             updateThread?.Join();
             broadcastThread?.Join();
-            _hostState = HostState.Inactive;
+            hostState = HostState.Inactive;
         }
 
         public Task StopAsync()
