@@ -49,9 +49,20 @@ namespace TVR.Service.Core.Math
             return new Vector3(a.X * b, a.Y * b, a.Z * b);
         }
 
+
+        public static Vector3 operator *(Vector3 a, double b)
+        {
+            return new Vector3(a.X * b, a.Y * b, a.Z * b);
+        }
+
         public static Vector3 operator +(Vector3 a, Vector3 b)
         {
             return new Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+        }
+
+        public static Vector3 operator -(Vector3 a, Vector3 b)
+        {
+            return new Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
         }
     }
 }
