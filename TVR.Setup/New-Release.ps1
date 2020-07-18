@@ -6,6 +6,7 @@ $CurrentPath = (Get-Location).Path
 
 $DriverReleasePath = "$CurrentPath\..\TVR.Driver\drivers"
 $ServiceReleasePath = "$CurrentPath\..\TVR.Service\TVR.Service.UI\bin\Release"
+$InstallerReleasePath ="$CurrentPath\Installer\Installer\bin\Release"
 
 $ReleasePath = "$CurrentPath\Releases\rel-$ReleaseVersion"
 
@@ -19,6 +20,7 @@ New-Item -Path "$ReleasePath\service\" -ItemType Directory | Out-Null
 echo "Copying files..."
 Copy-Item -Path "$DriverReleasePath\*" -Destination "$ReleasePath\driver\" -Recurse -Force
 Copy-Item -Path "$ServiceReleasePath\*" -Destination "$ReleasePath\service\" -Recurse -Force
+Copy-Item -Path "$InstallerReleasePath\*" -Destination "$ReleasePath\" -Recurse -Force
 
 # Removing debug files
 echo "Removing debug files..."
