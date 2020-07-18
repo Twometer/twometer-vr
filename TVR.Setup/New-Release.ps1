@@ -20,7 +20,7 @@ New-Item -Path "$ReleasePath\service\" -ItemType Directory | Out-Null
 echo "Copying files..."
 Copy-Item -Path "$DriverReleasePath\*" -Destination "$ReleasePath\driver\" -Recurse -Force
 Copy-Item -Path "$ServiceReleasePath\*" -Destination "$ReleasePath\service\" -Recurse -Force
-Copy-Item -Path "$InstallerReleasePath\*" -Destination "$ReleasePath\" -Recurse -Force
+Copy-Item -Path "$InstallerReleasePath\Installer.exe" -Destination "$ReleasePath\TVR-$ReleaseVersion-Installer.exe" -Recurse -Force
 
 # Removing debug files
 echo "Removing debug files..."
