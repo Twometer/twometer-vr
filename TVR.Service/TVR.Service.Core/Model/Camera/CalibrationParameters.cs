@@ -9,5 +9,7 @@
         public int CooldownFrames { get; set; }
 
         public int StableFrames { get; set; }
+
+        public int MaxExposure { get; set; } = 0;
     }
 }

@@ -43,7 +43,7 @@ namespace TVR.Service.Core.Video
             LoggerFactory.Current.Log(LogLevel.Debug, $"Mean image brightness: {System.Math.Round(meanBrightness, 2)}");
 
             // Don't let it calibrate forever
-            if ((meanBrightness > parameters.BrightnessThreshold) && EnsureBrightnessChanged(meanBrightness))
+            if (((meanBrightness > parameters.BrightnessThreshold) && EnsureBrightnessChanged(meanBrightness)) || exposure > parameters.MaxExposure)
             {
                 exposure--;
                 adjustFrames = parameters.CooldownFrames;
