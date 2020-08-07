@@ -74,7 +74,7 @@ class Storage {
     }
 
     void clear() {
-      for (int i = 0; i < 256; i++) {
+      for (int i = 0; i < EEPROM_SIZE; i++) {
         EEPROM.write(i, 0);
       }
       EEPROM.commit();
