@@ -1,5 +1,5 @@
 #define CONTROLLER_RED
-// #define CONTROLLER_BLUE
+//#define CONTROLLER_BLUE
 
 #include <ESP8266WiFi.h>
 
@@ -22,12 +22,12 @@ UdpClient udpClient;
 Button trigger(PIN_TRIG);
 Timer packetTimer(PACKET_RATE);
 
-IPoseSource *imu = new DmpPoseSource();   // Select DMP or Madgwick
+IPoseSource *imu = new SwPoseSource();   // Select DMP or Madgwick
 
 void setup() {
   // Ah yes, debug
   Serial.begin(38400);
-  Serial.println("Twometer VR Firmware v2.1");
+  Serial.println("Twometer VR Firmware v2.2");
 
   // Hardware setup
   trigger.init();
