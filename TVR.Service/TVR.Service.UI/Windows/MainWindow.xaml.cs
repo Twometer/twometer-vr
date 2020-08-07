@@ -18,6 +18,8 @@ namespace TVR.Service.UI
     {
         private readonly ServiceHost serviceHost = new ServiceHost();
 
+        private CalibrationDialog calibrationDialog;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,6 +29,7 @@ namespace TVR.Service.UI
             try
             {
                 serviceHost.Start();
+                serviceHost.Services.ControllerServer.StatusChanged += ControllerServer_StatusChanged;
             }
             catch (FileNotFoundException)
             {
@@ -38,6 +41,31 @@ namespace TVR.Service.UI
                 CommonDialog.ShowError(this, "Failed to start", e.ToString());
                 Environment.Exit(1);
             }
+        }
+
+        private void ControllerServer_StatusChanged(object sender, Network.Controllers.StatusChangedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                switch (e.StatusMessage)
+                {
+                    case Network.Controllers.StatusMessage.BeginCalibrationMode:
+                        calibrationDialog = new CalibrationDialog { Owner = this };
+                        calibrationDialog.UpdateState("Calibration", "Lay the controller down somewhere flat and wait for the calibration to complete...");
+                        calibrationDialog.Show();
+                        break;
+                    case Network.Controllers.StatusMessage.MagnetometerCalibration:
+                        calibrationDialog.UpdateState("Magnetic calibration", "Pick up the controller, go to your playspace and rotate it around and point it in all directions to calibrate the compass.");
+                        break;
+                    case Network.Controllers.StatusMessage.ExitCalibrationMode:
+                        calibrationDialog.Close();
+                        CommonDialog.Show(this, "Calibration complete", "Controller calibrated", "The current controller was calibrated successfully!");
+                        break;
+                    case Network.Controllers.StatusMessage.Reset:
+                        CommonDialog.Show(this, "Factory reset", "Reset complete", "The controller did a factory reset!");
+                        break;
+                }
+            });
         }
 
         private async void StartUpdateLoop()
@@ -109,7 +137,8 @@ namespace TVR.Service.UI
 
         private string PrettifyHostState(HostState state)
         {
-            switch (state) {
+            switch (state)
+            {
                 case HostState.Starting:
                     return "Initializing...";
                 case HostState.Active:

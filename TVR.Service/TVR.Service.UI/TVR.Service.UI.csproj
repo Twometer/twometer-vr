@@ -91,6 +91,9 @@
     <Compile Include="Setup\CameraSetup.cs" />
     <Compile Include="Setup\FirstStartup.cs" />
     <Compile Include="Util\TreeViewItemHelper.cs" />
+    <Compile Include="Windows\CalibrationDialog.xaml.cs">
+      <DependentUpon>CalibrationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CommonDialog.xaml.cs">
       <DependentUpon>CommonDialog.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Config\InputPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CalibrationDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
