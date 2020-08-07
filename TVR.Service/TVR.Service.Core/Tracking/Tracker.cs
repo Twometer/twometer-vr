@@ -50,7 +50,8 @@ namespace TVR.Service.Core.Tracking
 
         public void UpdateMeta(float qx, float qy, float qz, float qw, Button[] pressedButtons)
         {
-            TrackedController.Rotation = new Quaternion(-qy, qz, qx, qw);
+            TrackedController.Rotation = new Quaternion(-qy, qx, qz, qw);
+            // For DMP: TrackedController.Rotation = new Quaternion(-qy, qz, qx, qw);
 
             foreach (var btn in TrackedController.Buttons.Keys)
                 TrackedController.Buttons[btn] = pressedButtons?.Contains(btn) == true;
