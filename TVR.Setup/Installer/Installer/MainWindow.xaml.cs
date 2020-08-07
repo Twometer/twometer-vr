@@ -73,7 +73,7 @@ namespace Installer
         {
             StatusLabel.Content = "Removing...";
             var installFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "TwometerVR");
-            var driverUninstallScript = Path.Combine(installFolder, "driver", "Uninstall.ps1");
+            var driverUninstallScript = Path.Combine(installFolder, "driver", "Uninstall.bat");
             await Task.Run(() =>
             {
                 var startInfo = new ProcessStartInfo
@@ -97,6 +97,7 @@ namespace Installer
             try
             {
                 var webClient = new WebClient();
+                webClient.Headers.Add("User-Agent", "TwometerVR Installer/1.0");
                 webClient.DownloadProgressChanged += (sender, e) =>
                 {
                     StatusBar.Value = e.ProgressPercentage;
@@ -129,7 +130,7 @@ namespace Installer
                 StatusBar.IsIndeterminate = false;
                 StatusBar.Value = 90;
 
-                var driverInstallScript = Path.Combine(installFolder, "driver", "Install.ps1");
+                var driverInstallScript = Path.Combine(installFolder, "driver", "Install.bat");
 
                 await Task.Run(() =>
                 {
@@ -162,6 +163,7 @@ namespace Installer
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 FailInstallation(e.Message);
             }
         }
