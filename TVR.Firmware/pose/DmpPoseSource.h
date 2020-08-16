@@ -37,15 +37,15 @@ public:
     }
 
     float getQx() override {
-      return calcQuat(imu.qx, 30);
+      return -calcQuat(imu.qy, 30);
     }
 
     float getQy() override {
-      return calcQuat(imu.qy, 30);
+      return calcQuat(imu.qz, 30);
     }
 
     float getQz() override {
-      return calcQuat(imu.qz, 30);
+      return calcQuat(imu.qx, 30);
     }
 
     float getQw() override {

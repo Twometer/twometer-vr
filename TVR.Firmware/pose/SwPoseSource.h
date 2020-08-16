@@ -54,11 +54,11 @@ public:
   }
 
   float getQx() override {
-    return mpu.getQuaternion(0);
+    return -mpu.getQuaternion(1);
   }
 
   float getQy() override {
-    return mpu.getQuaternion(1);
+    return mpu.getQuaternion(0);
   }
 
   float getQz() override {
