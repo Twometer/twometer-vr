@@ -1,5 +1,9 @@
 ﻿using Emgu.CV;
+using Emgu.CV.Features2D;
 using Emgu.CV.Structure;
+using Emgu.CV.Util;
+using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using TVR.Service.Core.Math;
 using TVR.Service.Core.Model.Camera;
@@ -33,7 +37,29 @@ namespace TVR.Service.Core.Tracking
         {
             if (Frame == null)
                 Frame = new Image<Gray, byte>(hsvFrame.Width, hsvFrame.Height);
+
             ImageProcessing.ColorFilter(hsvFrame, Frame, tempFrame, ColorProfile, brightness);
+
+            using (var hierarchy = new Mat())
+            using (var contours = new VectorOfVectorOfPoint())
+            {
+                CvInvoke.FindContours(Frame, contours, hierarchy, Emgu.CV.CvEnum.RetrType.Tree, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxNone);
+                if (contours.Size > 0)
+                {
+                    var circle = CvInvoke.MinEnclosingCircle(contours[0]);
+                    Frame.Draw(circle, new Gray(128), 4);
+                    TrackedController.Position = transform.Transform(Frame.Width, Frame.Height, circle);
+                }
+            }
+
+            /*
+            MOMENT-BASED:
+            var moments = CvInvoke.Moments(Frame);
+            var center = moments.GravityCenter;
+            Frame.Draw(new Cross2DF(new System.Drawing.PointF((float)center.X, (float)center.Y), 10, 10), new Gray(100), 2);*/
+
+            /*
+            OLD TRANSFORM:
             ImageProcessing.Erode(Frame, 1);
             ImageProcessing.SmoothGaussian(Frame, 7);
 
@@ -45,7 +71,7 @@ namespace TVR.Service.Core.Tracking
 
             Frame.Draw(circles[0], new Gray(128), 4);
 
-            TrackedController.Position = transform.Transform(Frame.Width, Frame.Height, circles[0]);
+            TrackedController.Position = transform.Transform(Frame.Width, Frame.Height, circles[0]);*/
         }
 
         public void UpdateMeta(float qx, float qy, float qz, float qw, Button[] pressedButtons)
