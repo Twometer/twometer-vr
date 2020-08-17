@@ -19,7 +19,7 @@
   #define DISCOVERY_PORT  12743
 
   // Tick rates [Hz]
-  #define PACKET_RATE  75
+  #define PACKET_RATE  70
 
   // Button enum
   #define BUTTON_NONE   0

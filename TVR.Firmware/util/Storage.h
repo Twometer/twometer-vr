@@ -48,7 +48,7 @@ class Storage {
     }
 
     void loadCalibrationData(MPU9250* mpu) {
-      Serial.println("Loading calib data");
+      Serial.println("Loading calibration data");
       int idx = 0;
       byte magic = read_eeprom<byte>(idx);
       if (magic != EEPROM_MAGIC)

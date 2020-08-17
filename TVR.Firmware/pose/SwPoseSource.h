@@ -4,9 +4,8 @@
 #include <MPU9250.h>
 #include "IPoseSource.h"
 
-#define UPDATE_RATE 2000
-
-#define MAGNETIC_DECLINATION 2.85
+#define UPDATE_RATE 1000  // Hz
+#define ERROR_RATE 25.0f  // deg/s
 
 /**
  * Pose source that uses the Madgwick algorithm
@@ -24,7 +23,8 @@ public:
     Wire.begin(PIN_SDA, PIN_SCL);
     Wire.setClock(400000L);
 
-    mpu.setMagneticDeclination(MAGNETIC_DECLINATION);
+    mpu.setGyroMeasurementError(ERROR_RATE);
+    mpu.setAhrs(false);
     mpu.setup();
 
     if (storage.hasData())
@@ -53,6 +53,8 @@ public:
     return false;
   }
 
+  // Out of order because the coordinate system
+  // is different from what the server expects.
   float getQx() override {
     return -mpu.getQuaternion(1);
   }
