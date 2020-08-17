@@ -4,7 +4,7 @@
 #include <MPU9250.h>
 #include "IPoseSource.h"
 
-#define UPDATE_RATE 250
+#define UPDATE_RATE 2000
 
 #define MAGNETIC_DECLINATION 2.85
 

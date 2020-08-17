@@ -7,15 +7,15 @@ private:
   uint32_t timeout = 0;
 
 public:
-  Timer(uint32_t tps) : timeout(1000.0 / tps) {
+  Timer(uint32_t tps) : timeout(1000000.0 / tps) {
   }
 
   bool elapsed() {
-    return millis() - lastTick > timeout;
+    return micros() - lastTick > timeout;
   }
 
   void reset() {
-    lastTick = millis();
+    lastTick = micros();
   }
 };
 
