@@ -6,7 +6,7 @@ To build and install the Firmware, you need:
 - The Arduino IDE
 - ESP8266 [platform files](https://github.com/esp8266/Arduino#installing-with-boards-manager)
 - An ESP8266 programming board
-- This MPU-9250 [library](https://github.com/Twometer/MPU9250) for software AHRS
+- This MPU-9250 [library](https://github.com/Twometer/MPU9250) for software AHRS (recommended)
   or [this one](https://github.com/Twometer/SparkFun_MPU-9250-DMP_ESP8266_Library) for hardware AHRS
 - A new file called `WiFiConfig.h` in the `net` directory that contains your WiFi credentials, like this:
 
