@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace TVR.Service.Common
 
         private HostState hostState;
         private Thread updateThread;
+        private Thread filterThread;
         private Thread broadcastThread;
 
         private CancellationTokenSource tokenSource;
@@ -40,7 +42,8 @@ namespace TVR.Service.Common
             tokenSource = new CancellationTokenSource();
             token = tokenSource.Token;
 
-            (updateThread = new Thread(UpdateLoop)).Start();
+            (updateThread = new Thread(VideoLoop)).Start();
+            (filterThread = new Thread(FilterLoop)).Start();
             (broadcastThread = new Thread(BroadcastLoop)).Start();
 
             Services.ControllerServer.PacketReceived += ControllerServer_PacketReceived;
@@ -72,12 +75,26 @@ namespace TVR.Service.Common
             return Task.Run(() => Start());
         }
 
-        private async void UpdateLoop()
+        private async void VideoLoop()
         {
             while (!token.IsCancellationRequested)
             {
                 if (Services.Camera.Update())
                     await Services.TrackingManager.UpdateVideo(Services.Camera.HsvFrame, Services.Camera.FrameBrightness);
+            }
+        }
+
+        private void FilterLoop()
+        {
+            while (!token.IsCancellationRequested)
+            {
+                Services.TrackingManager.UpdateFilters();
+
+                var sw = new Stopwatch();
+                sw.Start();
+                while (sw.ElapsedTicks < (TimeSpan.TicksPerMillisecond) * 0.2)
+                    ;
+                sw.Stop();
             }
         }
 
@@ -125,7 +142,7 @@ namespace TVR.Service.Common
 
         private void ControllerServer_PacketReceived(object sender, ControllerInfoPacket e)
         {
-            Services.TrackingManager.UpdateMeta(e.ControllerId, e.Qx, e.Qy, e.Qz, e.Qw, e.PressedButtons);
+            Services.TrackingManager.UpdateMeta(e.ControllerId, e.ImuState, e.PressedButtons);
         }
     }
 }

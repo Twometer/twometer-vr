@@ -79,6 +79,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tracking\CameraSmoothing.cs" />
     <Compile Include="Tracking\CameraTransform.cs" />
+    <Compile Include="Math\QuaternionFilter.cs" />
+    <Compile Include="Tracking\ImuState.cs" />
     <Compile Include="Tracking\Tracker.cs" />
     <Compile Include="Tracking\TrackingManager.cs" />
     <Compile Include="TVRCore.cs" />

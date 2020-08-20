@@ -10,8 +10,8 @@ class Packet {
       client.send(data, 2);
     }
 
-    static void sendDataPacket(UdpClient& client, byte numButtonPresses, byte* buttonPresses, float qx, float qy, float qz, float qw) {
-      int16_t packetLen = 1 + 1 + numButtonPresses + 4 * 4;
+    static void sendDataPacket(UdpClient& client, byte numButtonPresses, byte* buttonPresses, float ax, float ay, float az, float gx, float gy, float gz, float mx, float my, float mz) {
+      int16_t packetLen = 1 + 1 + numButtonPresses + 4 * 9;
       byte data[packetLen];
       int offset = 0;
 
@@ -24,11 +24,16 @@ class Packet {
         copy(data, offset, buttonPresses[i]);
       }
 
-      // Quaternion rotations
-      copy(data, offset, qx);
-      copy(data, offset, qy);
-      copy(data, offset, qz);
-      copy(data, offset, qw);
+      // MPU data
+      copy(data, offset, ax);
+      copy(data, offset, ay);
+      copy(data, offset, az);
+      copy(data, offset, gx);
+      copy(data, offset, gy);
+      copy(data, offset, gz);
+      copy(data, offset, mx);
+      copy(data, offset, my);
+      copy(data, offset, mz);
 
       client.send(data, packetLen);
     }

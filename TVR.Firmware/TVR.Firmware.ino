@@ -7,9 +7,7 @@
 #include "util/Timer.h"
 #include "util/Storage.h"
 #include "util/Button.h"
-#include "pose/IPoseSource.h"
-#include "pose/SwPoseSource.h"
-#include "pose/DmpPoseSource.h"
+#include "pose/RawSource.h"
 #include "net/WiFiManager.h"
 #include "net/UdpClient.h"
 #include "net/Discovery.h"
@@ -22,7 +20,8 @@ UdpClient udpClient;
 Button trigger(PIN_TRIG);
 Timer packetTimer(PACKET_RATE);
 
-IPoseSource *imu = new SwPoseSource();   // Select DMP or Madgwick
+//IPoseSource *imu = new SwPoseSource();   // Select DMP or Madgwick
+RawSource *imu = new RawSource();
 
 void setup() {
   // Ah yes, debug
@@ -63,7 +62,8 @@ void setup() {
 }
 
 void loop() {
-  if (imu->update() && packetTimer.elapsed()) {
+  imu->update();
+  if (packetTimer.elapsed()) {
     sendPackets();
     packetTimer.reset();
   }
@@ -72,9 +72,9 @@ void loop() {
 void sendPackets() {
   if (trigger.isPressed()) {
     byte buttons[] = { BUTTON_A };
-    Packet::sendDataPacket(udpClient, 1, buttons, imu->getQx(), imu->getQy(), imu->getQz(), imu->getQw());
+    Packet::sendDataPacket(udpClient, 1, buttons, imu->ax, imu->ay, imu->az, imu->gx, imu->gy, imu->gz, imu->mx, imu->my, imu->mz);
   } else {
-    Packet::sendDataPacket(udpClient, 0, NULL, imu->getQx(), imu->getQy(), imu->getQz(), imu->getQw());
+    Packet::sendDataPacket(udpClient, 0, NULL, imu->ax, imu->ay, imu->az, imu->gx, imu->gy, imu->gz, imu->mx, imu->my, imu->mz);
   }
 }
 

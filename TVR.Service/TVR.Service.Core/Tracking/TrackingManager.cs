@@ -37,11 +37,17 @@ namespace TVR.Service.Core.Tracking
             return Task.WhenAll(tasks.ToArray());
         }
 
-        public void UpdateMeta(byte controllerId, float qx, float qy, float qz, float qw, Button[] pressedButtons)
+        public void UpdateFilters()
+        {
+            foreach (var tracker in Trackers)
+                tracker.UpdateFilter();
+        }
+
+        public void UpdateMeta(byte controllerId, ImuState imu, Button[] pressedButtons)
         {
             if (controllerId > Trackers.Length)
                 return;
-            Trackers[controllerId].UpdateMeta(qx, qy, qz, qw, pressedButtons);
+            Trackers[controllerId].UpdateMeta(imu, pressedButtons);
             HandleButtons();
         }
 
