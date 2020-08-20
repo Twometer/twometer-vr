@@ -1,5 +1,5 @@
-//#define CONTROLLER_RED
-#define CONTROLLER_BLUE
+#define CONTROLLER_RED
+//#define CONTROLLER_BLUE
 
 #include <ESP8266WiFi.h>
 

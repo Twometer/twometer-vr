@@ -4,7 +4,7 @@
 #include <MPU9250.h>
 #include "IPoseSource.h"
 
-#define UPDATE_RATE 1000  // Hz
+#define UPDATE_RATE 3000  // Hz
 #define ERROR_RATE 25.0f  // deg/s
 
 /**
