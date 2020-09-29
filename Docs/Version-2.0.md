@@ -9,17 +9,18 @@ Roadmap and design concept for the next generation of Twometer VR
 - More buttons on the controller to support more games
 - Faster and more stable networking protocol
 - Flexible, extensible, yet simple design
-- Support for full-body tracking
+- Support multiple cameras and arbitrary angles
+- Support 5P full-body tracking
 
 ## Controller colors and IDs
-Reserved colors as determined to be the most distinguishable on video. May change in the future
+Reserved colors as determined to be the most distinguishable on video. May change in the future as tests go on
 - `0x00`: Red (#FF0000): Left hand
 - `0x01`: Blue (#0000FF): Right hand
 - `0x02`: Green (#00FF00): Left leg
 - `0x03`: Yellow (#FFFF00): Right leg
-- `0x04`: Magenta (#FF00FF): Torso
-- `0x05`: Cyan (#FFFF00): Flexible
-  - May be used for an external camera, for another body controller, or anything else
+- `0x04`: Magenta (#FF00FF): Hip
+- `0x05`: Cyan (#FFFF00): Extra
+  - May be used for an external camera or anything else
 - `0x06..0x7F`: Reserved for future use
 - `0x80..0xFF`: For other, custom (user-created) controllers and colors
 
