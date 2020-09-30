@@ -1,20 +1,12 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TVR.Service.Core.IO;
 using TVector3 = TVR.Service.Core.Math.Vector3;
 using TVR.Service.Core.Tracking;
 using TVR.Service.Core.Video;
-using System.Security.Permissions;
 
 namespace nextgentrackingdemo
 {
@@ -23,6 +15,8 @@ namespace nextgentrackingdemo
         private volatile bool running = true;
 
         private Vector3 position = new Vector3(1, 2, 0);
+
+        private Matrix3 matrix = Matrix3.Identity;
 
         public Form1()
         {
@@ -48,7 +42,7 @@ namespace nextgentrackingdemo
 
         private void AdvancedTracking(TVector3 vec)
         {
-            position = new Vector3(vec.X, vec.Y, vec.Z);
+            position = matrix * new Vector3(vec.X, vec.Y, vec.Z);
             glControl1.Invalidate();
         }
 
@@ -103,6 +97,7 @@ namespace nextgentrackingdemo
             DrawCross(position.X, position.Y, position.Z, 1.0f);
 
             label3.Text = yaw + " " + pitch + " " + zoom;
+            label4.Text = position.ToString();
 
             glControl1.SwapBuffers();
         }
@@ -217,6 +212,11 @@ namespace nextgentrackingdemo
         }
 
         private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }
