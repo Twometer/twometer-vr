@@ -2,55 +2,78 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="index.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<link rel="stylesheet" href="index.css">
 
-    <title>Twometer VR</title>
+	<title>Twometer VR</title>
 </head>
 
-<body>
-	<div class="container">	
-		<div class="jumbotron">
+<body class="bg-light">
+	<nav class="navbar navbar-light shadow-sm p-3 bg-white">
+		<a class="navbar-brand" href="#">
+			<img src="icon.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+			TwometerVR
+		</a>
+	</nav>
+
+	<div class="container">
+		<div class="main-header px-3 py-3 pt-md-5 mx-auto text-center">
 			<h1 class="display-4">TwometerVR</h1>
-			<p class="lead">TwometerVR is a FREE open-source alternative to commercial hand trackers such as Oculus Touch or PS Move.</p>
-			<hr class="my-4">
-			<p>I started building this because I wanted to play Beat Saber without having to buy a new VR headset, but it got a little out of hand, so here we go building a full Virtual Reality controller system...</p>
-			<a class="btn btn-primary btn-lg" href="https://github.com/Twometer/twometer-vr" role="button">Learn more</a>
+			<p class="lead">Twometer is an open-source alternative to commercial VR tracking systems that aims to be low-cost, accessible and feature-rich.</p>
+			<a href="https://github.com/Twometer/twometer-vr" type="button" class="btn btn-lg btn-outline-success">Learn more</a>
 		</div>
-	
-		<div class="alert alert-info" role="alert">
-			Note: It's working, but still under development. That means fancy stuff like setup wizards may not be 100% complete and you may encounter bugs
+
+		<div class="my-3 p-3 bg-white rounded shadow-sm">
+			<h6 class="border-bottom border-gray pb-2 mb-0">Features</h6>
+			<div class="text-muted pt-3">
+				<p class="pb-3 mb-0 small lh-125 border-bottom border-gray pl-3">
+					<strong class="d-block text-gray-dark">Low cost</strong>
+					Each controller costs less than $15
+				</p>
+			</div>
+			<div class="text-muted pt-3">
+				<p class="pb-3 mb-0 small lh-125 border-bottom border-gray pl-3">
+					<strong class="d-block text-gray-dark">Compatible</strong>
+					Play BeatSaber, VRChat and any other game that runs on SteamVR
+				</p>
+			</div>
+			<div class="text-muted pt-3">
+				<p class="pb-3 mb-0 small lh-125 border-bottom border-gray pl-3">
+					<strong class="d-block text-gray-dark">Reuses equipment</strong>
+					Works with many different readily available consumer webcams
+				</p>
+			</div>
+			<div class="text-muted pt-3">
+				<p class="pb-3 mb-0 small lh-125 border-bottom border-gray pl-3">
+					<strong class="d-block text-gray-dark">Open-source</strong>
+					Both hardware and software files can be found on GitHub
+				</p>				
+			</div>
 		</div>
-		
-		<h2>Features</h2>
-		<ul>
-			<li>Very low cost, less than $20 for two controllers</li>
-			<li>Works with almost every consumer-grade webcam</li>
-			<li>Compatible with SteamVR (yes, the Beat Saber part)</li>
-			<li>Fully open-source and free</li>
-			<li>Nice DIY project</li>
-		</ul>
 
-		<h2>Getting Started</h2>
-		<p>So, how do I get these controllers, you may ask. Well, I am currently not in the position to mass-produce these things or even build kits for them, so for now, there are build instructions, which you can find <a href="https://github.com/Twometer/twometer-vr/wiki/Hardware">here</a>.</p>
-		<p>I am also planning to make a build video on these which will be linked here, but that will take a while probably...</p>
-		<p>After it's done and working, <a href="https://github.com/Twometer/twometer-vr/releases">download</a> the software, set it up with the wizard and start playing!</p>
-
-	</div>
+		<div class="my-3 p-3 bg-white rounded shadow-sm">
+			<h6 class="border-bottom border-gray pb-2 mb-0">Releases</h6>
+			<div class="p-3 text-muted">
+				The latest version is 1.x, which can be found on <a href="https://github.com/Twometer/twometer-vr/releases">GitHub</a>. It works, but it may be glitchy and the VR experience may not be satisfying due to missing controls and/or drift.
+			</div>
+			<div class="p-3 text-muted">
+				Version 2.x is currently in the making which fixes all glitches, removes the drift and will give the controllers a complete design overhaul resulting in a much more enjoyable experience.
+			</div>
+		</div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-    crossorigin="anonymous"></script>
+	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+	integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+	crossorigin="anonymous"></script>
 
 </html>

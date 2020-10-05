@@ -20,8 +20,3 @@ In the wiki you will find building and setup instructions, implementation detail
 - TVR.Hardware:  Hardware files which the controllers are built from
 - TVR.Setup:     Setup files for building new releases
 - Website:       Contains the source files for the TwometerVR web page 
-
-## Open Source!
-Everything that I release here is under the [MIT license](https://github.com/Twometer/twometer-vr/blob/master/LICENSE).
-
-Virtual reality for everyone! :-)
