@@ -1,5 +1,5 @@
 
-# Twometer VR 2.0
+# Twometer VR 2.0.0
 Roadmap and design concept for the next generation of Twometer VR
 
 
@@ -19,6 +19,16 @@ Roadmap and design concept for the next generation of Twometer VR
 - Controller: Handheld tracked devices with button input capabilities.
 - Server: The main server running in the TwometerVR service. May also be called 'service'.
 - Driver: The 'driver' extension for SteamVR.
+
+## Versioning
+
+- TwometerVR uses sematic versioning, that means MAJOR.MINOR.PATCH
+
+- The new version will be a complete rewrite/rebuild of the TVR system, therefore it's 2.0.0
+
+- Some subprojects have wrong or unassigned version numbers. With the next TVR, every subproject will have the same MAJOR version. However, each one may have different MINOR and PATCH parts.
+
+  TVR 2.0.0 resets everything to 2.0.0
 
 ## Tracker identification
 
@@ -164,11 +174,11 @@ I the MSB of `id` is set (`id > 0x7F`), then the lower 7 bytes of ID are treated
 - `0`: A
 - `1`: B
 - `2`: Up
-- `3`: Down
-- `4`: Left
-- `5`: Right
-- `6`: Trigger
-- `7`: Menu
+- `3`: Left
+- `4`: Right
+- `5`: Down
+- `6`: Menu
+- `7`: Trigger
 - `8..15`: reserved
 
 

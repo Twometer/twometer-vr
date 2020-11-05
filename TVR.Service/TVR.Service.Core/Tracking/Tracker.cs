@@ -41,7 +41,8 @@ namespace TVR.Service.Core.Tracking
             using (var contours = new VectorOfVectorOfPoint())
             {
                 CvInvoke.FindContours(Frame, contours, hierarchy, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxNone);
-                if (contours.Size > 0)
+                Detected = contours.Size > 0;
+                if (Detected)
                 {
                     var circle = CvInvoke.MinEnclosingCircle(contours[0]);
                     Frame.Draw(circle, new Gray(100), 2);

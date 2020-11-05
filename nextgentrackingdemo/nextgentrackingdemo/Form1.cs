@@ -7,12 +7,18 @@ using TVR.Service.Core.IO;
 using TVector3 = TVR.Service.Core.Math.Vector3;
 using TVR.Service.Core.Tracking;
 using TVR.Service.Core.Video;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using DirectShowLib;
+using Emgu.CV;
+using System.Threading.Tasks;
+using nextgentrackingdemo.Source;
 
 namespace nextgentrackingdemo
 {
     public partial class Form1 : Form
     {
-        private volatile bool running = true;
+        private volatile bool running = false;
 
         private Vector3 position = new Vector3(1, 2, 0);
 
@@ -24,30 +30,70 @@ namespace nextgentrackingdemo
             glControl1.MouseWheel += GlControl1_MouseWheel;
         }
 
+        private VideoCapture cap;
+
         private async void UpdateLoop()
         {
-            var conf = ConfigIO.LoadUserConfig();
-            var cam = new Camera(conf.CameraInfo);
-            var tracker = new TrackingManager(conf);
+            //var conf = ConfigIO.LoadUserConfig();
+            //var cam = new Camera(conf.CameraInfo);
+            //var tracker = new TrackingManager(conf);
+
+            /*cap = new VideoCapture(1);
+            cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth, 640);
+            cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight, 480);
+            cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps, 60);*/
+
+            IVideoSource src = new PSEyeVideoSource();
+            src.Framerate = 60;
+            src.Width = 640;
+            src.Height = 480;
+            src.Open();
+            
+
+            var frames = 0;
+            var lastReset = DateTime.Now;
 
             while (running)
-                if (cam.Update())
+            {
+                var t = await Task.Run(() =>
+                {
+                    return src.Grab();
+                });
+                if (t)
+                {
+                    imageBox1.Image = src.Frame;
+                    frames++;
+                }
+               
+
+                if ((DateTime.Now - lastReset).TotalSeconds > 1)
+                {
+                    Console.WriteLine(frames);
+                    frames = 0;
+                    lastReset = DateTime.Now;
+                }
+            }
+                /*if (cam.Update())
                 {
                     await tracker.UpdateVideo(cam.HsvFrame, cam.FrameBrightness);
                     imageBox1.Image = cam.Frame;
-                    imageBox2.Image = tracker.Trackers[1].Frame;
-                    AdvancedTracking(tracker.Trackers[1].TrackedController.Position);
-                }
-        }
+                    imageBox2.Image = tracker.Trackers[0].Frame;
 
-        private void AdvancedTracking(TVector3 vec)
+                    AdvancedTracking(tracker.Trackers[0].TrackedController.Position, tracker.Trackers[0].Detected);
+                }*/
+    }
+
+        private void AdvancedTracking(TVector3 vec, bool detect)
         {
-            position = matrix * new Vector3(vec.X, vec.Y, vec.Z);
+            var glvec = new Vector3(vec.X, vec.Y, vec.Z);
+            position = matrix * glvec;
+            handleMatrix(glvec, detect);
             glControl1.Invalidate();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            running = true;
             UpdateLoop();
         }
 
@@ -58,6 +104,8 @@ namespace nextgentrackingdemo
         float x = 0;
         float y = 0;
         float z = 0;
+
+        private List<Vector3> displayvecs = new List<Vector3>();
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
@@ -93,8 +141,23 @@ namespace nextgentrackingdemo
             DrawUnits(1, 0, 0, 10);
             DrawCross(10, 0, 0, 0.5f);
 
-            GL.Color4(Color.Blue);
+            GL.Color4(Color.Red);
             DrawCross(position.X, position.Y, position.Z, 1.0f);
+
+            GL.Color4(Color.Purple);
+
+            if (displayvecs.Count > 2)
+            {
+                Vector3 pv = default;
+                foreach (var vec in displayvecs)
+                {
+                    GL.Begin(PrimitiveType.Lines);
+                    GL.Vertex3(displayvecs[1]);
+                    GL.Vertex3(vec);
+                    GL.End();
+                    pv = vec;
+                }
+            }
 
             label3.Text = yaw + " " + pitch + " " + zoom;
             label4.Text = position.ToString();
@@ -219,6 +282,96 @@ namespace nextgentrackingdemo
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        enum regstate
+        {
+            NotStarted,
+            VectorCollect,
+            VectorsCollected
+        }
+
+        regstate matrixRegistryState = regstate.NotStarted;
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (!running)
+            {
+                lbStatus.Text = "Start service first";
+                return;
+            }
+            matrixRegistryState = regstate.VectorCollect;
+            lbStatus.Text = "Go to one edge of your play space. ";
+        }
+
+        int vectorsregistered = 0;
+
+        int framesstable = 0;
+
+        Vector3 prevvec;
+        Vector3 prevsaved;
+
+        private void handleMatrix(Vector3 v, bool detect)
+        {
+            if (matrixRegistryState == regstate.VectorCollect)
+            {
+
+                if (detect)
+                {
+                    if ((v - prevvec).Length < 0.1)
+                        framesstable++;
+
+                    if (framesstable > 120)
+                    {
+                        if ((v - prevsaved).Length > 0.1)
+                        {
+                            displayvecs.Add(v);
+                            framesstable = 0;
+                            prevsaved = v;
+                            vectorsregistered++;
+                            lbStatus.Text = vectorsregistered + " registered";
+                        }
+                        else framesstable = 0;
+                    }
+
+                    if (vectorsregistered == 4)
+                    {
+                        matrixRegistryState = regstate.VectorsCollected;
+                        lbStatus.Text = "Register done";
+                    }
+
+                    prevvec = v;
+                }
+                else framesstable = 0;
+            }
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            matrix = Matrix3.Identity;
+            lbStatus.Text = "Matrix cleared";
+            vectorsregistered = 0;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            displayvecs.Clear();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var cameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+            foreach (var cam in cameras)
+            {
+                Console.WriteLine(cam.Name + " " + cam.DevicePath);
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.AutoExposure, 0.25);
+            cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Exposure, 0);
         }
     }
 }

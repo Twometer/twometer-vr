@@ -1,4 +1,9 @@
 # Hardware
-In here are the STL files for 3D printing the controllers.
+This folder will hold the CAD files for 3D-printing the controller case.
 
-Links to the PCB for the controllers, as well as assembly instructions can be found in the [wiki](https://github.com/Twometer/twometer-vr/wiki/Hardware)
+### PCBs
+
+The PCB design files are on EasyEDA and consist of two projects:
+
+- The mainboard: https://easyeda.com/Twometer/twometer-vr-2-0
+- PCB for the buttons: https://easyeda.com/Twometer/twometer-vr-2-0-buttons
