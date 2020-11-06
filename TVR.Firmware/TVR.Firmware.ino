@@ -1,10 +1,14 @@
 #include <ESP8266WiFi.h>
 
+#include "Utils/Constants.h"
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
-  Serial.println("Twometer VR v2.0.0");
+  Serial.println("");
+  Serial.println(VERISON_STRING);
 }
 
-void loop() {
+void loop()
+{
 }
