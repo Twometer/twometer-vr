@@ -27,6 +27,13 @@ public:
     {
         write("ERROR", message);
     }
+
+    static void crash(String message) 
+    {
+        error("Failed to initialize UDP client");
+        delay(5000);
+        ESP.restart();
+    }
 };
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef TVR_TRACKER_COLOR
 #define TVR_TRACKER_COLOR
 
-enum TrackerColor
+enum class TrackerColor
 {
     Invalid = 0x00,
     Red = 0x01,     // Left hand

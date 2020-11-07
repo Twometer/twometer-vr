@@ -1,6 +1,7 @@
 #ifndef TVR_CONSTANTS
 #define TVR_CONSTANTS
 
+    // General
     #define VERISON_STRING "TwometerVR F/W v2.0.0"
 
     // Update rates [Hz]

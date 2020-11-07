@@ -225,14 +225,6 @@ The server must respond with `0x83 Client Hello`
 
 
 
-### `0x84` Haptic Feedback (To client only)
-
-```
-0x84   [uint16 durationMs]
-```
-
-
-
 ### `..0xBF` Reserved
 
 This packet range is reserved for (future) internal use.
