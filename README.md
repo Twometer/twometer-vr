@@ -15,7 +15,7 @@ In the wiki you will find building and setup instructions, implementation detail
 ## About the Repository
 - Artwork:       All the icons, designs etc.
 - TVR.Service:   The core application which manages the controllers and their inputs
-- TVR.Driver:    A SteamVR driver that can receive the data from the service
+- TVR.Driver:    An OpenVR driver that can receive the data from the service
 - TVR.Firmware:  The firmware that runs on the controllers' chips
 - TVR.Hardware:  Hardware files which the controllers are built from
 - TVR.Setup:     Setup files for building new releases
