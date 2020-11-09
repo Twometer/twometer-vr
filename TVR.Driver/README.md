@@ -3,14 +3,20 @@ OpenVR driver implementation which connects the TVR service to games
 
 
 
-### Installing
+### Directory
 
+- `lib/`: OpenVR SDK
+- `ovr/`: OpenVR driver manifests
+- `src/`: Source files
+
+
+
+### Installing
 The release installation package will automatically install the driver for you. If you want to do it yourself, see the next section.
 
 
 
 ### Building from source
-
 You will need:
 
 - CLion or other CMake compatible IDE
