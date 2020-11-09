@@ -90,7 +90,7 @@ The next generation positional tracking should allow for arbitrary camera angles
 - All multi-byte integer values are little-endian
 - Packets longer than 4 KB (4096 bytes) are not accepted by any endpoint
 - `vec3`: 3 sequential 32-bit floating-point values in order `[x, y, z]` that encode a 3D-position
-- `quat`: 4 sequential 32-bit floating-point values in order `[x, y, z, w]` that encode a quaternion
+- `vec4`: 4 sequential 32-bit floating-point values in order `[x, y, z, w]` that encode a quaternion
 - `type[]`: Array of objects, is prefixed by a `[uint8 length]` that contains the number of objects in the array.
 - `string`: NUL-terminated ASCII-encoded string
 
@@ -114,7 +114,7 @@ This UDP binary protocol is used for IPC between the server and the SteamVR driv
 ### 0x00 Tracker Connect
 
 ```
-[uint8 trackerId][uint8 trackerClass][string modelNo]
+[uint8 trackerId][uint8 trackerClass][uint8 trackerColor][string modelNo]
 ```
 
 
@@ -140,7 +140,7 @@ Used to tell the driver about state updates
 #### Tracker state
 
 ```
-[uint8 trackerId][uint16 buttons][vec3 position][quat rotation]
+[uint8 trackerId][uint16 buttons][vec3 position][vec4 rotation]
 ```
 
 
@@ -164,7 +164,7 @@ I the MSB of `id` is set (`id > 0x7F`), then the lower 7 bytes of ID are treated
 
 ### `0x00-0x7F` Tracker State
 ```
-[uint8 trackerId][uint16 buttons][quat rotation]
+[uint8 trackerId][uint16 buttons][vec4 rotation]
 ```
 
 `buttons` is a bitmask for pressed buttons: LSB->MSB is button 0->15

@@ -1,14 +1,14 @@
 #include <iostream>
-#include "Driver/TrackerDriver.h"
+#include "Driver/TrackerProvider.h"
 #include "Driver/WatchdogDriver.h"
 #include "Utils/OpenVrExports.h"
 
-TrackerDriver trackerDriver;
+TrackerProvider trackerProvider;
 WatchdogDriver watchdogDriver;
 
 HMD_DLL_EXPORT void *HmdDriverFactory(const char *pInterfaceName, int *pReturnCode) {
     if (strcmp(vr::IServerTrackedDeviceProvider_Version, pInterfaceName) == 0) {
-        return &trackerDriver;
+        return &trackerProvider;
     }
     if (strcmp(vr::IVRWatchdogProvider_Version, pInterfaceName) == 0) {
         return &watchdogDriver;

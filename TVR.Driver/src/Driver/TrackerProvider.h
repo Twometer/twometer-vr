@@ -2,12 +2,16 @@
 // Created by Twometer on 8 Nov 2020.
 //
 
-#ifndef TVR_DRIVER_TRACKERDRIVER_H
-#define TVR_DRIVER_TRACKERDRIVER_H
+#ifndef TVR_DRIVER_TRACKERPROVIDER_H
+#define TVR_DRIVER_TRACKERPROVIDER_H
 
 #include <openvr_driver.h>
+#include "../Net/StreamClient.h"
 
-class TrackerDriver : public vr::IServerTrackedDeviceProvider {
+class TrackerProvider : public vr::IServerTrackedDeviceProvider {
+private:
+    StreamClient streamClient;
+
 public:
     vr::EVRInitError Init(vr::IVRDriverContext *pDriverContext) override;
 
@@ -25,4 +29,4 @@ public:
 };
 
 
-#endif //TVR_DRIVER_TRACKERDRIVER_H
+#endif //TVR_DRIVER_TRACKERPROVIDER_H
