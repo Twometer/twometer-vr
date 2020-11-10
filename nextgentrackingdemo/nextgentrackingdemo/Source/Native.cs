@@ -51,37 +51,37 @@ namespace nextgentrackingdemo.Source
             CLEYE_LENSBRIGHTNESS        // [-500, 500]
         };
 
-        [DllImport("CLEyeMulticam.dll", SetLastError = true)]
+        [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern int CLEyeGetCameraCount();
       
-        [DllImport("CLEyeMulticam.dll", SetLastError = true)]
+        [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern Guid CLEyeGetCameraUUID(int camId);
       
-        [DllImport("CLEyeMulticam.dll", SetLastError = true)]
+        [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr CLEyeCreateCamera(Guid camUUID, CLEyeCameraColorMode mode, CLEyeCameraResolution res, float frameRate);
       
-        [DllImport("CLEyeMulticam.dll", SetLastError = true)]
+        [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool CLEyeDestroyCamera(IntPtr camera);
        
-        [DllImport("CLEyeMulticam.dll", SetLastError = true)]
+        [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool CLEyeCameraStart(IntPtr camera);
        
-        [DllImport("CLEyeMulticam.dll", SetLastError = true)]
+        [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool CLEyeCameraStop(IntPtr camera);
       
-        [DllImport("CLEyeMulticam.dll", SetLastError = true)]
+        [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool CLEyeCameraLED(IntPtr camera, bool on);
     
-        [DllImport("CLEyeMulticam.dll", SetLastError = true)]
+        [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool CLEyeSetCameraParameter(IntPtr camera, CLEyeCameraParameter param, int value);
       
-        [DllImport("CLEyeMulticam.dll", SetLastError = true)]
+        [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern int CLEyeGetCameraParameter(IntPtr camera, CLEyeCameraParameter param);
       
-        [DllImport("CLEyeMulticam.dll", SetLastError = true)]
+        [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool CLEyeCameraGetFrameDimensions(IntPtr camera, ref int width, ref int height);
        
-        [DllImport("CLEyeMulticam.dll", SetLastError = true)]
+        [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool CLEyeCameraGetFrame(IntPtr camera, IntPtr pData, int waitTimeout);
 
         [DllImport("kernel32.dll", SetLastError = true)]

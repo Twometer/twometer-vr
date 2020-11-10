@@ -32,6 +32,7 @@ namespace nextgentrackingdemo.Source
 
         public bool Grab()
         {
+            
             if (CLEyeCameraGetFrame(camera, map, 500))
             {
                 return true;
@@ -51,10 +52,10 @@ namespace nextgentrackingdemo.Source
             CLEyeCameraGetFrameDimensions(camera, ref width, ref height);
 
             uint imageSize = (uint)(width * height * 4);
-            section = CreateFileMapping(new IntPtr(-1), IntPtr.Zero, 0x04, 0, imageSize, null);
-            map = MapViewOfFile(section, 0xF001F, 0, 0, imageSize);
+            section = CreateFileMapping(new IntPtr(-1), IntPtr.Zero, 0x40, 0, imageSize, null);
+            map = MapViewOfFile(section, 0xf001f, 0, 0, imageSize);
 
-            _frame = new Mat(height, width, Emgu.CV.CvEnum.DepthType.Cv8U, 4, section, width * 4);
+            _frame = new Mat(height, width, Emgu.CV.CvEnum.DepthType.Cv8U, 3, section, width * 4);
 
             CLEyeCameraStart(camera);
         }
