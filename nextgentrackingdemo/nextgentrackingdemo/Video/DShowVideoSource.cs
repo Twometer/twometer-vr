@@ -10,9 +10,9 @@ namespace nextgentrackingdemo.Video
 
         private VideoCapture videoCapture;
 
-        private Mat rawFrame = new Mat();
+        public Image<Bgr, byte> BgrFrame { get; private set; }
 
-        public Image<Hsv, byte> Frame { get; private set; }
+        public Image<Hsv, byte> HsvFrame { get; private set; }
 
         public int Framerate { get; set; } = 30;
 
@@ -33,9 +33,9 @@ namespace nextgentrackingdemo.Video
         {
             if (videoCapture.Grab())
             {
-                videoCapture.Retrieve(rawFrame);
-                ImageProcessing.BgrToHsv(rawFrame, Frame);
-                FrameBrightness = ImageProcessing.GetBrightness(Frame);
+                videoCapture.Retrieve(BgrFrame);
+                ImageProcessing.BgrToHsv(BgrFrame, HsvFrame);
+                FrameBrightness = ImageProcessing.GetBrightness(HsvFrame);
                 return true;
             }
             return false;
@@ -50,7 +50,8 @@ namespace nextgentrackingdemo.Video
             videoCapture.SetCaptureProperty(CapProp.AutoExposure, 0);
             videoCapture.SetCaptureProperty(CapProp.Fps, Framerate);
 
-            Frame = new Image<Hsv, byte>(Width, Height);
+            BgrFrame = new Image<Bgr, byte>(Width, Height);
+            HsvFrame = new Image<Hsv, byte>(Width, Height);
         }
 
         public void Dispose()

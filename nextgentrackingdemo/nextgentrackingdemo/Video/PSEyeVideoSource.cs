@@ -15,7 +15,9 @@ namespace nextgentrackingdemo.Video
         private IntPtr data;
         private bool disposedValue;
 
-        public Image<Hsv, byte> Frame { get; private set; }
+        public Image<Bgr, byte> BgrFrame { get; private set; }
+
+        public Image<Hsv, byte> HsvFrame { get; private set; }
 
         public int Framerate { get; set; } = 60;
 
@@ -37,9 +39,9 @@ namespace nextgentrackingdemo.Video
             data = rawFrame.Mat.DataPointer;
             if (CLEyeCameraGetFrame(camera, data, 500))
             {
-                var bgrImg = rawFrame.Convert<Bgr, byte>();
-                ImageProcessing.BgrToHsv(bgrImg, Frame);
-                FrameBrightness = ImageProcessing.GetBrightness(Frame);
+                CvInvoke.CvtColor(rawFrame, BgrFrame, Emgu.CV.CvEnum.ColorConversion.Bgra2Bgr);
+                ImageProcessing.BgrToHsv(BgrFrame, HsvFrame);
+                FrameBrightness = ImageProcessing.GetBrightness(HsvFrame);
                 return true;
             }
             else return false;
@@ -57,7 +59,8 @@ namespace nextgentrackingdemo.Video
             CLEyeSetCameraParameter(camera, CLEyeCameraParameter.CLEYE_GAIN, 0);
 
             rawFrame = new Image<Bgra, byte>(width, height);
-            Frame = new Image<Hsv, byte>(width, height);
+            BgrFrame = new Image<Bgr, byte>(width, height);
+            HsvFrame = new Image<Hsv, byte>(width, height);
 
             CLEyeCameraStart(camera);
         }
@@ -69,7 +72,8 @@ namespace nextgentrackingdemo.Video
                 if (disposing)
                 {
                     rawFrame.Dispose();
-                    Frame.Dispose();
+                    BgrFrame.Dispose();
+                    HsvFrame.Dispose();
                 }
 
                 CLEyeDestroyCamera(camera);

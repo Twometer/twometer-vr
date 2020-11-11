@@ -8,7 +8,9 @@ namespace nextgentrackingdemo.Video
     {
         double FrameBrightness { get; }
 
-        Image<Hsv, byte> Frame { get; }
+        Image<Bgr, byte> BgrFrame { get; }
+
+        Image<Hsv, byte> HsvFrame { get; }
 
         int Framerate { get; set; }
 

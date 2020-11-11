@@ -34,9 +34,9 @@ namespace nextgentrackingdemo
 
         private async void UpdateLoop()
         {
-            //var conf = ConfigIO.LoadUserConfig();
+            var conf = ConfigIO.LoadUserConfig();
             //var cam = new Camera(conf.CameraInfo);
-            //var tracker = new TrackingManager(conf);
+            var tracker = new TrackingManager(conf);
 
             /*cap = new VideoCapture(1);
             cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth, 640);
@@ -63,7 +63,14 @@ namespace nextgentrackingdemo
                 });
                 if (t)
                 {
-                    imageBox1.Image = src.Frame;
+                    imageBox1.Image = src.BgrFrame;
+
+                    await tracker.UpdateVideo(src.HsvFrame.Mat, src.FrameBrightness);
+
+                    imageBox2.Image = tracker.Trackers[0].Frame;
+
+                    AdvancedTracking(tracker.Trackers[0].TrackedController.Position, tracker.Trackers[0].Detected);
+
                     frames++;
                 }
                
