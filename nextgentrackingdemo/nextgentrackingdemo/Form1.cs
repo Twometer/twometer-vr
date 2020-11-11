@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 using DirectShowLib;
 using Emgu.CV;
 using System.Threading.Tasks;
-using nextgentrackingdemo.Source;
+using nextgentrackingdemo.Video;
 
 namespace nextgentrackingdemo
 {
@@ -30,7 +30,7 @@ namespace nextgentrackingdemo
             glControl1.MouseWheel += GlControl1_MouseWheel;
         }
 
-        private VideoCapture cap;
+        private IVideoSource src;
 
         private async void UpdateLoop()
         {
@@ -43,10 +43,12 @@ namespace nextgentrackingdemo
             cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight, 480);
             cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps, 60);*/
 
-            IVideoSource src = new PSEyeVideoSource();
-            src.Framerate = 60;
-            src.Width = 640;
-            src.Height = 480;
+            // Paths: 
+            // pseye:0 -> 0th PS EYE
+            // dshow:0 -> 0th DSHOW
+            // dshow:1 -> ...
+
+            src = new PSEyeVideoSource(0);
             src.Open();
             
 
@@ -370,8 +372,9 @@ namespace nextgentrackingdemo
 
         private void button6_Click(object sender, EventArgs e)
         {
-            cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.AutoExposure, 0.25);
-            cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Exposure, 0);
+            //cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.AutoExposure, 0.25);
+            //cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Exposure, 0);
+            src.Exposure -= 40; 
         }
     }
 }

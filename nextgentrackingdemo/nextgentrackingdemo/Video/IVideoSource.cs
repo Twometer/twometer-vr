@@ -1,10 +1,14 @@
 ﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System;
 
-namespace nextgentrackingdemo
+namespace nextgentrackingdemo.Video
 {
-    public interface IVideoSource
+    public interface IVideoSource : IDisposable
     {
-        Mat Frame { get; }
+        double FrameBrightness { get; }
+
+        Image<Hsv, byte> Frame { get; }
 
         int Framerate { get; set; }
 
@@ -17,6 +21,5 @@ namespace nextgentrackingdemo
         void Open();
 
         bool Grab();
-
     }
 }

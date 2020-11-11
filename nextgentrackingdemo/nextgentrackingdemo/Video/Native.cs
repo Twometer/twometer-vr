@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nextgentrackingdemo.Source
+namespace nextgentrackingdemo.Video
 {
     public static class Native
     {
@@ -84,13 +84,5 @@ namespace nextgentrackingdemo.Source
         [DllImport("CLEyeMulticam.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool CLEyeCameraGetFrame(IntPtr camera, IntPtr pData, int waitTimeout);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr CreateFileMapping(IntPtr hFile, IntPtr lpFileMappingAttributes, uint flProtect, uint dwMaximumSizeHigh, uint dwMaximumSizeLow, string lpName);
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr MapViewOfFile(IntPtr hFileMappingObject, uint dwDesiredAccess, uint dwFileOffsetHigh, uint dwFileOffsetLow, uint dwNumberOfBytesToMap);
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool UnmapViewOfFile(IntPtr hMap);
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool CloseHandle(IntPtr hHandle);
     }
 }

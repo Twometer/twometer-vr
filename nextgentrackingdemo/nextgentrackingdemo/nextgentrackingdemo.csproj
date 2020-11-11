@@ -125,11 +125,13 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\IVideoSource.cs" />
+    <Compile Include="Video\DShowVideoSource.cs" />
+    <Compile Include="Video\ImageProcessing.cs" />
+    <Compile Include="Video\IVideoSource.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\Native.cs" />
-    <Compile Include="Source\PSEyeVideoSource.cs" />
+    <Compile Include="Video\Native.cs" />
+    <Compile Include="Video\PSEyeVideoSource.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
