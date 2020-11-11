@@ -1,6 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
+using System.Threading.Tasks;
 
 namespace nextgentrackingdemo.Video
 {
@@ -23,5 +24,6 @@ namespace nextgentrackingdemo.Video
         void Open();
 
         bool Grab();
+
     }
 }

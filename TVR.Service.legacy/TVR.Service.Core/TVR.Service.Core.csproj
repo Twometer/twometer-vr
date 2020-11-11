@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F8BFE536-73F3-497E-8914-0F2CBAAA2B0F}</ProjectGuid>
+    <ProjectGuid>{E2E45E90-09F4-4A9A-B6A9-203833A3CA68}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TVR.Service.Core</RootNamespace>
@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Emgu.CV.Platform.NetStandard, Version=4.4.0.4099, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <HintPath>..\packages\Emgu.CV.4.4.0.4099\lib\netstandard2.0\Emgu.CV.Platform.NetStandard.dll</HintPath>
+    <Reference Include="Emgu.CV.Platform.NetStandard, Version=4.4.0.4077, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\packages\Emgu.CV.4.4.0.4077\lib\netstandard2.0\Emgu.CV.Platform.NetStandard.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -61,37 +61,53 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=8.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.8.1.2\lib\net45\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IO\CameraProfileIO.cs" />
+    <Compile Include="IO\ConfigIO.cs" />
+    <Compile Include="IO\FileManager.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\DebugLogger.cs" />
     <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\LoggerFactory.cs" />
     <Compile Include="Logging\LogLevel.cs" />
-    <Compile Include="Native\CLEye.cs" />
+    <Compile Include="Math\Quaternion.cs" />
+    <Compile Include="Math\RollingAverageFilter.cs" />
+    <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Model\Camera\CalibrationParameters.cs" />
+    <Compile Include="Model\Camera\CameraParameters.cs" />
+    <Compile Include="Model\Camera\CameraProfile.cs" />
+    <Compile Include="Model\Camera\ColorProfile.cs" />
+    <Compile Include="Model\Camera\ColorRange.cs" />
+    <Compile Include="Model\Camera\HSVColor.cs" />
+    <Compile Include="Model\Config\CameraInfo.cs" />
+    <Compile Include="Model\Config\HardwareConfig.cs" />
+    <Compile Include="Model\Config\InputConfig.cs" />
+    <Compile Include="Model\Config\UserConfig.cs" />
+    <Compile Include="Model\Device\Button.cs" />
+    <Compile Include="Model\Device\Controller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Video\DShowVideoSource.cs" />
-    <Compile Include="Video\IVideoSource.cs" />
-    <Compile Include="Video\PSEyeVideoSource.cs" />
-    <Compile Include="Video\VideoSourceFactory.cs" />
+    <Compile Include="Tracking\CameraSmoothing.cs" />
+    <Compile Include="Tracking\CameraTransform.cs" />
+    <Compile Include="Tracking\Tracker.cs" />
+    <Compile Include="Tracking\TrackingManager.cs" />
+    <Compile Include="TVRCore.cs" />
+    <Compile Include="Video\Calibration.cs" />
+    <Compile Include="Video\Camera.cs" />
+    <Compile Include="Video\ImageProcessing.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Libraries\CLEyeMulticam.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="IO\" />
-    <Folder Include="Math\" />
-    <Folder Include="Model\" />
-    <Folder Include="Tracking\" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Emgu.CV.runtime.windows.4.4.0.4099\build\Emgu.CV.runtime.windows.targets" Condition="Exists('..\packages\Emgu.CV.runtime.windows.4.4.0.4099\build\Emgu.CV.runtime.windows.targets')" />
+  <Import Project="..\packages\Emgu.CV.runtime.windows.4.4.0.4077\build\Emgu.CV.runtime.windows.targets" Condition="Exists('..\packages\Emgu.CV.runtime.windows.4.4.0.4077\build\Emgu.CV.runtime.windows.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Emgu.CV.runtime.windows.4.4.0.4099\build\Emgu.CV.runtime.windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Emgu.CV.runtime.windows.4.4.0.4099\build\Emgu.CV.runtime.windows.targets'))" />
+    <Error Condition="!Exists('..\packages\Emgu.CV.runtime.windows.4.4.0.4077\build\Emgu.CV.runtime.windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Emgu.CV.runtime.windows.4.4.0.4077\build\Emgu.CV.runtime.windows.targets'))" />
   </Target>
 </Project>

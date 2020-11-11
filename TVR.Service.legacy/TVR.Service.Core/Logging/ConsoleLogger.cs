@@ -22,8 +22,9 @@ namespace TVR.Service.Core.Logging
                     break;
             }
 
-            Console.Write($"{level.ToPrefix()} ");
+            Console.Write($"{level.ToPrefix().ToLower()} ");
             Console.ResetColor();
+
             Console.WriteLine(message);
         }
     }
