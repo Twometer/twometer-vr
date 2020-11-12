@@ -24,6 +24,5 @@ namespace nextgentrackingdemo.Video
         void Open();
 
         bool Grab();
-
     }
 }
