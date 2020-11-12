@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="72" height="72" src="https://github.com/Twometer/twometer-vr/blob/master/Artwork/Icon512.png?raw=true">
+  <img width="72" height="72" src="https://github.com/Twometer/twometer-vr/blob/master/Art/Icon512.png?raw=true">
   <h1 align="center">Twometer VR</h1>
 </p>
 
