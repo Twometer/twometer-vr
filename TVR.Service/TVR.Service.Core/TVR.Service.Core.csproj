@@ -74,6 +74,10 @@
     <Compile Include="Model\TrackerClass.cs" />
     <Compile Include="Model\TrackerColor.cs" />
     <Compile Include="Native\CLEye.cs" />
+    <Compile Include="Network\BaseClient.cs" />
+    <Compile Include="Network\Buffer.cs" />
+    <Compile Include="Network\IPacket.cs" />
+    <Compile Include="Network\NetConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tracking\TrackingEngine.cs" />
     <Compile Include="Video\VideoSourceType.cs" />
