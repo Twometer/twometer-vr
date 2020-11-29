@@ -205,7 +205,7 @@ The server must respond with `0x81 Discovery Reply`
 
 
 
-### `0x82` Server Hello
+### `0x82` Handshake
 
 ```
 0x82   [uint8 trackerClass][uint8 colorId][string modelNo]
@@ -217,7 +217,7 @@ The server must respond with `0x83 Client Hello`
 
 
 
-### `0x83` Client Hello
+### `0x83` Handshake Reply
 
 ```
 0x83   [uint8 trackerId]

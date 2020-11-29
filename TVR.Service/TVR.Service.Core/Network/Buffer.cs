@@ -29,6 +29,11 @@ namespace TVR.Service.Core.Network
             Write(BitConverter.GetBytes(i));
         }
 
+        public void Write(ushort s)
+        {
+            Write(BitConverter.GetBytes(s));
+        }
+
         public void Write(byte b)
         {
             Write(BitConverter.GetBytes(b));
@@ -72,6 +77,11 @@ namespace TVR.Service.Core.Network
             return BitConverter.ToInt32(ReadBytes(sizeof(int)), 0);
         }
 
+        public ushort ReadUshort()
+        {
+            return BitConverter.ToUInt16(ReadBytes(sizeof(ushort)), 0);
+        }
+
         public byte ReadByte()
         {
             return (byte)stream.ReadByte();
@@ -90,7 +100,24 @@ namespace TVR.Service.Core.Network
         public Quaternion ReadQuaternion()
         {
             return new Quaternion(ReadFloat(), ReadFloat(), ReadFloat(), ReadFloat());
+        }
 
+        public string ReadString()
+        {
+            // TODO There's got to be a more elegant way :D
+            var tmpStream = new MemoryStream();
+            while (stream.Position < stream.Length)
+            {
+                var b = ReadByte();
+                if (b == 0x00) break;
+                else tmpStream.WriteByte(b);
+            }
+            return Encoding.ASCII.GetString(tmpStream.ToArray());
+        }
+
+        public byte[] ToArray()
+        {
+            return stream.ToArray();
         }
     }
 }

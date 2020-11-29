@@ -20,6 +20,14 @@ namespace TVR.Service.Core.Network
             return client.SendAsync(data, data.Length, receiver);
         }
 
+        protected Task Send(IPacket packet, IPEndPoint receiver)
+        {
+            var buf = new Buffer();
+            buf.Write(packet.Id);
+            packet.Serialize(buf);
+            return Send(buf.ToArray(), receiver);
+        }
+
         protected abstract void OnReceive(byte[] data, IPEndPoint sender);
 
         private void BeginReceive()
