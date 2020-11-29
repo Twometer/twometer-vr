@@ -60,9 +60,9 @@ Trackers are identified by the color of their tracking ball. The following color
 
 ### Tracker IDs
 
-Tracker IDs are a random ID that is used to identify all trackers after the `0x82 Server Hello`. 
+Tracker IDs are a random ID that is used to identify all trackers after `0x82 Handshake`. 
 
-To ensure uniqueness in the current tracking setup, IDs are managed by the server. The server informs the client of its ID using the `0x83 Client Hello` packet.
+To ensure uniqueness in the current tracking setup, IDs are managed by the server. The server informs the client of its ID using the `0x83 Handshake Reply` packet.
 
 ## Next-gen positional tracking
 
@@ -213,7 +213,7 @@ The server must respond with `0x81 Discovery Reply`
 
 `modelNo` can be the ESP chip's model number.
 
-The server must respond with `0x83 Client Hello`
+The server must respond with `0x83 Handshake Reply`
 
 
 
