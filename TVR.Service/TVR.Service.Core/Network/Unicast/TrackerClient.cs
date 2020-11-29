@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Net;
+﻿using System.Net;
+using TVR.Service.Core.Logging;
 
 namespace TVR.Service.Core.Network.Unicast
 {
@@ -8,6 +7,7 @@ namespace TVR.Service.Core.Network.Unicast
     {
         public TrackerClient() : base(NetConfig.UnicastPort)
         {
+            Loggers.Current.Log(LogLevel.Info, "Tracker client online");
         }
 
         protected override void OnReceive(byte[] data, IPEndPoint sender)

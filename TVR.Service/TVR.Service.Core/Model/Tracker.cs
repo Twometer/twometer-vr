@@ -1,4 +1,5 @@
-﻿using TVR.Service.Core.Math;
+﻿using System;
+using TVR.Service.Core.Math;
 
 namespace TVR.Service.Core.Model
 {
@@ -17,5 +18,7 @@ namespace TVR.Service.Core.Model
         public Vector3 Position { get; set; }
 
         public Quaternion Rotation { get; set; }
+
+        public DateTime LastHeartbeat { get; set; }
     }
 }

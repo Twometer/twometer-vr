@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using TVR.Service.Core.Logging;
 
 namespace TVR.Service.Core.Network.Broadcast
 {
@@ -11,6 +12,7 @@ namespace TVR.Service.Core.Network.Broadcast
 
         public DiscoveryClient() : base(NetConfig.BroadcastPort)
         {
+            Loggers.Current.Log(LogLevel.Info, "Discovery client online");
         }
 
         protected override void OnReceive(byte[] data, IPEndPoint sender)
