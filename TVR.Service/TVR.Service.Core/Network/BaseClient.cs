@@ -20,7 +20,7 @@ namespace TVR.Service.Core.Network
             return client.SendAsync(data, data.Length, receiver);
         }
 
-        protected Task Send(IPacket packet, IPEndPoint receiver)
+        public Task Send(IPacket packet, IPEndPoint receiver)
         {
             var buf = new Buffer();
             buf.Write(packet.Id);
@@ -29,6 +29,11 @@ namespace TVR.Service.Core.Network
         }
 
         protected abstract void OnReceive(byte[] data, IPEndPoint sender);
+
+        public void Close()
+        {
+            client.Close();
+        }
 
         private void BeginReceive()
         {

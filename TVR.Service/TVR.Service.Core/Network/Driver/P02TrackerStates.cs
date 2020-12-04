@@ -1,5 +1,6 @@
 ﻿using System;
 using TVR.Service.Core.Math;
+using TVR.Service.Core.Model;
 
 namespace TVR.Service.Core.Network.Driver
 {
@@ -41,6 +42,11 @@ namespace TVR.Service.Core.Network.Driver
                 Buttons = buttons;
                 Position = position;
                 Rotation = rotation;
+            }
+
+            public static TrackerState FromTracker(Tracker tracker)
+            {
+                return new TrackerState(tracker.TrackerId, tracker.Buttons, tracker.Position, tracker.Rotation);
             }
         }
     }
