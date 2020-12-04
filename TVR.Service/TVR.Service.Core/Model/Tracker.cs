@@ -21,6 +21,8 @@ namespace TVR.Service.Core.Model
 
         public DateTime LastHeartbeat { get; set; }
 
+        public bool Tracking { get; set; }
+
         public Tracker(byte trackerId, string modelNo, TrackerClass trackerClass, TrackerColor trackerColor) : this()
         {
             TrackerId = trackerId;

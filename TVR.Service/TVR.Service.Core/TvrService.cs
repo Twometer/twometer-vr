@@ -7,6 +7,7 @@ using TVR.Service.Core.Model;
 using TVR.Service.Core.Network.Broadcast;
 using TVR.Service.Core.Network.Driver;
 using TVR.Service.Core.Network.Unicast;
+using TVR.Service.Core.Tracking;
 using TVR.Service.Core.Video;
 
 namespace TVR.Service.Core
@@ -23,6 +24,7 @@ namespace TVR.Service.Core
         }
 
         private readonly TrackerManager trackerManager = new TrackerManager();
+        private readonly TrackingEngine trackingEngine = new TrackingEngine();
 
         private DiscoveryClient discoveryClient;
         private DriverClient driverClient;

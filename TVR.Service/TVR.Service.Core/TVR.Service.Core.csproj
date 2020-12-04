@@ -71,6 +71,10 @@
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Math\Quaternion.cs" />
     <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Model\ColorProfile.cs" />
+    <Compile Include="Model\ColorRange.cs" />
+    <Compile Include="Model\Config.cs" />
+    <Compile Include="Model\HsvColor.cs" />
     <Compile Include="Model\ITrackerIdProvider.cs" />
     <Compile Include="Model\Tracker.cs" />
     <Compile Include="Model\TrackerClass.cs" />
