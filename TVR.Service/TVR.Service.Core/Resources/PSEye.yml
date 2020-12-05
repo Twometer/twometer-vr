@@ -1,0 +1,15 @@
+VideoSourceType: PSEye
+VideoSourceIndex: 0
+FrameWidth: 640
+FrameHeight: 480
+FrameRate: 60
+ExposureConfig:
+    Start: 1
+    Limit: 0
+    Step: -0.15
+    WarmupFrames: 12
+    WaitFrames: 3
+    StableFrames: 2
+    Threshold: 20
+Distortion: []
+Calibration: []

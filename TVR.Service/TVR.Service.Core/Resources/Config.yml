@@ -1,0 +1,24 @@
+# Hardware config
+Hardware:
+    VideoSource: PSEye
+    SphereSize: 0.04
+    ColorRanges:
+        Red:
+            - Minimum: { H: 0, S: 0, V: 0 }
+              Maximum: { H: 0, S: 0, V: 0 }
+            - Minimum: { H: 0, S: 0, V: 0 }
+              Maximum: { H: 0, S: 0, V: 0 }
+        # Green: ...
+      
+# Room config
+Offset:
+    X: 0
+    Y: 0
+    Z: 0
+    
+# User input config
+Input:
+    PoseResetButton: Menu
+    PoseResetDelay: 0.2
+    RefreshRate: 120
+    PositionSmoothing: 2
