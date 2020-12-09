@@ -32,14 +32,14 @@ public:
 
     ~StreamClient();
 
-    void close();
+    void Close();
 
-    void setAddTrackerCallback(const tracker_cb &callback);
+    void SetAddTrackerCallback(const tracker_cb &callback);
 
-    void setRemoveTrackerCallback(const tracker_cb &callback);
+    void SetRemoveTrackerCallback(const tracker_cb &callback);
 
 private:
-    void receiveLoop();
+    void ReceiveLoop();
 
 };
 

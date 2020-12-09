@@ -9,10 +9,10 @@
 #include "../Utils/Constants.h"
 
 StreamClient::StreamClient() {
-    udpClient.bind(NET_PORT);
+    udpClient.Bind(NET_PORT);
 
     receiveBuffer = new uint8_t[MAX_PACKET_LEN];
-    receiveThread = new std::thread([this] { receiveLoop(); });
+    receiveThread = new std::thread([this] { ReceiveLoop(); });
 }
 
 StreamClient::~StreamClient() {
@@ -21,26 +21,26 @@ StreamClient::~StreamClient() {
         delete tracker.second;
 }
 
-void StreamClient::receiveLoop() {
+void StreamClient::ReceiveLoop() {
     while (threadRunning) {
-        size_t received = udpClient.receive(receiveBuffer, MAX_PACKET_LEN);
+        size_t received = udpClient.Receive(receiveBuffer, MAX_PACKET_LEN);
         Buffer buffer(receiveBuffer, received);
 
-        auto packetId = buffer.get<uint8_t>();
+        auto packetId = buffer.Get<uint8_t>();
 
         switch (packetId) {
             case 0x00: {
                 auto *info = new TrackerInfo();
-                info->trackerState.trackerId = buffer.get<uint8_t>();
-                info->trackerClass = static_cast<TrackerClass>(buffer.get<uint8_t>());
-                info->trackerColor = static_cast<TrackerColor>(buffer.get<uint8_t>());
-                info->modelNo = buffer.getString();
+                info->trackerState.trackerId = buffer.Get<uint8_t>();
+                info->trackerClass = static_cast<TrackerClass>(buffer.Get<uint8_t>());
+                info->trackerColor = static_cast<TrackerColor>(buffer.Get<uint8_t>());
+                info->modelNo = buffer.GetString();
                 trackers[info->trackerState.trackerId] = info;
                 addTrackerCallback(info);
                 break;
             }
             case 0x01: {
-                auto id = buffer.get<uint8_t>();
+                auto id = buffer.Get<uint8_t>();
                 auto *removed = trackers[id];
                 trackers[id] = nullptr;
                 removeTrackerCallback(removed);
@@ -48,20 +48,20 @@ void StreamClient::receiveLoop() {
                 break;
             }
             case 0x02: {
-                auto numItems = buffer.get<uint8_t>();
+                auto numItems = buffer.Get<uint8_t>();
                 for (int i = 0; i < numItems; i++) {
-                    auto trackerId = buffer.get<uint8_t>();
+                    auto trackerId = buffer.Get<uint8_t>();
 
                     auto &state = trackers[trackerId]->trackerState;
-                    state.buttons = buffer.get<uint16_t>();
-                    state.position.x = buffer.get<float>();
-                    state.position.y = buffer.get<float>();
-                    state.position.z = buffer.get<float>();
+                    state.buttons = buffer.Get<uint16_t>();
+                    state.position.x = buffer.Get<float>();
+                    state.position.y = buffer.Get<float>();
+                    state.position.z = buffer.Get<float>();
 
-                    state.rotation.x = buffer.get<float>();
-                    state.rotation.y = buffer.get<float>();
-                    state.rotation.z = buffer.get<float>();
-                    state.rotation.w = buffer.get<float>();
+                    state.rotation.x = buffer.Get<float>();
+                    state.rotation.y = buffer.Get<float>();
+                    state.rotation.z = buffer.Get<float>();
+                    state.rotation.w = buffer.Get<float>();
                 }
 
                 break;
@@ -73,15 +73,15 @@ void StreamClient::receiveLoop() {
     }
 }
 
-void StreamClient::close() {
+void StreamClient::Close() {
     threadRunning = false;
     receiveThread->join();
 }
 
-void StreamClient::setAddTrackerCallback(const StreamClient::tracker_cb &callback) {
+void StreamClient::SetAddTrackerCallback(const StreamClient::tracker_cb &callback) {
     addTrackerCallback = callback;
 }
 
-void StreamClient::setRemoveTrackerCallback(const StreamClient::tracker_cb &callback) {
+void StreamClient::SetRemoveTrackerCallback(const StreamClient::tracker_cb &callback) {
     removeTrackerCallback = callback;
 }

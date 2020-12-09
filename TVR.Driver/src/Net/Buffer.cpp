@@ -8,7 +8,7 @@
 Buffer::Buffer(uint8_t *data, size_t size) : data(data), size(size), offset(0) {
 }
 
-std::string Buffer::getString() {
+std::string Buffer::GetString() {
     const char *ptr = (const char *) (data + offset);
     int len = strlen(ptr);
     if (len > MAX_PACKET_LEN) {

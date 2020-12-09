@@ -10,7 +10,7 @@
 
 class ServerDriver : public vr::IServerTrackedDeviceProvider {
 private:
-    StreamClient streamClient;
+    StreamClient *streamClient{};
 
 public:
     vr::EVRInitError Init(vr::IVRDriverContext *pDriverContext) override;

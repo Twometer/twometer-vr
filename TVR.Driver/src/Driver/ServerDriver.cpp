@@ -7,11 +7,13 @@
 using namespace vr;
 
 vr::EVRInitError ServerDriver::Init(vr::IVRDriverContext *pDriverContext) {
-    streamClient.setAddTrackerCallback([](TrackerInfo *tracker) {
+    streamClient = new StreamClient();
+
+    streamClient->SetAddTrackerCallback([](TrackerInfo *tracker) {
 
     });
 
-    streamClient.setRemoveTrackerCallback([](TrackerInfo *tracker) {
+    streamClient->SetRemoveTrackerCallback([](TrackerInfo *tracker) {
 
     });
 
@@ -19,5 +21,6 @@ vr::EVRInitError ServerDriver::Init(vr::IVRDriverContext *pDriverContext) {
 }
 
 void ServerDriver::Cleanup() {
-    streamClient.close();
+    streamClient->Close();
+    delete streamClient;
 }

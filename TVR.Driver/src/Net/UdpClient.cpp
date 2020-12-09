@@ -21,7 +21,7 @@ UdpClient::~UdpClient() {
     WSACleanup();
 }
 
-void UdpClient::bind(uint16_t port) const {
+void UdpClient::Bind(uint16_t port) const {
     sockaddr_in address{};
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -32,7 +32,7 @@ void UdpClient::bind(uint16_t port) const {
         throw std::system_error(WSAGetLastError(), std::system_category(), "bind failed");
 }
 
-int UdpClient::receive(uint8_t *buffer, int len, int flags) const {
+int UdpClient::Receive(uint8_t *buffer, int len, int flags) const {
     sockaddr_in from{};
     int fromSize = sizeof(from);
 

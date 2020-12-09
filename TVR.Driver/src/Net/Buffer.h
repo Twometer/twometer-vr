@@ -18,7 +18,7 @@ public:
     Buffer(uint8_t *data, size_t size);
 
     template<typename T>
-    T get() {
+    T Get() {
         T val;
         size_t valSize = sizeof(val);
 
@@ -32,7 +32,7 @@ public:
         return val;
     }
 
-    std::string getString();
+    std::string GetString();
 };
 
 

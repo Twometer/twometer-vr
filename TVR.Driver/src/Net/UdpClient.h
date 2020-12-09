@@ -18,9 +18,9 @@ public:
 
     ~UdpClient();
 
-    void bind(uint16_t port) const;
+    void Bind(uint16_t port) const;
 
-    int receive(uint8_t* buffer, int len, int flags = 0) const;
+    int Receive(uint8_t* buffer, int len, int flags = 0) const;
 };
 
 

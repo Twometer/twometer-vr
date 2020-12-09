@@ -1,5 +1,5 @@
 //
-// Created by Twometer on 08/12/2020.
+// Created by Twometer on 8 Dec 2020.
 //
 
 #ifndef TVR_DRIVER_TRACKERDRIVER_H
@@ -13,7 +13,7 @@ private:
     TrackerInfo *tracker;
 
 public:
-    TrackerDriver(TrackerInfo *tracker);
+    explicit TrackerDriver(TrackerInfo *tracker);
 
     vr::EVRInitError Activate(uint32_t unObjectId) override;
 

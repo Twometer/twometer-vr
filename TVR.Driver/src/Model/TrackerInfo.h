@@ -1,5 +1,5 @@
 //
-// Created by Twometer on 09/12/2020.
+// Created by Twometer on 9 Dec 2020.
 //
 
 #ifndef TVR_DRIVER_TRACKERINFO_H
