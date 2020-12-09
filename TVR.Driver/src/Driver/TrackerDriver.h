@@ -6,16 +6,14 @@
 #define TVR_DRIVER_TRACKERDRIVER_H
 
 #include <openvr_driver.h>
-#include "../Model/TrackerState.h"
+#include "../Model/TrackerInfo.h"
 
 class TrackerDriver : public vr::ITrackedDeviceServerDriver {
 private:
-    std::string modelNumber;
-
-    TrackerState *state;
+    TrackerInfo *tracker;
 
 public:
-    TrackerDriver(std::string modelNumber, TrackerState *state);
+    TrackerDriver(TrackerInfo *tracker);
 
     vr::EVRInitError Activate(uint32_t unObjectId) override;
 

@@ -31,6 +31,8 @@ public:
 
         return val;
     }
+
+    std::string getString();
 };
 
 

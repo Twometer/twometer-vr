@@ -7,6 +7,14 @@
 using namespace vr;
 
 vr::EVRInitError ServerDriver::Init(vr::IVRDriverContext *pDriverContext) {
+    streamClient.setAddTrackerCallback([](TrackerInfo *tracker) {
+
+    });
+
+    streamClient.setRemoveTrackerCallback([](TrackerInfo *tracker) {
+
+    });
+
     return VRInitError_None;
 }
 

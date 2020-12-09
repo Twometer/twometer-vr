@@ -5,10 +5,11 @@
 #ifndef TVR_DRIVER_STREAMCLIENT_H
 #define TVR_DRIVER_STREAMCLIENT_H
 
+#include <map>
 #include <thread>
+#include <functional>
 #include "UdpClient.h"
-
-constexpr int PORT = 20156;
+#include "../Model/TrackerInfo.h"
 
 class StreamClient {
 private:
@@ -20,12 +21,22 @@ private:
 
     bool threadRunning = true;
 
+    std::map<uint8_t, TrackerInfo *> trackers;
+
+    typedef std::function<void(TrackerInfo *)> tracker_cb;
+    tracker_cb addTrackerCallback{};
+    tracker_cb removeTrackerCallback{};
+
 public:
     StreamClient();
 
     ~StreamClient();
 
     void close();
+
+    void setAddTrackerCallback(const tracker_cb &callback);
+
+    void setRemoveTrackerCallback(const tracker_cb &callback);
 
 private:
     void receiveLoop();
