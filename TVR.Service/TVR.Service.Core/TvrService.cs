@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -23,6 +24,10 @@ namespace TVR.Service.Core
             }
         }
 
+        private readonly Config config;
+
+        private readonly IServiceCollection serviceCollection = new ServiceCollection();
+
         private readonly TrackerManager trackerManager = new TrackerManager();
         private readonly TrackingEngine trackingEngine = new TrackingEngine();
 
@@ -34,9 +39,18 @@ namespace TVR.Service.Core
 
         private IVideoSource videoSource;
 
+        public TvrService(Config config)
+        {
+            this.config = config;
+        }
+
         public void Start()
         {
             Loggers.Current.Log(LogLevel.Info, $"Starting TwometerVR v{Version}");
+
+            serviceCollection.AddSingleton(trackerManager);
+            serviceCollection.AddSingleton(trackingEngine);
+            serviceCollection.AddSingleton(config);
 
             discoveryClient = new DiscoveryClient();
             driverClient = new DriverClient();

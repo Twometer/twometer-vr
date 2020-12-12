@@ -1,8 +1,10 @@
+ConfigVersion: 2
+
 # Hardware config
 Hardware:
     VideoSource: PSEye
     SphereSize: 0.04
-    ColorRanges:
+    ColorProfiles:
         Red:
             - Minimum: { H: 0, S: 0, V: 0 }
               Maximum: { H: 0, S: 0, V: 0 }
