@@ -30,26 +30,26 @@ namespace nextgentrackingdemo
             glControl1.MouseWheel += GlControl1_MouseWheel;
         }
 
-        private IVideoSource src;
+      //  private IVideoSource src;
 
         private async void UpdateLoop()
         {
             var conf = ConfigIO.LoadUserConfig();
-            //var cam = new Camera(conf.CameraInfo);
+            var cam = new Camera(conf.CameraInfo);
             var tracker = new TrackingManager(conf);
 
-            /*cap = new VideoCapture(1);
-            cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth, 640);
-            cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight, 480);
-            cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps, 60);*/
+            //cap = new VideoCapture(1);
+            //cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth, 640);
+            //cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight, 480);
+            //cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps, 60);
 
             // Paths: 
             // pseye:0 -> 0th PS EYE
             // dshow:0 -> 0th DSHOW
             // dshow:1 -> ...
 
-            src = new PSEyeVideoSource(0);
-            src.Open();
+            //src = new PSEyeVideoSource(0);
+            //src.Open();
             
 
             var frames = 0;
@@ -59,13 +59,13 @@ namespace nextgentrackingdemo
             {
                 var t = await Task.Run(() =>
                 {
-                    return src.Grab();
+                    return cam.Update();
                 });
                 if (t)
                 {
-                    imageBox1.Image = src.BgrFrame;
+                    imageBox1.Image = cam.Frame;
 
-                    await tracker.UpdateVideo(src.HsvFrame.Mat, src.FrameBrightness);
+                    await tracker.UpdateVideo(cam.HsvFrame, cam.FrameBrightness);
 
                     imageBox2.Image = tracker.Trackers[0].Frame;
 
@@ -381,7 +381,7 @@ namespace nextgentrackingdemo
         {
             //cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.AutoExposure, 0.25);
             //cap.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.Exposure, 0);
-            src.Exposure -= 40; 
+            //CacheVirtualItemsEventArgs.Exposure -= 40; 
         }
     }
 }
