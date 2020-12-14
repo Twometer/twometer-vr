@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using TVR.Service.Core.Logging;
 using TVR.Service.Core.Model;
 
@@ -6,17 +7,11 @@ namespace TVR.Service.Core.Network.Unicast
 {
     internal class TrackerClient : BaseClient
     {
-        private readonly ITrackerIdProvider idProvider;
+        private readonly TrackerManager trackerManager;
 
-        public delegate void TrackerUpdatedEventHandler(P00TrackerState trackerState);
-        public delegate void TrackerConnectedEventHandler(Tracker tracker);
-
-        public event TrackerUpdatedEventHandler TrackerUpdated;
-        public event TrackerConnectedEventHandler TrackerConnected;
-
-        public TrackerClient(ITrackerIdProvider idProvider) : base(NetConfig.UnicastPort)
+        public TrackerClient(TrackerManager trackerManager) : base(NetConfig.UnicastPort)
         {
-            this.idProvider = idProvider;
+            this.trackerManager = trackerManager;
             Loggers.Current.Log(LogLevel.Info, "Tracker client online");
         }
 
@@ -30,15 +25,18 @@ namespace TVR.Service.Core.Network.Unicast
                 var state = new P00TrackerState(pid);
                 state.Deserialize(buf);
 
-                TrackerUpdated?.Invoke(state);
+                var tracker = trackerManager.GetTracker(state.TrackerId);
+                tracker.Rotation = state.Rotation;
+                tracker.Buttons = state.Buttons;
+                tracker.LastHeartbeat = DateTime.Now;
             }
             else if (pid == 0x82)
             {
                 var handshake = new P82Handshake();
                 handshake.Deserialize(buf);
 
-                var tracker = new Tracker(idProvider.NewId(), handshake.ModelNo, handshake.TrackerClass, handshake.TrackerColor);
-                TrackerConnected?.Invoke(tracker);
+                var tracker = new Tracker(trackerManager.NewId(), handshake.ModelNo, handshake.TrackerClass, handshake.TrackerColor);
+                trackerManager.AddTracker(tracker);
 
                 Send(new P83HandshakeReply() { TrackerId = tracker.TrackerId }, sender);
             }

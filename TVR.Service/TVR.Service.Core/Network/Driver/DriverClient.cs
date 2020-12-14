@@ -11,8 +11,10 @@ namespace TVR.Service.Core.Network.Driver
     {
         private static IPEndPoint DriverEndpoint { get; } = new IPEndPoint(IPAddress.Loopback, NetConfig.DriverPort);
 
-        public DriverClient() : base((ushort) DriverEndpoint.Port)
+        public DriverClient(TrackerManager trackerManager) : base((ushort) DriverEndpoint.Port)
         {
+            trackerManager.TrackerAdded += SendTrackerConnect;
+            trackerManager.TrackerRemoved += SendTrackerDisconnect;
             Loggers.Current.Log(LogLevel.Info, "Driver client online");
         }
 
@@ -22,18 +24,18 @@ namespace TVR.Service.Core.Network.Driver
             throw new InvalidOperationException();
         }
 
-        public void HandleTrackerConnect(Tracker tracker)
+        private void SendTrackerConnect(Tracker tracker)
         {
             var packet = new P00TrackerConnect() { TrackerId = tracker.TrackerId, ModelNo = tracker.ModelNo, TrackerClass = tracker.TrackerClass, TrackerColor = tracker.TrackerColor };
             Send(packet, DriverEndpoint);
         }
 
-        public void HandleTrackerDisconnect(Tracker tracker)
+        private void SendTrackerDisconnect(Tracker tracker)
         {
             Send(new P01TrackerDisconnect() { TrackerId = tracker.TrackerId }, DriverEndpoint);
         }
 
-        public void HandleStateChange(IEnumerable<Tracker> trackers)
+        public void SendTrackerStates(IEnumerable<Tracker> trackers)
         {
             var states = trackers.Select(t => P02TrackerStates.TrackerState.FromTracker(t)).ToArray();
             Send(new P02TrackerStates() { States = states }, DriverEndpoint);

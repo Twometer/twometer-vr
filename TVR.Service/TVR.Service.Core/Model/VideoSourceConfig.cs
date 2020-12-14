@@ -12,6 +12,8 @@ namespace TVR.Service.Core.Model
 
         public int FrameHeight { get; set; }
 
+        public int Framerate { get; set; }
+
         public ExposureConfig ExposureConfig { get; set; }
 
         public float[] Distortion { get; set; }

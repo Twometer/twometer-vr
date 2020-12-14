@@ -82,7 +82,7 @@
     <Compile Include="Model\ColorRange.cs" />
     <Compile Include="Model\UserConfig.cs" />
     <Compile Include="Model\HsvColor.cs" />
-    <Compile Include="Model\ITrackerIdProvider.cs" />
+    <Compile Include="Model\IIdProvider.cs" />
     <Compile Include="Model\Tracker.cs" />
     <Compile Include="Model\TrackerButton.cs" />
     <Compile Include="Model\TrackerClass.cs" />
@@ -104,9 +104,10 @@
     <Compile Include="Network\Unicast\P82Handshake.cs" />
     <Compile Include="Network\Unicast\P83HandshakeReply.cs" />
     <Compile Include="Network\Unicast\TrackerClient.cs" />
-    <Compile Include="Network\TrackerWatchdog.cs" />
+    <Compile Include="Network\Unicast\TrackerWatchdog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tracking\ICameraTransform.cs" />
+    <Compile Include="Tracking\SimpleCameraTransform.cs" />
     <Compile Include="Tracking\TrackingEngine.cs" />
     <Compile Include="TvrService.cs" />
     <Compile Include="Video\VideoSourceType.cs" />

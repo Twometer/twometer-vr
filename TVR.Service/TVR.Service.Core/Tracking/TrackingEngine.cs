@@ -8,18 +8,25 @@ using TVR.Service.Core.Video;
 
 namespace TVR.Service.Core.Tracking
 {
-    public class TrackingEngine
+    internal class TrackingEngine
     {
-        // TODO get config in here.
-        private TrackerManager trackerManager;
-        private IConfigProvider configProvider;
-        private IVideoSource videoSource;
-        private ICameraTransform cameraTransform;
+        private readonly TrackerManager trackerManager;
+        private readonly IConfigProvider configProvider;
+        private readonly IVideoSource videoSource;
+        private readonly ICameraTransform cameraTransform;
 
         private Image<Gray, byte> frame;
 
         private readonly Mat tempFrame = new Mat();
         private readonly Mat hierarchy = new Mat();
+
+        public TrackingEngine(TrackerManager trackerManager, IConfigProvider configProvider, IVideoSource videoSource)
+        {
+            this.trackerManager = trackerManager;
+            this.configProvider = configProvider;
+            this.videoSource = videoSource;
+            this.cameraTransform = new SimpleCameraTransform();
+        }
 
         public void Update()
         {

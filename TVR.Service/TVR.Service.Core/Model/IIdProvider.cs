@@ -1,6 +1,6 @@
 ﻿namespace TVR.Service.Core.Model
 {
-    internal interface ITrackerIdProvider
+    internal interface IIdProvider
     {
 
         byte NewId();
