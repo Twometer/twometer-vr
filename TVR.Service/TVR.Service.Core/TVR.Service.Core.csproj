@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="IO\FileConfigProvider.cs" />
     <Compile Include="IO\IConfigProvider.cs" />
+    <Compile Include="IO\SimpleConfigProvider.cs" />
     <Compile Include="Logging\DebugLogger.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
