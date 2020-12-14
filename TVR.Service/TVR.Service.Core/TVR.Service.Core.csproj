@@ -82,7 +82,6 @@
     <Compile Include="Model\ColorRange.cs" />
     <Compile Include="Model\UserConfig.cs" />
     <Compile Include="Model\HsvColor.cs" />
-    <Compile Include="Model\IIdProvider.cs" />
     <Compile Include="Model\Tracker.cs" />
     <Compile Include="Model\TrackerButton.cs" />
     <Compile Include="Model\TrackerClass.cs" />
