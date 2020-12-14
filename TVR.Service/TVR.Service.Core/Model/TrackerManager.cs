@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -26,19 +25,6 @@ namespace TVR.Service.Core.Model
         public void RemoveTracker(byte id)
         {
             trackers.Remove(id);
-        }
-
-        public IEnumerable<Tracker> GetStaleTrackers()
-        {
-            var now = DateTime.Now;
-            foreach (var tracker in trackers.Values)
-            {
-                var timeSinceHeartbeat = now - tracker.LastHeartbeat;
-                if (timeSinceHeartbeat.TotalSeconds > 30)
-                {
-                    yield return tracker;
-                }
-            }
         }
 
         public byte NewId()

@@ -12,4 +12,3 @@ ExposureConfig:
     StableFrames: 2
     Threshold: 20
 Distortion: []
-Calibration: []

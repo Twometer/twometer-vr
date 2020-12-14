@@ -2,7 +2,7 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
-using System.Collections.Generic;
+using TVR.Service.Core.IO;
 using TVR.Service.Core.Model;
 using TVR.Service.Core.Video;
 
@@ -11,11 +11,10 @@ namespace TVR.Service.Core.Tracking
     public class TrackingEngine
     {
         // TODO get config in here.
-        private Config config;
-
+        private TrackerManager trackerManager;
+        private IConfigProvider configProvider;
         private IVideoSource videoSource;
-
-        private readonly IList<Tracker> trackers = new List<Tracker>();
+        private ICameraTransform cameraTransform;
 
         private Image<Gray, byte> frame;
 
@@ -24,37 +23,52 @@ namespace TVR.Service.Core.Tracking
 
         public void Update()
         {
-            if (frame == null)
-                frame = new Image<Gray, byte>(videoSource.HsvFrame.Width, videoSource.HsvFrame.Height);
+            EnsureFramebufferInitialized();
 
-            foreach (var tracker in trackers)
+            foreach (var tracker in trackerManager.Trackers)
             {
-                var colorProfile = config.ColorProfiles[tracker.TrackerColor];
-                TrackSingleDevice(tracker, colorProfile);
+                var colorProfile = configProvider.UserConfig.Hardware.ColorProfiles[tracker.TrackerColor];
+                TrackDevice(tracker, colorProfile);
             }
         }
 
-        private void TrackSingleDevice(Tracker device, ColorProfile profile)
+        private void TrackDevice(Tracker device, ColorProfile profile)
         {
-            ImageProcessing.ColorFilter(videoSource.HsvFrame.Mat, frame, tempFrame, profile, videoSource.FrameBrightness);
+            ImageProcessing.ColorFilter(videoSource.HsvFrame, frame, tempFrame, profile, videoSource.FrameBrightness);
 
             using (var contours = new VectorOfVectorOfPoint())
             {
                 CvInvoke.FindContours(frame, contours, hierarchy, RetrType.External, ChainApproxMethod.ChainApproxNone);
-
-                device.Tracking = contours.Size > 0;
-                if (device.Tracking)
+                device.InRange = contours.Size > 0;
+                
+                if (device.InRange)
                 {
-                    var circle = CvInvoke.MinEnclosingCircle(contours[0]);
-                    
-                    // TODO transform circle to world space
+                    var largest = FindLargestContour(contours);
+                    var circle = CvInvoke.MinEnclosingCircle(largest);
+                    device.Position = cameraTransform.Transform(circle);
                 }
             }
         }
 
-        public void RegisterTracker(Tracker tracker)
+        private VectorOfPoint FindLargestContour(VectorOfVectorOfPoint contours)
         {
-            trackers.Add(tracker);
+            var largest = contours[0];
+            
+            for (var i = 0; i < contours.Size; i++)
+            {
+                var contour = contours[i];
+
+                if (contour.Size > largest.Size)
+                    largest = contour;
+            }
+
+            return largest;
+        }
+
+        private void EnsureFramebufferInitialized()
+        {
+            if (frame == null)
+                frame = new Image<Gray, byte>(videoSource.HsvFrame.Width, videoSource.HsvFrame.Height);
         }
 
     }

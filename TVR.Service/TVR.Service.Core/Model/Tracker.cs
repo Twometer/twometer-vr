@@ -21,7 +21,9 @@ namespace TVR.Service.Core.Model
 
         public DateTime LastHeartbeat { get; set; }
 
-        public bool Tracking { get; set; }
+        public TimeSpan TimeSinceLastHeartbeat => DateTime.Now - LastHeartbeat;
+
+        public bool InRange { get; set; }
 
         public Tracker(byte trackerId, string modelNo, TrackerClass trackerClass, TrackerColor trackerColor) : this()
         {

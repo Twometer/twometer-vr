@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Linq;
+﻿using System;
 using System.Reflection;
 using System.Threading;
 using TVR.Service.Core.Logging;
 using TVR.Service.Core.Model;
+using TVR.Service.Core.Network;
 using TVR.Service.Core.Network.Broadcast;
 using TVR.Service.Core.Network.Driver;
 using TVR.Service.Core.Network.Unicast;
@@ -24,9 +23,7 @@ namespace TVR.Service.Core
             }
         }
 
-        private readonly Config config;
-
-        private readonly IServiceCollection serviceCollection = new ServiceCollection();
+        private readonly UserConfig config;
 
         private readonly TrackerManager trackerManager = new TrackerManager();
         private readonly TrackingEngine trackingEngine = new TrackingEngine();
@@ -35,11 +32,13 @@ namespace TVR.Service.Core
         private DriverClient driverClient;
         private TrackerClient trackerClient;
 
+        private TrackerWatchdog watchdog;
+
         private Timer updateTimer;
 
         private IVideoSource videoSource;
 
-        public TvrService(Config config)
+        public TvrService(UserConfig config)
         {
             this.config = config;
         }
@@ -48,9 +47,6 @@ namespace TVR.Service.Core
         {
             Loggers.Current.Log(LogLevel.Info, $"Starting TwometerVR v{Version}");
 
-            serviceCollection.AddSingleton(trackerManager);
-            serviceCollection.AddSingleton(trackingEngine);
-            serviceCollection.AddSingleton(config);
 
             discoveryClient = new DiscoveryClient();
             driverClient = new DriverClient();
@@ -79,14 +75,17 @@ namespace TVR.Service.Core
             trackerClient.Close();
         }
 
+        private void UpdateVideo()
+        {
+            if (videoSource.Grab())
+            {
+                trackingEngine.Update();
+            }
+        }
+
         private void Update(object stateInfo)
         {
-            foreach (var tracker in trackerManager.GetStaleTrackers())
-            {
-                driverClient.HandleTrackerDisconnect(tracker);
-                trackerManager.RemoveTracker(tracker.TrackerId);
-            }
-
+            watchdog.Update();
             driverClient.HandleStateChange(trackerManager.Trackers);
         }
 

@@ -37,15 +37,6 @@
     <Reference Include="Emgu.CV.Platform.NetStandard, Version=4.4.0.4099, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <HintPath>..\packages\Emgu.CV.4.4.0.4099\lib\netstandard2.0\Emgu.CV.Platform.NetStandard.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=5.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.5.0.1\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -80,6 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IO\FileConfigProvider.cs" />
+    <Compile Include="IO\IConfigProvider.cs" />
     <Compile Include="Logging\DebugLogger.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
@@ -87,13 +80,15 @@
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Model\ColorProfile.cs" />
     <Compile Include="Model\ColorRange.cs" />
-    <Compile Include="Model\Config.cs" />
+    <Compile Include="Model\UserConfig.cs" />
     <Compile Include="Model\HsvColor.cs" />
     <Compile Include="Model\ITrackerIdProvider.cs" />
     <Compile Include="Model\Tracker.cs" />
+    <Compile Include="Model\TrackerButton.cs" />
     <Compile Include="Model\TrackerClass.cs" />
     <Compile Include="Model\TrackerColor.cs" />
     <Compile Include="Model\TrackerManager.cs" />
+    <Compile Include="Model\VideoSourceConfig.cs" />
     <Compile Include="Native\CLEye.cs" />
     <Compile Include="Network\BaseClient.cs" />
     <Compile Include="Network\Broadcast\DiscoveryClient.cs" />
@@ -109,7 +104,9 @@
     <Compile Include="Network\Unicast\P82Handshake.cs" />
     <Compile Include="Network\Unicast\P83HandshakeReply.cs" />
     <Compile Include="Network\Unicast\TrackerClient.cs" />
+    <Compile Include="Network\TrackerWatchdog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tracking\ICameraTransform.cs" />
     <Compile Include="Tracking\TrackingEngine.cs" />
     <Compile Include="TvrService.cs" />
     <Compile Include="Video\VideoSourceType.cs" />

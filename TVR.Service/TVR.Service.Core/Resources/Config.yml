@@ -24,3 +24,4 @@ Input:
     PoseResetDelay: 0.2
     RefreshRate: 120
     PositionSmoothing: 2
+    TrackerTimeout: 30

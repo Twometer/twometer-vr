@@ -1,6 +1,6 @@
 ﻿namespace TVR.Service.Core.Video
 {
-    internal enum VideoSourceType
+    public enum VideoSourceType
     {
         DirectShow,
         PSEye

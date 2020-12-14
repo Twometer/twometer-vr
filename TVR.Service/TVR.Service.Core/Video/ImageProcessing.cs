@@ -17,15 +17,15 @@ namespace TVR.Service.Core.Video
             CvInvoke.CvtColor(bgr, hsv, ColorConversion.Bgr2Hsv);
         }
 
-        public static void ColorFilter(Mat hsvFrame, Image<Gray, byte> dstFrame, Mat tmpFrame, ColorProfile colorProfile, double baseBrightness)
+        public static void ColorFilter(Image<Hsv, byte> srcFrame, Image<Gray, byte> dstFrame, Mat tmpFrame, ColorProfile colorProfile, double baseBrightness)
         {
             var range0 = colorProfile.Ranges[0];
-            CvInvoke.InRange(hsvFrame, new ScalarArray(AdaptMinimum(range0.Min.CvScalar, baseBrightness)), new ScalarArray(range0.Max.CvScalar), dstFrame);
+            CvInvoke.InRange(srcFrame, new ScalarArray(AdaptMinimum(range0.Min.CvScalar, baseBrightness)), new ScalarArray(range0.Max.CvScalar), dstFrame);
 
             for (var i = 1; i < colorProfile.Ranges.Length; i++)
             {
                 var range = colorProfile.Ranges[i];
-                CvInvoke.InRange(hsvFrame, new ScalarArray(AdaptMinimum(range.Min.CvScalar, baseBrightness)), new ScalarArray(range.Max.CvScalar), tmpFrame);
+                CvInvoke.InRange(srcFrame, new ScalarArray(AdaptMinimum(range.Min.CvScalar, baseBrightness)), new ScalarArray(range.Max.CvScalar), tmpFrame);
                 CvInvoke.BitwiseOr(tmpFrame, dstFrame, dstFrame);
             }
 

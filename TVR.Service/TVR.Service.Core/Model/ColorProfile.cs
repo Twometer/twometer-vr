@@ -2,13 +2,10 @@
 {
     public struct ColorProfile
     {
-        public TrackerColor Color { get; set; }
-
         public ColorRange[] Ranges { get; set; }
 
-        public ColorProfile(TrackerColor color, ColorRange[] ranges)
+        public ColorProfile(ColorRange[] ranges)
         {
-            Color = color;
             Ranges = ranges;
         }
     }
