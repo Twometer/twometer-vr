@@ -113,6 +113,7 @@
     <Compile Include="Tracking\SimpleCameraTransform.cs" />
     <Compile Include="Tracking\TrackingEngine.cs" />
     <Compile Include="TvrService.cs" />
+    <Compile Include="Video\AutoExposure.cs" />
     <Compile Include="Video\VideoSourceType.cs" />
     <Compile Include="Video\DShowVideoSource.cs" />
     <Compile Include="Video\ImageProcessing.cs" />

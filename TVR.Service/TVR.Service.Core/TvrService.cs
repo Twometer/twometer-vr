@@ -20,6 +20,7 @@ namespace TVR.Service.Core
         private readonly CancellationToken cancellationToken;
 
         private IVideoSource videoSource;
+        private AutoExposure autoExposure;
 
         private TrackingEngine trackingEngine;
 
@@ -50,6 +51,8 @@ namespace TVR.Service.Core
 
             Loggers.Current.Log(LogLevel.Info, $"Starting TwometerVR v{Version}");
 
+            Loggers.Current.Log(LogLevel.Debug, "Loading config file...");
+            configProvider.Load();
 
             Loggers.Current.Log(LogLevel.Debug, "Opening video stream");
             var videoConfig = configProvider.VideoSourceConfig;
@@ -59,6 +62,7 @@ namespace TVR.Service.Core
             videoSource.Framerate = videoConfig.Framerate;
             videoSource.Open();
 
+            autoExposure = new AutoExposure(configProvider, videoSource);
 
             Loggers.Current.Log(LogLevel.Debug, "Initializing tracking engine");
             trackingEngine = new TrackingEngine(trackerManager, configProvider, videoSource);
@@ -104,8 +108,16 @@ namespace TVR.Service.Core
             while (!cancellationToken.IsCancellationRequested)
             {
                 if (videoSource.Grab())
-                    trackingEngine.Update();
+                    OnNewFrame();
             }
+        }
+
+        private void OnNewFrame()
+        {
+            if (autoExposure.Finished)
+                trackingEngine.Update();
+            else
+                autoExposure.Update();
         }
 
         private void Update(object stateInfo)
