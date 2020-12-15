@@ -1,142 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F8BFE536-73F3-497E-8914-0F2CBAAA2B0F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TVR.Service.Core</RootNamespace>
-    <AssemblyName>TVR.Service.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>2.0.0</Version>
+    <Authors>Twometer</Authors>
+    <Company>Twometer Applications</Company>
+    <Copyright />
+    <PackageProjectUrl>https://github.com/Twometer/twometer-vr</PackageProjectUrl>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Emgu.CV.Platform.NetStandard, Version=4.4.0.4099, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <HintPath>..\packages\Emgu.CV.4.4.0.4099\lib\netstandard2.0\Emgu.CV.Platform.NetStandard.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Drawing.Primitives.4.3.0\lib\net45\System.Drawing.Primitives.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="YamlDotNet, Version=9.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
-      <HintPath>..\packages\YamlDotNet.9.1.0\lib\net45\YamlDotNet.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Emgu.CV" Version="4.4.0.4099" />
+	<PackageReference Include="Emgu.CV.runtime.windows" Version="4.4.0.4099" />
+	<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
+	<PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+	<PackageReference Include="System.Runtime" Version="4.3.1" />
+	<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
+	<PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
+	<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+	<PackageReference Include="YamlDotNet" Version="9.1.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="IO\FileConfigProvider.cs" />
-    <Compile Include="IO\IConfigProvider.cs" />
-    <Compile Include="IO\SimpleConfigProvider.cs" />
-    <Compile Include="Logging\DebugLogger.cs" />
-    <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\ConsoleLogger.cs" />
-    <Compile Include="Logging\Loggers.cs" />
-    <Compile Include="Logging\LogLevel.cs" />
-    <Compile Include="Model\ColorProfile.cs" />
-    <Compile Include="Model\ColorRange.cs" />
-    <Compile Include="Model\UserConfig.cs" />
-    <Compile Include="Model\HsvColor.cs" />
-    <Compile Include="Model\Tracker.cs" />
-    <Compile Include="Model\TrackerButton.cs" />
-    <Compile Include="Model\TrackerClass.cs" />
-    <Compile Include="Model\TrackerColor.cs" />
-    <Compile Include="Model\TrackerManager.cs" />
-    <Compile Include="Model\VideoSourceConfig.cs" />
-    <Compile Include="Native\CLEye.cs" />
-    <Compile Include="Network\BaseClient.cs" />
-    <Compile Include="Network\Broadcast\DiscoveryClient.cs" />
-    <Compile Include="Network\Broadcast\P81DiscoveryReply.cs" />
-    <Compile Include="Network\Buffer.cs" />
-    <Compile Include="Network\Driver\DriverClient.cs" />
-    <Compile Include="Network\Driver\P00TrackerConnect.cs" />
-    <Compile Include="Network\Driver\P01TrackerDisconnect.cs" />
-    <Compile Include="Network\Driver\P02TrackerStates.cs" />
-    <Compile Include="Network\IPacket.cs" />
-    <Compile Include="Network\NetConfig.cs" />
-    <Compile Include="Network\Unicast\P00TrackerState.cs" />
-    <Compile Include="Network\Unicast\P82Handshake.cs" />
-    <Compile Include="Network\Unicast\P83HandshakeReply.cs" />
-    <Compile Include="Network\Unicast\TrackerClient.cs" />
-    <Compile Include="Network\Unicast\TrackerWatchdog.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tracking\ICameraTransform.cs" />
-    <Compile Include="Tracking\SimpleCameraTransform.cs" />
-    <Compile Include="Tracking\TrackingEngine.cs" />
-    <Compile Include="TvrService.cs" />
-    <Compile Include="Video\AutoExposure.cs" />
-    <Compile Include="Video\VideoSourceType.cs" />
-    <Compile Include="Video\DShowVideoSource.cs" />
-    <Compile Include="Video\ImageProcessing.cs" />
-    <Compile Include="Video\IVideoSource.cs" />
-    <Compile Include="Video\PSEyeVideoSource.cs" />
-    <Compile Include="Video\VideoSourceFactory.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Libraries\CLEyeMulticam.dll">
+    <None Update="Libraries\CLEyeMulticam.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Emgu.CV.runtime.windows.4.4.0.4099\build\Emgu.CV.runtime.windows.targets" Condition="Exists('..\packages\Emgu.CV.runtime.windows.4.4.0.4099\build\Emgu.CV.runtime.windows.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Emgu.CV.runtime.windows.4.4.0.4099\build\Emgu.CV.runtime.windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Emgu.CV.runtime.windows.4.4.0.4099\build\Emgu.CV.runtime.windows.targets'))" />
-  </Target>
+
 </Project>
