@@ -21,18 +21,20 @@ namespace TVR.Service.Core.Model
 
     public struct ExposureConfig
     {
-        public float Start { get; set; }
+        public int Start { get; set; }
 
-        public float Limit { get; set; }
+        public int Limit { get; set; }
 
-        public float Step { get; set; }
+        public int Step { get; set; }
 
         public int WarmupFrames { get; set; }
 
-        public int WaitFrames { get; set; }
+        public int CooldownFrames { get; set; }
 
         public int StableFrames { get; set; }
 
-        public float Threshold { get; set; }
+        public double MaximumChange { get; set; }
+
+        public double Threshold { get; set; }
     }
 }
