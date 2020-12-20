@@ -39,9 +39,9 @@ namespace TVR.Service.Core.Tracking
             }
         }
 
-        private void TrackDevice(Tracker device, ColorProfile profile)
+        private void TrackDevice(Tracker device, ColorRange[] colorRanges)
         {
-            ImageProcessing.ColorFilter(videoSource.HsvFrame, frame, tempFrame, profile, videoSource.FrameBrightness);
+            ImageProcessing.ColorFilter(videoSource.HsvFrame, frame, tempFrame, colorRanges, videoSource.FrameBrightness);
 
             using (var contours = new VectorOfVectorOfPoint())
             {

@@ -2,14 +2,14 @@
 {
     public struct ColorRange
     {
-        public HsvColor Min { get; set; }
+        public HsvColor Minimum { get; set; }
 
-        public HsvColor Max { get; set; }
+        public HsvColor Maximum { get; set; }
 
-        public ColorRange(HsvColor min, HsvColor max)
+        public ColorRange(HsvColor minimum, HsvColor maximum)
         {
-            Min = min;
-            Max = max;
+            Minimum = minimum;
+            Maximum = maximum;
         }
     }
 }

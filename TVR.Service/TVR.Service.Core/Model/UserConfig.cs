@@ -20,7 +20,7 @@ namespace TVR.Service.Core.Model
 
         public float SphereSize { get; set; }
 
-        public IDictionary<TrackerColor, ColorProfile> ColorProfiles { get; }
+        public IDictionary<TrackerColor, ColorRange[]> ColorProfiles { get; set; }
     }
 
     public struct InputConfig
