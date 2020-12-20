@@ -1,0 +1,18 @@
+VideoSourceType: DirectShow
+VideoSourceIndex: 0
+FrameWidth: 1280
+FrameHeight: 720
+Framerate: 30
+TransformConfig:
+    PFocalLength: 1350
+    PixelsPerMeter: 1118.5
+ExposureConfig:
+    Start: -5
+    Limit: -25
+    Step: -1
+    WarmupFrames: 12
+    CooldownFrames: 3
+    StableFrames: 2
+    MaximumChange: 2.0
+    Threshold: 20
+Distortion: []
