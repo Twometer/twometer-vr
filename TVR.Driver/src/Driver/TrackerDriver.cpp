@@ -19,7 +19,7 @@ EVRInitError TrackerDriver::Activate(uint32_t unObjectId) {
     VRProperties()->SetBoolProperty(propertyContainer, Prop_IsOnDesktop_Bool, false);
     VRProperties()->SetInt32Property(propertyContainer, Prop_ControllerRoleHint_Int32, GetTrackerRole());
     VRProperties()->SetStringProperty(propertyContainer, Prop_InputProfilePath_String,
-                                      "{tvr}/input/twometer_vr_profile.json");
+                                      "{tvr}/input/tvr_handed_profile.json");
 
     VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/a/click", &buttonA);
     VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/b/click", &buttonB);

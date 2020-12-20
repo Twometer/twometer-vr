@@ -25,6 +25,54 @@
 			],
 			"type": "button",
 			"order": 2
+		},
+		"/input/up": {
+			"binding_image_point": [
+				540,
+				800
+			],
+			"type": "button",
+			"order": 3
+		},
+		"/input/left": {
+			"binding_image_point": [
+				540,
+				800
+			],
+			"type": "button",
+			"order": 4
+		},
+		"/input/right": {
+			"binding_image_point": [
+				540,
+				800
+			],
+			"type": "button",
+			"order": 5
+		},
+		"/input/down": {
+			"binding_image_point": [
+				540,
+				800
+			],
+			"type": "button",
+			"order": 6
+		},
+		"/input/menu": {
+			"binding_image_point": [
+				540,
+				800
+			],
+			"type": "button",
+			"order": 7
+		},
+		"/input/trigger": {
+			"binding_image_point": [
+				540,
+				800
+			],
+			"type": "button",
+			"order": 8
 		}
 	},
 	"default_bindings": [
