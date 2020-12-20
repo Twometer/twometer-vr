@@ -42,6 +42,9 @@ namespace TVR.Service.Core.Video
         public void Open()
         {
             var camId = CLEyeGetCameraUUID(cameraIndex);
+            if (camId == Guid.Empty)
+                throw new Exception($"Can't find PSEye camera at index {cameraIndex}");
+
             var resolution = Width < 640 ? CLEyeCameraResolution.CLEYE_QVGA : CLEyeCameraResolution.CLEYE_VGA;
 
             var width = 0;
