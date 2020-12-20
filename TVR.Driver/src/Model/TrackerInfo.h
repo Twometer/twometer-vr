@@ -15,6 +15,7 @@ struct TrackerInfo {
     TrackerClass trackerClass{};
     TrackerColor trackerColor{};
     TrackerState trackerState{};
+    bool connected{};
 };
 
 #endif //TVR_DRIVER_TRACKERINFO_H
