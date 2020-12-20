@@ -9,9 +9,13 @@ namespace TVR.Service.Core.Network
     {
         private readonly UdpClient client = new UdpClient();
 
-        internal BaseClient(ushort port)
+        internal BaseClient()
         {
-            client.Client.Bind(new IPEndPoint(IPAddress.Any, port));
+        }
+
+        internal BaseClient(ushort bindPort)
+        {
+            client.Client.Bind(new IPEndPoint(IPAddress.Any, bindPort));
             BeginReceive();
         }
 

@@ -21,7 +21,6 @@ namespace TVR.Service.Core.Network.Driver
         protected override void OnReceive(byte[] data, IPEndPoint sender)
         {
             // Driver does not currently send messages back
-            throw new InvalidOperationException();
         }
 
         private void SendTrackerConnect(Tracker tracker)
