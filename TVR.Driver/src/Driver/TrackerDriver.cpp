@@ -21,10 +21,21 @@ EVRInitError TrackerDriver::Activate(uint32_t unObjectId) {
     VRProperties()->SetStringProperty(propertyContainer, Prop_InputProfilePath_String,
                                       "{tvr}/input/twometer_vr_profile.json");
 
+    VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/a/click", &buttonA);
+    VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/b/click", &buttonB);
+    VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/up/click", &buttonUp);
+    VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/left/click", &buttonLeft);
+    VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/right/click", &buttonRight);
+    VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/down/click", &buttonDown);
+    VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/menu/click", &buttonMenu);
+    VRDriverInput()->CreateBooleanComponent(propertyContainer, "/input/trigger/click", &buttonTrigger);
+
     return VRInitError_None;
 }
 
 DriverPose_t TrackerDriver::GetPose() {
+    UpdateButtons();
+
     DriverPose_t pose{};
 
     pose.result = TrackingResult_Running_OK;
@@ -33,7 +44,7 @@ DriverPose_t TrackerDriver::GetPose() {
     pose.shouldApplyHeadModel = false;
     pose.willDriftInYaw = false;
 
-    pose.qDriverFromHeadRotation.w = pose.qWorldFromDriverRotation.w = 1.0f;
+    pose.qDriverFromHeadRotation.w = pose.qWorldFromDriverRotation.w = 1.0f; // No rotation relative to head or world
 
     TrackerState &state = tracker->trackerState;
     pose.vecPosition[0] = state.position.x;
@@ -57,6 +68,21 @@ int32_t TrackerDriver::GetTrackerRole() {
         default:
             return TrackedControllerRole_Invalid;
     }
+}
+
+void TrackerDriver::UpdateButtons() {
+    VRDriverInput()->UpdateBooleanComponent(buttonA, IsButtonPressed(TrackerButton::A), 0);
+    VRDriverInput()->UpdateBooleanComponent(buttonB, IsButtonPressed(TrackerButton::B), 0);
+    VRDriverInput()->UpdateBooleanComponent(buttonUp, IsButtonPressed(TrackerButton::Up), 0);
+    VRDriverInput()->UpdateBooleanComponent(buttonLeft, IsButtonPressed(TrackerButton::Left), 0);
+    VRDriverInput()->UpdateBooleanComponent(buttonRight, IsButtonPressed(TrackerButton::Right), 0);
+    VRDriverInput()->UpdateBooleanComponent(buttonDown, IsButtonPressed(TrackerButton::Down), 0);
+    VRDriverInput()->UpdateBooleanComponent(buttonMenu, IsButtonPressed(TrackerButton::Menu), 0);
+    VRDriverInput()->UpdateBooleanComponent(buttonTrigger, IsButtonPressed(TrackerButton::Trigger), 0);
+}
+
+bool TrackerDriver::IsButtonPressed(TrackerButton button) {
+    return (tracker->trackerState.buttons & static_cast<uint16_t> (button)) != 0;
 }
 
 

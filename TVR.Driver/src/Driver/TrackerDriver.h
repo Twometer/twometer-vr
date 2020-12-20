@@ -7,10 +7,20 @@
 
 #include <openvr_driver.h>
 #include "../Model/TrackerInfo.h"
+#include "../Model/TrackerButton.h"
 
 class TrackerDriver : public vr::ITrackedDeviceServerDriver {
 private:
     TrackerInfo *tracker;
+
+    vr::VRInputComponentHandle_t buttonA{};
+    vr::VRInputComponentHandle_t buttonB{};
+    vr::VRInputComponentHandle_t buttonUp{};
+    vr::VRInputComponentHandle_t buttonLeft{};
+    vr::VRInputComponentHandle_t buttonRight{};
+    vr::VRInputComponentHandle_t buttonDown{};
+    vr::VRInputComponentHandle_t buttonMenu{};
+    vr::VRInputComponentHandle_t buttonTrigger{};
 
 public:
     explicit TrackerDriver(TrackerInfo *tracker);
@@ -29,6 +39,10 @@ public:
 
 private:
     int32_t GetTrackerRole();
+
+    void UpdateButtons();
+
+    bool IsButtonPressed(TrackerButton button);
 };
 
 #endif //TVR_DRIVER_TRACKERDRIVER_H
