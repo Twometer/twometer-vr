@@ -14,9 +14,18 @@ namespace TVR.Service.Core.Model
 
         public int Framerate { get; set; }
 
+        public TransformConfig TransformConfig { get; set; }
+
         public ExposureConfig ExposureConfig { get; set; }
 
         public float[] Distortion { get; set; }
+    }
+
+    public struct TransformConfig
+    {
+        public float PFocalLength { get; set; }
+
+        public float PixelsPerMeter { get; set; }
     }
 
     public struct ExposureConfig

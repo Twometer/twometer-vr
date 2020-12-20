@@ -25,7 +25,7 @@ namespace TVR.Service.Core.Tracking
             this.trackerManager = trackerManager;
             this.configProvider = configProvider;
             this.videoSource = videoSource;
-            this.cameraTransform = new SimpleCameraTransform();
+            this.cameraTransform = new SimpleCameraTransform(configProvider);
         }
 
         public void Update()
@@ -52,7 +52,7 @@ namespace TVR.Service.Core.Tracking
                 {
                     var largest = FindLargestContour(contours);
                     var circle = CvInvoke.MinEnclosingCircle(largest);
-                    device.Position = cameraTransform.Transform(circle);
+                    device.Position = cameraTransform.Transform(circle) + configProvider.UserConfig.Offset;
                 }
             }
         }

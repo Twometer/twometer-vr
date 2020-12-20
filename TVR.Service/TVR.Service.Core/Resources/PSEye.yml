@@ -3,6 +3,9 @@ VideoSourceIndex: 0
 FrameWidth: 640
 FrameHeight: 480
 Framerate: 60
+TransformConfig:
+    PFocalLength: 10
+    PixelsPerMeter: 10
 ExposureConfig:
     Start: 50
     Limit: 0
