@@ -7,7 +7,7 @@ namespace TVR.Service.Core.Model
     {
         public byte TrackerId { get; set; }
 
-        public string ModelNo { get; set; }
+        public string SerialNo { get; set; }
 
         public TrackerClass TrackerClass { get; set; }
 
@@ -25,10 +25,10 @@ namespace TVR.Service.Core.Model
 
         public bool InRange { get; set; }
 
-        public Tracker(byte trackerId, string modelNo, TrackerClass trackerClass, TrackerColor trackerColor) : this()
+        public Tracker(byte trackerId, string serialNo, TrackerClass trackerClass, TrackerColor trackerColor) : this()
         {
             TrackerId = trackerId;
-            ModelNo = modelNo;
+            SerialNo = serialNo;
             TrackerClass = trackerClass;
             TrackerColor = trackerColor;
             Position = Vector3.Zero;

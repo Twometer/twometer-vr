@@ -13,7 +13,7 @@ TrackerDriver::TrackerDriver(TrackerInfo *tracker) : tracker(tracker) {}
 EVRInitError TrackerDriver::Activate(uint32_t unObjectId) {
     PropertyContainerHandle_t propertyContainer = VRProperties()->TrackedDeviceToPropertyContainer(unObjectId);
     VRProperties()->SetStringProperty(propertyContainer, Prop_ModelNumber_String, "TVRCTRLV2");
-    VRProperties()->SetStringProperty(propertyContainer, Prop_SerialNumber_String, tracker->modelNo.c_str());
+    VRProperties()->SetStringProperty(propertyContainer, Prop_SerialNumber_String, tracker->serialNo.c_str());
     VRProperties()->SetStringProperty(propertyContainer, Prop_RenderModelName_String, "Twometer VR Tracker");
     VRProperties()->SetUint64Property(propertyContainer, Prop_CurrentUniverseId_Uint64, UNIVERSE_ID);
     VRProperties()->SetBoolProperty(propertyContainer, Prop_IsOnDesktop_Bool, false);

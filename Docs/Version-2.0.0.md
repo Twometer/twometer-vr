@@ -208,10 +208,10 @@ The server must respond with `0x81 Discovery Reply`
 ### `0x82` Handshake
 
 ```
-0x82   [uint8 trackerClass][uint8 colorId][string modelNo]
+0x82   [uint8 trackerClass][uint8 colorId][string serialNo]
 ```
 
-`modelNo` can be the ESP chip's model number.
+`serialNo` is formatted as `[manufacturerId][chipId]`, so for TwometerVR controllers with an ESP Chip `TVR[ESP.chipId]`.
 
 The server must respond with `0x83 Handshake Reply`
 

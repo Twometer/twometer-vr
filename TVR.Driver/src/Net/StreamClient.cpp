@@ -34,7 +34,7 @@ void StreamClient::ReceiveLoop() {
                 info->trackerState.trackerId = buffer.Get<uint8_t>();
                 info->trackerClass = static_cast<TrackerClass>(buffer.Get<uint8_t>());
                 info->trackerColor = static_cast<TrackerColor>(buffer.Get<uint8_t>());
-                info->modelNo = buffer.GetString();
+                info->serialNo = buffer.GetString();
                 trackers[info->trackerState.trackerId] = info;
                 addTrackerCallback(info);
                 break;

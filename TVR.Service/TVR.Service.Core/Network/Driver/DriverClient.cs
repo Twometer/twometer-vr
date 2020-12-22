@@ -25,7 +25,7 @@ namespace TVR.Service.Core.Network.Driver
 
         private void SendTrackerConnect(Tracker tracker)
         {
-            var packet = new P00TrackerConnect() { TrackerId = tracker.TrackerId, ModelNo = tracker.ModelNo, TrackerClass = tracker.TrackerClass, TrackerColor = tracker.TrackerColor };
+            var packet = new P00TrackerConnect() { TrackerId = tracker.TrackerId, SerialNo = tracker.SerialNo, TrackerClass = tracker.TrackerClass, TrackerColor = tracker.TrackerColor };
             Send(packet, DriverEndpoint);
         }
 

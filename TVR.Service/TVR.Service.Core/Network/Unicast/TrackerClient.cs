@@ -35,7 +35,7 @@ namespace TVR.Service.Core.Network.Unicast
                 var handshake = new P82Handshake();
                 handshake.Deserialize(buf);
 
-                var tracker = new Tracker(trackerManager.NewId(), handshake.ModelNo, handshake.TrackerClass, handshake.TrackerColor);
+                var tracker = new Tracker(trackerManager.NewId(), handshake.SerialNo, handshake.TrackerClass, handshake.TrackerColor);
                 trackerManager.AddTracker(tracker);
 
                 Send(new P83HandshakeReply() { TrackerId = tracker.TrackerId }, sender);

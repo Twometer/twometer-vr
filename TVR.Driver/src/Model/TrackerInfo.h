@@ -11,7 +11,7 @@
 #include "TrackerState.h"
 
 struct TrackerInfo {
-    std::string modelNo{};
+    std::string serialNo{};
     TrackerClass trackerClass{};
     TrackerColor trackerColor{};
     TrackerState trackerState{};

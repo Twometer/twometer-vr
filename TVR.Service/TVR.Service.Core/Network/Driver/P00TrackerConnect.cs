@@ -13,7 +13,7 @@ namespace TVR.Service.Core.Network.Driver
 
         public TrackerColor TrackerColor { get; set; }
 
-        public string ModelNo { get; set; }
+        public string SerialNo { get; set; }
 
         public void Deserialize(Buffer buffer)
         {
@@ -25,7 +25,7 @@ namespace TVR.Service.Core.Network.Driver
             buffer.Write(TrackerId);
             buffer.Write((byte)TrackerClass);
             buffer.Write((byte)TrackerColor);
-            buffer.Write(ModelNo);
+            buffer.Write(SerialNo);
         }
     }
 }

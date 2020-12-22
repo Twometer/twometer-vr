@@ -20,13 +20,13 @@ public:
         client.endPacket();
     }
 
-    static void sendHello(UdpClient &client, TrackerClass trackerClass, TrackerColor trackerColor, String modelNo)
+    static void sendHello(UdpClient &client, TrackerClass trackerClass, TrackerColor trackerColor, String serialNo)
     {
         client.beginPacket();
         client.write(0x82);
         client.write((uint8_t)trackerClass);
         client.write((uint8_t)trackerColor);
-        client.writeRaw(modelNo.c_str(), modelNo.length() + 1);
+        client.writeRaw(serialNo.c_str(), serialNo.length() + 1);
         client.endPacket();
     }
 

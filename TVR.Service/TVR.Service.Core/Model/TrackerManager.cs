@@ -21,7 +21,7 @@ namespace TVR.Service.Core.Model
 
         public void AddTracker(Tracker tracker)
         {
-            Loggers.Current.Log(LogLevel.Debug, $"Tracker {tracker.ModelNo} connected with id {tracker.TrackerId}");
+            Loggers.Current.Log(LogLevel.Debug, $"Tracker {tracker.SerialNo} connected with id {tracker.TrackerId}");
 
             trackers.Add(tracker.TrackerId, tracker);
             TrackerAdded?.Invoke(tracker);
@@ -30,7 +30,7 @@ namespace TVR.Service.Core.Model
         public void RemoveTracker(byte id)
         {
             var tracker = trackers[id];
-            Loggers.Current.Log(LogLevel.Debug, $"Tracker {tracker.ModelNo} (id {tracker.TrackerId}) disconnected");
+            Loggers.Current.Log(LogLevel.Debug, $"Tracker {tracker.SerialNo} (id {tracker.TrackerId}) disconnected");
 
             trackers.Remove(tracker.TrackerId);
             TrackerRemoved?.Invoke(tracker);
