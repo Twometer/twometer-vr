@@ -9,6 +9,7 @@ namespace TVR.Service.Core.Network.Driver
         public byte Id => 0x02;
 
         public TrackerState[] States { get; set; }
+
         public void Deserialize(Buffer buffer)
         {
             throw new NotImplementedException();
@@ -23,6 +24,7 @@ namespace TVR.Service.Core.Network.Driver
                 buffer.Write(state.Buttons);
                 buffer.Write(state.Position);
                 buffer.Write(state.Rotation);
+                buffer.Write(state.InRange ? 1 : 0);
             }
         }
 
@@ -36,17 +38,20 @@ namespace TVR.Service.Core.Network.Driver
 
             public Quaternion Rotation { get; }
 
-            public TrackerState(byte trackerId, ushort buttons, Vector3 position, Quaternion rotation)
+            public bool InRange { get; }
+
+            public TrackerState(byte trackerId, ushort buttons, Vector3 position, Quaternion rotation, bool inRange)
             {
                 TrackerId = trackerId;
                 Buttons = buttons;
                 Position = position;
                 Rotation = rotation;
+                InRange = inRange;
             }
 
             public static TrackerState FromTracker(Tracker tracker)
             {
-                return new TrackerState(tracker.TrackerId, tracker.Buttons, tracker.Position, tracker.Rotation);
+                return new TrackerState(tracker.TrackerId, tracker.Buttons, tracker.Position, tracker.Rotation, tracker.InRange);
             }
         }
     }

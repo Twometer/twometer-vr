@@ -36,17 +36,18 @@ EVRInitError TrackerDriver::Activate(uint32_t unObjectId) {
 DriverPose_t TrackerDriver::GetPose() {
     UpdateButtons();
 
+    TrackerState &state = tracker->trackerState;
     DriverPose_t pose{};
 
-    pose.result = TrackingResult_Running_OK;
-    pose.poseIsValid = tracker->connected;
+    pose.result = state.inRange ? TrackingResult_Running_OK : TrackingResult_Running_OutOfRange;
+    pose.poseIsValid = tracker->connected && state.inRange;
     pose.deviceIsConnected = tracker->connected;
+
     pose.shouldApplyHeadModel = false;
     pose.willDriftInYaw = false;
 
     pose.qDriverFromHeadRotation.w = pose.qWorldFromDriverRotation.w = 1.0f; // No rotation relative to head or world
 
-    TrackerState &state = tracker->trackerState;
     pose.vecPosition[0] = state.position.x;
     pose.vecPosition[1] = state.position.y;
     pose.vecPosition[2] = state.position.z;

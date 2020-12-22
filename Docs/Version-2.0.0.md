@@ -140,7 +140,7 @@ Used to tell the driver about state updates
 #### Tracker state
 
 ```
-[uint8 trackerId][uint16 buttons][vec3 position][vec4 rotation]
+[uint8 trackerId][uint16 buttons][vec3 position][vec4 rotation][bool inRange]
 ```
 
 

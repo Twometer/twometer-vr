@@ -13,6 +13,7 @@ struct TrackerState {
     uint16_t buttons{0};
     vec3 position{0, 0, 0};
     vec4 rotation{0, 0, 0, 1};
+    bool inRange{false};
 };
 
 #endif //TVR_DRIVER_TRACKERSTATE_H

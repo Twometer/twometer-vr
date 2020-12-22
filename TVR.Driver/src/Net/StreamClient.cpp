@@ -62,6 +62,8 @@ void StreamClient::ReceiveLoop() {
                     state.rotation.y = buffer.Get<float>();
                     state.rotation.z = buffer.Get<float>();
                     state.rotation.w = buffer.Get<float>();
+
+                    state.inRange = buffer.Get<bool>();
                 }
 
                 break;
