@@ -10,8 +10,8 @@ Roadmap and design concept for the next generation of Twometer VR
 - More buttons on the controller to support more games
 - Faster and more stable networking protocol
 - Flexible, extensible, yet simple design
-- Support multiple cameras and arbitrary angles
 - Support 5P full-body tracking
+- (Support multiple cameras and arbitrary angles)
 
 ## Naming
 
@@ -19,6 +19,9 @@ Roadmap and design concept for the next generation of Twometer VR
 - Controller: Handheld tracked devices with button input capabilities.
 - Server: The main server running in the TwometerVR service. May also be called 'service'.
 - Driver: The 'driver' extension for SteamVR.
+- Abbreviations:
+  - TwometerVR = TVR
+  - OpenVR / SteamVR = OVR
 
 ## Versioning
 
@@ -32,7 +35,7 @@ Roadmap and design concept for the next generation of Twometer VR
 
 ## Tracker identification
 
-When registering with the server, the tracker transmits its class, color and model number. The server then generates a unique 8-bit ID for that tracker. For subsequent pose updates, only this ID is sent.
+When registering with the server, the tracker transmits its class, color and serial number. The server then generates a unique 8-bit ID for that tracker. For subsequent pose updates, only this ID is sent.
 
 ### Tracker colors
 
@@ -64,22 +67,9 @@ Tracker IDs are a random ID that is used to identify all trackers after `0x82 Ha
 
 To ensure uniqueness in the current tracking setup, IDs are managed by the server. The server informs the client of its ID using the `0x83 Handshake Reply` packet.
 
-## Next-gen positional tracking
+## Simple positional tracking
 
-The next generation positional tracking should allow for arbitrary camera angles, and multiple cameras for a larger tracking space and more accuracy.
-
-#### Definitions
-
-- Image space: Raw camera image space, consisting of a 2D image position and a radius
-- Camera space: Ball position in 3D space, unprojected using camera parameters, but has its origin at the camera.
-- World space: Ball position in 3D space, transformed so that the origin is at the center of the playspace.
-
-#### Basic algorithm (idea)
-
-1. Isolate the tracker ball from the image and determine position and radius
-2. Using the previously determined camera parameters, unproject the tracker ball into camera space.
-3. By comparing the nominal playspace cube with the rotated playspace cube registered during a calibration step, compute a matrix from camera space into world space.
-4. Use said matrix to convert all camera space ball locations into world space ball locations.
+For a camera mounted in front of the play space, it is fairly easy to convert the 2D coordinates of a sphere to 3D coordinates using triangle similarity. This is the system TwometerVR is currently using.
 
 ## Steam VR
 
@@ -114,7 +104,7 @@ This UDP binary protocol is used for IPC between the server and the SteamVR driv
 ### 0x00 Tracker Connect
 
 ```
-[uint8 trackerId][uint8 trackerClass][uint8 trackerColor][string modelNo]
+[uint8 trackerId][uint8 trackerClass][uint8 trackerColor][string serialNo]
 ```
 
 
