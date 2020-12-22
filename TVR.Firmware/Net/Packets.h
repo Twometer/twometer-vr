@@ -32,7 +32,20 @@ public:
 
     static void receiveHello(UdpClient &client, uint8_t &trackerId)
     {
-        
+        int result;
+        uint8_t data[2];
+        while (true)
+        {
+            result = client.readPacket(data, 2);
+            if (result <= 0 || data[0] != 0x83)
+            {
+                delay(100);
+                continue;
+            }
+
+            trackerId = data[1];
+            break;
+        }
     }
 
     static void sendState(UdpClient &client, uint8_t trackerId, uint16_t buttons, vec4 rotation)
