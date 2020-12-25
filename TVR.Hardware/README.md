@@ -13,3 +13,5 @@ The PCB design files are on EasyEDA and consist of two projects:
 The CAD files are in Fusion360 and can be downloaded here:
 
 - Controller case: https://a360.co/38ymnGe
+- Detection sphere: https://a360.co/38zLkB1
+- Detection sphere holder: https://a360.co/3poNDxz
