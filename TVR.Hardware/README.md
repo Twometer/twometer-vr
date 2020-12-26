@@ -3,8 +3,9 @@
 
 The PCB design files are on EasyEDA and consist of two projects:
 
-- The mainboard: https://easyeda.com/Twometer/twometer-vr-2-0
-- PCB for the buttons: https://easyeda.com/Twometer/twometer-vr-2-0-buttons
+- The mainboard: https://oshwlab.com/Twometer/twometer-vr-2-0
+- Buttons PCB: https://oshwlab.com/Twometer/twometer-vr-2-0-buttons
+- LED PCB: https://oshwlab.com/Twometer/twometer-vr-2-0-led
 
 
 
@@ -13,5 +14,5 @@ The PCB design files are on EasyEDA and consist of two projects:
 The CAD files are in Fusion360 and can be downloaded here:
 
 - Controller case: https://a360.co/38ymnGe
-- Detection sphere: https://a360.co/38zLkB1
-- Detection sphere holder: https://a360.co/3poNDxz
+- Tracker ball: https://a360.co/38zLkB1
+- Tracker ball holder: https://a360.co/3poNDxz
