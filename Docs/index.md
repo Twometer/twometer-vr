@@ -1,3 +1,3 @@
-# TwometerVR docs
+# TwometerVR
 
-Work in progress
+Docs are work in progress
