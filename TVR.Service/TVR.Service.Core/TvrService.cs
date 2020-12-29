@@ -77,7 +77,7 @@ namespace TVR.Service.Core
 
 
             Loggers.Current.Log(LogLevel.Debug, "Initializing update timer");
-            updateTimer = new Timer(Update, null, 0, 1 / ConfigProvider.UserConfig.Input.RefreshRate);
+            updateTimer = new Timer(Update, null, 0, 1000 / ConfigProvider.UserConfig.Input.RefreshRate);
 
 
             Loggers.Current.Log(LogLevel.Debug, "Starting video procecssing thread");
