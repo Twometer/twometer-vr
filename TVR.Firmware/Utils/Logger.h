@@ -30,7 +30,8 @@ public:
 
     static void crash(String message) 
     {
-        error("Failed to initialize UDP client");
+        error(message);
+        error("Fatal Error, restarting...");
         delay(5000);
         ESP.restart();
     }

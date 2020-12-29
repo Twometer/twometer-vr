@@ -9,6 +9,7 @@
 #include "Net/NetDefs.h"
 #include "Net/Discovery.h"
 #include "Net/UdpClient.h"
+#include "Net/WiFiCredentials.h"
 
 const TrackerClass trackerClass = TrackerClass::Controller;
 const TrackerColor trackerColor = TrackerColor::Red;
@@ -27,9 +28,20 @@ void setup()
 
     Logger::info("Setting up hardware...");
     buttonInput.begin();
+    
+    delay(500); // Wait for the IMU to start up
     poseInput.begin();
 
-    // TODO connect to WiFi here
+    Logger::info("Connecting to WiFi " WIFI_SSID "...");
+    WiFi.persistent(true);
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(WIFI_SSID, WIFI_PASS);
+
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        delay(100);
+    }
+    Logger::info("Connected.");
 
     Logger::info("Discovering server...");
     Discovery discovery;

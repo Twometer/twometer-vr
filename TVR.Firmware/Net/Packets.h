@@ -15,15 +15,15 @@ public:
     static void sendDiscovery(UdpClient &client)
     {
         client.beginPacket();
-        client.write(0x80);        // Packet ID
-        client.write(UNIVERSE_ID); // Universe ID
+        client.write((uint8_t)0x80);         // Packet ID
+        client.write((uint32_t)UNIVERSE_ID); // Universe ID
         client.endPacket();
     }
 
     static void sendHello(UdpClient &client, TrackerClass trackerClass, TrackerColor trackerColor, String serialNo)
     {
         client.beginPacket();
-        client.write(0x82);
+        client.write((uint8_t)0x82);
         client.write((uint8_t)trackerClass);
         client.write((uint8_t)trackerColor);
         client.writeRaw(serialNo.c_str(), serialNo.length() + 1);
