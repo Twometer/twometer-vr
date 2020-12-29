@@ -36,7 +36,7 @@ namespace TVR.Service.Core.Network
 
         public void Write(byte b)
         {
-            Write(BitConverter.GetBytes(b));
+            Write(new byte[] { b });
         }
 
         public void Write(float f)
