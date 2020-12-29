@@ -28,7 +28,7 @@ void setup()
 
     Logger::info("Setting up hardware...");
     buttonInput.begin();
-    
+
     delay(500); // Wait for the IMU to start up
     poseInput.begin();
 
@@ -47,6 +47,8 @@ void setup()
     Discovery discovery;
     IPAddress serverIp = discovery.discover();
     client.begin(serverIp, UNICAST_PORT);
+    Serial.print("Server IP: ");
+    Serial.println(serverIp);
 
     Logger::info("Registering with the server...");
     Packets::sendHello(client, trackerClass, trackerColor, SerialNo::get());
