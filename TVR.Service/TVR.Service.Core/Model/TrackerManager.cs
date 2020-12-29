@@ -5,7 +5,7 @@ using TVR.Service.Core.Logging;
 
 namespace TVR.Service.Core.Model
 {
-    internal class TrackerManager
+    public class TrackerManager
     {
         private int idCounter;
 

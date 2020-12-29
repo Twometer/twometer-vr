@@ -14,8 +14,9 @@ namespace TVR.Service.Core
 {
     public class TvrService
     {
-        private readonly IConfigProvider configProvider;
-        private readonly TrackerManager trackerManager;
+        public IConfigProvider ConfigProvider { get; }
+        public TrackerManager TrackerManager { get; } = new TrackerManager();
+
         private readonly CancellationTokenSource cancellationTokenSource;
         private readonly CancellationToken cancellationToken;
 
@@ -38,8 +39,8 @@ namespace TVR.Service.Core
 
         public TvrService(IConfigProvider configProvider)
         {
-            this.configProvider = configProvider;
-            this.trackerManager = new TrackerManager();
+            ConfigProvider = configProvider;
+            TrackerManager = new TrackerManager();
             this.cancellationTokenSource = new CancellationTokenSource();
             this.cancellationToken = cancellationTokenSource.Token;
         }
@@ -52,31 +53,31 @@ namespace TVR.Service.Core
             Loggers.Current.Log(LogLevel.Info, $"Starting TwometerVR v{Version}");
 
             Loggers.Current.Log(LogLevel.Debug, "Loading config file...");
-            configProvider.Load();
+            ConfigProvider.Load();
 
             Loggers.Current.Log(LogLevel.Debug, "Opening video stream");
-            var videoConfig = configProvider.VideoSourceConfig;
+            var videoConfig = ConfigProvider.VideoSourceConfig;
             videoSource = VideoSourceFactory.Create(videoConfig.VideoSourceType, videoConfig.VideoSourceIndex);
             videoSource.Width = videoConfig.FrameWidth;
             videoSource.Height = videoConfig.FrameHeight;
             videoSource.Framerate = videoConfig.Framerate;
             videoSource.Open();
 
-            autoExposure = new AutoExposure(configProvider, videoSource);
+            autoExposure = new AutoExposure(ConfigProvider, videoSource);
 
             Loggers.Current.Log(LogLevel.Debug, "Initializing tracking engine");
-            trackingEngine = new TrackingEngine(trackerManager, configProvider, videoSource);
+            trackingEngine = new TrackingEngine(TrackerManager, ConfigProvider, videoSource);
 
 
             Loggers.Current.Log(LogLevel.Debug, "Setting up network");
             discoveryClient = new DiscoveryClient();
-            driverClient = new DriverClient(trackerManager);
-            trackerClient = new TrackerClient(trackerManager);
-            watchdog = new TrackerWatchdog(trackerManager, configProvider);
+            driverClient = new DriverClient(TrackerManager);
+            trackerClient = new TrackerClient(TrackerManager);
+            watchdog = new TrackerWatchdog(TrackerManager, ConfigProvider);
 
 
             Loggers.Current.Log(LogLevel.Debug, "Initializing update timer");
-            updateTimer = new Timer(Update, null, 0, 1 / configProvider.UserConfig.Input.RefreshRate);
+            updateTimer = new Timer(Update, null, 0, 1 / ConfigProvider.UserConfig.Input.RefreshRate);
 
 
             Loggers.Current.Log(LogLevel.Debug, "Starting video procecssing thread");
@@ -95,7 +96,7 @@ namespace TVR.Service.Core
             cancellationTokenSource.Cancel();
             videoThread.Join();
 
-            trackerManager.Clear();
+            TrackerManager.Clear();
             videoSource.Dispose();
             updateTimer.Dispose();
             discoveryClient.Close();
@@ -123,7 +124,7 @@ namespace TVR.Service.Core
         private void Update(object stateInfo)
         {
             watchdog.Update();
-            driverClient.SendTrackerStates(trackerManager.Trackers);
+            driverClient.SendTrackerStates(TrackerManager.Trackers);
         }
 
         public static string Version
