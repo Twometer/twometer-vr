@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace TVR.Service.Core.Model
 {
-    public struct Tracker
+    public class Tracker
     {
         public byte TrackerId { get; set; }
 
@@ -25,7 +25,7 @@ namespace TVR.Service.Core.Model
 
         public bool InRange { get; set; }
 
-        public Tracker(byte trackerId, string serialNo, TrackerClass trackerClass, TrackerColor trackerColor) : this()
+        public Tracker(byte trackerId, string serialNo, TrackerClass trackerClass, TrackerColor trackerColor)
         {
             TrackerId = trackerId;
             SerialNo = serialNo;

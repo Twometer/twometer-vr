@@ -17,6 +17,7 @@ namespace TVR.Service.Core.Network.Unicast
 
         protected override void OnReceive(byte[] data, IPEndPoint sender)
         {
+            Console.WriteLine("Received Data: " + BitConverter.ToString(data));
             var buf = new Buffer(data);
             var pid = buf.ReadByte();
 

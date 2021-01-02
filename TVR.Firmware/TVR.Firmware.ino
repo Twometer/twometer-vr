@@ -29,7 +29,7 @@ void setup()
     Logger::info("Setting up hardware...");
     buttonInput.begin();
 
-    delay(500); // Wait for the IMU to start up
+    //delay(500); // Wait for the IMU to start up
     poseInput.begin();
 
     Logger::info("Connecting to WiFi " WIFI_SSID "...");
@@ -39,7 +39,7 @@ void setup()
 
     while (WiFi.status() != WL_CONNECTED)
     {
-        delay(100);
+        delay(10);
     }
     Logger::info("Connected.");
 
@@ -67,4 +67,6 @@ void loop()
         Packets::sendState(client, trackerId, buttonInput.getStates(), poseInput.getPose());
         poseInput.clearAvailable();
     }
+
+    delay(16);
 }
