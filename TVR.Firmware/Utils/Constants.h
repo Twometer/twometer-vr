@@ -5,6 +5,8 @@
     #define VERISON_STRING "TwometerVR FW v2.0.0"
     #define MANUFACTURER_ID "TVR"
 
+    // Sensor 
+    #define SENSOR_USE_COMPASS  0
     #define SENSOR_PERIOD_US    16000
 
 #endif

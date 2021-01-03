@@ -17,7 +17,11 @@ public:
     {
         Wire.begin(PIN_SDA, PIN_SCL);
 
-        int code = icm.begin();
+#if SENSOR_USE_COMPASS == 0
+        icm.setFusionMode(FUSION_6_AXIS)
+#endif
+
+            int code = icm.begin();
         switch (code)
         {
         case ICM_SUCCESS:
@@ -40,9 +44,12 @@ public:
             break;
         }
 
-        icm.startSensor(INV_SENSOR_TYPE_MAGNETOMETER, SENSOR_PERIOD_US);
         icm.startSensor(INV_SENSOR_TYPE_GAME_ROTATION_VECTOR, SENSOR_PERIOD_US);
+
+#if SENSOR_USE_COMPASS
+        icm.startSensor(INV_SENSOR_TYPE_MAGNETOMETER, SENSOR_PERIOD_US);
         icm.startSensor(INV_SENSOR_TYPE_ROTATION_VECTOR, SENSOR_PERIOD_US);
+#endif
     }
 
     void update()
@@ -62,7 +69,7 @@ public:
 
     vec4 getPose()
     {
-        return { icm.x(), icm.y(), icm.z(), icm.w() };
+        return {icm.x(), icm.y(), icm.z(), icm.w()};
     }
 };
 
