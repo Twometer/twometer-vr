@@ -54,10 +54,18 @@ namespace TVR.Service.Core.Tracking
                     var largest = FindLargestContour(contours);
                     var circle = CvInvoke.MinEnclosingCircle(largest);
 
-                    if (Debugger.IsAttached)
-                        videoSource.BgrFrame.Draw(circle, new Bgr(255, 255, 255));
+                    device.TrackingAccuracy = (float)(CvInvoke.ContourArea(largest) / circle.Area);
+                    device.Circle = circle;
 
-                    device.Position = cameraTransform.Transform(circle) + configProvider.UserConfig.Offset;
+                    // Only update position if we have some confidence in what we do
+                    if (device.TrackingAccuracy > 0.4)
+                    {
+                        device.Position = cameraTransform.Transform(circle) + configProvider.UserConfig.Offset;
+                    }
+                    else
+                    {
+                        device.InRange = false;
+                    }
                 }
             }
         }

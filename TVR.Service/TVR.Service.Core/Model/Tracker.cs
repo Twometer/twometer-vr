@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emgu.CV.Structure;
+using System;
 using System.Numerics;
 
 namespace TVR.Service.Core.Model
@@ -24,6 +25,10 @@ namespace TVR.Service.Core.Model
         public TimeSpan TimeSinceLastHeartbeat => DateTime.Now - LastHeartbeat;
 
         public bool InRange { get; set; }
+
+        public CircleF Circle { get; set; }
+
+        public float TrackingAccuracy { get; set; }
 
         public Tracker(byte trackerId, string serialNo, TrackerClass trackerClass, TrackerColor trackerColor)
         {

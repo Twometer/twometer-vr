@@ -41,10 +41,11 @@ namespace TVR.Service.Debug
                 sb.AppendLine("    Rotation: " + tracker.Rotation);
                 sb.AppendLine("    InRange: " + tracker.InRange);
                 sb.AppendLine("    Timeout: " + tracker.TimeSinceLastHeartbeat);
+                sb.AppendLine("    Accuracy: " + tracker.TrackingAccuracy);
+                service.VideoSource.BgrFrame.Draw(tracker.Circle, new Emgu.CV.Structure.Bgr(255, 255, 255));
             }
             label1.Text = sb.ToString();
             imageBox1.Image = service.VideoSource.BgrFrame;
-            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
