@@ -1,13 +1,12 @@
 #ifndef TVR_PACKETS
 #define TVR_PACKETS
 
-#include <IcmVectors.h>
-
 #include "Buffer.h"
 #include "UdpClient.h"
 #include "NetDefs.h"
 #include "../Model/TrackerClass.h"
 #include "../Model/TrackerColor.h"
+#include "../Utils/Vector.h"
 
 class Packets
 {

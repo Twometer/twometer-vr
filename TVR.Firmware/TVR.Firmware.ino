@@ -68,5 +68,5 @@ void loop()
         poseInput.clearAvailable();
     }
 
-    delay(16);
+    delay(SENSOR_PERIOD_MS);
 }

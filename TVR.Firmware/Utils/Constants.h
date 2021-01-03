@@ -7,6 +7,7 @@
 
     // Sensor 
     #define SENSOR_USE_COMPASS  0
-    #define SENSOR_PERIOD_US    16000
+    #define SENSOR_PERIOD_MS    16
+    #define SENSOR_PERIOD_US    SENSOR_PERIOD_MS * 1000
 
 #endif

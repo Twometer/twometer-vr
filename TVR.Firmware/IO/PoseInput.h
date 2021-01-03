@@ -18,10 +18,10 @@ public:
         Wire.begin(PIN_SDA, PIN_SCL);
 
 #if SENSOR_USE_COMPASS == 0
-        icm.setFusionMode(FUSION_6_AXIS)
+        icm.setFusionMode(FUSION_6_AXIS);
 #endif
 
-            int code = icm.begin();
+        int code = icm.begin();
         switch (code)
         {
         case ICM_SUCCESS:
@@ -39,7 +39,7 @@ public:
         case ICM_SERIAL_ERROR:
             Logger::crash("IMU init failed: Serial connection error");
             break;
-        case ICM_SETUP:
+        case ICM_SETUP_ERROR:
             Logger::crash("IMU init failed: Setup failed");
             break;
         }
