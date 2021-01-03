@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Net;
 using System.Threading.Tasks;
+using TVR.Service.Core.Logging;
 
 namespace TVR.Service.Core.Network
 {
@@ -46,13 +47,20 @@ namespace TVR.Service.Core.Network
 
         private void ReceiveCallback(IAsyncResult result)
         {
-            IPEndPoint sender = null;
-            var data = client.EndReceive(result, ref sender);
+            try
+            {
+                IPEndPoint sender = null;
+                var data = client.EndReceive(result, ref sender);
 
-            if (data.Length <= NetConfig.MaxPacketSize)
-                OnReceive(data, sender);
+                if (data.Length <= NetConfig.MaxPacketSize)
+                    OnReceive(data, sender);
 
-            BeginReceive();
+                BeginReceive();
+            }
+            catch (Exception e)
+            {
+                Loggers.Current.Log(LogLevel.Error, e.Message);
+            }
         }
     }
 
