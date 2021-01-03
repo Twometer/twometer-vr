@@ -16,6 +16,7 @@ namespace TVR.Service.Core
     {
         public IConfigProvider ConfigProvider { get; }
         public TrackerManager TrackerManager { get; } = new TrackerManager();
+        public IVideoSource VideoSource => videoSource;
 
         private readonly CancellationTokenSource cancellationTokenSource;
         private readonly CancellationToken cancellationToken;

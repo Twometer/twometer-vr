@@ -2,6 +2,7 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using System.Diagnostics;
 using TVR.Service.Core.IO;
 using TVR.Service.Core.Model;
 using TVR.Service.Core.Video;
@@ -47,11 +48,15 @@ namespace TVR.Service.Core.Tracking
             {
                 CvInvoke.FindContours(frame, contours, hierarchy, RetrType.External, ChainApproxMethod.ChainApproxNone);
                 device.InRange = contours.Size > 0;
-                
+
                 if (device.InRange)
                 {
                     var largest = FindLargestContour(contours);
                     var circle = CvInvoke.MinEnclosingCircle(largest);
+
+                    if (Debugger.IsAttached)
+                        videoSource.BgrFrame.Draw(circle, new Bgr(255, 255, 255));
+
                     device.Position = cameraTransform.Transform(circle) + configProvider.UserConfig.Offset;
                 }
             }
@@ -60,7 +65,7 @@ namespace TVR.Service.Core.Tracking
         private VectorOfPoint FindLargestContour(VectorOfVectorOfPoint contours)
         {
             var largest = contours[0];
-            
+
             for (var i = 0; i < contours.Size; i++)
             {
                 var contour = contours[i];

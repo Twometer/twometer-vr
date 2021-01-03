@@ -43,11 +43,50 @@ namespace TVR.Service.Debug
                 sb.AppendLine("    Timeout: " + tracker.TimeSinceLastHeartbeat);
             }
             label1.Text = sb.ToString();
+            imageBox1.Image = service.VideoSource.BgrFrame;
+            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             service?.Stop();
+        }
+
+        double minh = 999;
+        double mins = 999;
+        double minv = 999;
+        double maxh;
+        double maxs;
+        double maxv;
+
+        private void imageBox1_Click(object sender, EventArgs e)
+        {
+            var xScrollOffset = imageBox1.HorizontalScrollBar.Value; // / 100.0 * service.VideoSource.BgrFrame.Width;
+            var yScrollOffset = imageBox1.VerticalScrollBar.Value; // / 100.0 * service.VideoSource.BgrFrame.Height;
+            var scale = imageBox1.ZoomScale;
+
+            var mousePos = imageBox1.PointToClient(MousePosition);
+            var pixX = mousePos.X / scale + xScrollOffset;
+            var pixY = mousePos.Y / scale + yScrollOffset;
+            var pix = service.VideoSource.HsvFrame[new Point((int)pixX, (int)pixY)];
+            CompareAndSet(pix.Hue, ref minh, false);
+            CompareAndSet(pix.Satuation, ref mins, false);
+            CompareAndSet(pix.Value, ref minv, false);
+
+            CompareAndSet(pix.Hue, ref maxh, true);
+            CompareAndSet(pix.Satuation, ref maxs, true);
+            CompareAndSet(pix.Value, ref maxv, true);
+
+            label2.Text = $"lH: {minh} lS: {mins} lV: {minv}\n\nhH: {maxh} hS: {maxs} hV: {maxv}";
+        }
+
+        private void CompareAndSet(double val, ref double dst, bool greater)
+        {
+            var cond = greater
+                ? (val > dst)
+                : (val < dst);
+
+            if (cond) dst = val;
         }
     }
 }

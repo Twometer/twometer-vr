@@ -4,7 +4,7 @@ using System;
 
 namespace TVR.Service.Core.Video
 {
-    internal interface IVideoSource : IDisposable
+    public interface IVideoSource : IDisposable
     {
         Image<Bgr, byte> BgrFrame { get; }
 
