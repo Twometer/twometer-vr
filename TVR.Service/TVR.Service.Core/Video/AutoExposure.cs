@@ -36,6 +36,7 @@ namespace TVR.Service.Core.Video
             if (frames == 0)
                 Initialize();
 
+
             frames++;
             if (frames < config.WarmupFrames)
                 return;
@@ -63,7 +64,7 @@ namespace TVR.Service.Core.Video
         private void Initialize()
         {
             Loggers.Current.Log(LogLevel.Debug, "Running auto exposure");
-            exposure = config.Start - config.Step;
+            exposure = config.Start;
         }
 
         private bool IsLimitReached()
