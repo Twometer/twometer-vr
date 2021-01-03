@@ -7,9 +7,9 @@ TransformConfig:
     PFocalLength: 10
     PixelsPerMeter: 10
 ExposureConfig:
-    Start: 50
+    Start: 100
     Limit: 0
-    Step: -3
+    Step: -5
     WarmupFrames: 12
     CooldownFrames: 3
     StableFrames: 2
