@@ -31,7 +31,7 @@ public:
         digitalWrite(PIN_CLK, HIGH);
         digitalWrite(PIN_CE, LOW); // Enable the clock
 
-        shiftedIn = shiftIn(PIN_DATA, PIN_CLK, MSBFIRST);
+        shiftedIn = ~shiftIn(PIN_DATA, PIN_CLK, MSBFIRST);
         digitalWrite(PIN_CE, HIGH);
     }
 

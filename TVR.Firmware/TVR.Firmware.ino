@@ -28,8 +28,6 @@ void setup()
 
     Logger::info("Setting up hardware...");
     buttonInput.begin();
-
-    //delay(500); // Wait for the IMU to start up
     poseInput.begin();
 
     Logger::info("Connecting to WiFi " WIFI_SSID "...");
