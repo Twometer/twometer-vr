@@ -36,7 +36,7 @@ namespace TVR.Service.Debug
                 sb.AppendLine("    Serial No: " + tracker.SerialNo);
                 sb.AppendLine("    Class: " + tracker.TrackerClass);
                 sb.AppendLine("    Color: " + tracker.TrackerColor);
-                sb.AppendLine("    Buttons: " + tracker.Buttons);
+                sb.AppendLine("    Buttons: " + Convert.ToString(tracker.Buttons, 2));
                 sb.AppendLine("    Position: " + tracker.Position);
                 sb.AppendLine("    Rotation: " + tracker.Rotation);
                 sb.AppendLine("    InRange: " + tracker.InRange);

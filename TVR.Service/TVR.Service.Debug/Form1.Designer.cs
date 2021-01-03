@@ -50,13 +50,14 @@ namespace TVR.Service.Debug
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label1.Location = new System.Drawing.Point(13, 43);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(332, 398);
+            this.label1.Size = new System.Drawing.Size(775, 398);
             this.label1.TabIndex = 1;
             this.label1.Text = "state";
             // 
             // timer1
             // 
             this.timer1.Enabled = true;
+            this.timer1.Interval = 16;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
