@@ -146,5 +146,10 @@ namespace TVR.Service.Debug
         {
             cameraSetup.BeginDepthSamplingCountdown();
         }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            service.VideoSource.Exposure = 30;
+        }
     }
 }
