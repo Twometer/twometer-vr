@@ -11,7 +11,7 @@ namespace TVR.Service.Core.Network.Driver
     {
         private static IPEndPoint DriverEndpoint { get; } = new IPEndPoint(IPAddress.Loopback, NetConfig.DriverPort);
 
-        public DriverClient(TrackerManager trackerManager) : base((ushort) DriverEndpoint.Port)
+        public DriverClient(TrackerManager trackerManager) : base()
         {
             trackerManager.TrackerAdded += SendTrackerConnect;
             trackerManager.TrackerRemoved += SendTrackerDisconnect;

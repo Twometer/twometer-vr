@@ -23,8 +23,8 @@ namespace TVR.Service.Core.Model
         {
             Loggers.Current.Log(LogLevel.Debug, $"Tracker {tracker.SerialNo} connected with id {tracker.TrackerId}");
 
-            trackers.Add(tracker.TrackerId, tracker);
             TrackerAdded?.Invoke(tracker);
+            trackers.Add(tracker.TrackerId, tracker);
         }
 
         public void RemoveTracker(byte id)
