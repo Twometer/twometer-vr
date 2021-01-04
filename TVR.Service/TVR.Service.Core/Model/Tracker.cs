@@ -1,6 +1,7 @@
 ﻿using Emgu.CV.Structure;
 using System;
 using System.Numerics;
+using TVR.Service.Core.Tracking;
 
 namespace TVR.Service.Core.Model
 {
@@ -29,6 +30,8 @@ namespace TVR.Service.Core.Model
         public CircleF Circle { get; set; }
 
         public float TrackingAccuracy { get; set; }
+
+        internal ICameraTransform CameraTransform { get; set; }
 
         public Tracker(byte trackerId, string serialNo, TrackerClass trackerClass, TrackerColor trackerColor)
         {

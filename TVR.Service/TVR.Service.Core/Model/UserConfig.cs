@@ -31,7 +31,9 @@ namespace TVR.Service.Core.Model
 
         public int RefreshRate { get; set; }
 
-        public int PositionSmoothing { get; set; }
+        public int XYPositionSmoothing { get; set; }
+        
+        public int ZPositionSmoothing { get; set; }
 
         public int TrackerTimeout { get; set; }
 

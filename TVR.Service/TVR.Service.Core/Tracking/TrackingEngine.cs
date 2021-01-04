@@ -13,7 +13,6 @@ namespace TVR.Service.Core.Tracking
         private readonly TrackerManager trackerManager;
         private readonly IConfigProvider configProvider;
         private readonly IVideoSource videoSource;
-        private readonly ICameraTransform cameraTransform;
 
         private Image<Gray, byte> frame;
 
@@ -25,7 +24,6 @@ namespace TVR.Service.Core.Tracking
             this.trackerManager = trackerManager;
             this.configProvider = configProvider;
             this.videoSource = videoSource;
-            this.cameraTransform = new SimpleCameraTransform(configProvider);
         }
 
         public void Update()
@@ -41,6 +39,11 @@ namespace TVR.Service.Core.Tracking
 
         private void TrackDevice(Tracker device, ColorRange[] colorRanges)
         {
+            if (device.CameraTransform == null)
+            {
+                device.CameraTransform = new SimpleCameraTransform(configProvider);
+            }
+
             ImageProcessing.ColorFilter(videoSource.HsvFrame, frame, tempFrame, colorRanges, videoSource.FrameBrightness);
 
             using (var contours = new VectorOfVectorOfPoint())
@@ -59,7 +62,7 @@ namespace TVR.Service.Core.Tracking
                     // Only update position if we have some confidence in what we do
                     if (device.TrackingAccuracy > configProvider.UserConfig.Input.MinAccuracy)
                     {
-                        device.Position = cameraTransform.Transform(circle) + configProvider.UserConfig.Offset;
+                        device.Position = device.CameraTransform.Transform(circle) + configProvider.UserConfig.Offset;
                     }
                     else
                     {
