@@ -19,6 +19,8 @@ namespace TVR.Service.Core.Tracking
         private readonly Mat tempFrame = new Mat();
         private readonly Mat hierarchy = new Mat();
 
+        public Image<Gray, byte> DebugFrame => frame;
+
         public TrackingEngine(TrackerManager trackerManager, IConfigProvider configProvider, IVideoSource videoSource)
         {
             this.trackerManager = trackerManager;

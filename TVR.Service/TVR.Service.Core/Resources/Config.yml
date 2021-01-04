@@ -9,7 +9,7 @@ Hardware:
             - Minimum: { H: 0, S: 150, V: 69 }
               Maximum: { H: 20, S: 255, V: 255 }
             - Minimum: { H: 160, S: 150, V: 69 }
-              Maximum: { H: 179, S: 255, V: 255 }
+              Maximum: { H: 180, S: 255, V: 255 }
         Blue:
             - Minimum: { H: 94, S: 143, V: 69 }
               Maximum: { H: 107, S: 255, V: 255 }
@@ -17,14 +17,15 @@ Hardware:
 # Room config
 Offset:
     X: 0
-    Y: 0
-    Z: 0
+    Y: 1.55
+    Z: -1.1
     
 # User input config
 Input:
     PoseResetButton: Menu
     PoseResetDelay: 0.2
     RefreshRate: 120
-    PositionSmoothing: 2
-    TrackerTimeout: 30
+    XYPositionSmoothing: 2
+    ZPositionSmoothing: 6
+    TrackerTimeout: 5
     MinAccuracy: 0.4

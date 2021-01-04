@@ -15,4 +15,5 @@ ExposureConfig:
     StableFrames: 10
     MaximumChange: 0.5
     Threshold: 15
-Distortion: []
+Distortion: [-0.10771770030260086, 0.1213262677192688, 0.04875476285815239, 0.00091733073350042105, 0.00010589254816295579]
+# TODO: https://dominoc925.blogspot.com/2016/04/using-emgucvopencv-to-correct-optical.html and https://github.com/caulifla/emgucv

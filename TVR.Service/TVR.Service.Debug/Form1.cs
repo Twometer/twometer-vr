@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emgu.CV;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -47,7 +48,7 @@ namespace TVR.Service.Debug
                 service.VideoSource.BgrFrame.Draw(tracker.Circle, new Emgu.CV.Structure.Bgr(255, 255, 255));
             }
             lbTrackerState.Text = sb.ToString();
-            imageBox1.Image = service.VideoSource.BgrFrame;
+            imageBox1.Image = checkBox1.Checked ? service.DebugFrame.Mat : service.VideoSource.BgrFrame.Mat;
             lbCalibState.Text = $"p_focal_length: {cameraSetup.PFocalLength}\n\npx_per_meter: {cameraSetup.PixelsPerMeter}";
 
             var calibTracker = service.TrackerManager.Trackers.FirstOrDefault();

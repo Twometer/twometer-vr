@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using TVR.Service.Core.IO;
@@ -17,6 +19,7 @@ namespace TVR.Service.Core
         public IConfigProvider ConfigProvider { get; }
         public TrackerManager TrackerManager { get; } = new TrackerManager();
         public IVideoSource VideoSource => videoSource;
+        public Image<Gray, byte> DebugFrame => trackingEngine.DebugFrame;
 
         private readonly CancellationTokenSource cancellationTokenSource;
         private readonly CancellationToken cancellationToken;
