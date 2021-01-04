@@ -6,9 +6,9 @@ Hardware:
     SphereSize: 0.04
     ColorProfiles:
         Red:
-            - Minimum: { H: 0, S: 93, V: 69 }
-              Maximum: { H: 30, S: 221, V: 255 }
-            - Minimum: { H: 100, S: 93, V: 69 }
+            - Minimum: { H: 0, S: 150, V: 69 }
+              Maximum: { H: 20, S: 221, V: 255 }
+            - Minimum: { H: 110, S: 150, V: 69 }
               Maximum: { H: 127, S: 221, V: 255 }
         Blue:
             - Minimum: { H: 94, S: 143, V: 69 }
