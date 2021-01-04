@@ -53,6 +53,7 @@ namespace TVR.Service.Core.Video
                 exposure += config.Step;
                 cooldown = config.CooldownFrames;
                 videoSource.Exposure = exposure;
+                Loggers.Current.Log(LogLevel.Debug, $"Auto exposure level: {exposure}");
             }
             else
             {
@@ -65,14 +66,15 @@ namespace TVR.Service.Core.Video
         {
             Loggers.Current.Log(LogLevel.Debug, "Running auto exposure");
             exposure = config.Start;
+            videoSource.Exposure = exposure;
         }
 
         private bool IsLimitReached()
         {
             if (config.Step > 0)
-                return exposure < config.Limit;
-            else
                 return exposure > config.Limit;
+            else
+                return exposure < config.Limit;
         }
 
         private bool HasBrightnessChanged(double brightness)

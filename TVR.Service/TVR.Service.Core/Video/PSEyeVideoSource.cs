@@ -58,7 +58,7 @@ namespace TVR.Service.Core.Video
 
             CLEyeSetCameraParameter(camera, CLEyeCameraParameter.CLEYE_AUTO_EXPOSURE, 0);
             CLEyeSetCameraParameter(camera, CLEyeCameraParameter.CLEYE_AUTO_GAIN, 0);
-            CLEyeSetCameraParameter(camera, CLEyeCameraParameter.CLEYE_GAIN, 0);
+            CLEyeSetCameraParameter(camera, CLEyeCameraParameter.CLEYE_GAIN, 15);
 
             rawFrame = new Image<Bgra, byte>(width, height);
             BgrFrame = new Image<Bgr, byte>(width, height);
