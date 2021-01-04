@@ -4,8 +4,8 @@ FrameWidth: 640
 FrameHeight: 480
 Framerate: 60
 TransformConfig:
-    PFocalLength: 10
-    PixelsPerMeter: 10
+    PFocalLength: 568.18
+    PixelsPerMeter: 503.80
 ExposureConfig:
     Start: 75
     Limit: 0
