@@ -52,7 +52,7 @@ DriverPose_t TrackerDriver::GetPose() {
     pose.vecPosition[1] = state.position.y;
     pose.vecPosition[2] = state.position.z;
 
-    pose.qRotation = {state.rotation.x, state.rotation.y, state.rotation.z, state.rotation.w};
+    pose.qRotation = {state.rotation.x, state.rotation.y, state.rotation.w, -state.rotation.z};
 
     return pose;
 }
@@ -72,7 +72,8 @@ int32_t TrackerDriver::GetTrackerRole() {
 }
 
 bool TrackerDriver::IsButtonPressed(TrackerButton button) {
-    return (tracker->trackerState.buttons & static_cast<uint16_t> (button)) != 0;
+    auto buttonMask = 1u << static_cast<uint16_t> (button);
+    return (tracker->trackerState.buttons & buttonMask) != 0;
 }
 
 void TrackerDriver::Update() {
