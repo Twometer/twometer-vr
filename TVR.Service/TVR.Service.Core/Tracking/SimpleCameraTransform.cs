@@ -23,7 +23,7 @@ namespace TVR.Service.Core.Tracking
         public Vector3 Transform(CircleF circle)
         {
             var relativePos = new PointF(circle.Center.X - frameCenter.X, circle.Center.Y - frameCenter.Y);
-            var diameter = circle.Area * 2.0f;
+            var diameter = circle.Radius * 2.0f;
 
             var z = ComputeDistance(diameter);
             var x = -relativePos.X * z / transformConfig.PixelsPerMeter;

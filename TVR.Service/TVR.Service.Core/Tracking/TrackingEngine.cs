@@ -58,7 +58,7 @@ namespace TVR.Service.Core.Tracking
                     device.Circle = circle;
 
                     // Only update position if we have some confidence in what we do
-                    if (device.TrackingAccuracy > 0.4)
+                    if (device.TrackingAccuracy > configProvider.UserConfig.Input.MinAccuracy)
                     {
                         device.Position = cameraTransform.Transform(circle) + configProvider.UserConfig.Offset;
                     }

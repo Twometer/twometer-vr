@@ -27,3 +27,4 @@ Input:
     RefreshRate: 120
     PositionSmoothing: 2
     TrackerTimeout: 30
+    MinAccuracy: 0.4

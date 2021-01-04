@@ -34,5 +34,7 @@ namespace TVR.Service.Core.Model
         public int PositionSmoothing { get; set; }
 
         public int TrackerTimeout { get; set; }
+
+        public float MinAccuracy { get; set; }
     }
 }
