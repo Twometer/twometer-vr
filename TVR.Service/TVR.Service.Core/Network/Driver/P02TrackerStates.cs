@@ -24,7 +24,7 @@ namespace TVR.Service.Core.Network.Driver
                 buffer.Write(state.Buttons);
                 buffer.Write(state.Position);
                 buffer.Write(state.Rotation);
-                buffer.Write(state.InRange ? 1 : 0);
+                buffer.Write((byte)(state.InRange ? 1 : 0));
             }
         }
 
