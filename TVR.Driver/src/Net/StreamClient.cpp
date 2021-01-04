@@ -51,8 +51,11 @@ void StreamClient::ReceiveLoop() {
                 auto numItems = buffer.Get<uint8_t>();
                 for (int i = 0; i < numItems; i++) {
                     auto trackerId = buffer.Get<uint8_t>();
+                    auto tracker = trackers[trackerId];
+                    if (tracker == nullptr)
+                        continue;
 
-                    auto &state = trackers[trackerId]->trackerState;
+                    auto &state = tracker->trackerState;
                     state.buttons = buffer.Get<uint16_t>();
                     state.position.x = buffer.Get<float>();
                     state.position.y = buffer.Get<float>();

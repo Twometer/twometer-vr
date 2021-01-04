@@ -22,12 +22,12 @@ public:
         T val;
         size_t valSize = sizeof(val);
 
-        memcpy(&val, data + offset, valSize);
-        offset += valSize;
-
         if (offset >= size) {
             throw std::out_of_range("Buffer access out of range");
         }
+
+        memcpy(&val, data + offset, valSize);
+        offset += valSize;
 
         return val;
     }

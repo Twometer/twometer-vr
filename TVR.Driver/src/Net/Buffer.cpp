@@ -16,7 +16,7 @@ std::string Buffer::GetString() {
     }
 
     char *string = new char[len + 1];
-    strcpy_s(string, len, ptr);
+    strcpy_s(string, len +1, ptr);
 
     return std::string(string);
 }
