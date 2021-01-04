@@ -26,7 +26,7 @@ namespace TVR.Service.Core.Video
             {
                 var range = colorRanges[i];
                 CvInvoke.InRange(srcFrame, new ScalarArray(AdaptMinimum(range.Minimum.CvScalar, baseBrightness)), new ScalarArray(range.Maximum.CvScalar), tmpFrame);
-                CvInvoke.BitwiseOr(tmpFrame, dstFrame, dstFrame);
+                CvInvoke.Add(tmpFrame, dstFrame, dstFrame);
             }
 
             CvInvoke.Threshold(dstFrame, dstFrame, 10, 255, ThresholdType.Binary);
@@ -35,6 +35,8 @@ namespace TVR.Service.Core.Video
         private static MCvScalar AdaptMinimum(MCvScalar minimum, double brightness)
         {
             minimum.V2 += brightness;
+            if (minimum.V2 > 255)
+                minimum.V2 = 255;
             return minimum;
         }
     }

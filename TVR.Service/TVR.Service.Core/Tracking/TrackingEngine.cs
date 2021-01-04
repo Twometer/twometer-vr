@@ -2,7 +2,6 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
-using System.Diagnostics;
 using TVR.Service.Core.IO;
 using TVR.Service.Core.Model;
 using TVR.Service.Core.Video;
