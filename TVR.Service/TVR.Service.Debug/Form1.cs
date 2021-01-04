@@ -14,6 +14,8 @@ namespace TVR.Service.Debug
     public partial class Form1 : Form
     {
         private TvrService service;
+        private CameraSetup cameraSetup = new CameraSetup();
+        private bool online;
 
         public Form1()
         {
@@ -22,13 +24,13 @@ namespace TVR.Service.Debug
 
         private void button1_Click(object sender, EventArgs e)
         {
-            service = new TvrService();
-            service.Start();
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (service == null) return;
+            if (!online) return;
+
             var sb = new StringBuilder();
             foreach (var tracker in service.TrackerManager.Trackers)
             {
@@ -44,8 +46,13 @@ namespace TVR.Service.Debug
                 sb.AppendLine("    Accuracy: " + tracker.TrackingAccuracy);
                 service.VideoSource.BgrFrame.Draw(tracker.Circle, new Emgu.CV.Structure.Bgr(255, 255, 255));
             }
-            label1.Text = sb.ToString();
+            lbTrackerState.Text = sb.ToString();
             imageBox1.Image = service.VideoSource.BgrFrame;
+            lbCalibState.Text = $"p_focal_length: {cameraSetup.PFocalLength}\n\npx_per_meter: {cameraSetup.PixelsPerMeter}";
+
+            var calibTracker = service.TrackerManager.Trackers.FirstOrDefault();
+            if (calibTracker != null)
+                cameraSetup.Update(calibTracker);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -78,7 +85,7 @@ namespace TVR.Service.Debug
             CompareAndSet(pix.Satuation, ref maxs, true);
             CompareAndSet(pix.Value, ref maxv, true);
 
-            label2.Text = $"lH: {minh} lS: {mins} lV: {minv}\n\nhH: {maxh} hS: {maxs} hV: {maxv}";
+            lbColorState.Text = $"lH: {minh} lS: {mins} lV: {minv}\n\nhH: {maxh} hS: {maxs} hV: {maxv}";
         }
 
         private void CompareAndSet(double val, ref double dst, bool greater)
@@ -88,6 +95,56 @@ namespace TVR.Service.Debug
                 : (val < dst);
 
             if (cond) dst = val;
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            minh = mins = minv = 999f;
+            maxh = maxs = maxv = 0f;
+            lbColorState.Text = "";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            cameraSetup.StatusMessageReceived += CameraSetup_StatusMessageReceived;
+        }
+
+        private void CameraSetup_StatusMessageReceived(object sender, CameraSetup.StatusMessage e)
+        {
+            switch (e)
+            {
+                case CameraSetup.StatusMessage.CountdownChanged:
+                    lbStatus.Text = $"Move controller 1m away from cam; sampling will begin in {cameraSetup.TimerSeconds} seconds...";
+                    break;
+                case CameraSetup.StatusMessage.BeginSamplingCircleDiameter:
+                    lbStatus.Text = $"Sampling! Please do not move the controller!";
+                    break;
+                case CameraSetup.StatusMessage.AwaitingZeroPosition:
+                    lbStatus.Text = "Complete. Now please stay at one meter distance from the camera and move all the way to the left side of the frame!";
+                    break;
+                case CameraSetup.StatusMessage.BeginSamplingPixelsPerMeter:
+                    lbStatus.Text = "Horizontal calibration starting. Please move one meter to the right and back again!";
+                    break;
+                case CameraSetup.StatusMessage.Completed:
+                    lbStatus.Text = "Setup completed successfully!";
+                    break;
+            }
+        }
+
+        private async void Form1_Shown(object sender, EventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                service = new TvrService();
+                service.Start();
+            });
+            lbStatus.Text = "Online";
+            online = true;
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            cameraSetup.BeginDepthSamplingCountdown();
         }
     }
 }
