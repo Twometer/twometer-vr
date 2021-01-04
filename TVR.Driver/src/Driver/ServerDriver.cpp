@@ -19,12 +19,19 @@ vr::EVRInitError ServerDriver::Init(vr::IVRDriverContext *pDriverContext) {
             auto deviceClass = GetDeviceClass(tracker);
             VRServerDriverHost()->TrackedDeviceAdded(tracker->serialNo.c_str(), deviceClass, driver);
             knownTrackers.insert(tracker->serialNo);
+            tracker->context = driver;
         }
 
         // Always set to connected
         tracker->connected = true;
 
         VRDriverLog()->Log("New tracker connected");
+    });
+
+    streamClient->SetUpdateTrackerCallback([](TrackerInfo *tracker) {
+        auto driver = (TrackerDriver *) tracker->context;
+        if (driver != nullptr)
+            driver->Update();
     });
 
     streamClient->SetRemoveTrackerCallback([](TrackerInfo *tracker) {

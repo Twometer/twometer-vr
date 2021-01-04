@@ -25,6 +25,7 @@ private:
 
     typedef std::function<void(TrackerInfo *)> tracker_cb;
     tracker_cb addTrackerCallback{};
+    tracker_cb updateTrackerCallback{};
     tracker_cb removeTrackerCallback{};
 
 public:
@@ -35,6 +36,8 @@ public:
     void Close();
 
     void SetAddTrackerCallback(const tracker_cb &callback);
+
+    void SetUpdateTrackerCallback(const tracker_cb &callback);
 
     void SetRemoveTrackerCallback(const tracker_cb &callback);
 

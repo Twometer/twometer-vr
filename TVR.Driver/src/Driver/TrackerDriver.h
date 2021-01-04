@@ -11,6 +11,7 @@
 
 class TrackerDriver : public vr::ITrackedDeviceServerDriver {
 private:
+    uint32_t objectId{0};
     TrackerInfo *tracker;
 
     vr::VRInputComponentHandle_t buttonA{};
@@ -25,7 +26,7 @@ private:
 public:
     explicit TrackerDriver(TrackerInfo *tracker);
 
-    vr::EVRInitError Activate(uint32_t unObjectId) override;
+    vr::EVRInitError Activate(uint32_t objectId) override;
 
     vr::DriverPose_t GetPose() override;
 
@@ -36,6 +37,8 @@ public:
     void *GetComponent(const char *pchComponentNameAndVersion) override { return nullptr; };
 
     void DebugRequest(const char *pchRequest, char *pchResponseBuffer, uint32_t unResponseBufferSize) override {};
+
+    void Update();
 
 private:
     int32_t GetTrackerRole();

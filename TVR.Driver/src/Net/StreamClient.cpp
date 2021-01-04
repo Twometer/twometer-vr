@@ -67,6 +67,7 @@ void StreamClient::ReceiveLoop() {
                     state.rotation.w = buffer.Get<float>();
 
                     state.inRange = buffer.Get<bool>();
+                    updateTrackerCallback(tracker);
                 }
 
                 break;
@@ -87,6 +88,12 @@ void StreamClient::SetAddTrackerCallback(const StreamClient::tracker_cb &callbac
     addTrackerCallback = callback;
 }
 
+void StreamClient::SetUpdateTrackerCallback(const StreamClient::tracker_cb &callback) {
+    updateTrackerCallback = callback;
+}
+
 void StreamClient::SetRemoveTrackerCallback(const StreamClient::tracker_cb &callback) {
     removeTrackerCallback = callback;
 }
+
+

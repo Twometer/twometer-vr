@@ -10,8 +10,10 @@ using namespace vr;
 
 TrackerDriver::TrackerDriver(TrackerInfo *tracker) : tracker(tracker) {}
 
-EVRInitError TrackerDriver::Activate(uint32_t unObjectId) {
-    PropertyContainerHandle_t propertyContainer = VRProperties()->TrackedDeviceToPropertyContainer(unObjectId);
+EVRInitError TrackerDriver::Activate(uint32_t objectId) {
+    this->objectId = objectId;
+
+    PropertyContainerHandle_t propertyContainer = VRProperties()->TrackedDeviceToPropertyContainer(objectId);
     VRProperties()->SetStringProperty(propertyContainer, Prop_ModelNumber_String, "TVRCTRLV2");
     VRProperties()->SetStringProperty(propertyContainer, Prop_SerialNumber_String, tracker->serialNo.c_str());
     VRProperties()->SetStringProperty(propertyContainer, Prop_RenderModelName_String, "Twometer VR Tracker");
@@ -34,8 +36,6 @@ EVRInitError TrackerDriver::Activate(uint32_t unObjectId) {
 }
 
 DriverPose_t TrackerDriver::GetPose() {
-    UpdateButtons();
-
     TrackerState &state = tracker->trackerState;
     DriverPose_t pose{};
 
@@ -71,7 +71,13 @@ int32_t TrackerDriver::GetTrackerRole() {
     }
 }
 
-void TrackerDriver::UpdateButtons() {
+bool TrackerDriver::IsButtonPressed(TrackerButton button) {
+    return (tracker->trackerState.buttons & static_cast<uint16_t> (button)) != 0;
+}
+
+void TrackerDriver::Update() {
+    VRServerDriverHost()->TrackedDevicePoseUpdated(objectId, GetPose(), sizeof(DriverPose_t));
+
     VRDriverInput()->UpdateBooleanComponent(buttonA, IsButtonPressed(TrackerButton::A), 0);
     VRDriverInput()->UpdateBooleanComponent(buttonB, IsButtonPressed(TrackerButton::B), 0);
     VRDriverInput()->UpdateBooleanComponent(buttonUp, IsButtonPressed(TrackerButton::Up), 0);
@@ -80,10 +86,6 @@ void TrackerDriver::UpdateButtons() {
     VRDriverInput()->UpdateBooleanComponent(buttonDown, IsButtonPressed(TrackerButton::Down), 0);
     VRDriverInput()->UpdateBooleanComponent(buttonMenu, IsButtonPressed(TrackerButton::Menu), 0);
     VRDriverInput()->UpdateBooleanComponent(buttonTrigger, IsButtonPressed(TrackerButton::Trigger), 0);
-}
-
-bool TrackerDriver::IsButtonPressed(TrackerButton button) {
-    return (tracker->trackerState.buttons & static_cast<uint16_t> (button)) != 0;
 }
 
 
