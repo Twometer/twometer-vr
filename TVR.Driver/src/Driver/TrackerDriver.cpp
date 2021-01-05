@@ -89,5 +89,9 @@ void TrackerDriver::Update() {
     VRDriverInput()->UpdateBooleanComponent(buttonTrigger, IsButtonPressed(TrackerButton::Trigger), 0);
 }
 
+void TrackerDriver::SetTracker(TrackerInfo *tracker) {
+    this->tracker = tracker;
+}
+
 
 

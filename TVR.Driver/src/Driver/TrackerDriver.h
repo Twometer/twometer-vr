@@ -40,10 +40,10 @@ public:
 
     void Update();
 
+    void SetTracker(TrackerInfo *tracker);
+
 private:
     int32_t GetTrackerRole();
-
-    void UpdateButtons();
 
     bool IsButtonPressed(TrackerButton button);
 };

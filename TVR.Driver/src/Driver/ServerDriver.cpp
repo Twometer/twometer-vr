@@ -3,7 +3,6 @@
 //
 
 #include "ServerDriver.h"
-#include "TrackerDriver.h"
 
 using namespace vr;
 
@@ -13,16 +12,22 @@ vr::EVRInitError ServerDriver::Init(vr::IVRDriverContext *pDriverContext) {
     streamClient = new StreamClient();
 
     streamClient->SetAddTrackerCallback([this](TrackerInfo *tracker) {
-        // Only register a new tracker if it does not already exist
-        if (knownTrackers.find(tracker->serialNo) == knownTrackers.end()) {
+        if (knownDrivers.find(tracker->serialNo) == knownDrivers.end()) {
+            // Only register a new driver if it does not already exist
             auto driver = new TrackerDriver(tracker);
             auto deviceClass = GetDeviceClass(tracker);
             VRServerDriverHost()->TrackedDeviceAdded(tracker->serialNo.c_str(), deviceClass, driver);
-            knownTrackers.insert(tracker->serialNo);
+
             tracker->context = driver;
+            knownDrivers[tracker->serialNo] = driver;
+        } else {
+            // If it exists, reuse it for the new tracker info
+            auto driver = knownDrivers[tracker->serialNo];
+            tracker->context = driver;
+            driver->SetTracker(tracker);
         }
 
-        // Always set to connected
+        // Always set connected
         tracker->connected = true;
 
         VRDriverLog()->Log("New tracker connected");
