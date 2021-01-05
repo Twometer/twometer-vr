@@ -52,7 +52,7 @@ DriverPose_t TrackerDriver::GetPose() {
     pose.vecPosition[1] = state.position.y;
     pose.vecPosition[2] = state.position.z;
 
-    pose.qRotation = {state.rotation.x, state.rotation.y, state.rotation.w, -state.rotation.z};
+    pose.qRotation = {state.rotation.x, state.rotation.y, state.rotation.z, state.rotation.w};
 
     return pose;
 }

@@ -3,6 +3,7 @@ using Emgu.CV.Structure;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Threading;
 using TVR.Service.Core.Extensions;
@@ -156,7 +157,8 @@ namespace TVR.Service.Core
                 // ... then reset pose for all controllers
                 foreach (var tracker in TrackerManager.Trackers)
                 {
-                    tracker.RotationOffset = tracker.Rotation.Invert();
+                    var off = new Quaternion(tracker.Rotation.Y, tracker.Rotation.Z, tracker.Rotation.W, tracker.Rotation.X);
+                    tracker.RotationOffset = off.Invert();
                 }
                 poseResetExecuted = true;
                 Loggers.Current.Log(LogLevel.Info, "Pose reset");

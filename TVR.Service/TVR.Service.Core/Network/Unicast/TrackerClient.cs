@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using TVR.Service.Core.Extensions;
 using TVR.Service.Core.Logging;
 using TVR.Service.Core.Model;
 
@@ -26,7 +27,7 @@ namespace TVR.Service.Core.Network.Unicast
                 state.Deserialize(buf);
 
                 var tracker = trackerManager.GetTracker(state.TrackerId);
-                tracker.Rotation = state.Rotation;
+                tracker.Rotation = state.Rotation.ICM2SteamVR();
                 tracker.Buttons = state.Buttons;
                 tracker.LastHeartbeat = DateTime.Now;
             }
