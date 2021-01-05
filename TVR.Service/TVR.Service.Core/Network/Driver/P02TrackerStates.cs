@@ -51,7 +51,7 @@ namespace TVR.Service.Core.Network.Driver
 
             public static TrackerState FromTracker(Tracker tracker)
             {
-                return new TrackerState(tracker.TrackerId, tracker.Buttons, tracker.Position, tracker.Rotation, tracker.InRange);
+                return new TrackerState(tracker.TrackerId, tracker.Buttons, tracker.Position, tracker.Rotation * tracker.RotationOffset, tracker.InRange);
             }
         }
     }

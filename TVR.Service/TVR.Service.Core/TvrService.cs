@@ -1,8 +1,11 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
+using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
+using TVR.Service.Core.Extensions;
 using TVR.Service.Core.IO;
 using TVR.Service.Core.Logging;
 using TVR.Service.Core.Model;
@@ -129,6 +132,35 @@ namespace TVR.Service.Core
         {
             watchdog.Update();
             driverClient.SendTrackerStates(TrackerManager.Trackers);
+            HandlePoseReset();
+        }
+
+        private bool poseResetExecuted;
+        private DateTime? poseResetBegin;
+        private void HandlePoseReset()
+        {
+            var allPressed = TrackerManager.Trackers
+                    .Where(t => t.TrackerClass == TrackerClass.Controller)
+                    .All(t => (t.Buttons & (1 << (int)ConfigProvider.UserConfig.Input.PoseResetButton)) != 0);
+
+            if (!allPressed)
+            {
+                poseResetExecuted = false;
+                poseResetBegin = null;
+            }
+            else if (!poseResetBegin.HasValue)
+                poseResetBegin = DateTime.Now;
+
+            if (poseResetBegin.HasValue && !poseResetExecuted && (DateTime.Now - poseResetBegin.Value).TotalSeconds > ConfigProvider.UserConfig.Input.PoseResetDelay)
+            {
+                // ... then reset pose for all controllers
+                foreach (var tracker in TrackerManager.Trackers)
+                {
+                    tracker.RotationOffset = tracker.Rotation.Invert();
+                }
+                poseResetExecuted = true;
+                Loggers.Current.Log(LogLevel.Info, "Pose reset");
+            }
         }
 
         public static string Version

@@ -21,6 +21,8 @@ namespace TVR.Service.Core.Model
 
         public Quaternion Rotation { get; set; }
 
+        public Quaternion RotationOffset { get; set; } = Quaternion.Identity;
+
         public DateTime LastHeartbeat { get; set; }
 
         public TimeSpan TimeSinceLastHeartbeat => DateTime.Now - LastHeartbeat;
