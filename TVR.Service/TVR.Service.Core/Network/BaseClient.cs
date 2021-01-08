@@ -53,13 +53,27 @@ namespace TVR.Service.Core.Network
                 var data = client.EndReceive(result, ref sender);
 
                 if (data.Length <= NetConfig.MaxPacketSize)
-                    OnReceive(data, sender);
+                {
+                    HandlePacket(data, sender);
+                }
 
                 BeginReceive();
             }
-            catch (Exception e)
+            catch (ObjectDisposedException e)
             {
                 Loggers.Current.Log(LogLevel.Error, e.Message);
+            }
+        }
+
+        private void HandlePacket(byte[] data, IPEndPoint sender)
+        {
+            try
+            {
+                OnReceive(data, sender);
+            }
+            catch (Exception)
+            {
+                // drop packets with errors
             }
         }
     }
