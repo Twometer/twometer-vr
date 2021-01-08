@@ -16,3 +16,4 @@ ExposureConfig:
     MaximumChange: 2.0
     Threshold: 20
 Distortion: []
+UseAdaptiveBrightness: True

@@ -11,8 +11,8 @@ Hardware:
             - Minimum: { H: 160, S: 150, V: 69 }
               Maximum: { H: 180, S: 255, V: 255 }
         Blue:
-            - Minimum: { H: 94, S: 143, V: 69 }
-              Maximum: { H: 107, S: 255, V: 255 }
+            - Minimum: { H: 90, S: 123, V: 59 }
+              Maximum: { H: 125, S: 255, V: 255 }
       
 # Room config
 Offset:
