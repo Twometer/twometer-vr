@@ -46,7 +46,8 @@ namespace TVR.Service.Core.Tracking
                 device.CameraTransform = new SimpleCameraTransform(configProvider);
             }
 
-            ImageProcessing.ColorFilter(videoSource.HsvFrame, frame, tempFrame, colorRanges, videoSource.FrameBrightness);
+            var adaptiveBrightness = configProvider.VideoSourceConfig.UseAdaptiveBrightness ? videoSource.FrameBrightness : 0;
+            ImageProcessing.ColorFilter(videoSource.HsvFrame, frame, tempFrame, colorRanges, adaptiveBrightness);
 
             using (var contours = new VectorOfVectorOfPoint())
             {

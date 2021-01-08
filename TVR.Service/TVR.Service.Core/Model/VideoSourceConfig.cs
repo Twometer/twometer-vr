@@ -19,6 +19,8 @@ namespace TVR.Service.Core.Model
         public ExposureConfig ExposureConfig { get; set; }
 
         public float[] Distortion { get; set; }
+
+        public bool UseAdaptiveBrightness { get; set; }
     }
 
     public struct TransformConfig
