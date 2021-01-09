@@ -31,7 +31,7 @@ namespace TVR.Service.Core.Network.Unicast
                 tracker.Buttons = state.Buttons;
                 tracker.LastHeartbeat = DateTime.Now;
             }
-            else if (pid == 0x82)
+            else if (pid == 0x82) // Handshake packet
             {
                 var handshake = new P82Handshake();
                 handshake.Deserialize(buf);

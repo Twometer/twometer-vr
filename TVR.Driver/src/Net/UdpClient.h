@@ -13,14 +13,16 @@ class UdpClient {
 private:
     SOCKET sock;
 
+    sockaddr_in serverAddress{};
+
 public:
-    UdpClient();
+    UdpClient(const char *ip, uint16_t port);
 
     ~UdpClient();
 
-    void Bind(uint16_t port) const;
+    int Receive(uint8_t *buffer, int len) const;
 
-    int Receive(uint8_t* buffer, int len, int flags = 0) const;
+    void Send(const uint8_t *buffer, int len) const;
 };
 
 

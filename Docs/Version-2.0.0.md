@@ -127,11 +127,22 @@ Used to tell the driver about state updates
 [TrackerStates[] states]
 ```
 
+
+
+
 #### Tracker state
 
 ```
 [uint8 trackerId][uint16 buttons][vec3 position][vec4 rotation][bool inRange]
 ```
+
+
+
+### 0x03 Request Info
+
+Sent by the driver on starting up to request tracker information.
+
+Has no content.
 
 
 

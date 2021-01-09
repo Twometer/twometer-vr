@@ -3,9 +3,10 @@
 //
 
 #include <system_error>
+#include <iostream>
 #include "UdpClient.h"
 
-UdpClient::UdpClient() {
+UdpClient::UdpClient(const char *ip, uint16_t port) {
     WSAData data{};
     int ret = WSAStartup(MAKEWORD(2, 2), &data);
     if (ret != 0)
@@ -14,6 +15,10 @@ UdpClient::UdpClient() {
     sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (sock == INVALID_SOCKET)
         throw std::system_error(WSAGetLastError(), std::system_category(), "Error opening socket");
+
+    serverAddress.sin_family = AF_INET;
+    serverAddress.sin_port = htons(port);
+    serverAddress.sin_addr.S_un.S_addr = inet_addr(ip);
 }
 
 UdpClient::~UdpClient() {
@@ -21,24 +26,13 @@ UdpClient::~UdpClient() {
     WSACleanup();
 }
 
-void UdpClient::Bind(uint16_t port) const {
-    sockaddr_in address{};
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = htonl(INADDR_ANY);
-    address.sin_port = htons(port);
-
-    int ret = ::bind(sock, (SOCKADDR*)&address, sizeof(address));
-    if (ret < 0)
-        throw std::system_error(WSAGetLastError(), std::system_category(), "bind failed");
+int UdpClient::Receive(uint8_t *buffer, int len) const {
+    int fromSize = sizeof(serverAddress);
+    return recvfrom(sock, (char *) buffer, len, 0, (sockaddr *) &serverAddress, &fromSize);
 }
 
-int UdpClient::Receive(uint8_t *buffer, int len, int flags) const {
-    sockaddr_in from{};
-    int fromSize = sizeof(from);
-
-    int ret = recvfrom(sock, (char *) buffer, len, flags, (SOCKADDR *) &from, &fromSize);
+void UdpClient::Send(const uint8_t *buffer, int len) const {
+    int ret = sendto(sock, (const char *) buffer, len, 0, (const sockaddr *) &serverAddress, sizeof(serverAddress));
     if (ret < 0)
-        throw std::system_error(WSAGetLastError(), std::system_category(), "recvfrom failed");
-
-    return ret;
+        throw std::system_error(WSAGetLastError(), std::system_category(), "sendto failed");
 }

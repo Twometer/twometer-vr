@@ -8,11 +8,11 @@
 #include "Buffer.h"
 #include "../Utils/Constants.h"
 
-StreamClient::StreamClient() {
-    udpClient.Bind(NET_PORT);
-
+StreamClient::StreamClient() : udpClient(SERVER_IP, SERVER_PORT) {
     receiveBuffer = new uint8_t[MAX_PACKET_LEN];
     receiveThread = new std::thread([this] { ReceiveLoop(); });
+
+    TryRegister();
 }
 
 StreamClient::~StreamClient() {
@@ -23,7 +23,13 @@ StreamClient::~StreamClient() {
 
 void StreamClient::ReceiveLoop() {
     while (threadRunning) {
-        size_t received = udpClient.Receive(receiveBuffer, MAX_PACKET_LEN);
+        int received = udpClient.Receive(receiveBuffer, MAX_PACKET_LEN);
+        if (received < 0) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            TryRegister();
+            continue;
+        }
+
         Buffer buffer(receiveBuffer, received);
 
         auto packetId = buffer.Get<uint8_t>();
@@ -73,7 +79,7 @@ void StreamClient::ReceiveLoop() {
                 break;
             }
             default:
-                std::cerr << "Invalid packet with id " << packetId << " received." << std::endl;
+                std::cerr << "Invalid packet with id " << (int) packetId << " received." << std::endl;
                 break;
         }
     }
@@ -94,6 +100,11 @@ void StreamClient::SetUpdateTrackerCallback(const StreamClient::tracker_cb &call
 
 void StreamClient::SetRemoveTrackerCallback(const StreamClient::tracker_cb &callback) {
     removeTrackerCallback = callback;
+}
+
+void StreamClient::TryRegister() {
+    uint8_t loginMessage[] = {0x03};
+    udpClient.Send(loginMessage, 1);
 }
 
 

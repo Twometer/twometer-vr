@@ -7,7 +7,8 @@
 
 #include <cstdint>
 
-constexpr uint16_t NET_PORT = 20156;
+constexpr const char *SERVER_IP = "127.0.0.1";
+constexpr uint16_t SERVER_PORT = 20156;
 constexpr int MAX_PACKET_LEN = 4096;
 constexpr uint32_t UNIVERSE_ID = 2688095746;
 

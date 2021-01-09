@@ -44,6 +44,8 @@ public:
 private:
     void ReceiveLoop();
 
+    void TryRegister();
+
 };
 
 
