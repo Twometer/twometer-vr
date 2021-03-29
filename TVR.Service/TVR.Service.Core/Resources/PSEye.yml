@@ -1,11 +1,13 @@
+# Config file for the PlayStation 3 Eye camera
+
 VideoSourceType: PSEye
 VideoSourceIndex: 0
 FrameWidth: 640
 FrameHeight: 480
 Framerate: 60
 TransformConfig:
-    PFocalLength: 568.18
-    PixelsPerMeter: 503.80
+    PFocalLength: 622.72
+    PixelsPerMeter: 523.80
 ExposureConfig:
     Start: 75
     Limit: 0
