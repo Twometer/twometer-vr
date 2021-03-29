@@ -1,23 +1,19 @@
 # Firmware
 Source code for the TwometerVR firmware that runs on the ESP8266 chips.
 
-
-
-### Building
-
+## Building
 You need:
 
-- Arduino IDE (only used as upload tool)
+- Arduino IDE (used as an upload tool)
 - ESP8266 [platform files](https://github.com/esp8266/Arduino#installing-with-boards-manager)
-- ICM-20948 IMU [library](https://github.com/Twometer/ICM-20948-Arduino)
-- ESP8266 programmer
+- ICM-20948 [Arduino library](https://github.com/Twometer/ICM-20948-Arduino)
+- An ESP8266 programming device
 
+## Recommended upload settings
+- CPU Speed: 160 MHz
+- Espressif Version: 2.2.1+100
 
-
-### Features
-
-- High rotational accuracy and no yaw drift with the new ICM-20948 IMUs
-- Better way of connecting to the WiFi network (no more hard-coded credentials)
-- Automatic server discovery and IMU calibration
-- Supports many more controller inputs (buttons)
-
+## Features
+- ICM-20948 IMUs with DMP support for high accuracy
+- Automatic server discovery and runtime IMU calibration
+- Supports up to 8 button inputs (16 with a larger Shift Register)

@@ -17,7 +17,9 @@ public:
     {
         Wire.begin(PIN_SDA, PIN_SCL);
 
-#if SENSOR_USE_COMPASS == 0
+#if SENSOR_USE_COMPASS
+        icm.setFusionMode(FUSION_9_AXIS);
+#else
         icm.setFusionMode(FUSION_6_AXIS);
 #endif
 
@@ -44,11 +46,11 @@ public:
             break;
         }
 
-        icm.startSensor(INV_SENSOR_TYPE_GAME_ROTATION_VECTOR, SENSOR_PERIOD_US);
-
+        icm.setHighPowerMode(true);
 #if SENSOR_USE_COMPASS
-        icm.startSensor(INV_SENSOR_TYPE_MAGNETOMETER, SENSOR_PERIOD_US);
         icm.startSensor(INV_SENSOR_TYPE_ROTATION_VECTOR, SENSOR_PERIOD_US);
+#else
+        icm.startSensor(INV_SENSOR_TYPE_GAME_ROTATION_VECTOR, SENSOR_PERIOD_US);
 #endif
     }
 
