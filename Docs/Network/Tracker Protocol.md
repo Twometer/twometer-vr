@@ -1,6 +1,8 @@
 # Tracker Protocol
 
-Also an UDP-based binary protocol; used to tell the server about the tracker state.
+This UDP binary protocol is used for communication between the server and the trackers.
+
+
 
 ### Base structure
 
@@ -8,7 +10,7 @@ Also an UDP-based binary protocol; used to tell the server about the tracker sta
 [uint8 id][payload]
 ```
 
-I the MSB of `id` is set (`id > 0x7F`), then the lower 7 bytes of ID are treated as the ID of a management packet. If it's not  set, the packet is interpreted as a tracker state packet and the lower 7 bytes are the tracker ID.
+If the MSB of `id` is set (`id & 0x80 != 0`), then the lower 7 bytes of ID are treated as the ID of a management packet. If it's not  set, the packet is interpreted as a tracker state packet and the lower 7 bytes are the tracker ID.
 
 
 

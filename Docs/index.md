@@ -1,7 +1,24 @@
-# Home
+# Welcome
 
-TwometerVR is a project intended for people who have a virtual reality headset such as the Oculus DK2, that have no hand trackers/controllers to go along with it. It provides an open-source alternative to expensive commercial devices such as PS Move or the official Oculus Touch trackers. Currently, TwometerVR works with SteamVR and Windows.
+TwometerVR is an open-source alternative to commercial VR hand/body tracking systems.
 
+It's primarily intended for those who have a VR headset such as the Oculus DK2 that don't include controllers. It is a low-cost alternative to expensive commercial devices such as the PS Move or Oculus Touch system.
 
+## Features
 
-Here, you can find technical documentation about how the trackers can be built, programmed and extended.
+- 3D hand tracking controllers with 7 buttons and 9-DoF IMUs
+- Works with BeatSaber, VRChat, or any other SteamVR game
+- Low-cost with around $15 per controller
+- Fully open-source and open-hardware
+
+Although there is no implementation at the moment, the system supports a lot of trackers and can therefore support 5-point body tracking.
+
+## Getting started
+
+As this is currently a hobby project of mine, there are no ready-made products or kits available for purchase.
+
+To learn about the way the system works, check out the [system structure page](/Basics/System structure). If you're interested in the hardware, you can find all the required 3D models and PCB layouts on the [hardware page](Hardware/). The source code is available in the [GitHub repo](https://github.com/Twometer/twometer-vr).
+
+## Pictures
+
+todo

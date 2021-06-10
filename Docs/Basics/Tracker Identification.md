@@ -1,6 +1,6 @@
 # Tracker identification
 
-When registering with the server, the tracker transmits its class, color and serial number. The server then generates a unique 8-bit ID for that tracker. For subsequent pose updates, only this ID is sent.
+When registering with the server, the tracker transmits its class, color and serial number. The server then generates a unique 7-bit ID for that tracker. For subsequent pose updates, only this ID is sent.
 
 ### Tracker colors
 
@@ -28,6 +28,8 @@ Trackers are identified by the color of their tracking ball. The following color
 
 ### Tracker IDs
 
-Tracker IDs are a random ID that is used to identify all trackers after `0x82 Handshake`. 
+Tracker IDs are randomly generated numbers that are used to easily identify trackers after a `0x82 Handshake` packet. 
 
 To ensure uniqueness in the current tracking setup, IDs are managed by the server. The server informs the client of its ID using the `0x83 Handshake Reply` packet.
+
+More information about these packets packet can be found in the [protocol documentation](/Network/Tracker protocol).

@@ -10,7 +10,9 @@ This UDP binary protocol is used for IPC between the server and the SteamVR driv
 
 
 
-### 0x00 Tracker Connect
+### `0x00` Tracker Connect
+
+Sent by the server to inform the driver of a new tracker
 
 ```
 [uint8 trackerId][uint8 trackerClass][uint8 trackerColor][string serialNo]
@@ -18,7 +20,7 @@ This UDP binary protocol is used for IPC between the server and the SteamVR driv
 
 
 
-### 0x01 Tracker Disconnect
+### `0x01` Tracker Disconnect
 
 If a tracker stops sending status updates for longer than 30 seconds, it is considered offline and the server will inform the driver of a lost tracker using this message.
 
@@ -28,7 +30,7 @@ If a tracker stops sending status updates for longer than 30 seconds, it is cons
 
 
 
-### 0x02 Tracker States
+### `0x02` Tracker States
 
 Used to tell the driver about state updates
 
@@ -47,7 +49,7 @@ Used to tell the driver about state updates
 
 
 
-### 0x03 Request Info
+### `0x03` Request Info
 
 Sent by the driver on starting up to request tracker information.
 
