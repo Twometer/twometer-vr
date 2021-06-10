@@ -2,7 +2,7 @@
 
 TwometerVR is an open-source alternative to commercial VR hand/body tracking systems.
 
-It's primarily intended for those who have a VR headset such as the Oculus DK2 that don't include controllers. It is a low-cost alternative to expensive commercial devices such as the PS Move or Oculus Touch system.
+It's primarily intended for those who have VR headsets such as the Oculus DK2 that don't include controllers. It is a low-cost alternative to expensive commercial devices such as the PS Move or Oculus Touch system.
 
 ## Features
 
@@ -11,7 +11,7 @@ It's primarily intended for those who have a VR headset such as the Oculus DK2 t
 - Low-cost with around $15 per controller
 - Fully open-source and open-hardware
 
-Although there is no implementation at the moment, the system supports a lot of trackers and can therefore support 5-point body tracking.
+Although there is currently no implementation of full-body-tracking, the system is technically fully capable of supporting it.
 
 ## Getting started
 
