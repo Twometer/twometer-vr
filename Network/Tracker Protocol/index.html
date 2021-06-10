@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tracker Protocol - TwometerVR</title>
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/theme.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap" rel="stylesheet">
+
+    <!-- User styles -->
+    
+
+    <!-- Extra head -->
+    
+    
+
+    <!-- User javascript -->
+    
+    <script src="../../search/main.js"></script>
+    
+</head>
+
+<body>
+    <div class="menu-button" id="menu-button">
+        <img src="../../img/menu.svg" alt="Menu">
+    </div>
+
+    <main class="w-100 d-flex flex-row">
+        <section class="nav" id="nav">
+            <div class="nav-content">
+                <header class="nav-header">
+                    
+    <img src="../../img/logo.png" alt="" width=32>
+
+                    TwometerVR
+                </header>
+
+                
+                    
+                    
+<a href="../.." class="nav-item ">
+    Welcome
+</a>
+
+                
+                    
+                    
+<div class="nav-item header">
+    Basics
+</div>
+<div class="sublist">
+    
+        
+        
+<a href="../../Basics/Hardware/" class="nav-item ">
+    Hardware files
+</a>
+
+    
+        
+        
+<a href="../../Basics/System%20structure/" class="nav-item ">
+    System structure
+</a>
+
+    
+        
+        
+<a href="../../Basics/Tracker%20Identification/" class="nav-item ">
+    Tracker identification
+</a>
+
+    
+</div>
+
+                
+                    
+                    
+<div class="nav-item header">
+    Meta
+</div>
+<div class="sublist">
+    
+        
+        
+<a href="../../Meta/Definitions/" class="nav-item ">
+    Definitions
+</a>
+
+    
+        
+        
+<a href="../../Meta/Naming/" class="nav-item ">
+    Naming
+</a>
+
+    
+        
+        
+<a href="../../Meta/Versioning/" class="nav-item ">
+    Versioning
+</a>
+
+    
+</div>
+
+                
+                    
+                    
+<div class="nav-item header">
+    Network
+</div>
+<div class="sublist">
+    
+        
+        
+<a href="../Driver%20Protocol/" class="nav-item ">
+    Driver Protocol
+</a>
+
+    
+        
+        
+<a href="./" class="nav-item active">
+    Tracker Protocol
+</a>
+
+    
+</div>
+
+                
+            </div>
+        </section>
+        <section class="flex-fill">
+            <div class="main-content" id="main-content">
+                
+                <h1 id="tracker-protocol">Tracker Protocol</h1>
+<p>This UDP binary protocol is used for communication between the server and the trackers.</p>
+<h3 id="base-structure">Base structure</h3>
+<pre><code>[uint8 id][payload]
+</code></pre>
+<p>If the MSB of <code>id</code> is set (<code>id &amp; 0x80 != 0</code>), then the lower 7 bytes of ID are treated as the ID of a management packet. If it's not  set, the packet is interpreted as a tracker state packet and the lower 7 bytes are the tracker ID.</p>
+<h3 id="0x00-0x7f-tracker-state"><code>0x00-0x7F</code> Tracker State</h3>
+<pre><code>[uint8 trackerId][uint16 buttons][vec4 rotation]
+</code></pre>
+<p><code>buttons</code> is a bitmask for pressed buttons: LSB-&gt;MSB is button 0-&gt;15</p>
+<p>The button IDs are defined in the definitions file.</p>
+<h3 id="0x80-discovery-use-broadcast-channel"><code>0x80</code> Discovery (Use Broadcast Channel)</h3>
+<pre><code>0x80   0x02 0x16 0x39 0xA0
+pID    Identifier
+</code></pre>
+<p>Identifier is a static key that identifies the Twometer VR 2.0 universe. It's the same as the SteamVR universe ID.</p>
+<p>The server must respond with <code>0x81 Discovery Reply</code></p>
+<h3 id="0x81-discovery-reply"><code>0x81</code> Discovery Reply</h3>
+<pre><code>0x81   [string serverIp]
+</code></pre>
+<p><code>serverIp</code> contains the IP or hostname of the server.</p>
+<h3 id="0x82-handshake"><code>0x82</code> Handshake</h3>
+<pre><code>0x82   [uint8 trackerClass][uint8 colorId][string serialNo]
+</code></pre>
+<p><code>serialNo</code> is formatted as <code>[manufacturerId][chipId]</code>, so for TwometerVR controllers with an ESP Chip <code>TVR[ESP.chipId]</code>.</p>
+<p>The server must respond with <code>0x83 Handshake Reply</code></p>
+<h3 id="0x83-handshake-reply"><code>0x83</code> Handshake Reply</h3>
+<pre><code>0x83   [uint8 trackerId]
+</code></pre>
+<h3 id="0xbf-reserved"><code>..0xBF</code> Reserved</h3>
+<p>This packet range is reserved for (future) internal use.</p>
+<p>Modified trackers may use the subsequent packet ID range <code>0xC0..0xFF</code> for extended functionality.</p>
+                
+            </div>
+        </section>
+        <section class="toc">
+            <div class="toc-item header">Contents</div>
+            
+            <a href="#tracker-protocol" class="toc-item">Tracker Protocol</a>
+            
+            <a href="#base-structure" class="toc-item">Base structure</a>
+            
+            <a href="#0x00-0x7f-tracker-state" class="toc-item">0x00-0x7F Tracker State</a>
+            
+            <a href="#0x80-discovery-use-broadcast-channel" class="toc-item">0x80 Discovery (Use Broadcast Channel)</a>
+            
+            <a href="#0x81-discovery-reply" class="toc-item">0x81 Discovery Reply</a>
+            
+            <a href="#0x82-handshake" class="toc-item">0x82 Handshake</a>
+            
+            <a href="#0x83-handshake-reply" class="toc-item">0x83 Handshake Reply</a>
+            
+            <a href="#0xbf-reserved" class="toc-item">..0xBF Reserved</a>
+            
+            
+        </section>
+    </main>
+
+    <!--
+    MkDocs version      : 1.1.2
+    Docs Build Date UTC : 2021-06-10 10:14:51.989640+00:00
+    -->
+
+    <script src="../../js/theme.js"></script>
+</body>
+
+</html>

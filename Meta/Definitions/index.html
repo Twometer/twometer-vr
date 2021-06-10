@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Definitions - TwometerVR</title>
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/theme.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap" rel="stylesheet">
+
+    <!-- User styles -->
+    
+
+    <!-- Extra head -->
+    
+    
+
+    <!-- User javascript -->
+    
+    <script src="../../search/main.js"></script>
+    
+</head>
+
+<body>
+    <div class="menu-button" id="menu-button">
+        <img src="../../img/menu.svg" alt="Menu">
+    </div>
+
+    <main class="w-100 d-flex flex-row">
+        <section class="nav" id="nav">
+            <div class="nav-content">
+                <header class="nav-header">
+                    
+    <img src="../../img/logo.png" alt="" width=32>
+
+                    TwometerVR
+                </header>
+
+                
+                    
+                    
+<a href="../.." class="nav-item ">
+    Welcome
+</a>
+
+                
+                    
+                    
+<div class="nav-item header">
+    Basics
+</div>
+<div class="sublist">
+    
+        
+        
+<a href="../../Basics/Hardware/" class="nav-item ">
+    Hardware files
+</a>
+
+    
+        
+        
+<a href="../../Basics/System%20structure/" class="nav-item ">
+    System structure
+</a>
+
+    
+        
+        
+<a href="../../Basics/Tracker%20Identification/" class="nav-item ">
+    Tracker identification
+</a>
+
+    
+</div>
+
+                
+                    
+                    
+<div class="nav-item header">
+    Meta
+</div>
+<div class="sublist">
+    
+        
+        
+<a href="./" class="nav-item active">
+    Definitions
+</a>
+
+    
+        
+        
+<a href="../Naming/" class="nav-item ">
+    Naming
+</a>
+
+    
+        
+        
+<a href="../Versioning/" class="nav-item ">
+    Versioning
+</a>
+
+    
+</div>
+
+                
+                    
+                    
+<div class="nav-item header">
+    Network
+</div>
+<div class="sublist">
+    
+        
+        
+<a href="../../Network/Driver%20Protocol/" class="nav-item ">
+    Driver Protocol
+</a>
+
+    
+        
+        
+<a href="../../Network/Tracker%20Protocol/" class="nav-item ">
+    Tracker Protocol
+</a>
+
+    
+</div>
+
+                
+            </div>
+        </section>
+        <section class="flex-fill">
+            <div class="main-content" id="main-content">
+                
+                <h1 id="definitions">Definitions</h1>
+<p>There are many constants used throughout the TVR project. Below, you can find an overview of them.</p>
+<h2 id="steam-vr">Steam VR</h2>
+<ul>
+<li>Universe ID: <code>0x02 0x16 0x39 0xA0</code> = <code>2688095746</code></li>
+</ul>
+<h2 id="networking-ports">Networking ports</h2>
+<ul>
+<li>Server ⇄ Driver: <code>20156</code></li>
+<li>Server ⇄ Tracker (Broadcast): <code>20157</code></li>
+<li>Server ⇄ Tracker (Unicast): <code>20158</code></li>
+</ul>
+<h2 id="protocol-definitions">Protocol definitions</h2>
+<ul>
+<li>All multi-byte integer values are little-endian</li>
+<li>Packets longer than 4 KB (4096 bytes) are not accepted by any endpoint</li>
+<li><code>vec3</code>: 3 sequential 32-bit floating-point values in order <code>[x, y, z]</code> that encode a 3D vector</li>
+<li><code>vec4</code>: 4 sequential 32-bit floating-point values in order <code>[x, y, z, w]</code> that encode a quaternion</li>
+<li><code>type[]</code>: Array of objects, is prefixed by a <code>[uint8 length]</code> that specifies the number of objects in the array.</li>
+<li><code>string</code>: Null-terminated, ASCII-encoded string</li>
+</ul>
+<h2 id="button-ids">Button IDs</h2>
+<ul>
+<li><code>0</code>: A</li>
+<li><code>1</code>: B</li>
+<li><code>2</code>: Up</li>
+<li><code>3</code>: Left</li>
+<li><code>4</code>: Right</li>
+<li><code>5</code>: Down</li>
+<li><code>6</code>: Menu</li>
+<li><code>7</code>: Trigger</li>
+<li><code>8..15</code>: reserved</li>
+</ul>
+                
+            </div>
+        </section>
+        <section class="toc">
+            <div class="toc-item header">Contents</div>
+            
+            <a href="#definitions" class="toc-item">Definitions</a>
+            
+            <a href="#steam-vr" class="toc-item">Steam VR</a>
+            
+            <a href="#networking-ports" class="toc-item">Networking ports</a>
+            
+            <a href="#protocol-definitions" class="toc-item">Protocol definitions</a>
+            
+            <a href="#button-ids" class="toc-item">Button IDs</a>
+            
+            
+        </section>
+    </main>
+
+    <!--
+    MkDocs version      : 1.1.2
+    Docs Build Date UTC : 2021-06-10 10:14:51.978640+00:00
+    -->
+
+    <script src="../../js/theme.js"></script>
+</body>
+
+</html>

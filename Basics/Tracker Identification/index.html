@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tracker identification - TwometerVR</title>
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/theme.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@600&display=swap" rel="stylesheet">
+
+    <!-- User styles -->
+    
+
+    <!-- Extra head -->
+    
+    
+
+    <!-- User javascript -->
+    
+    <script src="../../search/main.js"></script>
+    
+</head>
+
+<body>
+    <div class="menu-button" id="menu-button">
+        <img src="../../img/menu.svg" alt="Menu">
+    </div>
+
+    <main class="w-100 d-flex flex-row">
+        <section class="nav" id="nav">
+            <div class="nav-content">
+                <header class="nav-header">
+                    
+    <img src="../../img/logo.png" alt="" width=32>
+
+                    TwometerVR
+                </header>
+
+                
+                    
+                    
+<a href="../.." class="nav-item ">
+    Welcome
+</a>
+
+                
+                    
+                    
+<div class="nav-item header">
+    Basics
+</div>
+<div class="sublist">
+    
+        
+        
+<a href="../Hardware/" class="nav-item ">
+    Hardware files
+</a>
+
+    
+        
+        
+<a href="../System%20structure/" class="nav-item ">
+    System structure
+</a>
+
+    
+        
+        
+<a href="./" class="nav-item active">
+    Tracker identification
+</a>
+
+    
+</div>
+
+                
+                    
+                    
+<div class="nav-item header">
+    Meta
+</div>
+<div class="sublist">
+    
+        
+        
+<a href="../../Meta/Definitions/" class="nav-item ">
+    Definitions
+</a>
+
+    
+        
+        
+<a href="../../Meta/Naming/" class="nav-item ">
+    Naming
+</a>
+
+    
+        
+        
+<a href="../../Meta/Versioning/" class="nav-item ">
+    Versioning
+</a>
+
+    
+</div>
+
+                
+                    
+                    
+<div class="nav-item header">
+    Network
+</div>
+<div class="sublist">
+    
+        
+        
+<a href="../../Network/Driver%20Protocol/" class="nav-item ">
+    Driver Protocol
+</a>
+
+    
+        
+        
+<a href="../../Network/Tracker%20Protocol/" class="nav-item ">
+    Tracker Protocol
+</a>
+
+    
+</div>
+
+                
+            </div>
+        </section>
+        <section class="flex-fill">
+            <div class="main-content" id="main-content">
+                
+                <h1 id="tracker-identification">Tracker identification</h1>
+<p>When registering with the server, the tracker transmits its class, color and serial number. The server then generates a unique 7-bit ID for that tracker. For subsequent pose updates, only this ID is sent.</p>
+<h3 id="tracker-colors">Tracker colors</h3>
+<p>Trackers are identified by the color of their tracking ball. The following colors are reserved as they were determined to be the most distinguishable by the video camera. May change in the future as tests go on.</p>
+<ul>
+<li><code>0x00</code>: Invalid (internal use)</li>
+<li><code>0x01</code>: Red (#FF0000): Left hand</li>
+<li><code>0x02</code>: Blue (#0000FF): Right hand</li>
+<li><code>0x03</code>: Green (#00FF00): Left leg</li>
+<li><code>0x04</code>: Magenta (#FF00FF): Right leg</li>
+<li><code>0x05</code>: Cyan (#FFFF00): Hips</li>
+<li><code>0x06</code>: Yellow (#FFFF00): Generic</li>
+<li>Not required for 5-point body tracking and may therefore be used for any other object that should be tracked.</li>
+<li><code>..0x7F</code>: Reserved for future use</li>
+<li><code>0x80..0xFF</code>: May be used by extensions</li>
+</ul>
+<h3 id="tracker-classes">Tracker classes</h3>
+<ul>
+<li><code>0x00</code>: Invalid (internal use)</li>
+<li><code>0x01</code>: Controller</li>
+<li><code>0x02</code>: Body tracker</li>
+<li><code>0x03</code>: Generic tracker</li>
+<li><code>..0x7F</code>: Reserved for future use</li>
+<li><code>0x80..0xFF</code>: May be used by extensions</li>
+</ul>
+<h3 id="tracker-ids">Tracker IDs</h3>
+<p>Tracker IDs are randomly generated numbers that are used to easily identify trackers after a <code>0x82 Handshake</code> packet. </p>
+<p>To ensure uniqueness in the current tracking setup, IDs are managed by the server. The server informs the client of its ID using the <code>0x83 Handshake Reply</code> packet.</p>
+<p>More information about these packets packet can be found in the <a href="/Network/Tracker protocol">protocol documentation</a>.</p>
+                
+            </div>
+        </section>
+        <section class="toc">
+            <div class="toc-item header">Contents</div>
+            
+            <a href="#tracker-identification" class="toc-item">Tracker identification</a>
+            
+            <a href="#tracker-colors" class="toc-item">Tracker colors</a>
+            
+            <a href="#tracker-classes" class="toc-item">Tracker classes</a>
+            
+            <a href="#tracker-ids" class="toc-item">Tracker IDs</a>
+            
+            
+        </section>
+    </main>
+
+    <!--
+    MkDocs version      : 1.1.2
+    Docs Build Date UTC : 2021-06-10 10:14:51.975640+00:00
+    -->
+
+    <script src="../../js/theme.js"></script>
+</body>
+
+</html>
