@@ -3,51 +3,44 @@
 
 #include <WiFiUdp.h>
 #include <stdint.h>
+
 #include "../Utils/Logger.h"
 
-class UdpClient
-{
-private:
+class UdpClient {
+   private:
     WiFiUDP client{};
 
     IPAddress ip;
     int port;
 
-public:
-    void begin(IPAddress ip, int port)
-    {
+   public:
+    void begin(IPAddress ip, int port) {
         this->ip = ip;
         this->port = port;
 
-        if (!client.begin(port))
-        {
+        if (!client.begin(port)) {
             Logger::crash("Cannot initialize UDP client.");
         }
     }
 
-    void beginPacket()
-    {
+    void beginPacket() {
         client.beginPacket(ip, port);
     }
 
     template <typename T>
-    void write(T data)
-    {
+    void write(T data) {
         writeRaw((uint8_t *)(&data), sizeof(data));
     }
 
-    void writeRaw(const void *data, int length)
-    {
-        client.write((uint8_t*) data, length);
+    void writeRaw(const void *data, int length) {
+        client.write((uint8_t *)data, length);
     }
 
-    void endPacket()
-    {
+    void endPacket() {
         client.endPacket();
     }
 
-    int readPacket(uint8_t *buffer, int maxlen)
-    {
+    int readPacket(uint8_t *buffer, int maxlen) {
         int size = client.parsePacket();
         if (!size)
             return 0;

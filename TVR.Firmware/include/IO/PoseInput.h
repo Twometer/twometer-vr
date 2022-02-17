@@ -2,19 +2,18 @@
 #define TVR_POSE_INPUT
 
 #include <ICM20948.h>
-#include "Hardware.h"
-#include "../Utils/Vector.h"
-#include "../Utils/Logger.h"
-#include "../Utils/Constants.h"
 
-class PoseInput
-{
-private:
+#include "../Utils/Constants.h"
+#include "../Utils/Logger.h"
+#include "../Utils/Vector.h"
+#include "Hardware.h"
+
+class PoseInput {
+   private:
     ICM20948 icm{};
 
-public:
-    void begin()
-    {
+   public:
+    void begin() {
         Wire.begin(PIN_SDA, PIN_SCL);
 
 #if SENSOR_USE_COMPASS
@@ -24,8 +23,7 @@ public:
 #endif
 
         int code = icm.begin();
-        switch (code)
-        {
+        switch (code) {
         case ICM_SUCCESS:
             Logger::info("IMU initialized successfully.");
             break;
@@ -54,23 +52,19 @@ public:
 #endif
     }
 
-    void update()
-    {
+    void update() {
         icm.update();
     }
 
-    bool available()
-    {
+    bool available() {
         return icm.available();
     }
 
-    void clearAvailable()
-    {
+    void clearAvailable() {
         return icm.clearAvailable();
     }
 
-    vec4 getPose()
-    {
+    vec4 getPose() {
         return {icm.x(), icm.y(), icm.z(), icm.w()};
     }
 };

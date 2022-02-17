@@ -3,11 +3,9 @@
 
 #include "Constants.h"
 
-class SerialNo
-{
-public:
-    static String get()
-    {
+class SerialNo {
+   public:
+    static String get() {
         String serialNo = MANUFACTURER_ID;
         serialNo.concat(String(ESP.getChipId(), HEX));
         serialNo.toUpperCase();
