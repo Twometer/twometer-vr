@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <EEPROM.h>
 #include <ESP8266WiFi.h>
 #include <stdint.h>
 
@@ -26,6 +27,7 @@ void setupHardware() {
     Logger::info("Setting up hardware...");
     buttonInput.begin();
     poseInput.begin();
+    EEPROM.begin(1024);
 }
 
 void setupWifi() {
@@ -39,6 +41,37 @@ void setupWifi() {
     }
 
     Logger::info("Connected.");
+}
+
+void dumpCalibrationData(const CalibrationData &calibData) {
+    Serial.printf("Accel: %d %d %d\n", calibData.accelBias[0], calibData.accelBias[1], calibData.accelBias[2]);
+    Serial.printf(" Gyro: %d %d %d\n", calibData.gyroBias[0], calibData.gyroBias[1], calibData.gyroBias[2]);
+    Serial.printf("  Mag: %d %d %d\n", calibData.magBias[0], calibData.magBias[1], calibData.magBias[2]);
+}
+
+void loadCalibrationData() {
+    Logger::info("Loading calibration data");
+    if (EEPROM.read(0) == 0x42) {
+        CalibrationData data{};
+        EEPROM.get(4, data);
+        dumpCalibrationData(data);
+        poseInput.setCalibrationData(data);
+        Logger::info("Load successful");
+    } else {
+        Logger::info("EEPROM has no data");
+    }
+}
+
+unsigned long long lastSave = 0;
+void saveCalibrationData() {
+    if (millis() - lastSave > 60000) {
+        auto data = poseInput.getCalibrationData();
+        EEPROM.write(0, 0x42);
+        EEPROM.put(4, data);
+        EEPROM.commit();
+        dumpCalibrationData(data);
+        lastSave = millis();
+    }
 }
 
 void runServerDiscovery() {
@@ -66,6 +99,7 @@ void setup() {
 
     setupHardware();
     setupWifi();
+    loadCalibrationData();
     runServerDiscovery();
     runServerRegistration();
 
@@ -79,25 +113,13 @@ void runTick() {
     if (poseInput.available()) {
         Packets::sendState(client, trackerId, buttonInput.getStates(), poseInput.getPose());
         poseInput.clearAvailable();
-    }
-}
-
-unsigned long long lastDebug = 0;
-void debugTick() {
-    if (millis() - lastDebug > 1000) {
-        Serial.println("--- calib info ---");
-        auto calibData = poseInput.getCalibData();
-        Serial.printf("Accel: %d %d %d\n", calibData.accelBias[0], calibData.accelBias[1], calibData.accelBias[2]);
-        Serial.printf(" Gyro: %d %d %d\n", calibData.gyroBias[0], calibData.gyroBias[1], calibData.gyroBias[2]);
-        Serial.printf("  Mag: %d %d %d\n", calibData.magBias[0], calibData.magBias[1], calibData.magBias[2]);
-        lastDebug = millis();
+        saveCalibrationData();
     }
 }
 
 void loop() {
     uint64_t tickStart = micros64();
     runTick();
-    debugTick();
     uint64_t tickDuration = micros64() - tickStart;
     if (tickDuration < TICK_PERIOD_US) {
         uint64_t remainingTime = TICK_PERIOD_US - tickDuration;

@@ -68,8 +68,12 @@ class PoseInput {
         return {icm.x(), icm.y(), icm.z(), icm.w()};
     }
 
-    CalibrationData getCalibData() {
+    CalibrationData getCalibrationData() {
         return icm.getCalibrationData();
+    }
+
+    void setCalibrationData(const CalibrationData &data) {
+        icm.setCalibrationData(data);
     }
 };
 
