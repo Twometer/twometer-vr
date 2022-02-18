@@ -67,6 +67,10 @@ class PoseInput {
     vec4 getPose() {
         return {icm.x(), icm.y(), icm.z(), icm.w()};
     }
+
+    CalibrationData getCalibData() {
+        return icm.getCalibrationData();
+    }
 };
 
 #endif

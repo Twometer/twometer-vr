@@ -25,7 +25,13 @@ static const uint8_t dmp3_image[] = {
 #include "Invn/Images/icm20948_img.dmp3a.h"
 };
 
-enum fusion_mode_t {
+struct CalibrationData {
+    int accelBias[3];
+    int gyroBias[3];
+    int magBias[3];
+};
+
+enum FusionMode {
     FUSION_6_AXIS,
     FUSION_9_AXIS
 };
@@ -38,7 +44,7 @@ class ICM20948 {
     inv_host_serif_t serif_instance{};
     inv_sensor_listener_t sensor_listener{};
 
-    fusion_mode_t fusion_mode = FUSION_9_AXIS;
+    FusionMode fusion_mode = FUSION_9_AXIS;
 
     volatile bool has_data = false;
     volatile float quat[4] = {1, 0, 0, 0};
@@ -47,7 +53,7 @@ class ICM20948 {
         ICM20948 *icm = (ICM20948 *)context;
 
         if (event->status == INV_SENSOR_STATUS_DATA_UPDATED) {
-            int sensor = -1;
+            unsigned int sensor = -1;
             if (icm->fusion_mode == FUSION_6_AXIS) {
                 sensor = INV_SENSOR_TYPE_GAME_ROTATION_VECTOR;
             } else {
@@ -65,7 +71,7 @@ class ICM20948 {
     }
 
    public:
-    void setFusionMode(fusion_mode_t mode) {
+    void setFusionMode(FusionMode mode) {
         fusion_mode = mode;
     }
 
@@ -102,7 +108,7 @@ class ICM20948 {
         if (inv_device_setup(device))
             return ICM_SETUP_ERROR;
 
-        if (inv_device_load(device, NULL, dmp3_image, sizeof(dmp3_image), true /* verify */, NULL))
+        if (inv_device_load(device, 0, dmp3_image, sizeof(dmp3_image), /* verify */ true, /* force */ false))
             return ICM_DMP_ERROR;
 
         if (fusion_mode == FUSION_9_AXIS && inv_device_ping_sensor(device, INV_SENSOR_TYPE_UNCAL_MAGNETOMETER))
@@ -147,6 +153,20 @@ class ICM20948 {
 
     float w() {
         return quat[3];
+    }
+
+    CalibrationData getCalibrationData() {
+        CalibrationData data{};
+        inv_icm20948_get_bias(icm20948_instance, INV_ICM20948_SENSOR_ACCELEROMETER, data.accelBias);
+        inv_icm20948_get_bias(icm20948_instance, INV_ICM20948_SENSOR_GYROSCOPE, data.gyroBias);
+        inv_icm20948_get_bias(icm20948_instance, INV_ICM20948_SENSOR_GEOMAGNETIC_FIELD, data.magBias);
+        return data;
+    }
+
+    void setCalibrationData(const CalibrationData &data) {
+        inv_icm20948_set_bias(icm20948_instance, INV_ICM20948_SENSOR_ACCELEROMETER, data.accelBias);
+        inv_icm20948_set_bias(icm20948_instance, INV_ICM20948_SENSOR_GYROSCOPE, data.gyroBias);
+        inv_icm20948_set_bias(icm20948_instance, INV_ICM20948_SENSOR_GEOMAGNETIC_FIELD, data.magBias);
     }
 };
 
