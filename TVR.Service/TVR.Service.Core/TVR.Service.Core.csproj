@@ -7,10 +7,9 @@
     <Company>Twometer Applications</Company>
     <Copyright />
     <PackageProjectUrl>https://github.com/Twometer/twometer-vr</PackageProjectUrl>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>x86</PlatformTarget>
+    <Platforms>AnyCPU;x64</Platforms>
+	<PlatformTarget>x64</PlatformTarget>
+	<BaseOutputPath>bin\</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Libraries\CLEyeMulticam.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="Libraries\libps3eye.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Config.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

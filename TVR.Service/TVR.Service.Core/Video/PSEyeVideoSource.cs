@@ -1,7 +1,9 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
-using static TVR.Service.Core.Native.CLEye;
+using System.Diagnostics;
+using TVR.Service.Core.Logging;
+using VR.Service.Core.Native;
 
 namespace TVR.Service.Core.Video
 {
@@ -10,7 +12,6 @@ namespace TVR.Service.Core.Video
         private readonly int cameraIndex;
         private IntPtr camera;
 
-        private Image<Bgra, byte> rawFrame;
         private IntPtr rawData;
 
         public Image<Bgr, byte> BgrFrame { get; private set; }
@@ -18,7 +19,7 @@ namespace TVR.Service.Core.Video
         public double FrameBrightness { get; private set; }
 
         public int Framerate { get; set; } = 60;
-        public int Exposure { get => CLEyeGetCameraParameter(camera, CLEyeCameraParameter.CLEYE_EXPOSURE); set => CLEyeSetCameraParameter(camera, CLEyeCameraParameter.CLEYE_EXPOSURE, value); }
+        public int Exposure { get => PSEye.Exposure(camera); set => PSEye.SetExposure(camera, value); }
         public int Width { get; set; } = 640;
         public int Height { get; set; } = 480;
 
@@ -29,9 +30,8 @@ namespace TVR.Service.Core.Video
 
         public bool Grab()
         {
-            if (CLEyeCameraGetFrame(camera, rawData, 500))
+            if (PSEye.GetFrame(camera, rawData))
             {
-                CvInvoke.CvtColor(rawFrame, BgrFrame, Emgu.CV.CvEnum.ColorConversion.Bgra2Bgr);
                 ImageProcessing.BgrToHsv(BgrFrame, HsvFrame);
                 FrameBrightness = ImageProcessing.GetBrightness(HsvFrame);
                 return true;
@@ -41,40 +41,31 @@ namespace TVR.Service.Core.Video
 
         public void Open()
         {
-            var camId = CLEyeGetCameraUUID(cameraIndex);
-            if (camId == Guid.Empty)
-                throw new Exception($"Can't find PSEye camera at index {cameraIndex}");
+            Loggers.Current.Log(LogLevel.Info, $"Starging PSEYe");
+            camera = PSEye.OpenCamera(cameraIndex, Width < 640 ? PsEyeResolution.Qvga : PsEyeResolution.Vga, 75, PsEyeFormat.Bgr);
+            if (camera == IntPtr.Zero)
+            {
+                throw new Exception($"Can't open PSEye camera at index {cameraIndex}");
+            }
 
-            var resolution = Width < 640 ? CLEyeCameraResolution.CLEYE_QVGA : CLEyeCameraResolution.CLEYE_VGA;
+            Width = PSEye.Width(camera);
+            Height = PSEye.Height(camera);
 
-            var width = 0;
-            var height = 0;
+            PSEye.SetAutoGain(camera, false);
+            PSEye.SetGain(camera, 15);
 
-            camera = CLEyeCreateCamera(camId, CLEyeCameraColorMode.CLEYE_COLOR_PROCESSED, resolution, Framerate);
+            BgrFrame = new Image<Bgr, byte>(Width, Height);
+            HsvFrame = new Image<Hsv, byte>(Width, Height);
 
-            CLEyeCameraGetFrameDimensions(camera, ref width, ref height);
-            Width = width;
-            Height = height;
-
-            CLEyeSetCameraParameter(camera, CLEyeCameraParameter.CLEYE_AUTO_EXPOSURE, 0);
-            CLEyeSetCameraParameter(camera, CLEyeCameraParameter.CLEYE_AUTO_GAIN, 0);
-            CLEyeSetCameraParameter(camera, CLEyeCameraParameter.CLEYE_GAIN, 15);
-
-            rawFrame = new Image<Bgra, byte>(width, height);
-            BgrFrame = new Image<Bgr, byte>(width, height);
-            HsvFrame = new Image<Hsv, byte>(width, height);
-
-            rawData = rawFrame.Mat.DataPointer;
-
-            CLEyeCameraStart(camera);
+            rawData = BgrFrame.Mat.DataPointer;
+            Loggers.Current.Log(LogLevel.Info, $"PS Eye initialized with resolution {Width}x{Height}");
         }
 
         public void Dispose()
         {
-            rawFrame?.Dispose();
             BgrFrame?.Dispose();
             HsvFrame?.Dispose();
-            CLEyeDestroyCamera(camera);
+            PSEye.CloseCamera(camera);
         }
     }
 }
